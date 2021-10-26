@@ -1,0 +1,7 @@
+query Movie {
+  movies {
+    imdbRating,
+    title
+    year
+    }
+  }
