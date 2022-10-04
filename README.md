@@ -56,8 +56,6 @@ Example query:
 MATCH (n:Person) RETURN n LIMIT 25
 ```
 
-```cypher
-```
 
 # api/
 
@@ -71,6 +69,7 @@ For API __only__ developement:
 
 - @neo4j/neo4j-graphql -  https://neo4j.com/docs/graphql-manual/current/
 - Neo4j and GraphQL - https://neo4j.com/developer/graphql/
+- Neo4j with Docker trobleshooting - https://neo4j.com/developer/docker/
 - Consuming the standard way - https://apollo-angular.com/docs/
 
 
