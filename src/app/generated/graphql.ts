@@ -2,6 +2,7 @@ import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -78,36 +79,36 @@ export type MutationCreatePostsArgs = {
 
 
 export type MutationDeletePeopleArgs = {
-  delete?: Maybe<PersonDeleteInput>;
-  where?: Maybe<PersonWhere>;
+  delete?: InputMaybe<PersonDeleteInput>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type MutationDeletePostsArgs = {
-  delete?: Maybe<PostDeleteInput>;
-  where?: Maybe<PostWhere>;
+  delete?: InputMaybe<PostDeleteInput>;
+  where?: InputMaybe<PostWhere>;
 };
 
 
 export type MutationUpdatePeopleArgs = {
-  connect?: Maybe<PersonConnectInput>;
-  connectOrCreate?: Maybe<PersonConnectOrCreateInput>;
-  create?: Maybe<PersonRelationInput>;
-  delete?: Maybe<PersonDeleteInput>;
-  disconnect?: Maybe<PersonDisconnectInput>;
-  update?: Maybe<PersonUpdateInput>;
-  where?: Maybe<PersonWhere>;
+  connect?: InputMaybe<PersonConnectInput>;
+  connectOrCreate?: InputMaybe<PersonConnectOrCreateInput>;
+  create?: InputMaybe<PersonRelationInput>;
+  delete?: InputMaybe<PersonDeleteInput>;
+  disconnect?: InputMaybe<PersonDisconnectInput>;
+  update?: InputMaybe<PersonUpdateInput>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type MutationUpdatePostsArgs = {
-  connect?: Maybe<PostConnectInput>;
-  connectOrCreate?: Maybe<PostConnectOrCreateInput>;
-  create?: Maybe<PostRelationInput>;
-  delete?: Maybe<PostDeleteInput>;
-  disconnect?: Maybe<PostDisconnectInput>;
-  update?: Maybe<PostUpdateInput>;
-  where?: Maybe<PostWhere>;
+  connect?: InputMaybe<PostConnectInput>;
+  connectOrCreate?: InputMaybe<PostConnectOrCreateInput>;
+  create?: InputMaybe<PostRelationInput>;
+  delete?: InputMaybe<PostDeleteInput>;
+  disconnect?: InputMaybe<PostDisconnectInput>;
+  update?: InputMaybe<PostUpdateInput>;
+  where?: InputMaybe<PostWhere>;
 };
 
 /** Pagination information (Relay) */
@@ -135,40 +136,40 @@ export type Person = {
 
 
 export type PersonFriendsArgs = {
-  options?: Maybe<PersonOptions>;
-  where?: Maybe<PersonWhere>;
+  options?: InputMaybe<PersonOptions>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type PersonFriendsAggregateArgs = {
-  where?: Maybe<PersonWhere>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type PersonFriendsConnectionArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  sort?: Maybe<Array<PersonFriendsConnectionSort>>;
-  where?: Maybe<PersonFriendsConnectionWhere>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<PersonFriendsConnectionSort>>;
+  where?: InputMaybe<PersonFriendsConnectionWhere>;
 };
 
 
 export type PersonPostsArgs = {
-  options?: Maybe<PostOptions>;
-  where?: Maybe<PostWhere>;
+  options?: InputMaybe<PostOptions>;
+  where?: InputMaybe<PostWhere>;
 };
 
 
 export type PersonPostsAggregateArgs = {
-  where?: Maybe<PostWhere>;
+  where?: InputMaybe<PostWhere>;
 };
 
 
 export type PersonPostsConnectionArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  sort?: Maybe<Array<PersonPostsConnectionSort>>;
-  where?: Maybe<PersonPostsConnectionWhere>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<PersonPostsConnectionSort>>;
+  where?: InputMaybe<PersonPostsConnectionWhere>;
 };
 
 export type PersonAggregateSelection = {
@@ -179,13 +180,13 @@ export type PersonAggregateSelection = {
 };
 
 export type PersonConnectInput = {
-  friends?: Maybe<Array<PersonFriendsConnectFieldInput>>;
-  posts?: Maybe<Array<PersonPostsConnectFieldInput>>;
+  friends?: InputMaybe<Array<PersonFriendsConnectFieldInput>>;
+  posts?: InputMaybe<Array<PersonPostsConnectFieldInput>>;
 };
 
 export type PersonConnectOrCreateInput = {
-  friends?: Maybe<Array<PersonFriendsConnectOrCreateFieldInput>>;
-  posts?: Maybe<Array<PersonPostsConnectOrCreateFieldInput>>;
+  friends?: InputMaybe<Array<PersonFriendsConnectOrCreateFieldInput>>;
+  posts?: InputMaybe<Array<PersonPostsConnectOrCreateFieldInput>>;
 };
 
 export type PersonConnectOrCreateWhere = {
@@ -197,37 +198,37 @@ export type PersonConnectWhere = {
 };
 
 export type PersonCreateInput = {
-  birthday?: Maybe<Scalars['Date']>;
-  friends?: Maybe<PersonFriendsFieldInput>;
-  location?: Maybe<PointInput>;
+  birthday?: InputMaybe<Scalars['Date']>;
+  friends?: InputMaybe<PersonFriendsFieldInput>;
+  location?: InputMaybe<PointInput>;
   name: Scalars['String'];
-  posts?: Maybe<PersonPostsFieldInput>;
+  posts?: InputMaybe<PersonPostsFieldInput>;
 };
 
 export type PersonDeleteInput = {
-  friends?: Maybe<Array<PersonFriendsDeleteFieldInput>>;
-  posts?: Maybe<Array<PersonPostsDeleteFieldInput>>;
+  friends?: InputMaybe<Array<PersonFriendsDeleteFieldInput>>;
+  posts?: InputMaybe<Array<PersonPostsDeleteFieldInput>>;
 };
 
 export type PersonDisconnectInput = {
-  friends?: Maybe<Array<PersonFriendsDisconnectFieldInput>>;
-  posts?: Maybe<Array<PersonPostsDisconnectFieldInput>>;
+  friends?: InputMaybe<Array<PersonFriendsDisconnectFieldInput>>;
+  posts?: InputMaybe<Array<PersonPostsDisconnectFieldInput>>;
 };
 
 export type PersonFriendsAggregateInput = {
-  AND?: Maybe<Array<PersonFriendsAggregateInput>>;
-  OR?: Maybe<Array<PersonFriendsAggregateInput>>;
-  count?: Maybe<Scalars['Int']>;
-  count_GT?: Maybe<Scalars['Int']>;
-  count_GTE?: Maybe<Scalars['Int']>;
-  count_LT?: Maybe<Scalars['Int']>;
-  count_LTE?: Maybe<Scalars['Int']>;
-  node?: Maybe<PersonFriendsNodeAggregationWhereInput>;
+  AND?: InputMaybe<Array<PersonFriendsAggregateInput>>;
+  OR?: InputMaybe<Array<PersonFriendsAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<PersonFriendsNodeAggregationWhereInput>;
 };
 
 export type PersonFriendsConnectFieldInput = {
-  connect?: Maybe<Array<PersonConnectInput>>;
-  where?: Maybe<PersonConnectWhere>;
+  connect?: InputMaybe<Array<PersonConnectInput>>;
+  where?: InputMaybe<PersonConnectWhere>;
 };
 
 export type PersonFriendsConnectOrCreateFieldInput = {
@@ -247,14 +248,14 @@ export type PersonFriendsConnection = {
 };
 
 export type PersonFriendsConnectionSort = {
-  node?: Maybe<PersonSort>;
+  node?: InputMaybe<PersonSort>;
 };
 
 export type PersonFriendsConnectionWhere = {
-  AND?: Maybe<Array<PersonFriendsConnectionWhere>>;
-  OR?: Maybe<Array<PersonFriendsConnectionWhere>>;
-  node?: Maybe<PersonWhere>;
-  node_NOT?: Maybe<PersonWhere>;
+  AND?: InputMaybe<Array<PersonFriendsConnectionWhere>>;
+  OR?: InputMaybe<Array<PersonFriendsConnectionWhere>>;
+  node?: InputMaybe<PersonWhere>;
+  node_NOT?: InputMaybe<PersonWhere>;
 };
 
 export type PersonFriendsCreateFieldInput = {
@@ -262,45 +263,45 @@ export type PersonFriendsCreateFieldInput = {
 };
 
 export type PersonFriendsDeleteFieldInput = {
-  delete?: Maybe<PersonDeleteInput>;
-  where?: Maybe<PersonFriendsConnectionWhere>;
+  delete?: InputMaybe<PersonDeleteInput>;
+  where?: InputMaybe<PersonFriendsConnectionWhere>;
 };
 
 export type PersonFriendsDisconnectFieldInput = {
-  disconnect?: Maybe<PersonDisconnectInput>;
-  where?: Maybe<PersonFriendsConnectionWhere>;
+  disconnect?: InputMaybe<PersonDisconnectInput>;
+  where?: InputMaybe<PersonFriendsConnectionWhere>;
 };
 
 export type PersonFriendsFieldInput = {
-  connect?: Maybe<Array<PersonFriendsConnectFieldInput>>;
-  connectOrCreate?: Maybe<Array<PersonFriendsConnectOrCreateFieldInput>>;
-  create?: Maybe<Array<PersonFriendsCreateFieldInput>>;
+  connect?: InputMaybe<Array<PersonFriendsConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<PersonFriendsConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<PersonFriendsCreateFieldInput>>;
 };
 
 export type PersonFriendsNodeAggregationWhereInput = {
-  AND?: Maybe<Array<PersonFriendsNodeAggregationWhereInput>>;
-  OR?: Maybe<Array<PersonFriendsNodeAggregationWhereInput>>;
-  id_EQUAL?: Maybe<Scalars['ID']>;
-  name_AVERAGE_EQUAL?: Maybe<Scalars['Float']>;
-  name_AVERAGE_GT?: Maybe<Scalars['Float']>;
-  name_AVERAGE_GTE?: Maybe<Scalars['Float']>;
-  name_AVERAGE_LT?: Maybe<Scalars['Float']>;
-  name_AVERAGE_LTE?: Maybe<Scalars['Float']>;
-  name_EQUAL?: Maybe<Scalars['String']>;
-  name_GT?: Maybe<Scalars['Int']>;
-  name_GTE?: Maybe<Scalars['Int']>;
-  name_LONGEST_EQUAL?: Maybe<Scalars['Int']>;
-  name_LONGEST_GT?: Maybe<Scalars['Int']>;
-  name_LONGEST_GTE?: Maybe<Scalars['Int']>;
-  name_LONGEST_LT?: Maybe<Scalars['Int']>;
-  name_LONGEST_LTE?: Maybe<Scalars['Int']>;
-  name_LT?: Maybe<Scalars['Int']>;
-  name_LTE?: Maybe<Scalars['Int']>;
-  name_SHORTEST_EQUAL?: Maybe<Scalars['Int']>;
-  name_SHORTEST_GT?: Maybe<Scalars['Int']>;
-  name_SHORTEST_GTE?: Maybe<Scalars['Int']>;
-  name_SHORTEST_LT?: Maybe<Scalars['Int']>;
-  name_SHORTEST_LTE?: Maybe<Scalars['Int']>;
+  AND?: InputMaybe<Array<PersonFriendsNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<PersonFriendsNodeAggregationWhereInput>>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
+  name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  name_EQUAL?: InputMaybe<Scalars['String']>;
+  name_GT?: InputMaybe<Scalars['Int']>;
+  name_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  name_LT?: InputMaybe<Scalars['Int']>;
+  name_LTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
 };
 
 export type PersonFriendsRelationship = {
@@ -310,24 +311,24 @@ export type PersonFriendsRelationship = {
 };
 
 export type PersonFriendsUpdateConnectionInput = {
-  node?: Maybe<PersonUpdateInput>;
+  node?: InputMaybe<PersonUpdateInput>;
 };
 
 export type PersonFriendsUpdateFieldInput = {
-  connect?: Maybe<Array<PersonFriendsConnectFieldInput>>;
-  connectOrCreate?: Maybe<Array<PersonFriendsConnectOrCreateFieldInput>>;
-  create?: Maybe<Array<PersonFriendsCreateFieldInput>>;
-  delete?: Maybe<Array<PersonFriendsDeleteFieldInput>>;
-  disconnect?: Maybe<Array<PersonFriendsDisconnectFieldInput>>;
-  update?: Maybe<PersonFriendsUpdateConnectionInput>;
-  where?: Maybe<PersonFriendsConnectionWhere>;
+  connect?: InputMaybe<Array<PersonFriendsConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<PersonFriendsConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<PersonFriendsCreateFieldInput>>;
+  delete?: InputMaybe<Array<PersonFriendsDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<PersonFriendsDisconnectFieldInput>>;
+  update?: InputMaybe<PersonFriendsUpdateConnectionInput>;
+  where?: InputMaybe<PersonFriendsConnectionWhere>;
 };
 
 export type PersonOptions = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
   /** Specify one or more PersonSort objects to sort People by. The sorts will be applied in the order in which they are arranged in the array. */
-  sort?: Maybe<Array<Maybe<PersonSort>>>;
+  sort?: InputMaybe<Array<InputMaybe<PersonSort>>>;
 };
 
 export type PersonPersonFriendsAggregationSelection = {
@@ -356,19 +357,19 @@ export type PersonPostPostsNodeAggregateSelection = {
 };
 
 export type PersonPostsAggregateInput = {
-  AND?: Maybe<Array<PersonPostsAggregateInput>>;
-  OR?: Maybe<Array<PersonPostsAggregateInput>>;
-  count?: Maybe<Scalars['Int']>;
-  count_GT?: Maybe<Scalars['Int']>;
-  count_GTE?: Maybe<Scalars['Int']>;
-  count_LT?: Maybe<Scalars['Int']>;
-  count_LTE?: Maybe<Scalars['Int']>;
-  node?: Maybe<PersonPostsNodeAggregationWhereInput>;
+  AND?: InputMaybe<Array<PersonPostsAggregateInput>>;
+  OR?: InputMaybe<Array<PersonPostsAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<PersonPostsNodeAggregationWhereInput>;
 };
 
 export type PersonPostsConnectFieldInput = {
-  connect?: Maybe<Array<PostConnectInput>>;
-  where?: Maybe<PostConnectWhere>;
+  connect?: InputMaybe<Array<PostConnectInput>>;
+  where?: InputMaybe<PostConnectWhere>;
 };
 
 export type PersonPostsConnectOrCreateFieldInput = {
@@ -388,14 +389,14 @@ export type PersonPostsConnection = {
 };
 
 export type PersonPostsConnectionSort = {
-  node?: Maybe<PostSort>;
+  node?: InputMaybe<PostSort>;
 };
 
 export type PersonPostsConnectionWhere = {
-  AND?: Maybe<Array<PersonPostsConnectionWhere>>;
-  OR?: Maybe<Array<PersonPostsConnectionWhere>>;
-  node?: Maybe<PostWhere>;
-  node_NOT?: Maybe<PostWhere>;
+  AND?: InputMaybe<Array<PersonPostsConnectionWhere>>;
+  OR?: InputMaybe<Array<PersonPostsConnectionWhere>>;
+  node?: InputMaybe<PostWhere>;
+  node_NOT?: InputMaybe<PostWhere>;
 };
 
 export type PersonPostsCreateFieldInput = {
@@ -403,60 +404,60 @@ export type PersonPostsCreateFieldInput = {
 };
 
 export type PersonPostsDeleteFieldInput = {
-  delete?: Maybe<PostDeleteInput>;
-  where?: Maybe<PersonPostsConnectionWhere>;
+  delete?: InputMaybe<PostDeleteInput>;
+  where?: InputMaybe<PersonPostsConnectionWhere>;
 };
 
 export type PersonPostsDisconnectFieldInput = {
-  disconnect?: Maybe<PostDisconnectInput>;
-  where?: Maybe<PersonPostsConnectionWhere>;
+  disconnect?: InputMaybe<PostDisconnectInput>;
+  where?: InputMaybe<PersonPostsConnectionWhere>;
 };
 
 export type PersonPostsFieldInput = {
-  connect?: Maybe<Array<PersonPostsConnectFieldInput>>;
-  connectOrCreate?: Maybe<Array<PersonPostsConnectOrCreateFieldInput>>;
-  create?: Maybe<Array<PersonPostsCreateFieldInput>>;
+  connect?: InputMaybe<Array<PersonPostsConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<PersonPostsConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<PersonPostsCreateFieldInput>>;
 };
 
 export type PersonPostsNodeAggregationWhereInput = {
-  AND?: Maybe<Array<PersonPostsNodeAggregationWhereInput>>;
-  OR?: Maybe<Array<PersonPostsNodeAggregationWhereInput>>;
-  content_AVERAGE_EQUAL?: Maybe<Scalars['Float']>;
-  content_AVERAGE_GT?: Maybe<Scalars['Float']>;
-  content_AVERAGE_GTE?: Maybe<Scalars['Float']>;
-  content_AVERAGE_LT?: Maybe<Scalars['Float']>;
-  content_AVERAGE_LTE?: Maybe<Scalars['Float']>;
-  content_EQUAL?: Maybe<Scalars['String']>;
-  content_GT?: Maybe<Scalars['Int']>;
-  content_GTE?: Maybe<Scalars['Int']>;
-  content_LONGEST_EQUAL?: Maybe<Scalars['Int']>;
-  content_LONGEST_GT?: Maybe<Scalars['Int']>;
-  content_LONGEST_GTE?: Maybe<Scalars['Int']>;
-  content_LONGEST_LT?: Maybe<Scalars['Int']>;
-  content_LONGEST_LTE?: Maybe<Scalars['Int']>;
-  content_LT?: Maybe<Scalars['Int']>;
-  content_LTE?: Maybe<Scalars['Int']>;
-  content_SHORTEST_EQUAL?: Maybe<Scalars['Int']>;
-  content_SHORTEST_GT?: Maybe<Scalars['Int']>;
-  content_SHORTEST_GTE?: Maybe<Scalars['Int']>;
-  content_SHORTEST_LT?: Maybe<Scalars['Int']>;
-  content_SHORTEST_LTE?: Maybe<Scalars['Int']>;
-  createdAt_EQUAL?: Maybe<Scalars['DateTime']>;
-  createdAt_GT?: Maybe<Scalars['DateTime']>;
-  createdAt_GTE?: Maybe<Scalars['DateTime']>;
-  createdAt_LT?: Maybe<Scalars['DateTime']>;
-  createdAt_LTE?: Maybe<Scalars['DateTime']>;
-  createdAt_MAX_EQUAL?: Maybe<Scalars['DateTime']>;
-  createdAt_MAX_GT?: Maybe<Scalars['DateTime']>;
-  createdAt_MAX_GTE?: Maybe<Scalars['DateTime']>;
-  createdAt_MAX_LT?: Maybe<Scalars['DateTime']>;
-  createdAt_MAX_LTE?: Maybe<Scalars['DateTime']>;
-  createdAt_MIN_EQUAL?: Maybe<Scalars['DateTime']>;
-  createdAt_MIN_GT?: Maybe<Scalars['DateTime']>;
-  createdAt_MIN_GTE?: Maybe<Scalars['DateTime']>;
-  createdAt_MIN_LT?: Maybe<Scalars['DateTime']>;
-  createdAt_MIN_LTE?: Maybe<Scalars['DateTime']>;
-  id_EQUAL?: Maybe<Scalars['ID']>;
+  AND?: InputMaybe<Array<PersonPostsNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<PersonPostsNodeAggregationWhereInput>>;
+  content_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  content_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  content_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  content_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  content_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  content_EQUAL?: InputMaybe<Scalars['String']>;
+  content_GT?: InputMaybe<Scalars['Int']>;
+  content_GTE?: InputMaybe<Scalars['Int']>;
+  content_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  content_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  content_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  content_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  content_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  content_LT?: InputMaybe<Scalars['Int']>;
+  content_LTE?: InputMaybe<Scalars['Int']>;
+  content_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  content_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  content_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  content_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  content_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  createdAt_EQUAL?: InputMaybe<Scalars['DateTime']>;
+  createdAt_GT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_GTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_LT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_LTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MAX_EQUAL?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MAX_GT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MAX_GTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MAX_LT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MAX_LTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MIN_EQUAL?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MIN_GT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MIN_GTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MIN_LT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_MIN_LTE?: InputMaybe<Scalars['DateTime']>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
 };
 
 export type PersonPostsRelationship = {
@@ -466,94 +467,94 @@ export type PersonPostsRelationship = {
 };
 
 export type PersonPostsUpdateConnectionInput = {
-  node?: Maybe<PostUpdateInput>;
+  node?: InputMaybe<PostUpdateInput>;
 };
 
 export type PersonPostsUpdateFieldInput = {
-  connect?: Maybe<Array<PersonPostsConnectFieldInput>>;
-  connectOrCreate?: Maybe<Array<PersonPostsConnectOrCreateFieldInput>>;
-  create?: Maybe<Array<PersonPostsCreateFieldInput>>;
-  delete?: Maybe<Array<PersonPostsDeleteFieldInput>>;
-  disconnect?: Maybe<Array<PersonPostsDisconnectFieldInput>>;
-  update?: Maybe<PersonPostsUpdateConnectionInput>;
-  where?: Maybe<PersonPostsConnectionWhere>;
+  connect?: InputMaybe<Array<PersonPostsConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<PersonPostsConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<PersonPostsCreateFieldInput>>;
+  delete?: InputMaybe<Array<PersonPostsDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<PersonPostsDisconnectFieldInput>>;
+  update?: InputMaybe<PersonPostsUpdateConnectionInput>;
+  where?: InputMaybe<PersonPostsConnectionWhere>;
 };
 
 export type PersonRelationInput = {
-  friends?: Maybe<Array<PersonFriendsCreateFieldInput>>;
-  posts?: Maybe<Array<PersonPostsCreateFieldInput>>;
+  friends?: InputMaybe<Array<PersonFriendsCreateFieldInput>>;
+  posts?: InputMaybe<Array<PersonPostsCreateFieldInput>>;
 };
 
 /** Fields to sort People by. The order in which sorts are applied is not guaranteed when specifying many fields in one PersonSort object. */
 export type PersonSort = {
-  birthday?: Maybe<SortDirection>;
-  id?: Maybe<SortDirection>;
-  location?: Maybe<SortDirection>;
-  name?: Maybe<SortDirection>;
+  birthday?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
+  location?: InputMaybe<SortDirection>;
+  name?: InputMaybe<SortDirection>;
 };
 
 export type PersonUniqueWhere = {
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type PersonUpdateInput = {
-  birthday?: Maybe<Scalars['Date']>;
-  friends?: Maybe<Array<PersonFriendsUpdateFieldInput>>;
-  location?: Maybe<PointInput>;
-  name?: Maybe<Scalars['String']>;
-  posts?: Maybe<Array<PersonPostsUpdateFieldInput>>;
+  birthday?: InputMaybe<Scalars['Date']>;
+  friends?: InputMaybe<Array<PersonFriendsUpdateFieldInput>>;
+  location?: InputMaybe<PointInput>;
+  name?: InputMaybe<Scalars['String']>;
+  posts?: InputMaybe<Array<PersonPostsUpdateFieldInput>>;
 };
 
 export type PersonWhere = {
-  AND?: Maybe<Array<PersonWhere>>;
-  OR?: Maybe<Array<PersonWhere>>;
-  birthday?: Maybe<Scalars['Date']>;
-  birthday_GT?: Maybe<Scalars['Date']>;
-  birthday_GTE?: Maybe<Scalars['Date']>;
-  birthday_IN?: Maybe<Array<Maybe<Scalars['Date']>>>;
-  birthday_LT?: Maybe<Scalars['Date']>;
-  birthday_LTE?: Maybe<Scalars['Date']>;
-  birthday_NOT?: Maybe<Scalars['Date']>;
-  birthday_NOT_IN?: Maybe<Array<Maybe<Scalars['Date']>>>;
-  friends?: Maybe<PersonWhere>;
-  friendsAggregate?: Maybe<PersonFriendsAggregateInput>;
-  friendsConnection?: Maybe<PersonFriendsConnectionWhere>;
-  friendsConnection_NOT?: Maybe<PersonFriendsConnectionWhere>;
-  friends_NOT?: Maybe<PersonWhere>;
-  id?: Maybe<Scalars['ID']>;
-  id_CONTAINS?: Maybe<Scalars['ID']>;
-  id_ENDS_WITH?: Maybe<Scalars['ID']>;
-  id_IN?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_NOT?: Maybe<Scalars['ID']>;
-  id_NOT_CONTAINS?: Maybe<Scalars['ID']>;
-  id_NOT_ENDS_WITH?: Maybe<Scalars['ID']>;
-  id_NOT_IN?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_NOT_STARTS_WITH?: Maybe<Scalars['ID']>;
-  id_STARTS_WITH?: Maybe<Scalars['ID']>;
-  location?: Maybe<PointInput>;
-  location_DISTANCE?: Maybe<PointDistance>;
-  location_GT?: Maybe<PointDistance>;
-  location_GTE?: Maybe<PointDistance>;
-  location_IN?: Maybe<Array<Maybe<PointInput>>>;
-  location_LT?: Maybe<PointDistance>;
-  location_LTE?: Maybe<PointDistance>;
-  location_NOT?: Maybe<PointInput>;
-  location_NOT_IN?: Maybe<Array<Maybe<PointInput>>>;
-  name?: Maybe<Scalars['String']>;
-  name_CONTAINS?: Maybe<Scalars['String']>;
-  name_ENDS_WITH?: Maybe<Scalars['String']>;
-  name_IN?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_NOT?: Maybe<Scalars['String']>;
-  name_NOT_CONTAINS?: Maybe<Scalars['String']>;
-  name_NOT_ENDS_WITH?: Maybe<Scalars['String']>;
-  name_NOT_IN?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_NOT_STARTS_WITH?: Maybe<Scalars['String']>;
-  name_STARTS_WITH?: Maybe<Scalars['String']>;
-  posts?: Maybe<PostWhere>;
-  postsAggregate?: Maybe<PersonPostsAggregateInput>;
-  postsConnection?: Maybe<PersonPostsConnectionWhere>;
-  postsConnection_NOT?: Maybe<PersonPostsConnectionWhere>;
-  posts_NOT?: Maybe<PostWhere>;
+  AND?: InputMaybe<Array<PersonWhere>>;
+  OR?: InputMaybe<Array<PersonWhere>>;
+  birthday?: InputMaybe<Scalars['Date']>;
+  birthday_GT?: InputMaybe<Scalars['Date']>;
+  birthday_GTE?: InputMaybe<Scalars['Date']>;
+  birthday_IN?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  birthday_LT?: InputMaybe<Scalars['Date']>;
+  birthday_LTE?: InputMaybe<Scalars['Date']>;
+  birthday_NOT?: InputMaybe<Scalars['Date']>;
+  birthday_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  friends?: InputMaybe<PersonWhere>;
+  friendsAggregate?: InputMaybe<PersonFriendsAggregateInput>;
+  friendsConnection?: InputMaybe<PersonFriendsConnectionWhere>;
+  friendsConnection_NOT?: InputMaybe<PersonFriendsConnectionWhere>;
+  friends_NOT?: InputMaybe<PersonWhere>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  location?: InputMaybe<PointInput>;
+  location_DISTANCE?: InputMaybe<PointDistance>;
+  location_GT?: InputMaybe<PointDistance>;
+  location_GTE?: InputMaybe<PointDistance>;
+  location_IN?: InputMaybe<Array<InputMaybe<PointInput>>>;
+  location_LT?: InputMaybe<PointDistance>;
+  location_LTE?: InputMaybe<PointDistance>;
+  location_NOT?: InputMaybe<PointInput>;
+  location_NOT_IN?: InputMaybe<Array<InputMaybe<PointInput>>>;
+  name?: InputMaybe<Scalars['String']>;
+  name_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name_NOT?: InputMaybe<Scalars['String']>;
+  name_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  name_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  posts?: InputMaybe<PostWhere>;
+  postsAggregate?: InputMaybe<PersonPostsAggregateInput>;
+  postsConnection?: InputMaybe<PersonPostsConnectionWhere>;
+  postsConnection_NOT?: InputMaybe<PersonPostsConnectionWhere>;
+  posts_NOT?: InputMaybe<PostWhere>;
 };
 
 export type Point = {
@@ -572,7 +573,7 @@ export type PointDistance = {
 };
 
 export type PointInput = {
-  height?: Maybe<Scalars['Float']>;
+  height?: InputMaybe<Scalars['Float']>;
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
 };
@@ -589,21 +590,21 @@ export type Post = {
 
 
 export type PostCreatorArgs = {
-  options?: Maybe<PersonOptions>;
-  where?: Maybe<PersonWhere>;
+  options?: InputMaybe<PersonOptions>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type PostCreatorAggregateArgs = {
-  where?: Maybe<PersonWhere>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type PostCreatorConnectionArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  sort?: Maybe<Array<PostCreatorConnectionSort>>;
-  where?: Maybe<PostCreatorConnectionWhere>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<PostCreatorConnectionSort>>;
+  where?: InputMaybe<PostCreatorConnectionWhere>;
 };
 
 export type PostAggregateSelection = {
@@ -615,11 +616,11 @@ export type PostAggregateSelection = {
 };
 
 export type PostConnectInput = {
-  creator?: Maybe<PostCreatorConnectFieldInput>;
+  creator?: InputMaybe<PostCreatorConnectFieldInput>;
 };
 
 export type PostConnectOrCreateInput = {
-  creator?: Maybe<PostCreatorConnectOrCreateFieldInput>;
+  creator?: InputMaybe<PostCreatorConnectOrCreateFieldInput>;
 };
 
 export type PostConnectOrCreateWhere = {
@@ -633,23 +634,23 @@ export type PostConnectWhere = {
 export type PostCreateInput = {
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
-  creator?: Maybe<PostCreatorFieldInput>;
+  creator?: InputMaybe<PostCreatorFieldInput>;
 };
 
 export type PostCreatorAggregateInput = {
-  AND?: Maybe<Array<PostCreatorAggregateInput>>;
-  OR?: Maybe<Array<PostCreatorAggregateInput>>;
-  count?: Maybe<Scalars['Int']>;
-  count_GT?: Maybe<Scalars['Int']>;
-  count_GTE?: Maybe<Scalars['Int']>;
-  count_LT?: Maybe<Scalars['Int']>;
-  count_LTE?: Maybe<Scalars['Int']>;
-  node?: Maybe<PostCreatorNodeAggregationWhereInput>;
+  AND?: InputMaybe<Array<PostCreatorAggregateInput>>;
+  OR?: InputMaybe<Array<PostCreatorAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<PostCreatorNodeAggregationWhereInput>;
 };
 
 export type PostCreatorConnectFieldInput = {
-  connect?: Maybe<PersonConnectInput>;
-  where?: Maybe<PersonConnectWhere>;
+  connect?: InputMaybe<PersonConnectInput>;
+  where?: InputMaybe<PersonConnectWhere>;
 };
 
 export type PostCreatorConnectOrCreateFieldInput = {
@@ -669,14 +670,14 @@ export type PostCreatorConnection = {
 };
 
 export type PostCreatorConnectionSort = {
-  node?: Maybe<PersonSort>;
+  node?: InputMaybe<PersonSort>;
 };
 
 export type PostCreatorConnectionWhere = {
-  AND?: Maybe<Array<PostCreatorConnectionWhere>>;
-  OR?: Maybe<Array<PostCreatorConnectionWhere>>;
-  node?: Maybe<PersonWhere>;
-  node_NOT?: Maybe<PersonWhere>;
+  AND?: InputMaybe<Array<PostCreatorConnectionWhere>>;
+  OR?: InputMaybe<Array<PostCreatorConnectionWhere>>;
+  node?: InputMaybe<PersonWhere>;
+  node_NOT?: InputMaybe<PersonWhere>;
 };
 
 export type PostCreatorCreateFieldInput = {
@@ -684,45 +685,45 @@ export type PostCreatorCreateFieldInput = {
 };
 
 export type PostCreatorDeleteFieldInput = {
-  delete?: Maybe<PersonDeleteInput>;
-  where?: Maybe<PostCreatorConnectionWhere>;
+  delete?: InputMaybe<PersonDeleteInput>;
+  where?: InputMaybe<PostCreatorConnectionWhere>;
 };
 
 export type PostCreatorDisconnectFieldInput = {
-  disconnect?: Maybe<PersonDisconnectInput>;
-  where?: Maybe<PostCreatorConnectionWhere>;
+  disconnect?: InputMaybe<PersonDisconnectInput>;
+  where?: InputMaybe<PostCreatorConnectionWhere>;
 };
 
 export type PostCreatorFieldInput = {
-  connect?: Maybe<PostCreatorConnectFieldInput>;
-  connectOrCreate?: Maybe<PostCreatorConnectOrCreateFieldInput>;
-  create?: Maybe<PostCreatorCreateFieldInput>;
+  connect?: InputMaybe<PostCreatorConnectFieldInput>;
+  connectOrCreate?: InputMaybe<PostCreatorConnectOrCreateFieldInput>;
+  create?: InputMaybe<PostCreatorCreateFieldInput>;
 };
 
 export type PostCreatorNodeAggregationWhereInput = {
-  AND?: Maybe<Array<PostCreatorNodeAggregationWhereInput>>;
-  OR?: Maybe<Array<PostCreatorNodeAggregationWhereInput>>;
-  id_EQUAL?: Maybe<Scalars['ID']>;
-  name_AVERAGE_EQUAL?: Maybe<Scalars['Float']>;
-  name_AVERAGE_GT?: Maybe<Scalars['Float']>;
-  name_AVERAGE_GTE?: Maybe<Scalars['Float']>;
-  name_AVERAGE_LT?: Maybe<Scalars['Float']>;
-  name_AVERAGE_LTE?: Maybe<Scalars['Float']>;
-  name_EQUAL?: Maybe<Scalars['String']>;
-  name_GT?: Maybe<Scalars['Int']>;
-  name_GTE?: Maybe<Scalars['Int']>;
-  name_LONGEST_EQUAL?: Maybe<Scalars['Int']>;
-  name_LONGEST_GT?: Maybe<Scalars['Int']>;
-  name_LONGEST_GTE?: Maybe<Scalars['Int']>;
-  name_LONGEST_LT?: Maybe<Scalars['Int']>;
-  name_LONGEST_LTE?: Maybe<Scalars['Int']>;
-  name_LT?: Maybe<Scalars['Int']>;
-  name_LTE?: Maybe<Scalars['Int']>;
-  name_SHORTEST_EQUAL?: Maybe<Scalars['Int']>;
-  name_SHORTEST_GT?: Maybe<Scalars['Int']>;
-  name_SHORTEST_GTE?: Maybe<Scalars['Int']>;
-  name_SHORTEST_LT?: Maybe<Scalars['Int']>;
-  name_SHORTEST_LTE?: Maybe<Scalars['Int']>;
+  AND?: InputMaybe<Array<PostCreatorNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<PostCreatorNodeAggregationWhereInput>>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
+  name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  name_EQUAL?: InputMaybe<Scalars['String']>;
+  name_GT?: InputMaybe<Scalars['Int']>;
+  name_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  name_LT?: InputMaybe<Scalars['Int']>;
+  name_LTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
 };
 
 export type PostCreatorRelationship = {
@@ -732,32 +733,32 @@ export type PostCreatorRelationship = {
 };
 
 export type PostCreatorUpdateConnectionInput = {
-  node?: Maybe<PersonUpdateInput>;
+  node?: InputMaybe<PersonUpdateInput>;
 };
 
 export type PostCreatorUpdateFieldInput = {
-  connect?: Maybe<PostCreatorConnectFieldInput>;
-  connectOrCreate?: Maybe<PostCreatorConnectOrCreateFieldInput>;
-  create?: Maybe<PostCreatorCreateFieldInput>;
-  delete?: Maybe<PostCreatorDeleteFieldInput>;
-  disconnect?: Maybe<PostCreatorDisconnectFieldInput>;
-  update?: Maybe<PostCreatorUpdateConnectionInput>;
-  where?: Maybe<PostCreatorConnectionWhere>;
+  connect?: InputMaybe<PostCreatorConnectFieldInput>;
+  connectOrCreate?: InputMaybe<PostCreatorConnectOrCreateFieldInput>;
+  create?: InputMaybe<PostCreatorCreateFieldInput>;
+  delete?: InputMaybe<PostCreatorDeleteFieldInput>;
+  disconnect?: InputMaybe<PostCreatorDisconnectFieldInput>;
+  update?: InputMaybe<PostCreatorUpdateConnectionInput>;
+  where?: InputMaybe<PostCreatorConnectionWhere>;
 };
 
 export type PostDeleteInput = {
-  creator?: Maybe<PostCreatorDeleteFieldInput>;
+  creator?: InputMaybe<PostCreatorDeleteFieldInput>;
 };
 
 export type PostDisconnectInput = {
-  creator?: Maybe<PostCreatorDisconnectFieldInput>;
+  creator?: InputMaybe<PostCreatorDisconnectFieldInput>;
 };
 
 export type PostOptions = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
   /** Specify one or more PostSort objects to sort Posts by. The sorts will be applied in the order in which they are arranged in the array. */
-  sort?: Maybe<Array<Maybe<PostSort>>>;
+  sort?: InputMaybe<Array<InputMaybe<PostSort>>>;
 };
 
 export type PostPersonCreatorAggregationSelection = {
@@ -773,62 +774,62 @@ export type PostPersonCreatorNodeAggregateSelection = {
 };
 
 export type PostRelationInput = {
-  creator?: Maybe<PostCreatorCreateFieldInput>;
+  creator?: InputMaybe<PostCreatorCreateFieldInput>;
 };
 
 /** Fields to sort Posts by. The order in which sorts are applied is not guaranteed when specifying many fields in one PostSort object. */
 export type PostSort = {
-  content?: Maybe<SortDirection>;
-  createdAt?: Maybe<SortDirection>;
-  id?: Maybe<SortDirection>;
+  content?: InputMaybe<SortDirection>;
+  createdAt?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
 };
 
 export type PostUniqueWhere = {
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type PostUpdateInput = {
-  content?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  creator?: Maybe<PostCreatorUpdateFieldInput>;
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  creator?: InputMaybe<PostCreatorUpdateFieldInput>;
 };
 
 export type PostWhere = {
-  AND?: Maybe<Array<PostWhere>>;
-  OR?: Maybe<Array<PostWhere>>;
-  content?: Maybe<Scalars['String']>;
-  content_CONTAINS?: Maybe<Scalars['String']>;
-  content_ENDS_WITH?: Maybe<Scalars['String']>;
-  content_IN?: Maybe<Array<Maybe<Scalars['String']>>>;
-  content_NOT?: Maybe<Scalars['String']>;
-  content_NOT_CONTAINS?: Maybe<Scalars['String']>;
-  content_NOT_ENDS_WITH?: Maybe<Scalars['String']>;
-  content_NOT_IN?: Maybe<Array<Maybe<Scalars['String']>>>;
-  content_NOT_STARTS_WITH?: Maybe<Scalars['String']>;
-  content_STARTS_WITH?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  createdAt_GT?: Maybe<Scalars['DateTime']>;
-  createdAt_GTE?: Maybe<Scalars['DateTime']>;
-  createdAt_IN?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
-  createdAt_LT?: Maybe<Scalars['DateTime']>;
-  createdAt_LTE?: Maybe<Scalars['DateTime']>;
-  createdAt_NOT?: Maybe<Scalars['DateTime']>;
-  createdAt_NOT_IN?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
-  creator?: Maybe<PersonWhere>;
-  creatorAggregate?: Maybe<PostCreatorAggregateInput>;
-  creatorConnection?: Maybe<PostCreatorConnectionWhere>;
-  creatorConnection_NOT?: Maybe<PostCreatorConnectionWhere>;
-  creator_NOT?: Maybe<PersonWhere>;
-  id?: Maybe<Scalars['ID']>;
-  id_CONTAINS?: Maybe<Scalars['ID']>;
-  id_ENDS_WITH?: Maybe<Scalars['ID']>;
-  id_IN?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_NOT?: Maybe<Scalars['ID']>;
-  id_NOT_CONTAINS?: Maybe<Scalars['ID']>;
-  id_NOT_ENDS_WITH?: Maybe<Scalars['ID']>;
-  id_NOT_IN?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_NOT_STARTS_WITH?: Maybe<Scalars['ID']>;
-  id_STARTS_WITH?: Maybe<Scalars['ID']>;
+  AND?: InputMaybe<Array<PostWhere>>;
+  OR?: InputMaybe<Array<PostWhere>>;
+  content?: InputMaybe<Scalars['String']>;
+  content_CONTAINS?: InputMaybe<Scalars['String']>;
+  content_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  content_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  content_NOT?: InputMaybe<Scalars['String']>;
+  content_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  content_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  content_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  content_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  content_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt_GT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_GTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_IN?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  createdAt_LT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_LTE?: InputMaybe<Scalars['DateTime']>;
+  createdAt_NOT?: InputMaybe<Scalars['DateTime']>;
+  createdAt_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  creator?: InputMaybe<PersonWhere>;
+  creatorAggregate?: InputMaybe<PostCreatorAggregateInput>;
+  creatorConnection?: InputMaybe<PostCreatorConnectionWhere>;
+  creatorConnection_NOT?: InputMaybe<PostCreatorConnectionWhere>;
+  creator_NOT?: InputMaybe<PersonWhere>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
 };
 
 export type Query = {
@@ -843,34 +844,34 @@ export type Query = {
 
 
 export type QueryPeopleArgs = {
-  options?: Maybe<PersonOptions>;
-  where?: Maybe<PersonWhere>;
+  options?: InputMaybe<PersonOptions>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type QueryPeopleAggregateArgs = {
-  where?: Maybe<PersonWhere>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type QueryPeopleCountArgs = {
-  where?: Maybe<PersonWhere>;
+  where?: InputMaybe<PersonWhere>;
 };
 
 
 export type QueryPostsArgs = {
-  options?: Maybe<PostOptions>;
-  where?: Maybe<PostWhere>;
+  options?: InputMaybe<PostOptions>;
+  where?: InputMaybe<PostWhere>;
 };
 
 
 export type QueryPostsAggregateArgs = {
-  where?: Maybe<PostWhere>;
+  where?: InputMaybe<PostWhere>;
 };
 
 
 export type QueryPostsCountArgs = {
-  where?: Maybe<PostWhere>;
+  where?: InputMaybe<PostWhere>;
 };
 
 export enum SortDirection {
@@ -910,7 +911,7 @@ export type UpdatePostsMutationResponse = {
 export type PersonsWithFriendsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PersonsWithFriendsQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id?: string | null | undefined, name: string, friends: Array<{ __typename?: 'Person', id?: string | null | undefined, name: string }> }> };
+export type PersonsWithFriendsQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id?: string | null, name: string, friends: Array<{ __typename?: 'Person', id?: string | null, name: string }> }> };
 
 export const PersonsWithFriendsDocument = gql`
     query PersonsWithFriends {
