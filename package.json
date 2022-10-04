@@ -7,6 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "prestart": "graphql-codegen --config graphql-codegen.yml",
+    "prettier:check": "prettier \"./src/**/*.ts\" --check",
+    "prettier:format": "prettier \"./src/**/*.ts\" --write",
     "test": "ng test"
   },
   "private": true,
@@ -42,6 +44,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "prettier": "^2.7.1",
     "typescript": "~4.6.4"
   }
 }

@@ -1,0 +1,11 @@
+# Ignore artifacts:
+cypress
+coverage
+dist
+node_modules
+api/node_modules
+.angular
+
+# Ignore all HTML and MD files:
+*.html
+*.md

@@ -5,17 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    GraphQLModule
-  ],
+  declarations: [AppComponent],
+  imports: [AppRoutingModule, BrowserModule, GraphQLModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
