@@ -7,7 +7,8 @@ import path from "path";
 
 dotenv.config();
 
-const typeDefs = fs.readFileSync(process.env.GRAPHQL_SCHEMA || path.join(__dirname, "schema.graphql")).toString("utf-8");
+const __dirname = path.resolve();
+const typeDefs = fs.readFileSync(process.env.GRAPHQL_SCHEMA || path.join(__dirname, "src", "schema.graphql")).toString("utf-8");
 
 const driver = neo4j.driver(
   process.env.NEO4J_URI || "bolt://localhost:7687",
@@ -20,7 +21,7 @@ const driver = neo4j.driver(
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 
 const server = new ApolloServer({
-    schema: neoSchema.schema,
+    schema: await neoSchema.getSchema(),
     context: ({ req }) => ({ req }),
 });
 

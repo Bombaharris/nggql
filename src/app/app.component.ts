@@ -4,7 +4,7 @@ import {
 } from './generated/graphql';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,11 @@ export class AppComponent {
   constructor(feedGQL: PersonsWithFriendsGQL) {
     this.people$ = feedGQL
       .watch()
-      .valueChanges.pipe(map((result) => result.data.people));
+      .valueChanges
+      .pipe(
+        map((result) => result.data.people),
+        tap((result) => console.log(result[1]))
+      );
   }
 
   trackName(index: any, item: any): string {
