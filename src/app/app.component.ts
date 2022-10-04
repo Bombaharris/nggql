@@ -1,4 +1,4 @@
-import { MovieQuery, MovieGQL } from './generated/graphql';
+import { PersonsWithFriendsQuery, PersonsWithFriendsGQL } from './generated/graphql';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,14 +9,17 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  movies: Observable<MovieQuery['movies']>;
+  people$: Observable<PersonsWithFriendsQuery['people']>;
 
-  constructor(feedGQL: MovieGQL) {
-    this.movies = feedGQL
+  constructor(feedGQL: PersonsWithFriendsGQL) {
+    this.people$ = feedGQL
       .watch()
       .valueChanges.pipe(
-        map(result => result.data.movies)
+        map(result => result.data.people)
       );
   }
-  title = 'nggql';
+
+  trackName(index: any, item: any): string{
+    return item.name;
+ }
 }

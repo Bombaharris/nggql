@@ -4,11 +4,81 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1. `docker-compose up -d`
+2. `npm start`
+
+### http://localhost:4000/ - Appolo Sandbox
+
+Example query:
+
+```graphql
+mutation CreatePeopleMutation {
+  createPeople(input: {
+    name: "Ala",
+    birthday: "1956-07-22",
+    location: {
+      longitude: 51.213213,
+      latitude: 21.2132132
+    },
+    friends: {
+      connect: {
+        where: {
+          node: {name: "Rafał"}
+        }
+      }
+    }
+  }) {
+    people {
+      name
+      birthday
+      location {
+        longitude
+        latitude
+        height
+      }
+      friendsConnection {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### http://localhost:7474/ - neo4j browser
+
+Example query:
+
+```cypher
+MATCH (n:Person) RETURN n LIMIT 25
+```
+
+```cypher
+```
+
+# api/
+
+For API __only__ developement:
+
+1. `docker-compose stop api`
+2. `docker-compose up -d neo4j`
+3. `cd api/ && npm start`
+
+## api/ Docs
+
+- @neo4j/neo4j-graphql -  https://neo4j.com/docs/graphql-manual/current/
+- Neo4j and GraphQL - https://neo4j.com/developer/graphql/
+- Consuming the standard way - https://apollo-angular.com/docs/
+
 
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+Run `npm run prestart` to generate GQL services with https://www.graphql-code-generator.com/docs/plugins/typescript-apollo-angular.
 
 ## Build
 

@@ -1,19 +1,15 @@
-type Movie {
-  title: String
-  year: Int
-  imdbRating: Float,
-  studio: String
-  description: String!
-  runtime: Int
-  trailer: String
-  imageUrl: String
-  genre: String
-  tagline: String!
-  homepage: String!
-  genres: [Genre] @relationship(type: "IN_GENRE", direction: OUT)
+type Person {
+  id: ID @id
+  name: String!
+  birthday: Date
+  location: Point
+  friends: [Person!]! @relationship(type: "HAS_FRIENDS", direction: OUT)
+  posts: [Post!]! @relationship(type: "HAS_POST", direction: OUT)
 }
 
-type Genre {
-  name: String
-  movies: [Movie] @relationship(type: "IN_GENRE", direction: IN)
+type Post {
+  id: ID @id
+  content: String!
+  creator: Person! @relationship(type: "HAS_POST", direction: IN)
+  createdAt: DateTime!
 }

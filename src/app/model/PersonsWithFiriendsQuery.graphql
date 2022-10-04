@@ -1,0 +1,10 @@
+query PersonsWithFriends {
+  people {
+    id
+    name
+    friends {
+      id
+      name
+    }
+  }
+}
