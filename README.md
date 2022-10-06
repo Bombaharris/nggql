@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
 
+## TODO
+
+- [ ] setup GH action
+- [ ] dockerize front
+
 ## Development server
 
 1. `docker-compose up -d`
@@ -14,18 +19,23 @@ Example query:
 ```graphql
 mutation CreatePeopleMutation {
   createPeople(input: {
-    name: "Ala",
-    birthday: "1956-07-22",
+    name: "Rafał",
+    surname: "Zielonka",
+    birthday: "1981-12-30",
     location: {
       longitude: 51.213213,
       latitude: 21.2132132
     },
-    friends: {
-      connect: {
-        where: {
-          node: {name: "Rafał"}
-        }
-      }
+    skills: {
+        connect: [
+          {
+            where: {
+              node: {
+               name: "AWS"
+              }
+            }
+          }
+        ]
     }
   }) {
     people {
@@ -36,15 +46,45 @@ mutation CreatePeopleMutation {
         latitude
         height
       }
-      friendsConnection {
-        edges {
-          node {
-            id
-          }
-        }
+      skills {
+        name
       }
     }
   }
+}
+```
+
+```graphql
+mutation CreateSkills($input: [SkillCreateInput!]!) {
+  createSkills(input: $input) {
+    skills {
+      id,
+      name,
+      persons {
+        name
+      }
+    }
+  }
+}
+```
+```json
+{
+  "input": [
+    {
+      "name": "A11y",
+      "persons": {
+        "connect": [
+          {
+            "where": {
+              "node": {
+               "name_CONTAINS": "Łukasz"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 
@@ -55,8 +95,10 @@ Example query:
 ```cypher
 MATCH (n:Person) RETURN n LIMIT 25
 ```
+Drop database with: 
 
 ```cypher
+MATCH (n) DETACH DELETE n
 ```
 
 # api/
@@ -72,6 +114,9 @@ For API __only__ developement:
 - @neo4j/neo4j-graphql -  https://neo4j.com/docs/graphql-manual/current/
 - Neo4j and GraphQL - https://neo4j.com/developer/graphql/
 - Consuming the standard way - https://apollo-angular.com/docs/
+- Cypher Manual - https://neo4j.com/docs/cypher-manual/current/syntax/operators/
+- Apollo Server - https://www.apollographql.com/docs/apollo-server/getting-started/
+- GraphQl Queries - https://graphql.org/learn/queries/
 
 
 ## Code scaffolding

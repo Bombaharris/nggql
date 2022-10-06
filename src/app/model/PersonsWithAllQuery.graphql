@@ -1,0 +1,32 @@
+query PersonsWithAll {
+  people {
+    id
+    name
+    surname
+    location {
+      longitude
+      latitude
+    }
+    skills {
+      id
+      name
+    }
+    roles {
+      id
+      name
+    }
+    seniority
+    rates {
+      value
+      validFrom
+    }
+    departments {
+      id
+      name
+      manager {
+        name
+        surname
+      }
+    }
+  }
+}

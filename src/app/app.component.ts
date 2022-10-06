@@ -1,10 +1,10 @@
 import {
-  PersonsWithFriendsQuery,
-  PersonsWithFriendsGQL,
+  PersonsWithAllQuery,
+  PersonsWithAllGQL,
 } from './generated/graphql';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +12,14 @@ import { map, tap } from 'rxjs/operators';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  people$: Observable<PersonsWithFriendsQuery['people']>;
+  people$: Observable<PersonsWithAllQuery['people']>;
 
-  constructor(feedGQL: PersonsWithFriendsGQL) {
+  constructor(feedGQL: PersonsWithAllGQL) {
     this.people$ = feedGQL
       .watch()
       .valueChanges
       .pipe(
-        map((result) => result.data.people),
-        tap((result) => console.log(result[1]))
+        map((result) => result.data.people)
       );
   }
 

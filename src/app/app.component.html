@@ -1,4 +1,9 @@
 <ul>
-  <li *ngFor="let item of people$ | async; trackBy: trackName">{{ item?.name }}</li>
+  <li *ngFor="let item of people$ | async; trackBy: trackName">
+    {{ item?.name }} {{ item?.surname }} {{ item?.seniority }}
+    <span *ngFor="let skill of item.skills">
+      {{ skill?.name }}
+    </span>
+  </li>
 </ul>
 <router-outlet></router-outlet>
