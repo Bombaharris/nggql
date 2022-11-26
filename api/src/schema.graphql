@@ -14,6 +14,7 @@ type Person {
   skills: [Skill!]! @relationship(type: "HAS_SKILL", direction: OUT)
   roles: [Role!]! @relationship(type: "HAS_ROLE", direction: OUT)
   rates: [Rate!]! @relationship(type: "HAS_RATE", direction: OUT)
+  projects: [Project!]! @relationship(type: "HAS_PROJECT", direction: OUT)
   departments: [Department!]! @relationship(type: "HAS_DEPARTMENT", direction: OUT)
 }
 
@@ -38,7 +39,9 @@ type Role {
 type Project {
   id: ID! @id(autogenerate: true)
   name: String!
-  skills: [Skill!]! @relationship(type: "HAS_SKILL", direction: OUT)
+  skills: [Skill!]! @relationship(type: "NEED_SKILL", direction:OUT)
+  persons: [Person!]! @relationship(type: "HAS_PROJECT", direction: IN)
+  startedFrom: Date!
   duration: Duration!
 }
 
@@ -54,4 +57,27 @@ type Rate {
   value: Float!
   validFrom: Date!
   person: Person! @relationship(type: "HAS_RATE", direction: OUT)
+}
+
+type PersonsToProject {
+    people: [PersonWithScore] @cypher(statement: """
+        MATCH (p:Person)-[:HAS_SKILL]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)
+        RETURN p,COUNT(*) AS score ORDER BY score DESC
+    """)
+}
+
+type Score {
+  score: Int
+}
+
+union PersonWithScore = Person | Score
+
+type QueryP {
+    people: [Person]
+        @cypher(
+            statement: """
+            MATCH (p:Person)
+            RETURN p
+            """
+        )
 }

@@ -1,0 +1,40 @@
+<section class="hero is-small is-primary mb-6">
+  <div class="hero-body">
+    <p class="title">
+      Dashboard
+    </p>
+    <p class="subtitle">
+      Small subtitle
+    </p>
+  </div>
+</section>
+
+<form class="mb-6" [formGroup]="filterForm">
+  <div class="columns is-vcentered">
+    <div class="column">
+      <div class="select is-fullwidth">
+        <select formControlName="project" id="project">
+          <option value="">Choose project</option>
+          <option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="column is-centered">
+      Second column
+    </div>
+    <div class="column">
+      Third column
+    </div>
+    <div class="column">
+      Fourth column
+    </div>
+  </div>
+</form>
+
+<div class="columns is-multiline is-mobile">
+  <div class="column is-one-quarter" *ngFor="let person of people$ | async">
+    <sd-person-card  [person]="person"></sd-person-card>
+  </div>
+</div>
+
+

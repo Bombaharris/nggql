@@ -18,7 +18,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "sd",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -34,6 +34,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bulma/css/bulma.min.css",
               "src/styles.scss"
             ],
             "scripts": []

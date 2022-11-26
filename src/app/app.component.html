@@ -1,9 +1,17 @@
-<ul>
-  <li *ngFor="let item of people$ | async; trackBy: trackName">
-    {{ item?.name }} {{ item?.surname }} {{ item?.seniority }}
-    <span *ngFor="let skill of item.skills">
-      {{ skill?.name }}
-    </span>
-  </li>
-</ul>
-<router-outlet></router-outlet>
+<div class="container is-fullhd">
+    <nav class="navbar mb-4" role="navigation" aria-label="Main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="/assets/logo.jpg" height="28">
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" [routerLink]="['/dashboard']" routerLinkActive="is-active">
+                    Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,16 @@
+query ProjectsWithAll {
+  projects {
+    id
+    name
+    duration
+    skills {
+      id
+      name
+    }
+    startedFrom
+    persons {
+      id
+      name
+    }
+  }
+}

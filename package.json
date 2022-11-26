@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "prestart": "graphql-codegen --config graphql-codegen.yml",
+    "gql-codegen": "graphql-codegen --config graphql-codegen.yml",
+    "gql-codegen:watch": "graphql-codegen --config graphql-codegen.yml --watch",
+    "prestart": "npm run gql-codegen",
     "prettier:check": "prettier \"./src/**/*.ts\" --check",
     "prettier:format": "prettier \"./src/**/*.ts\" --write",
     "test": "ng test"
@@ -23,6 +25,7 @@
     "@angular/router": "^14.2.4",
     "@apollo/client": "^3.6.9",
     "apollo-angular": "^4.0.1",
+    "bulma": "^0.9.4",
     "graphql": "^16.6.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

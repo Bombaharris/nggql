@@ -15,8 +15,10 @@ query PersonsWithAll {
       id
       name
     }
+    birthday
     seniority
     rates {
+      id
       value
       validFrom
     }
@@ -27,6 +29,11 @@ query PersonsWithAll {
         name
         surname
       }
+    }
+    projects {
+      name
+      duration
+      startedFrom
     }
   }
 }

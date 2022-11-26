@@ -117,6 +117,7 @@ For API __only__ developement:
 - Cypher Manual - https://neo4j.com/docs/cypher-manual/current/syntax/operators/
 - Apollo Server - https://www.apollographql.com/docs/apollo-server/getting-started/
 - GraphQl Queries - https://graphql.org/learn/queries/
+- Genrating code with - https://www.the-guild.dev/graphql/codegen/docs/guides/angular
 
 
 ## Code scaffolding
