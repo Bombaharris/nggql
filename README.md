@@ -1,18 +1,13 @@
-# Nggql
+# Nggql — GAAND stack
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
-
-## TODO
-
-- [ ] setup GH action
-- [ ] dockerize front
+Nggql is a simple imaginary web application for software houses build with __GAAND__(GraphQL, Angular, Apollo and Neo4j Database) stack.
 
 ## Development server
 
 1. `docker-compose up -d`
 2. `npm start`
 
-### http://localhost:4000/ - Appolo Sandbox
+### <http://localhost:4000/> - Appolo Sandbox
 
 Example query:
 
@@ -67,6 +62,7 @@ mutation CreateSkills($input: [SkillCreateInput!]!) {
   }
 }
 ```
+
 ```json
 {
   "input": [
@@ -88,20 +84,21 @@ mutation CreateSkills($input: [SkillCreateInput!]!) {
 }
 ```
 
-### http://localhost:7474/ - neo4j browser
+### <http://localhost:7474/> - neo4j browser
 
 Example query:
 
 ```cypher
 MATCH (n:Person) RETURN n LIMIT 25
 ```
-Drop database with: 
+
+Drop database with:
 
 ```cypher
 MATCH (n) DETACH DELETE n
 ```
 
-# api/
+## api/
 
 For API __only__ developement:
 
@@ -111,20 +108,19 @@ For API __only__ developement:
 
 ## api/ Docs
 
-- @neo4j/neo4j-graphql -  https://neo4j.com/docs/graphql-manual/current/
-- Neo4j and GraphQL - https://neo4j.com/developer/graphql/
-- Consuming the standard way - https://apollo-angular.com/docs/
-- Cypher Manual - https://neo4j.com/docs/cypher-manual/current/syntax/operators/
-- Apollo Server - https://www.apollographql.com/docs/apollo-server/getting-started/
-- GraphQl Queries - https://graphql.org/learn/queries/
-- Genrating code with - https://www.the-guild.dev/graphql/codegen/docs/guides/angular
-
+- @neo4j/neo4j-graphql -  <https://neo4j.com/docs/graphql-manual/current/>
+- Neo4j and GraphQL - <https://neo4j.com/developer/graphql/>
+- Consuming the standard way - <https://apollo-angular.com/docs/>
+- Cypher Manual - <https://neo4j.com/docs/cypher-manual/current/syntax/operators/>
+- Apollo Server - <https://www.apollographql.com/docs/apollo-server/getting-started/>
+- GraphQl Queries - <https://graphql.org/learn/queries/>
+- Generating code with - <https://www.the-guild.dev/graphql/codegen/docs/guides/angular>
 
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-Run `npm run prestart` to generate GQL services with https://www.graphql-code-generator.com/docs/plugins/typescript-apollo-angular.
+Run `npm run prestart` to generate GQL services with <https://www.graphql-code-generator.com/docs/plugins/typescript-apollo-angular>.
 
 ## Build
 
@@ -141,3 +137,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## TODO
+
+- [ ] setup GH action
+- [ ] dockerize front

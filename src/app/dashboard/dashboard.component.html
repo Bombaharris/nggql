@@ -1,40 +1,93 @@
-<section class="hero is-small is-primary mb-6">
+<section class="hero is-small is-info mb-6">
   <div class="hero-body">
     <p class="title">
-      Dashboard
+      Software House
     </p>
     <p class="subtitle">
-      Small subtitle
+      Choose right people for the job
     </p>
   </div>
 </section>
 
 <form class="mb-6" [formGroup]="filterForm">
-  <div class="columns is-vcentered">
+  <div class="columns is-multiple">
     <div class="column">
-      <div class="select is-fullwidth">
-        <select formControlName="project" id="project">
-          <option value="">Choose project</option>
+      <div class="select is-multiple is-fullwidth">
+        <select formControlName="deps" id="deps" multiple size="4">
+          <option *ngFor="let dep of deps$ | async" [value]="dep.id">{{ dep.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="column">
+      <div class="select is-multiple is-fullwidth">
+        <select formControlName="projects" id="projects" multiple size="4">
           <option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</option>
         </select>
       </div>
     </div>
-    <div class="column is-centered">
-      Second column
+    <div class="column">
+      <div class="select is-multiple is-fullwidth">
+        <select formControlName="skills" id="skills" multiple size="4">
+          <option *ngFor="let skill of skills$ | async" [value]="skill.id">{{ skill.name }}</option>
+        </select>
+      </div>
     </div>
     <div class="column">
-      Third column
-    </div>
-    <div class="column">
-      Fourth column
+      <div class="select is-multiple is-fullwidth">
+        <select formControlName="roles" id="roles" multiple size="4">
+          <option *ngFor="let role of roles$ | async" [value]="role.id">{{ role.name }}</option>
+        </select>
+      </div>
     </div>
   </div>
 </form>
 
-<div class="columns is-multiline is-mobile">
-  <div class="column is-one-quarter" *ngFor="let person of people$ | async">
-    <sd-person-card  [person]="person"></sd-person-card>
-  </div>
-</div>
-
-
+<section class="section is-medium" *ngIf="isLoading">
+  <progress class="progress is-small is-primary" max="100"></progress>
+</section>
+<section class="section is-medium" *ngIf="isEmpty">
+  <h1 class="title">No one found!</h1>
+  <h2 class="subtitle">
+   We need to hire more talents ...
+  </h2>
+</section>
+<table class="table is-fullwidth is-hoverable" *ngIf="!isEmpty">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Seniority</th>
+      <th>Role</th>
+      <th>Skills</th>
+      <th>Department</th>
+      <th>Project</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of people">
+      <th>{{ person.name}} {{ person.surname}}</th>
+      <td>{{ person.seniority | titlecase}}</td>
+      <td>
+        <span *ngFor="let role of person.roles">{{ role.name }} </span>
+      </td>
+      <td>
+        <div class="tags">
+          <span class="tag is-light" *ngFor="let skill of person.skills | slice:0:8">
+            {{ skill.name }}
+          </span>
+        </div>
+      </td>
+      <td>
+        <div class="tags">
+          <span class="tag is-info" *ngFor="let dep of person.departments">
+            {{ dep.id }}
+          </span>
+        </div>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let project of person.projects">{{ project.name }}</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

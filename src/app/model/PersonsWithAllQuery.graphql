@@ -1,5 +1,5 @@
-query PersonsWithAll {
-  people {
+query PersonsWithAll($where: PersonWhere) {
+  people(where: $where) {
     id
     name
     surname

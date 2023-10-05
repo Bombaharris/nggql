@@ -1,0 +1,9 @@
+query Departments {
+  departments {
+    id
+    name
+    manager {
+      id
+    }
+  }
+}

@@ -1,0 +1,11 @@
+mutation CreatePeople($input: [PersonCreateInput!]!) {
+  createPeople(input: $input) {
+    people {
+      id
+      name
+      surname
+      seniority
+      birthday
+    }
+  }
+}
