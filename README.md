@@ -110,6 +110,7 @@ For API __only__ developement:
 
 - @neo4j/neo4j-graphql -  <https://neo4j.com/docs/graphql-manual/current/>
 - Neo4j and GraphQL - <https://neo4j.com/developer/graphql/>
+- Neo4j GraphQL Library - <https://neo4j.com/docs/graphql/current/mutations/update/>
 - Consuming the standard way - <https://apollo-angular.com/docs/>
 - Cypher Manual - <https://neo4j.com/docs/cypher-manual/current/syntax/operators/>
 - Apollo Server - <https://www.apollographql.com/docs/apollo-server/getting-started/>

@@ -1,0 +1,94 @@
+<form nz-form [formGroup]="personForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="surname" nzRequired>Surname</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input person surname!">
+      <input
+        nz-input
+        id="surname"
+        formControlName="surname"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="birthday" nzRequired>Date of birth</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-date-picker formControlName="birthday"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'departments'">Department</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        [nzMaxTagCount]="10"
+        nzMode="multiple"
+        nzPlaceHolder="Please select departments"
+        formControlName="departments"
+        >
+        <nz-option *ngFor="let dep of deps$ | async" [nzLabel]="dep.name" [nzValue]="dep.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Skills</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        [nzMaxTagCount]="10"
+        nzMode="multiple"
+        nzPlaceHolder="Please select skills"
+        formControlName="skills"
+        >
+        <nz-option *ngFor="let skill of skills$ | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'projects'">Projects</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        [nzMaxTagCount]="10"
+        nzMode="multiple"
+        nzPlaceHolder="Please select projects"
+        formControlName="projects"
+        >
+        <nz-option *ngFor="let project of projects$ | async" [nzLabel]="project.name" [nzValue]="project.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'roles'">Roles</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        [nzMaxTagCount]="10"
+        nzMode="multiple"
+        nzPlaceHolder="Please select roles"
+        formControlName="roles"
+        >
+        <nz-option *ngFor="let role of roles$ | async" [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'seniority'">Seniority</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-radio-group formControlName="seniority">
+        <label nz-radio [nzValue]="s" *ngFor="let s of seniority">{{ s | titlecase }}</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <nz-space [nzSize]="'small'">
+        <button *nzSpaceItem nz-button nzType="primary" (click)="submit()" [disabled]="!personForm.valid">Submit</button>
+        <button *nzSpaceItem nz-button (click)="cancel()">Cancel</button>
+      </nz-space>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- <pre>{{ personForm.value | json}}</pre>
+  <pre>{{ person | json}}</pre> -->
+</form>

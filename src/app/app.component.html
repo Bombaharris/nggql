@@ -1,3 +1,33 @@
-<div class="container is-fullhd">
+<!-- <nz-layout>
+  <nz-header>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/dashboard']">
+          Dashboard
+      </a>
+      </li>
+    </ul>
+  </nz-header>
+  <nz-layout>
+    <nz-sider>Sider</nz-sider>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+  <nz-footer>Footer</nz-footer>
+</nz-layout> -->
+<nz-layout>
+  <nz-header>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/dashboard']">
+            Dashboard
+        </a>
+      </li>
+    </ul>
+  </nz-header>
+  <nz-content>
     <router-outlet></router-outlet>
-</div>
+  </nz-content>
+  <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+</nz-layout>

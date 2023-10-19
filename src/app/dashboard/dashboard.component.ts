@@ -1,11 +1,11 @@
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillsGQL, SkillsQuery } from '../generated/graphql';
+import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, Person, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillConnectInput, SkillsGQL, SkillsQuery } from '../generated/graphql';
 import { QueryRef } from 'apollo-angular';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +13,11 @@ import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  isEmpty: boolean = false;
-  isLoading: boolean = false;
+  isPersonFormVisible = false;
+  isLoading = false;
+  expandSet = new Set<string>();
   people!: PersonsWithAllQuery['people'];
+  editedPerson!: Person | any;
   queryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>>;
   deps$: Observable<DepartmentsQuery['departments']>;
   projects$: Observable<ProjectsWithAllQuery['projects']>;
@@ -35,17 +37,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private prGQL: ProjectsWithAllGQL,
     private sGQL: SkillsGQL,
     private rGQL: RolesGQL,
-    private dGQL: DepartmentsGQL
+    private dGQL: DepartmentsGQL,
+    private notification: NzNotificationService
   ) {
     this.queryRef = this.pGQL.watch({}, {
-      fetchPolicy: 'cache-and-network'
+      fetchPolicy: 'cache-and-network',
+      errorPolicy: 'all'
     });
 
     this.subscription.add(
       this.queryRef.valueChanges.subscribe(({ data, loading }) => {
         this.isLoading = loading;
         this.people = data.people;
-        this.isEmpty = data.people.length <= 0;
       })
     );
 
@@ -77,6 +80,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.queryRef.refetch(this.qlFilterService.getVariables());
       })
     );
+  }
+
+  openPersonForm(person?: Person | any): void {
+    this.isPersonFormVisible = true;
+    this.editedPerson = person;
+  }
+
+  closePersonForm(): void {
+    this.isPersonFormVisible = false;
+  }
+
+  closePersonFormWithRefetch(): void {
+    this.isPersonFormVisible = false;
+    this.queryRef.refetch();
   }
 
   ngOnDestroy(): void {

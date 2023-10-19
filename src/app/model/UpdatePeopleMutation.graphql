@@ -1,0 +1,42 @@
+mutation UpdatePeople($where: PersonWhere, $update: PersonUpdateInput) {
+  updatePeople(where: $where, update: $update) {
+    people {
+      id
+      name
+      surname
+      location {
+        longitude
+        latitude
+      }
+      skills {
+        id
+        name
+      }
+      roles {
+        id
+        name
+      }
+      birthday
+      seniority
+      rates {
+        id
+        value
+        validFrom
+      }
+      departments {
+        id
+        name
+        manager {
+          name
+          surname
+        }
+      }
+      projects {
+        id
+        name
+        duration
+        startedFrom
+      }
+    }
+  }
+}

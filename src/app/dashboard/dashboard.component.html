@@ -1,57 +1,88 @@
-<section class="hero is-small is-info mb-6">
-  <div class="hero-body">
-    <p class="title">
-      Software House
-    </p>
-    <p class="subtitle">
-      Choose right people for the job
-    </p>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>Software House</nz-breadcrumb-item>
+  <nz-breadcrumb-item>Dashboard</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div nz-row nzJustify="end">
+  <div nz-col [nzSpan]="20">
+    <h1 nz-typography>Dashboard</h1>
   </div>
-</section>
-
-<form class="mb-6" [formGroup]="filterForm">
-  <div class="columns is-multiple">
-    <div class="column">
-      <div class="select is-multiple is-fullwidth">
-        <select formControlName="deps" id="deps" multiple size="4">
-          <option *ngFor="let dep of deps$ | async" [value]="dep.id">{{ dep.name }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="column">
-      <div class="select is-multiple is-fullwidth">
-        <select formControlName="projects" id="projects" multiple size="4">
-          <option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="column">
-      <div class="select is-multiple is-fullwidth">
-        <select formControlName="skills" id="skills" multiple size="4">
-          <option *ngFor="let skill of skills$ | async" [value]="skill.id">{{ skill.name }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="column">
-      <div class="select is-multiple is-fullwidth">
-        <select formControlName="roles" id="roles" multiple size="4">
-          <option *ngFor="let role of roles$ | async" [value]="role.id">{{ role.name }}</option>
-        </select>
-      </div>
-    </div>
+  <div nz-col [nzSpan]="4">
+    <button nz-button nzBlock nzType="default" (click)="openPersonForm()">Create person</button>
   </div>
-</form>
+</div>
+<nz-card nzTitle="Find people for the job ">
+  <form nz-form [formGroup]="filterForm">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'deps'">Department</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [nzMaxTagCount]="10"
+              nzMode="multiple"
+              nzPlaceHolder="Please select departments"
+              formControlName="deps"
+              >
+              <nz-option *ngFor="let dep of deps$ | async" [nzLabel]="dep.name" [nzValue]="dep.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'deps'">Project</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [nzMaxTagCount]="10"
+              nzMode="multiple"
+              nzPlaceHolder="Please select projects"
+              formControlName="projects"
+              >
+              <nz-option *ngFor="let project of projects$ | async" [nzLabel]="project.name" [nzValue]="project.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'skills'">Skills</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [nzMaxTagCount]="10"
+              nzMode="multiple"
+              nzPlaceHolder="Please select skills"
+              formControlName="skills"
+              >
+              <nz-option *ngFor="let skill of skills$ | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'roles'">Roles</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [nzMaxTagCount]="10"
+              nzMode="multiple"
+              nzPlaceHolder="Please select roles"
+              formControlName="roles"
+              >
+              <nz-option *ngFor="let role of roles$ | async" [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>
 
-<section class="section is-medium" *ngIf="isLoading">
-  <progress class="progress is-small is-primary" max="100"></progress>
-</section>
-<section class="section is-medium" *ngIf="isEmpty">
-  <h1 class="title">No one found!</h1>
-  <h2 class="subtitle">
-   We need to hire more talents ...
-  </h2>
-</section>
-<table class="table is-fullwidth is-hoverable" *ngIf="!isEmpty">
+<nz-table
+  #table
+  [nzData]="people"
+  [nzBordered]="true"
+  [nzLoading]="isLoading"
+  [nzPageSize]="100">
   <thead>
     <tr>
       <th>Name</th>
@@ -59,35 +90,50 @@
       <th>Role</th>
       <th>Skills</th>
       <th>Department</th>
-      <th>Project</th>
+      <th>Projects</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let person of people">
-      <th>{{ person.name}} {{ person.surname}}</th>
+    <tr *ngFor="let person of table.data">
+      <td>{{ person.name}} {{ person.surname}}</td>
       <td>{{ person.seniority | titlecase}}</td>
       <td>
         <span *ngFor="let role of person.roles">{{ role.name }} </span>
       </td>
       <td>
-        <div class="tags">
-          <span class="tag is-light" *ngFor="let skill of person.skills | slice:0:8">
-            {{ skill.name }}
-          </span>
-        </div>
+        <nz-tag *ngFor="let skill of person.skills | slice:0:8">
+          {{ skill.name }}
+        </nz-tag>
       </td>
       <td>
-        <div class="tags">
-          <span class="tag is-info" *ngFor="let dep of person.departments">
-            {{ dep.id }}
-          </span>
-        </div>
+        <span *ngFor="let dep of person.departments">
+          {{ dep.id }}
+        </span>
       </td>
       <td>
-        <ul>
-          <li *ngFor="let project of person.projects">{{ project.name }}</li>
-        </ul>
+        <nz-tag *ngFor="let project of person.projects | slice:0:8" nzMode="checkable">
+          {{ project.name }}
+        </nz-tag>
+      </td>
+      <td>
+        <nz-space [nzSize]="'small'">
+          <button *nzSpaceItem nz-button nzType="link" (click)="openPersonForm(person)">Edit</button>
+          <button *nzSpaceItem nz-button nzType="link" nzDanger>Delete</button>
+        </nz-space>
       </td>
     </tr>
   </tbody>
-</table>
+</nz-table>
+
+<nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="true"
+  [nzWidth]="'40%'"
+  [nzVisible]="isPersonFormVisible"
+  nzTitle="Create person"
+  (nzOnClose)="closePersonForm()">
+  <div *nzDrawerContent>
+    <app-person-form [person]="editedPerson" (canceled)="closePersonForm()" (submitted)="closePersonFormWithRefetch()"></app-person-form>
+  </div>
+</nz-drawer>

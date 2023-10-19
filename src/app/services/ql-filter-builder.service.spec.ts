@@ -55,6 +55,15 @@ const whereVariableCleared = {
     AND: []
   }
 };
+const connectWhere = [
+  {
+    where: {
+      node: {
+        id: 1
+      }
+    }
+  }
+];
 
 describe('Service: QLFilterBuilder', () => {
   beforeEach(() => {
@@ -86,6 +95,13 @@ describe('Service: QLFilterBuilder', () => {
       service.andWhere('projects_SOME','id', 1);
       service.clearAndWhere();
       expect(service.getVariables()).toEqual(whereVariableCleared);
+    }));
+  });
+
+  describe('connectWhere', () => {
+    it('string or number', inject([QLFilterBuilderService], (service: QLFilterBuilderService) => {
+      expect(service.connectWhere('id', 1)).toEqual(connectWhere);
+      expect(service.connectWhere('id', [1])).toEqual(connectWhere);
     }));
   });
 });

@@ -17,6 +17,35 @@ export class QLFilterBuilderService {
     this.condition.where.AND = this.condition.where.AND.concat(params);
   }
 
+  connectWhere(nodeProperty: string, cond: string | number | Array<string | number>): object {
+    let params = [];
+    switch (typeof cond) {
+      case 'object':
+        params = cond ? cond.map((sId: string | number) => {
+          return {
+            where: {
+              node: {
+                [nodeProperty]: sId
+              }
+            }
+          }
+        }) : [];
+        break;
+      case 'string':
+      case 'number':
+      default:
+        params.push({
+          where: {
+            node: {
+              [nodeProperty]: cond
+            }
+          }
+        });
+        break;
+    }
+    return params;
+  }
+
   clearAndWhere() :void {
     this.condition.where.AND = [];
   }
@@ -33,6 +62,7 @@ export class QLFilterBuilderService {
         params = cond ? cond.map((c) => { return {[relation]:  {[field]: c}} }  ) : [];
         break;
       case 'string':
+      case 'number':
       default:
         params.push({[relation]: {[field]: cond }} );
         break;
