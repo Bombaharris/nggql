@@ -7,6 +7,10 @@ Nggql is a simple imaginary web application for software houses build with __GAA
 1. `docker-compose up -d`
 2. `npm start`
 
+### Api rebuild
+
+`docker-compose build api`
+
 ### <http://localhost:4000/> - Appolo Sandbox
 
 Example query:

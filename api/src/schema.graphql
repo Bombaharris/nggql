@@ -16,12 +16,15 @@ type Person {
   rates: [Rate!]! @relationship(type: "HAS_RATE", direction: OUT)
   projects: [Project!]! @relationship(type: "HAS_PROJECT", direction: OUT)
   departments: [Department!]! @relationship(type: "HAS_DEPARTMENT", direction: OUT)
+  experiences: [Experience!]! @relationship(type: "HAS_EXPERIENCE", direction: OUT)
 }
 
 type Experience {
   id: ID! @id(autogenerate: true)
   name: String!
   description: String!
+  skills: [Skill!]! @relationship(type: "USED_SKILL", direction: OUT)
+  startedFrom: Date!
   gainedAt: Date!
 }
 
@@ -29,6 +32,7 @@ type Skill {
   id: ID! @id(autogenerate: true)
   name: String!
   persons: [Person!]! @relationship(type: "HAS_SKILL", direction: IN)
+  experiences: [Experience!]! @relationship(type: "USED_SKILL", direction: IN)
 }
 
 type Role {
