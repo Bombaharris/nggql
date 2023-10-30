@@ -1,6 +1,5 @@
-query PersonsWithAll($where: PersonWhere) {
-  people(where: $where) {
-    id
+fragment PersonWithAllType on Person {
+   id
     name
     surname
     location {
@@ -37,4 +36,9 @@ query PersonsWithAll($where: PersonWhere) {
       startedFrom
     }
   }
+
+query PersonsWithAll($where: PersonWhere) {
+  people(where: $where) {
+   ...PersonWithAllType
+}
 }

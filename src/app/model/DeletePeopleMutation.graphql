@@ -1,0 +1,5 @@
+mutation DeletePeople($where: PersonWhere) {
+  deletePeople(where: $where) {
+    nodesDeleted
+  }
+}

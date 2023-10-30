@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PersonsWithAllQuery } from 'src/app/generated/graphql';
+import { PersonWithAllTypeFragment } from 'src/app/generated/graphql';
 
 @Component({
   selector: 'sd-person-card',
@@ -7,7 +7,7 @@ import { PersonsWithAllQuery } from 'src/app/generated/graphql';
   styleUrls: ['./person-card.component.scss']
 })
 export class PersonCardComponent implements OnInit {
-  @Input() person!: PersonsWithAllQuery['people'][0];
+  @Input() person!: PersonWithAllTypeFragment[][0];
 
   constructor() { }
 

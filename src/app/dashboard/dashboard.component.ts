@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, Person, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillConnectInput, SkillsGQL, SkillsQuery } from '../generated/graphql';
+import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, Person, DeletePeopleGQL, DeletePeopleDocument, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillConnectInput, SkillsGQL, SkillsQuery } from '../generated/graphql';
 import { QueryRef } from 'apollo-angular';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -16,8 +16,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isPersonFormVisible = false;
   isLoading = false;
   expandSet = new Set<string>();
-  people!: PersonsWithAllQuery['people'];
-  editedPerson!: Person | any;
+  people!: PersonWithAllTypeFragment[];
+  editedPerson!: PersonWithAllTypeFragment | null;
   queryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>>;
   deps$: Observable<DepartmentsQuery['departments']>;
   projects$: Observable<ProjectsWithAllQuery['projects']>;
@@ -29,11 +29,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     skills: new FormControl(),
     roles: new FormControl()
   });
+  confirmModal: boolean = false;
   readonly subscription: Subscription = new Subscription();
 
   constructor(
     private qlFilterService: QLFilterBuilderService,
     private pGQL: PersonsWithAllGQL,
+    private rpGQL: DeletePeopleGQL,
     private prGQL: ProjectsWithAllGQL,
     private sGQL: SkillsGQL,
     private rGQL: RolesGQL,
@@ -46,9 +48,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.subscription.add(
-      this.queryRef.valueChanges.subscribe(({ data, loading }) => {
-        this.isLoading = loading;
-        this.people = data.people;
+      this.queryRef.valueChanges.subscribe(({ data, loading, errors }) => {
+        if(loading) {
+          this.isLoading = loading;
+        }
+        if(errors) {
+          errors.map(e => console.error(e));
+          this.isLoading = false;
+        }
+        if(data && data.people) {
+          this.people = data.people;
+          this.isLoading = false;
+        }
       })
     );
 
@@ -82,13 +93,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  openPersonForm(person?: Person | any): void {
+  openPersonForm(person?: PersonWithAllTypeFragment): void {
     this.isPersonFormVisible = true;
-    this.editedPerson = person;
+    if(person) this.editedPerson = person;
+  }
+
+  removePerson(person: PersonWithAllTypeFragment): void {
+    this.confirmModal = true;
+    this.rpGQL.mutate({ where: {id: person.id}}).subscribe(
+      () => {
+        this.queryRef.refetch();
+    }, 
+    (error) => {
+      this.notification.create(
+        'error',
+        'Error',
+        `Error occured during removal: ${error}`
+      )
+    }, 
+    () => {
+      this.notification.create(
+        'success',
+        'Success',
+        `${person.name} ${person.surname} was successfully removed.`
+      )
+    });
+    this.confirmModal = false;
   }
 
   closePersonForm(): void {
     this.isPersonFormVisible = false;
+    this.editedPerson = null;
   }
 
   closePersonFormWithRefetch(): void {
