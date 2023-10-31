@@ -147,3 +147,58 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - [ ] setup GH action
 - [ ] dockerize front
+
+## Using git-flow to automate your git branching workflow
+
+```mermaid
+%%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'showBranches': true, 'showCommitLabel':true,'mainBranchName': 'master'}} }%%
+gitGraph
+       commit id: "chore: init"
+       branch develop
+       checkout develop
+       commit id: "chore: job"
+       branch feature/xyz order: 2
+       commit id: "feat: x"
+       checkout feature/xyz
+       commit id: "feat: y"
+       commit id: "feat: z"
+       checkout develop
+       merge feature/xyz
+       branch release/v1.0.0
+       commit id: "chore: release version 1.0.0"
+       checkout master
+       merge release/v1.0.0 tag: "v1.0.0"
+       checkout develop
+       merge release/v1.0.0
+       commit id: "feat: b"
+       commit id: "feat: c"
+       commit id: "feat: d"
+       branch release/v1.0.1
+       commit id: "chore: release version 1.0.1"
+       checkout master
+       merge release/v1.0.1 tag: "v1.0.1"
+       checkout develop
+       merge release/v1.0.1
+       commit id: "feat: e"
+       commit id: "feat: f"
+       checkout master
+       branch hotfix/v1.0.2 order: 0
+       commit id: "fix: v1.0.2"
+       checkout master
+       merge hotfix/v1.0.2 tag: "v1.0.2"
+       checkout develop
+       merge hotfix/v1.0.2
+       commit id: "feat: g"
+       commit id: "feat: h"
+```
+
+## Bump version, update changelog, commit, & tag release
+
+It's recommended that you install [`commitizen`](https://github.com/commitizen/cz-cli) to make commits to your project.
+
+```sh
+npm install -g commitizen
+
+# commit your changes:
+git cz
+```
