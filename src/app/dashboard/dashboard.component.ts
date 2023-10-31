@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, Person, DeletePeopleGQL, DeletePeopleDocument, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillConnectInput, SkillsGQL, SkillsQuery } from '../generated/graphql';
+import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, Person, DeletePersonsGQL, DeletePersonsDocument, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillConnectInput, SkillsGQL, SkillsQuery } from '../generated/graphql';
 import { QueryRef } from 'apollo-angular';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -29,13 +29,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     skills: new FormControl(),
     roles: new FormControl()
   });
-  confirmModal: boolean = false;
+  isConfirmModal: boolean = false;
   readonly subscription: Subscription = new Subscription();
 
   constructor(
     private qlFilterService: QLFilterBuilderService,
     private pGQL: PersonsWithAllGQL,
-    private rpGQL: DeletePeopleGQL,
+    private rpGQL: DeletePersonsGQL,
     private prGQL: ProjectsWithAllGQL,
     private sGQL: SkillsGQL,
     private rGQL: RolesGQL,
@@ -99,7 +99,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   removePerson(person: PersonWithAllTypeFragment): void {
-    this.confirmModal = true;
+    this.isConfirmModal = true;
     this.rpGQL.mutate({ where: {id: person.id}}).subscribe(
       () => {
         this.queryRef.refetch();
@@ -118,7 +118,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         `${person.name} ${person.surname} was successfully removed.`
       )
     });
-    this.confirmModal = false;
   }
 
   closePersonForm(): void {

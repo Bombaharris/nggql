@@ -1,4 +1,4 @@
-mutation DeletePeople($where: PersonWhere) {
+mutation DeletePersons($where: PersonWhere) {
   deletePeople(where: $where) {
     nodesDeleted
   }
