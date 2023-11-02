@@ -52,7 +52,7 @@ type Project {
 type Department {
   id: ID! @id(autogenerate: true)
   name: String!
-  manager: Person! @relationship(type: "MANAGED_BY", direction: OUT)
+  manager: Person @relationship(type: "MANAGED_BY", direction: OUT)
   persons: [Person!]! @relationship(type: "HAS_DEPARTMENT", direction: IN)
 }
 
