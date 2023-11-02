@@ -120,7 +120,7 @@
         <nz-space [nzSize]="'small'">
           <button *nzSpaceItem nz-button nzType="link" (click)="openPersonForm(person)">Edit</button>
           <button *nzSpaceItem
-          nzType="link"  
+          nzType="link"
           nz-popconfirm
           nzPopconfirmTitle="Do you want to remove this person?"
           (nzOnConfirm)="removePerson(person)"
@@ -138,7 +138,7 @@
   [nzMaskClosable]="true"
   [nzWidth]="'40%'"
   [nzVisible]="isPersonFormVisible"
-  nzTitle="Create person"
+  [nzTitle]="editedPerson ? editedPerson?.name + ' ' + editedPerson?.surname : 'Create person'"
   (nzOnClose)="closePersonForm()">
   <div *nzDrawerContent>
     <app-person-form [person]="editedPerson" (canceled)="closePersonForm()" (submitted)="closePersonFormWithRefetch()"></app-person-form>
