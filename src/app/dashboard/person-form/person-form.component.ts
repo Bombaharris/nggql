@@ -70,7 +70,13 @@ export class PersonFormComponent implements OnInit {
   }
 
   cancel(): void {
+    this.resetForm();
     this.canceled.emit();
+  }
+
+  resetForm(): void {
+    this.personForm.reset();
+    this.person = null;
   }
 
   submit(): void {
@@ -104,6 +110,12 @@ export class PersonFormComponent implements OnInit {
         update: input
       }).subscribe(() => {
         this.submitted.emit();
+        this.notification.create(
+          'success',
+          'Success',
+          `User ${input.name} ${input.surname} was successfully edited.`
+        );
+        this.resetForm();
       }, (error: any) => {
         this.notification.create(
           'error',
@@ -132,6 +144,12 @@ export class PersonFormComponent implements OnInit {
     };
       this.createPGQL.mutate({ input }).subscribe(() => {
         this.submitted.emit();
+        this.notification.create(
+          'success',
+          'Success',
+          `User ${input.name} ${input.surname} was successfully added.`
+        );
+        this.resetForm();
       }, (error: any) => {
         this.notification.create(
           'error',

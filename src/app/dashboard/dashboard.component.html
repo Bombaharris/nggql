@@ -119,7 +119,14 @@
       <td>
         <nz-space [nzSize]="'small'">
           <button *nzSpaceItem nz-button nzType="link" (click)="openPersonForm(person)">Edit</button>
-          <button *nzSpaceItem nz-button nzType="link" nzDanger>Delete</button>
+          <button *nzSpaceItem
+          nzType="link"  
+          nz-popconfirm
+          nzPopconfirmTitle="Do you want to remove this person?"
+          (nzOnConfirm)="removePerson(person)"
+          (nzOnCancel)="isConfirmModal = false"
+          nzPopconfirmPlacement="top"
+          nz-button nzDanger>Delete</button>
         </nz-space>
       </td>
     </tr>
