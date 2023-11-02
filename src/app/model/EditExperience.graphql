@@ -1,0 +1,19 @@
+mutation EditExperiences($where: ExperienceWhere, $update: ExperienceUpdateInput) {
+  updateExperiences(where: $where, update: $update) {
+    experiences {
+      description
+      gainedAt
+      name
+      person {
+        id
+        name
+      }
+      skills {
+        id
+        name
+      }
+      startedFrom
+    }
+  }
+}
+

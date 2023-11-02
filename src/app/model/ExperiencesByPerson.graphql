@@ -1,0 +1,9 @@
+query ExperiencesByPerson($where: ExperienceWhere) {
+  experiences(where: $where) {
+    id
+    name
+    description
+    startedFrom
+    gainedAt
+  }
+}

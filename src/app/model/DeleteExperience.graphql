@@ -1,0 +1,5 @@
+mutation DeleteExperiences($where: ExperienceWhere) {
+  deleteExperiences(where: $where) {
+    nodesDeleted
+  }
+}

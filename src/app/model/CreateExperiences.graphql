@@ -1,0 +1,10 @@
+mutation CreateExperiences($input: [ExperienceCreateInput!]!) {
+  createExperiences(input: $input) {
+    experiences {
+      name
+      person {
+        name
+      }
+    }
+  }
+}
