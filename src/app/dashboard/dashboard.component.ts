@@ -13,8 +13,9 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  isPersonFormVisible = false;
+  isFormVisible = false;
   isLoading = false;
+  currentForm: "experience" | "person" | null = null;
   expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
@@ -93,19 +94,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  openPersonForm(person?: PersonWithAllTypeFragment): void {
-    this.isPersonFormVisible = true;
-    if(person) this.editedPerson = person;
-  }
-
+  
   removePerson(person: PersonWithAllTypeFragment): void {
     this.isConfirmModal = true;
     this.rpGQL.mutate({ where: {id: person.id}}).subscribe(
       () => {
         this.queryRef.refetch();
-    }, 
-    (error) => {
-      this.notification.create(
+      }, 
+      (error) => {
+        this.notification.create(
         'error',
         'Error',
         `Error occured during removal: ${error}`
@@ -116,19 +113,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
         'success',
         'Success',
         `${person.name} ${person.surname} was successfully removed.`
-      )
-    });
-  }
+        )
+      });
+    }
 
-  closePersonForm(): void {
-    this.isPersonFormVisible = false;
-    this.editedPerson = null;
-  }
+    openForm(formType: "experience" | "person" | null, person?: PersonWithAllTypeFragment): void {
+      this.isFormVisible = true;
+      this.currentForm = formType;
+      if(person) this.editedPerson = person;
+    }
 
-  closePersonFormWithRefetch(): void {
-    this.isPersonFormVisible = false;
-    this.queryRef.refetch();
-  }
+    closeForm(refetch?: boolean | undefined): void {
+      this.isFormVisible = false;
+      this.currentForm = null;
+      if(refetch) this.queryRef.refetch();
+    }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

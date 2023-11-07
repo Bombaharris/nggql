@@ -1,9 +1,13 @@
-query ExperiencesByPerson($where: ExperienceWhere) {
-  experiences(where: $where) {
+fragment ExperienceData on Experience {
     id
     name
     description
     startedFrom
     gainedAt
+}
+
+query ExperiencesByPerson($where: ExperienceWhere) {
+  experiences(where: $where) {
+    ...ExperienceData
   }
 }

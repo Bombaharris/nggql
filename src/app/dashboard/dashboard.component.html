@@ -7,7 +7,7 @@
     <h1 nz-typography>Dashboard</h1>
   </div>
   <div nz-col [nzSpan]="4">
-    <button nz-button nzBlock nzType="default" (click)="openPersonForm()">Create person</button>
+    <button nz-button nzBlock nzType="default" (click)="openForm('person')">Create person</button>
   </div>
 </div>
 <nz-card nzTitle="Find people for the job ">
@@ -118,7 +118,8 @@
       </td>
       <td>
         <nz-space [nzSize]="'small'">
-          <button *nzSpaceItem nz-button nzType="link" (click)="openPersonForm(person)">Edit</button>
+           <button *nzSpaceItem nz-button nzType="link" (click)="openForm('person', person)">Edit</button>
+          <button *nzSpaceItem nz-button nzType="link" (click)="openForm('experience', person)">Experience</button>
           <button *nzSpaceItem
           nzType="link"
           nz-popconfirm
@@ -132,15 +133,27 @@
     </tr>
   </tbody>
 </nz-table>
-
 <nz-drawer
-  [nzBodyStyle]="{ overflow: 'auto' }"
-  [nzMaskClosable]="true"
-  [nzWidth]="'40%'"
-  [nzVisible]="isPersonFormVisible"
-  [nzTitle]="editedPerson ? editedPerson?.name + ' ' + editedPerson?.surname : 'Create person'"
-  (nzOnClose)="closePersonForm()">
-  <div *nzDrawerContent>
-    <app-person-form [person]="editedPerson" (canceled)="closePersonForm()" (submitted)="closePersonFormWithRefetch()"></app-person-form>
-  </div>
+*ngIf="currentForm === 'person'"
+[nzBodyStyle]="{ overflow: 'auto' }"
+[nzMaskClosable]="true"
+[nzWidth]="'40%'"
+[nzVisible]="isFormVisible"
+[nzTitle]="editedPerson ? editedPerson.name + ' ' + editedPerson.surname : 'Create person'"
+(nzOnClose)="closeForm()">
+<div *nzDrawerContent>
+  <app-person-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-person-form>
+</div>
+</nz-drawer>
+<nz-drawer
+*ngIf="currentForm === 'experience'"
+[nzBodyStyle]="{ overflow: 'auto' }"
+[nzMaskClosable]="true"
+[nzWidth]="'40%'"
+[nzVisible]="isFormVisible"
+[nzTitle]="editedPerson ? 'Edit experience of ' + editedPerson.name + ' ' + editedPerson.surname : 'Add experience'"
+(nzOnClose)="closeForm()">
+<div *nzDrawerContent>
+  <app-experience-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-experience-form>
+</div>
 </nz-drawer>

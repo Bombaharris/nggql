@@ -35,6 +35,9 @@ fragment PersonWithAllType on Person {
       duration
       startedFrom
     }
+    experiences{
+      ...ExperienceData
+    }
   }
 
 query PersonsWithAll($where: PersonWhere) {
