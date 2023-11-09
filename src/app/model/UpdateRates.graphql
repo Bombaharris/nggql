@@ -1,0 +1,13 @@
+mutation UpdateRates($where: RateWhere, $update: RateUpdateInput) {
+  updateRates(where: $where, update: $update) {
+    rates {
+     id
+     validFrom
+     value
+      person {
+        id
+        name
+      }
+    }
+  }
+}

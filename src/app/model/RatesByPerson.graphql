@@ -1,0 +1,7 @@
+query RatesByPerson($where: RateWhere) {
+  rates(where: $where) {
+    id
+    validFrom
+    value
+  }
+}

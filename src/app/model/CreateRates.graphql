@@ -1,0 +1,12 @@
+mutation CreateRates($input: [RateCreateInput!]!) {
+  createRates(input: $input) {
+    rates {
+      id
+      validFrom
+      value
+      person{
+        id
+      }
+    }
+  }
+}

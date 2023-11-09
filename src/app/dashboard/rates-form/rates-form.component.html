@@ -1,0 +1,44 @@
+<form nz-form [formGroup]="ratesForm" >
+    <ng-container formArrayName="rates">
+      <div *ngFor="let rate of rates.controls; let idx = index" [formGroupName]="idx">
+        <div style="border: 1px solid lightslategray; border-radius: 1rem; padding: 0.5rem; margin: 0.5rem;">
+        <nz-divider [nzText]="(idx+1).toString()+') ' + (rate.value.value ?? '')"></nz-divider> 
+        <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Value</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Value is required.">
+          <input nz-input type="number" formControlName="value" id="value" />
+        </nz-form-control>
+      </nz-form-item>
+      
+      <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="validFrom" nzRequired>Valid from:</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid starting date!">
+              <nz-date-picker formControlName="validFrom"></nz-date-picker>
+          </nz-form-control>
+      </nz-form-item>
+    <nz-form-item>
+      <nz-form-control class="btn-center">
+          <nz-space [nzSize]="'small'">
+          <button *nzSpaceItem nz-button nzType="primary" [disabled]="ratesForm.status !== 'VALID'" (click)="submitRate(rate)">
+              Submit
+          </button>
+  
+        <button class="btn-sm" nz-button nzType="default" nzDanger (click)="deleteRate(idx, rate)">
+            <span nz-icon nzType="delete" nzTheme="fill">Remove </span>
+        </button>
+          </nz-space>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control class="btn-center">
+        <nz-space [nzSize]="'small'">
+        <button *nzSpaceItem nz-button nzType="primary" [disabled]="ratesForm.status !== 'VALID'" (click)="addNewForm()">
+            Add new
+        </button>
+        </nz-space>
+    </nz-form-control>
+  </nz-form-item>
+  </ng-container>
+  </form>
