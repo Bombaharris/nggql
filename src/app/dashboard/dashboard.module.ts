@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { PersonCardComponent } from './person-card/person-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from '../ng-zorro-antd.module';
 import { PersonFormComponent } from './person-form/person-form.component';
@@ -12,7 +11,6 @@ import { ExperienceFormComponent } from './experience-form/experience-form.compo
 @NgModule({
   declarations: [
     DashboardComponent,
-    PersonCardComponent,
     PersonFormComponent,
     ExperienceFormComponent
   ],

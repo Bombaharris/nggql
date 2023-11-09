@@ -17,31 +17,26 @@ export class QLFilterBuilderService {
     this.condition.where.AND = this.condition.where.AND.concat(params);
   }
 
-  connectWhere(nodeProperty: string, cond: string | number | Array<string | number>): object {
+  connectWhere<T>(nodeProperty: string, cond: string | number | T | Array<string | number | T>): object {
     let params = [];
-    switch (typeof cond) {
-      case 'object':
-        params = cond ? cond.map((sId: string | number) => {
-          return {
-            where: {
-              node: {
-                [nodeProperty]: sId
-              }
-            }
-          }
-        }) : [];
-        break;
-      case 'string':
-      case 'number':
-      default:
-        params.push({
+    if (Array.isArray(cond)) {
+      params = cond.map((sId: string | number| T) => {
+        return {
           where: {
             node: {
-              [nodeProperty]: cond
+              [nodeProperty]: sId
             }
           }
-        });
-        break;
+        };
+      });
+    } else {
+      params.push({
+        where: {
+          node: {
+            [nodeProperty]: cond
+          }
+        }
+      });
     }
     return params;
   }

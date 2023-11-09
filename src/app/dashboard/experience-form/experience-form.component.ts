@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from 'src/app/generated/graphql';
+import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, Skill, SkillsGQL, SkillsQuery } from 'src/app/generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 
 @Component({
@@ -19,7 +19,9 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
   @Output() canceled = new EventEmitter();
   skills$: Observable<SkillsQuery['skills']>;
   qlFilterService = new QLFilterBuilderService();
-  experienceForm = this.fb.group({
+  experienceForm: FormGroup<{
+    experiences: FormArray<FormControl>;
+  }> = this.fb.group({
     experiences: this.fb.array([])
   });
   isLoading: boolean = false;
@@ -35,9 +37,8 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
     this.apollo.query<{experiences: Experience[]}>({query: ExperiencesByPersonDocument, variables:{where: {person: {id: this.person.id}}}})
     .subscribe(({data}) => {
       this.experiencesResponse = data.experiences;
-      this.experienceForm.patchValue({experiences: data.experiences});
       this.setWorkExperiences(data.experiences);
-    });
+      });
     this.queryRef = this.rGQL.watch({where: {person:{id: this.person.id}}}, {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
@@ -52,7 +53,7 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
         if(data && data.experiences) {
-          this.experienceForm.patchValue({experiences: data.experiences});
+          this.experienceForm.patchValue({experiences: data.experiences.map(e => ({...e, skills: e.skills.map(s => s.id)}))});
           this.isLoading = false;
         }
       })
@@ -60,11 +61,14 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
     
   }
 
-  
   setWorkExperiences(experiences: Experience[]): void {
     const workExperiencesFormArray = this.experienceForm.get('experiences') as FormArray;
-    experiences.forEach((experience) => {
-      const newWorkExperience = this.fb.group(experience, [Validators.required]);
+    const e = experiences.map(e => ({...e, skills: e.skills.map(s => s.id)}));
+    e.forEach((experience) => {      
+      const newWorkExperience = this.fb.group({
+       ...experience,
+        skills: [experience.skills]
+      });
       workExperiencesFormArray.push(newWorkExperience);
     });
   }
@@ -79,7 +83,7 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
       description: ["", [Validators.required]],
       startedFrom: ["", [Validators.required]],
       gainedAt: ["", [Validators.required]],
-      // skills: this.fb.array([]),
+       skills: [],
     })
   }
 
@@ -87,7 +91,6 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
     if(!this.experiences) return;
     this.experiences.push(this.newExperienceGroup());
   }
-
 
   deleteExperience(idx: number, experience: AbstractControl<Experience,any>) {
     const id = experience.get("id")?.value;
@@ -115,26 +118,26 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
       description: experience.get('description')?.value ?? '',
       startedFrom: experience.get('startedFrom')?.value ?? '',
       gainedAt: experience.get('gainedAt')?.value ?? '',
-      // skills: [{
-      //   disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-      //     connect: this.qlFilterService.connectWhere('id', experience.get('skills')!.value) as any
-      // }]
+      skills: experience.get('skills')!.value ?? ''
     }
-    
     const experienceExists = this.experiencesResponse?.find(e => e.id === experience.get("id")?.value);
     if(experienceExists) {
       this.apollo.mutate({mutation: EditExperiencesDocument, variables: {
         where: {
-        person: {
-          id: this.person.id
-        },
+          person: {
+            id: this.person.id
+          },
         id: experience.get("id")!.value
       },
       update: {
         name: input.name,
         description: input.description,
         startedFrom: input.startedFrom,
-        gainedAt: input.gainedAt
+        gainedAt: input.gainedAt,
+        skills: [{
+          disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
+          connect: this.qlFilterService.connectWhere('id', input.skills ?? '') as any
+        }],
       }
     }}).subscribe(({data}) => {
       this.queryRef?.refetch();
@@ -160,6 +163,9 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
           description: experience.get('description')?.value ?? '',
           startedFrom: experience.get('startedFrom')?.value ?? '',
           gainedAt: experience.get('gainedAt')?.value ?? '',
+          skills: {
+            connect: this.qlFilterService.connectWhere('id', experience.get('skills')?.value ?? '') as any
+          },
           person: {
             "connect": {
               "where": {
@@ -169,7 +175,6 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
               }
             }
           },
-          
         }
       ]
     }).subscribe(() => {

@@ -32,19 +32,19 @@
         </nz-form-control>
     </nz-form-item>
 
-<!-- <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Skills</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24">
-      <nz-select
-        [nzMaxTagCount]="10"
-        nzMode="multiple"
-        nzPlaceHolder="Please select skills"
-        formControlName="skills"
-        >
-        <nz-option formGroupName="skillIdx" *ngFor="let skill of skills$ | async; let skillIdx = index;" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item> -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Skills</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+          [nzMaxTagCount]="10"
+          nzMode="multiple"
+          nzPlaceHolder="Please select skills"
+          formControlName="skills"
+          >
+          <nz-option *ngFor="let skill of skills$ | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
   <nz-form-item>
     <nz-form-control class="btn-center">
         <nz-space [nzSize]="'small'">
@@ -71,15 +71,3 @@
 </nz-form-item>
 </ng-container>
 </form>
-
-<!-- 
-<nz-list>
-    <nz-list-item  *ngFor="let experience of experiences.controls; let idx = index">
-        <div class="editButtons">
-            <p>{{experience.name}}: {{experience.}} - {{experience.gainedAt}}</p>
-            <div>
-          
-        </div>
-        </div>
-    </nz-list-item>
-</nz-list> -->

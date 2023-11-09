@@ -4,6 +4,10 @@ fragment ExperienceData on Experience {
     description
     startedFrom
     gainedAt
+    skills{
+      id
+      name
+    }
 }
 
 query ExperiencesByPerson($where: ExperienceWhere) {
