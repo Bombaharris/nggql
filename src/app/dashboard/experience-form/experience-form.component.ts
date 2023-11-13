@@ -14,6 +14,7 @@ import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.servi
 })
 export class ExperienceFormComponent implements OnInit, OnDestroy {
   @Input() person!: Person | any;
+  confirmModal: boolean = false;
   experiencesResponse: Experience[] | undefined = undefined;
   @Output() submitted = new EventEmitter();
   @Output() canceled = new EventEmitter();
@@ -193,6 +194,11 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
     });
     
   }
+
+  cancelDelete(){
+    this.confirmModal = false;
+  }
+
     ngOnDestroy():void {
       this.subscription.unsubscribe();
     }
