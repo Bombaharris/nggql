@@ -4,7 +4,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, Skill, SkillsGQL, SkillsQuery } from 'src/app/generated/graphql';
+import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, Skill, SkillsGQL, SkillsQuery } from '../../generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 
 @Component({
@@ -45,7 +45,7 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
       errorPolicy: 'all'
     });
     this.subscription.add(
-      this.queryRef.valueChanges.subscribe(({ data, loading, errors }) => {
+      this.queryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
           this.isLoading = loading;
         }
@@ -54,7 +54,7 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
         if(data && data.experiences) {
-          this.experienceForm.patchValue({experiences: data.experiences.map(e => ({...e, skills: e.skills.map(s => s.id)}))});
+          this.experienceForm.patchValue({experiences: data.experiences.map((e: ExperienceDataFragment) => ({...e, skills: e.skills.map(s => s.id)}))});
           this.isLoading = false;
         }
       })
@@ -96,6 +96,8 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
   deleteExperience(idx: number, experience: AbstractControl<Experience,any>) {
     const id = experience.get("id")?.value;
     this.experiences.removeAt(idx);
+    //if no Id was found (empty form) just remove it from layout
+    if(!id) return;
     this.apollo.mutate({mutation: DeleteExperiencesDocument, variables:{where: {id: id}}}).subscribe(() => {
       this.notification.create(
         'success',

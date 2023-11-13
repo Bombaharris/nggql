@@ -11,11 +11,15 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description" nzRequired>Description</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please give description!">
-        <input
+        <nz-textarea-count [nzMaxCharacterCount]="1000">
+        <textarea
           nz-input
           id="description"
           formControlName="description"
-        />
+          rows="3" 
+          placeholder="Describe experience"
+        ></textarea>
+        </nz-textarea-count>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -44,7 +48,9 @@
   <nz-form-item>
     <nz-form-control class="btn-center">
         <nz-space [nzSize]="'small'">
-        <button *nzSpaceItem nz-button nzType="primary" [disabled]="experienceForm.status !== 'VALID'" (click)="submitExperience(experience)">
+        <button
+        [disabled]="!(experience.status === 'VALID') || !experience.dirty"
+        *nzSpaceItem nz-button nzType="primary" (click)="submitExperience(experience)">
             Submit
         </button>
         <button
@@ -66,7 +72,7 @@
 <nz-form-item>
   <nz-form-control class="btn-center">
       <nz-space [nzSize]="'small'">
-      <button *nzSpaceItem nz-button nzType="primary" [disabled]="experienceForm.status !== 'VALID'" (click)="addNewForm()">
+      <button *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
           Add new
       </button>
       </nz-space>
