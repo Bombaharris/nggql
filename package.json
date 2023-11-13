@@ -11,7 +11,8 @@
     "prestart": "npm run gql-codegen",
     "prettier:check": "prettier \"./src/**/*.ts\" --check",
     "prettier:format": "prettier \"./src/**/*.ts\" --write",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --browsers=ChromeHeadless --watch=false"
   },
   "private": true,
   "dependencies": {
