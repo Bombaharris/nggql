@@ -18,7 +18,7 @@ import { ExperienceFormComponent } from './experience-form/experience-form.compo
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
   ]
 })
 export class DashboardModule {
