@@ -1,0 +1,17 @@
+fragment ExperienceData on Experience {
+    id
+    name
+    description
+    startedFrom
+    gainedAt
+    skills{
+      id
+      name
+    }
+}
+
+query ExperiencesByPerson($where: ExperienceWhere) {
+  experiences(where: $where) {
+    ...ExperienceData
+  }
+}

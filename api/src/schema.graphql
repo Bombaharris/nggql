@@ -21,6 +21,7 @@ type Person {
 
 type Experience {
   id: ID! @id(autogenerate: true)
+  person: Person @relationship(type: "HAS_EXPERIENCE", direction: IN)
   name: String!
   description: String!
   skills: [Skill!]! @relationship(type: "USED_SKILL", direction: OUT)

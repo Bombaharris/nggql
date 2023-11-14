@@ -1,0 +1,82 @@
+<form nz-form [formGroup]="experienceForm" >
+  <ng-container formArrayName="experiences">
+    <div *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
+      <nz-divider [nzText]="(idx+1).toString()+') ' + (experience.value.name ?? '')"></nz-divider> 
+      <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Name is required.">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description" nzRequired>Description</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please give description!">
+        <nz-textarea-count [nzMaxCharacterCount]="1000">
+        <textarea
+          nz-input
+          id="description"
+          formControlName="description"
+          rows="3" 
+          placeholder="Describe experience"
+        ></textarea>
+        </nz-textarea-count>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="startedFrom" nzRequired>Started from</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid starting date!">
+            <nz-date-picker formControlName="startedFrom"></nz-date-picker>
+        </nz-form-control>
+        <nz-form-label [ngStyle]="{'text-align': 'left', 'margin-left':'0.5rem'}" nzFor="gainedAt" nzRequired>Gained at</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid gaining date!">
+            <nz-date-picker formControlName="gainedAt"></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Skills</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+          [nzMaxTagCount]="10"
+          nzMode="multiple"
+          nzPlaceHolder="Please select skills"
+          formControlName="skills"
+          >
+          <nz-option *ngFor="let skill of skills$ | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  <nz-form-item>
+    <nz-form-control class="btn-center">
+        <nz-space [nzSize]="'small'">
+        <button
+        [disabled]="!(experience.status === 'VALID') || !experience.dirty"
+        *nzSpaceItem nz-button nzType="primary" (click)="submitExperience(experience)">
+            Submit
+        </button>
+        <button
+        class="btn-sm" 
+        nzDanger
+        nz-button
+        nzType="primary"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure you want to delete this experience?"
+        (nzOnConfirm)="deleteExperience(idx, experience)"
+        (nzOnCancel)="cancelDelete()"
+      >
+        <span nz-icon nzType="delete" nzTheme="fill">Remove </span>
+      </button>
+        </nz-space>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+<nz-form-item>
+  <nz-form-control class="btn-center">
+      <nz-space [nzSize]="'small'">
+      <button *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
+          Add new
+      </button>
+      </nz-space>
+  </nz-form-control>
+</nz-form-item>
+</ng-container>
+</form>
