@@ -15,7 +15,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 export class DashboardComponent implements OnInit, OnDestroy {
   isFormVisible = false;
   isLoading = false;
-  currentForm: "experience" | "person" | null = null;
+  currentForm: "experience" | "person" | "rates" | null = null;
   expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
     }
 
-    openForm(formType: "experience" | "person" | null, person?: PersonWithAllTypeFragment): void {
+    openForm(formType: "experience" | "person" | "rates" | null, person?: PersonWithAllTypeFragment): void {
       this.isFormVisible = true;
       this.currentForm = formType;
       if(person) this.editedPerson = person;

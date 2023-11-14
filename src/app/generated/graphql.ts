@@ -4225,6 +4225,13 @@ export type UpdateSkillsMutationResponse = {
   skills: Array<Skill>;
 };
 
+export type CreateExperiencesMutationVariables = Exact<{
+  input: Array<ExperienceCreateInput> | ExperienceCreateInput;
+}>;
+
+
+export type CreateExperiencesMutation = { __typename?: 'Mutation', createExperiences: { __typename?: 'CreateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', id: string, name: string, person?: { __typename?: 'Person', name: string } | null }> } };
+
 export type CreatePeopleMutationVariables = Exact<{
   input: Array<PersonCreateInput> | PersonCreateInput;
 }>;
@@ -4238,6 +4245,13 @@ export type CreateRatesMutationVariables = Exact<{
 
 
 export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
+
+export type DeleteExperiencesMutationVariables = Exact<{
+  where?: InputMaybe<ExperienceWhere>;
+}>;
+
+
+export type DeleteExperiencesMutation = { __typename?: 'Mutation', deleteExperiences: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
 export type DeletePersonsMutationVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
@@ -4258,14 +4272,31 @@ export type DepartmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DepartmentsQuery = { __typename?: 'Query', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string } | null }> };
 
-export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }> };
+export type EditExperiencesMutationVariables = Exact<{
+  where?: InputMaybe<ExperienceWhere>;
+  update?: InputMaybe<ExperienceUpdateInput>;
+}>;
+
+
+export type EditExperiencesMutation = { __typename?: 'Mutation', updateExperiences: { __typename?: 'UpdateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', description: string, gainedAt: any, name: string, startedFrom: any, person?: { __typename?: 'Person', id: string, name: string } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> } };
+
+export type ExperienceDataFragment = { __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+
+export type ExperiencesByPersonQueryVariables = Exact<{
+  where?: InputMaybe<ExperienceWhere>;
+}>;
+
+
+export type ExperiencesByPersonQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+
+export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
 export type PersonsWithAllQueryVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
 }>;
 
 
-export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }> }> };
+export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> }> };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4310,6 +4341,19 @@ export type UpdateRatesMutationVariables = Exact<{
 
 export type UpdateRatesMutation = { __typename?: 'Mutation', updateRates: { __typename?: 'UpdateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string, name: string } }> } };
 
+export const ExperienceDataFragmentDoc = gql`
+    fragment ExperienceData on Experience {
+  id
+  name
+  description
+  startedFrom
+  gainedAt
+  skills {
+    id
+    name
+  }
+}
+    `;
 export const PersonWithAllTypeFragmentDoc = gql`
     fragment PersonWithAllType on Person {
   id
@@ -4348,8 +4392,35 @@ export const PersonWithAllTypeFragmentDoc = gql`
     duration
     startedFrom
   }
+  experiences {
+    ...ExperienceData
+  }
+}
+    ${ExperienceDataFragmentDoc}`;
+export const CreateExperiencesDocument = gql`
+    mutation CreateExperiences($input: [ExperienceCreateInput!]!) {
+  createExperiences(input: $input) {
+    experiences {
+      id
+      name
+      person {
+        name
+      }
+    }
+  }
 }
     `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateExperiencesGQL extends Apollo.Mutation<CreateExperiencesMutation, CreateExperiencesMutationVariables> {
+    document = CreateExperiencesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreatePeopleDocument = gql`
     mutation CreatePeople($input: [PersonCreateInput!]!) {
   createPeople(input: $input) {
@@ -4394,6 +4465,24 @@ export const CreateRatesDocument = gql`
   })
   export class CreateRatesGQL extends Apollo.Mutation<CreateRatesMutation, CreateRatesMutationVariables> {
     document = CreateRatesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteExperiencesDocument = gql`
+    mutation DeleteExperiences($where: ExperienceWhere) {
+  deleteExperiences(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteExperiencesGQL extends Apollo.Mutation<DeleteExperiencesMutation, DeleteExperiencesMutationVariables> {
+    document = DeleteExperiencesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4452,6 +4541,55 @@ export const DepartmentsDocument = gql`
   })
   export class DepartmentsGQL extends Apollo.Query<DepartmentsQuery, DepartmentsQueryVariables> {
     document = DepartmentsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EditExperiencesDocument = gql`
+    mutation EditExperiences($where: ExperienceWhere, $update: ExperienceUpdateInput) {
+  updateExperiences(where: $where, update: $update) {
+    experiences {
+      description
+      gainedAt
+      name
+      person {
+        id
+        name
+      }
+      skills {
+        id
+        name
+      }
+      startedFrom
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EditExperiencesGQL extends Apollo.Mutation<EditExperiencesMutation, EditExperiencesMutationVariables> {
+    document = EditExperiencesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ExperiencesByPersonDocument = gql`
+    query ExperiencesByPerson($where: ExperienceWhere) {
+  experiences(where: $where) {
+    ...ExperienceData
+  }
+}
+    ${ExperienceDataFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ExperiencesByPersonGQL extends Apollo.Query<ExperiencesByPersonQuery, ExperiencesByPersonQueryVariables> {
+    document = ExperiencesByPersonDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
