@@ -202,3 +202,9 @@ npm install -g commitizen
 # commit your changes:
 git cz
 ```
+
+## repo-visualizer
+
+This is an example of using the [repo-visualizer](https://github.com/githubocto/repo-visualizer) GitHub Action.
+
+![Visualization of this repo](./diagram.svg)
