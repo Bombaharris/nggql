@@ -119,7 +119,8 @@
       <td>
         <nz-space [nzSize]="'small'">
            <button *nzSpaceItem nz-button nzType="link" (click)="openForm('person', person)">Edit</button>
-          <button *nzSpaceItem nz-button nzType="link" (click)="openForm('experience', person)">Experience</button>
+          <button *nzSpaceItem nz-button nzType="link" (click)="openForm('experience', person)">Edit experience</button>
+          <button *nzSpaceItem nz-button nzType="link" (click)="openForm('rates', person)">Edit rates</button>
           <button *nzSpaceItem
           nzType="link"
           nz-popconfirm
@@ -145,6 +146,7 @@
   <app-person-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-person-form>
 </div>
 </nz-drawer>
+
 <nz-drawer
 *ngIf="currentForm === 'experience'"
 [nzBodyStyle]="{ overflow: 'auto' }"
@@ -156,4 +158,18 @@
 <div *nzDrawerContent>
   <app-experience-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-experience-form>
 </div>
+</nz-drawer>
+
+
+<nz-drawer
+*ngIf="currentForm === 'rates'"
+[nzBodyStyle]="{ overflow: 'auto' }"
+[nzMaskClosable]="true"
+[nzWidth]="'40%'"
+[nzVisible]="isFormVisible"
+[nzTitle]="editedPerson ? 'Edit rates': 'Create rates'"
+(nzOnClose)="closeForm()">
+<div *nzDrawerContent>
+    <app-rates-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm()"></app-rates-form>
+  </div>
 </nz-drawer>

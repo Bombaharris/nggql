@@ -4239,6 +4239,13 @@ export type CreatePeopleMutationVariables = Exact<{
 
 export type CreatePeopleMutation = { __typename?: 'Mutation', createPeople: { __typename?: 'CreatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, seniority?: Seniority | null, birthday?: any | null }> } };
 
+export type CreateRatesMutationVariables = Exact<{
+  input: Array<RateCreateInput> | RateCreateInput;
+}>;
+
+
+export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
+
 export type DeleteExperiencesMutationVariables = Exact<{
   where?: InputMaybe<ExperienceWhere>;
 }>;
@@ -4252,6 +4259,13 @@ export type DeletePersonsMutationVariables = Exact<{
 
 
 export type DeletePersonsMutation = { __typename?: 'Mutation', deletePeople: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
+export type DeleteRatesMutationVariables = Exact<{
+  where?: InputMaybe<RateWhere>;
+}>;
+
+
+export type DeleteRatesMutation = { __typename?: 'Mutation', deleteRates: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
 export type DepartmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4294,6 +4308,13 @@ export type ProjectsWithAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProjectsWithAllQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string }> }> };
 
+export type RatesByPersonQueryVariables = Exact<{
+  where?: InputMaybe<RateWhere>;
+}>;
+
+
+export type RatesByPersonQuery = { __typename?: 'Query', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number }> };
+
 export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4311,6 +4332,14 @@ export type UpdatePeopleMutationVariables = Exact<{
 
 
 export type UpdatePeopleMutation = { __typename?: 'Mutation', updatePeople: { __typename?: 'UpdatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }> }> } };
+
+export type UpdateRatesMutationVariables = Exact<{
+  where?: InputMaybe<RateWhere>;
+  update?: InputMaybe<RateUpdateInput>;
+}>;
+
+
+export type UpdateRatesMutation = { __typename?: 'Mutation', updateRates: { __typename?: 'UpdateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string, name: string } }> } };
 
 export const ExperienceDataFragmentDoc = gql`
     fragment ExperienceData on Experience {
@@ -4416,6 +4445,31 @@ export const CreatePeopleDocument = gql`
       super(apollo);
     }
   }
+export const CreateRatesDocument = gql`
+    mutation CreateRates($input: [RateCreateInput!]!) {
+  createRates(input: $input) {
+    rates {
+      id
+      validFrom
+      value
+      person {
+        id
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateRatesGQL extends Apollo.Mutation<CreateRatesMutation, CreateRatesMutationVariables> {
+    document = CreateRatesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const DeleteExperiencesDocument = gql`
     mutation DeleteExperiences($where: ExperienceWhere) {
   deleteExperiences(where: $where) {
@@ -4447,6 +4501,24 @@ export const DeletePersonsDocument = gql`
   })
   export class DeletePersonsGQL extends Apollo.Mutation<DeletePersonsMutation, DeletePersonsMutationVariables> {
     document = DeletePersonsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteRatesDocument = gql`
+    mutation DeleteRates($where: RateWhere) {
+  deleteRates(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
+    document = DeleteRatesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4589,6 +4661,26 @@ export const ProjectsWithAllDocument = gql`
       super(apollo);
     }
   }
+export const RatesByPersonDocument = gql`
+    query RatesByPerson($where: RateWhere) {
+  rates(where: $where) {
+    id
+    validFrom
+    value
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RatesByPersonGQL extends Apollo.Query<RatesByPersonQuery, RatesByPersonQueryVariables> {
+    document = RatesByPersonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const SkillsDocument = gql`
     query Skills {
   skills {
@@ -4677,6 +4769,32 @@ export const UpdatePeopleDocument = gql`
   })
   export class UpdatePeopleGQL extends Apollo.Mutation<UpdatePeopleMutation, UpdatePeopleMutationVariables> {
     document = UpdatePeopleDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateRatesDocument = gql`
+    mutation UpdateRates($where: RateWhere, $update: RateUpdateInput) {
+  updateRates(where: $where, update: $update) {
+    rates {
+      id
+      validFrom
+      value
+      person {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateRatesGQL extends Apollo.Mutation<UpdateRatesMutation, UpdateRatesMutationVariables> {
+    document = UpdateRatesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

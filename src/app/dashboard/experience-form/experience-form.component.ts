@@ -4,7 +4,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, Skill, SkillsGQL, SkillsQuery } from '../../generated/graphql';
+import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 
 @Component({
