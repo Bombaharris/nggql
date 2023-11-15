@@ -10,6 +10,10 @@ const routes: Routes = [
   { 
     path: 'dashboard', 
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) 
+  },
+  {
+    path: 'persons/:id/experiences',
+    loadChildren: () => import('./experiences/experiences.module').then(m => m.ExperiencesModule)
   }
 ];
 

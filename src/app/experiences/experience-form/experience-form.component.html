@@ -1,7 +1,11 @@
+<div *ngIf="!experiences || experiences.length === 0"><p>No experiences</p></div>
 <form nz-form [formGroup]="experienceForm" >
   <ng-container formArrayName="experiences">
-    <div *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
-      <nz-divider [nzText]="(idx+1).toString()+') ' + (experience.value.name ?? '')"></nz-divider> 
+    <nz-list nzGrid>
+      <div nz-row [nzGutter]="8">
+  <div nz-col [nzXXl]="8" [nzXl]="4" [nzLg]="6" [nzMd]="6" [nzSm]="12" [nzXs]="24" *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
+    <nz-list-item>
+      <nz-card [nzTitle]="((idx+1) + ') ' + experience.value.name)">
       <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Name is required.">
@@ -68,7 +72,12 @@
         </nz-space>
     </nz-form-control>
   </nz-form-item>
+  </nz-card>
+  </nz-list-item>
 </div>
+
+</div>
+</nz-list>
 <nz-form-item>
   <nz-form-control class="btn-center">
       <nz-space [nzSize]="'small'">

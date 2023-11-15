@@ -119,7 +119,7 @@
       <td>
         <nz-space [nzSize]="'small'">
            <button *nzSpaceItem nz-button nzType="link" (click)="openForm('person', person)">Edit</button>
-          <button *nzSpaceItem nz-button nzType="link" (click)="openForm('experience', person)">Edit experience</button>
+          <a *nzSpaceItem nz-button nzType="link" [routerLink]="['../persons/', person.id, 'experiences']">Edit experience</a>
           <button *nzSpaceItem nz-button nzType="link" (click)="openForm('rates', person)">Edit rates</button>
           <button *nzSpaceItem
           nzType="link"
@@ -144,19 +144,6 @@
 (nzOnClose)="closeForm()">
 <div *nzDrawerContent>
   <app-person-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-person-form>
-</div>
-</nz-drawer>
-
-<nz-drawer
-*ngIf="currentForm === 'experience'"
-[nzBodyStyle]="{ overflow: 'auto' }"
-[nzMaskClosable]="true"
-[nzWidth]="'40%'"
-[nzVisible]="isFormVisible"
-[nzTitle]="editedPerson ? 'Edit experience of ' + editedPerson.name + ' ' + editedPerson.surname : 'Add experience'"
-(nzOnClose)="closeForm()">
-<div *nzDrawerContent>
-  <app-experience-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-experience-form>
 </div>
 </nz-drawer>
 

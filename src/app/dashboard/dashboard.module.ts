@@ -6,14 +6,13 @@ import { DashboardComponent } from './dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from '../ng-zorro-antd.module';
 import { PersonFormComponent } from './person-form/person-form.component';
-import { ExperienceFormComponent } from './experience-form/experience-form.component';
 import { RatesFormComponent } from './rates-form/rates-form.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PersonFormComponent,
-    ExperienceFormComponent,
+   
     RatesFormComponent
   ],
   imports: [

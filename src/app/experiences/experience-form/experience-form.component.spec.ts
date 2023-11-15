@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { ExperienceFormComponent } from './experience-form.component';
-import { DashboardComponent } from '../dashboard.component';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Overlay } from '@angular/cdk/overlay';
 import { FormBuilder } from '@angular/forms';
