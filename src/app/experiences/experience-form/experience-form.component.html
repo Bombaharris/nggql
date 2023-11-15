@@ -2,8 +2,8 @@
 <form nz-form [formGroup]="experienceForm" >
   <ng-container formArrayName="experiences">
     <nz-list nzGrid>
-      <div nz-row [nzGutter]="8">
-  <div nz-col [nzXXl]="8" [nzXl]="4" [nzLg]="6" [nzMd]="6" [nzSm]="12" [nzXs]="24" *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
+      <div nz-row [nzGutter]="12">
+  <div nz-col [nzXXl]="6" [nzXl]="12" *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
     <nz-list-item>
       <nz-card [nzTitle]="((idx+1) + ') ' + experience.value.name)">
       <nz-form-item>
