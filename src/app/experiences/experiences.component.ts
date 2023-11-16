@@ -1,32 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { PersonsWithAllGQL, DeletePersonsGQL, ProjectsWithAllGQL, SkillsGQL, RolesGQL, DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllQuery } from '../generated/graphql';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
 import { QueryRef } from 'apollo-angular';
 import { Observable, Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-experiences',
   templateUrl: './experiences.component.html',
   styleUrls: ['./experiences.component.scss']
 })
-export class ExperiencesComponent implements OnInit {
+export class ExperiencesComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null | undefined;
-  queryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>>;
+  queryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
   readonly subscription: Subscription = new Subscription();
-
+  readonly routeSub: Subscription = new Subscription();
+  id: string | undefined = '';
+  
   constructor(
     private pGQL: PersonsWithAllGQL, private route: ActivatedRoute,
   ) { 
-    this.queryRef = this.pGQL.watch({}, {
+    this.routeSub.add(
+      this.route.params.subscribe(params => {
+      this.id = params['id'];
+    }))
+    this.queryRef = this.pGQL.watch({where:{id: this.id}}, {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
-
+    
     this.subscription.add(
       this.queryRef.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
@@ -38,15 +44,19 @@ export class ExperiencesComponent implements OnInit {
         }
         if(data && data.people) {
           this.people = data.people;
-          this.editedPerson = this.people.find(p => p.id === this.route.snapshot.paramMap.get("id"))
+          this.editedPerson = this.people.find(p => p.id === this.id);
           this.isLoading = false;
         }
       })
     );
-    
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }

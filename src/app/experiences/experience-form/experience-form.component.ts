@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-experience-form',
@@ -35,15 +36,12 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.apollo.query<{experiences: Experience[]}>({query: ExperiencesByPersonDocument, variables:{where: {person: {id: this.person.id}}}})
-    .subscribe(({data}) => {
-      this.experiencesResponse = data.experiences;
-      this.setWorkExperiences(data.experiences);
-      });
     this.queryRef = this.rGQL.watch({where: {person:{id: this.person.id}}}, {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
+    this.setWorkExperiences(this.person.experiences);
+   
     this.subscription.add(
       this.queryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
