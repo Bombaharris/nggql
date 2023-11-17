@@ -1,32 +1,47 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { ExperienceFormComponent } from './experience-form.component';
-import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Overlay } from '@angular/cdk/overlay';
 import { FormBuilder } from '@angular/forms';
+import { PersonsComponent } from '../persons.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ExperienceFormComponent', () => {
   let controller: ApolloTestingController;
   let component: ExperienceFormComponent;
-  let dashboard: DashboardComponent;
+  let persons: PersonsComponent;
   let fixture: ComponentFixture<ExperienceFormComponent>;
-  let dashboardFixture: ComponentFixture<DashboardComponent>;
+  let personsFixture: ComponentFixture<PersonsComponent>;
+  let router: Router;
+  let route: ActivatedRoute;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExperienceFormComponent, DashboardComponent ],
-      imports: [ApolloTestingModule],
-      providers: [NzNotificationService, Overlay, FormBuilder]
+      declarations: [ ExperienceFormComponent, PersonsComponent ],
+      imports: [ApolloTestingModule, RouterTestingModule.withRoutes([])],
+      providers: [NzNotificationService, Overlay, FormBuilder, 
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({
+              bookId: 2,
+            }),
+          },
+        },
+      ]
     })
     .compileComponents();
     controller = TestBed.inject(ApolloTestingController);
-    dashboardFixture = TestBed.createComponent(DashboardComponent);
+    personsFixture = TestBed.createComponent(PersonsComponent);
+    router = TestBed.inject(Router);
+    route = TestBed.inject(ActivatedRoute)
     fixture = TestBed.createComponent(ExperienceFormComponent);
     component = fixture.componentInstance;
-    dashboard = dashboardFixture.componentInstance;
-dashboard.openForm("experience");
-  component.person = {
+    persons = personsFixture.componentInstance;
+    component.person = {
     id: "MrGreen",
     name: "Ralph",
     surname: "Green",
@@ -37,13 +52,15 @@ dashboard.openForm("experience");
     roles: [],
      skills: [],
   }
-    dashboardFixture.detectChanges();
+ 
+    personsFixture.detectChanges();
     fixture.detectChanges();
   });
 
  
   it('should create', () => {
-    if(!dashboard || !dashboard.currentForm){
+
+    if(!component || !component.person || !component.person.id){
       expect(component).toBeFalsy();
     } else {
       expect(component).toBeTruthy();

@@ -4,12 +4,8 @@ import { PersonsComponent } from './persons.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: PersonsComponent,
-  },
-  {
     path: ':id/experiences',
-    loadChildren: () => import('../experiences/experiences.module').then(m => m.ExperiencesModule)
+    component: PersonsComponent,
   },
   
 ];

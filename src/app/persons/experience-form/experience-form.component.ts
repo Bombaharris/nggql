@@ -1,19 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere, ExperiencesByPersonDocument, ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../generated/graphql';
+import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere,  ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-experience-form',
   templateUrl: './experience-form.component.html',
   styleUrls: ['./experience-form.component.scss']
 })
-export class ExperienceFormComponent implements OnInit, OnDestroy {
+export class ExperienceFormComponent implements OnDestroy, OnChanges {
   @Input() person!: Person | any;
   confirmModal: boolean = false;
   experiencesResponse: Experience[] | undefined = undefined;
@@ -35,13 +34,40 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
    
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!changes || !changes.person || !changes.person.currentValue) return;
+
+    this.queryRef = this.rGQL.watch({where: {person: {id: changes.person.currentValue.id}}}, {
+      fetchPolicy: 'cache-and-network',
+      errorPolicy: 'all'
+    });
+    this.setWorkExperiences(changes.person.currentValue.experiences );
+  
+    this.subscription.add(
+      this.queryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
+        if(loading) {
+          this.isLoading = loading;
+        }
+        if(errors) {
+          errors.map(e => console.error(e));
+          this.isLoading = false;
+        }
+        if(data && data.experiences) {
+          this.experienceForm.patchValue({experiences: data.experiences.map((e: ExperienceDataFragment) => ({...e, skills: e.skills.map(s => s.id)}))});
+          this.isLoading = false;
+        }
+      })
+    );
+    
+  }
+
   ngOnInit(): void {
-    this.queryRef = this.rGQL.watch({where: {person:{id: this.person.id}}}, {
+    if(!this.person || !this.person.id) return;
+    this.queryRef = this.rGQL.watch({where: {person:{id: this.person?.id ?? ''}}}, {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
     this.setWorkExperiences(this.person.experiences);
-   
     this.subscription.add(
       this.queryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
@@ -68,6 +94,8 @@ export class ExperienceFormComponent implements OnInit, OnDestroy {
        ...experience,
         skills: [experience.skills]
       });
+      //check if experience already exists, if not omit it
+      if(workExperiencesFormArray.controls.find(w => w.get('id')?.value === newWorkExperience.get('id')?.value)) return;
       workExperiencesFormArray.push(newWorkExperience);
     });
   }
