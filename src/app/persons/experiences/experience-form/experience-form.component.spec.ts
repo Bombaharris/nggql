@@ -4,7 +4,7 @@ import { ExperienceFormComponent } from './experience-form.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Overlay } from '@angular/cdk/overlay';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { PersonsComponent } from '../persons.component';
+import { PersonsComponent } from '../../persons.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { of } from 'rxjs';

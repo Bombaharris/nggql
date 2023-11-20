@@ -4,7 +4,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere,  ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../generated/graphql';
+import { CreateExperiencesGQL, DeleteExperiencesDocument, EditExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere,  ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../../generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 
 @Component({
@@ -130,7 +130,7 @@ export class ExperienceFormComponent implements OnDestroy, OnChanges {
         'Success',
         `Experience was successfully deleted.`
         );
-        this.queryRef?.refetch();
+        this.submitted.emit();
       }, (error: any) => {
         this.notification.create(
           'error',
@@ -168,8 +168,8 @@ export class ExperienceFormComponent implements OnDestroy, OnChanges {
           connect: this.qlFilterService.connectWhere('id', input.skills ?? '') as any
         }],
       }
-    }}).subscribe(({data}) => {
-      this.queryRef?.refetch();
+    }}).subscribe(({}) => {
+      this.submitted.emit();
       this.notification.create(
         'success',
         'Success',
@@ -207,7 +207,7 @@ export class ExperienceFormComponent implements OnDestroy, OnChanges {
         }
       ]
     }).subscribe(() => {
-      this.queryRef?.refetch();
+      this.submitted.emit();
       this.notification.create(
         'success',
         'Success',
