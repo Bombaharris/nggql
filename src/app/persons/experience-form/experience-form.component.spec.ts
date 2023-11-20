@@ -3,11 +3,19 @@ import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/tes
 import { ExperienceFormComponent } from './experience-form.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Overlay } from '@angular/cdk/overlay';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { PersonsComponent } from '../persons.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { of } from 'rxjs';
+import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { GraphQLModule } from 'src/app/graphql.module';
 
 describe('ExperienceFormComponent', () => {
   let controller: ApolloTestingController;
@@ -21,7 +29,18 @@ describe('ExperienceFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ExperienceFormComponent, PersonsComponent ],
-      imports: [ApolloTestingModule, RouterTestingModule.withRoutes([])],
+      imports: [ RouterTestingModule.withRoutes([]),
+      AppRoutingModule,
+      BrowserModule,
+      GraphQLModule,
+      HttpClientModule,
+      HttpClientJsonpModule,
+      ReactiveFormsModule,
+      NgZorroAntdModule,
+      BrowserAnimationsModule,
+      ScrollingModule,
+      DragDropModule,
+    ],
       providers: [NzNotificationService, Overlay, FormBuilder, 
         {
           provide: ActivatedRoute,
@@ -34,7 +53,6 @@ describe('ExperienceFormComponent', () => {
       ]
     })
     .compileComponents();
-    controller = TestBed.inject(ApolloTestingController);
     personsFixture = TestBed.createComponent(PersonsComponent);
     router = TestBed.inject(Router);
     route = TestBed.inject(ActivatedRoute)
@@ -60,10 +78,8 @@ describe('ExperienceFormComponent', () => {
  
   it('should create', () => {
 
-    if(!component || !component.person || !component.person.id){
-      expect(component).toBeFalsy();
-    } else {
+    
       expect(component).toBeTruthy();
-    }
+
   });
 });

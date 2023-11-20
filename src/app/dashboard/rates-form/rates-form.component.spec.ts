@@ -2,10 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RatesFormComponent } from './rates-form.component';
 import { Overlay } from '@angular/cdk/overlay';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DashboardComponent } from '../dashboard.component';
+import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { GraphQLModule } from 'src/app/graphql.module';
 
 describe('RatesFormComponent', () => {
   let controller: ApolloTestingController;
@@ -13,21 +21,31 @@ describe('RatesFormComponent', () => {
   let ratesComponent: RatesFormComponent;
   let fixture: ComponentFixture<RatesFormComponent>;
   let dashboardFixture: ComponentFixture<DashboardComponent>;
-
+  let fb: FormBuilder;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RatesFormComponent, DashboardComponent ],
-      imports: [ApolloTestingModule],
+      imports: [AppRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        ReactiveFormsModule,
+        NgZorroAntdModule,
+        BrowserAnimationsModule,
+        ScrollingModule,
+        DragDropModule,],
       providers: [NzNotificationService, Overlay, FormBuilder]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(RatesFormComponent);
     ratesComponent = fixture.componentInstance;
-    controller = TestBed.inject(ApolloTestingController);
     dashboardFixture = TestBed.createComponent(DashboardComponent);
     dashboard = dashboardFixture.componentInstance;
     dashboard.openForm("experience");
+    ratesComponent.isLoading = false;
+    ratesComponent.ratesForm.get("rates")?.value.push(ratesComponent.addNewForm())
     ratesComponent.person = {
       id: "MrGreen",
       name: "Ralph",
@@ -44,10 +62,6 @@ describe('RatesFormComponent', () => {
   });
 
   it('should create', () => {
-    if(!dashboard || !dashboard.currentForm){
-      expect(ratesComponent).toBeFalsy();
-    } else {
       expect(ratesComponent).toBeTruthy();
-    }
   });
 });
