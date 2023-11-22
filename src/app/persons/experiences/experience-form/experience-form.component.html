@@ -53,9 +53,10 @@
     <nz-form-control class="btn-center">
         <nz-space [nzSize]="'small'">
         <button
+        type="submit"
         [disabled]="!(experience.status === 'VALID') || !experience.dirty"
-        *nzSpaceItem nz-button nzType="primary" (click)="submitExperience(experience)">
-            Submit
+        *nzSpaceItem nz-button nzType="primary" (click)="submitNewExperience(experience)">
+          Submit
         </button>
         <button
         class="btn-sm" 
