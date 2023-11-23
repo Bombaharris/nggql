@@ -32,10 +32,6 @@ export class ExperienceFormComponent implements OnChanges {
     this.skills$ = this.sGQL.watch().valueChanges.pipe(map((result) => result.data.skills));
   }
 
-  ngOnInit(): void {
-    this.refetch(this.person.experiences);
-  }
-  
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes || !changes.person || !changes.person.currentValue) return;
     this.refetch(changes.person.currentValue.experiences );

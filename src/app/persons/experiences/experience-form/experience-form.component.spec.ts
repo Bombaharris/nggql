@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 import { ExperienceFormComponent } from './experience-form.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Overlay } from '@angular/cdk/overlay';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { PersonsComponent } from '../../persons.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -16,19 +15,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GraphQLModule } from 'src/app/graphql.module';
+import { ExperiencesComponent } from '../experiences.component';
 
 describe('ExperienceFormComponent', () => {
-  let controller: ApolloTestingController;
-  let component: ExperienceFormComponent;
-  let persons: PersonsComponent;
-  let fixture: ComponentFixture<ExperienceFormComponent>;
-  let personsFixture: ComponentFixture<PersonsComponent>;
+  let experienceFormComponent: ExperienceFormComponent;
+  let experiencesComponent: ExperiencesComponent;
+  let experienceFormFixture: ComponentFixture<ExperienceFormComponent>;
+  let experiencesFixture: ComponentFixture<ExperiencesComponent>;
   let router: Router;
   let route: ActivatedRoute;
-
+  let fb: FormBuilder = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExperienceFormComponent, PersonsComponent ],
+      declarations: [ ExperienceFormComponent, ExperiencesComponent ],
       imports: [ RouterTestingModule.withRoutes([]),
       AppRoutingModule,
       BrowserModule,
@@ -41,45 +40,53 @@ describe('ExperienceFormComponent', () => {
       ScrollingModule,
       DragDropModule,
     ],
-      providers: [NzNotificationService, Overlay, FormBuilder, 
+      providers: [ApolloTestingModule, NzNotificationService, Overlay, FormBuilder, 
         {
           provide: ActivatedRoute,
           useValue: {
             params: of({
-              bookId: 2,
+              id: "Zub",
             }),
           },
         },
       ]
     })
     .compileComponents();
-    personsFixture = TestBed.createComponent(PersonsComponent);
     router = TestBed.inject(Router);
     route = TestBed.inject(ActivatedRoute)
-    fixture = TestBed.createComponent(ExperienceFormComponent);
-    component = fixture.componentInstance;
-    persons = personsFixture.componentInstance;
-    component.person = {
-    id: "MrGreen",
-    name: "Ralph",
-    surname: "Green",
+    experiencesFixture = TestBed.createComponent(ExperiencesComponent);
+    experienceFormFixture = TestBed.createComponent(ExperienceFormComponent);
+    experiencesComponent = experiencesFixture.componentInstance;
+    experienceFormComponent = experienceFormFixture.componentInstance;
+    experienceFormComponent.person = {
+    id: "Zub",
+    name: "Michael",
+    surname: "Zubenstein",
     departments: [],
-    experiences: [],
+    experiences: [
+      {
+        name: "Onwleo",
+        description: "Large description",
+        startedFrom: '2023-11-11T16:36:52.959Z',
+        gainedAt: '2023-11-23T16:36:52.959Z',
+      }
+    ],
     projects: [],
     rates: [],
     roles: [],
      skills: [],
   }
- 
-    personsFixture.detectChanges();
-    fixture.detectChanges();
+    experienceFormComponent.experienceForm = fb.group({
+      experiences: fb.array([])
+    });
+    experienceFormComponent.experienceForm.get("experiences")?.value.push(experienceFormComponent.newExperienceGroup())
+    
+    experiencesFixture.detectChanges();
+    experienceFormFixture.detectChanges();
   });
 
  
   it('should create', () => {
-
-    
-      expect(component).toBeTruthy();
-
+      expect(experienceFormComponent).toBeTruthy();
   });
 });

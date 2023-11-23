@@ -19,7 +19,7 @@ describe('RatesFormComponent', () => {
   let controller: ApolloTestingController;
   let dashboard: DashboardComponent;
   let ratesComponent: RatesFormComponent;
-  let fixture: ComponentFixture<RatesFormComponent>;
+  let ratesFormFixture: ComponentFixture<RatesFormComponent>;
   let dashboardFixture: ComponentFixture<DashboardComponent>;
   let fb: FormBuilder;
   beforeEach(async () => {
@@ -39,8 +39,8 @@ describe('RatesFormComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RatesFormComponent);
-    ratesComponent = fixture.componentInstance;
+    ratesFormFixture = TestBed.createComponent(RatesFormComponent);
+    ratesComponent = ratesFormFixture.componentInstance;
     dashboardFixture = TestBed.createComponent(DashboardComponent);
     dashboard = dashboardFixture.componentInstance;
     dashboard.openForm("experience");
@@ -58,7 +58,7 @@ describe('RatesFormComponent', () => {
       skills: [],
     }
     dashboardFixture.detectChanges();
-    fixture.detectChanges();
+    ratesFormFixture.detectChanges();
   });
 
   it('should create', () => {
