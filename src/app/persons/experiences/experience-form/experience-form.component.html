@@ -1,7 +1,11 @@
+<div *ngIf="!experiences || experiences.length === 0"><p>No experiences</p></div>
 <form nz-form [formGroup]="experienceForm" >
   <ng-container formArrayName="experiences">
-    <div *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
-      <nz-divider [nzText]="(idx+1).toString()+') ' + (experience.value.name ?? '')"></nz-divider> 
+    <nz-list nzGrid>
+      <div nz-row [nzGutter]="12">
+  <div nz-col [nzXXl]="6" [nzXl]="12" *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
+    <nz-list-item>
+      <nz-card [nzTitle]="((idx+1) + ') ' + experience.value.name)">
       <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Name is required.">
@@ -49,9 +53,10 @@
     <nz-form-control class="btn-center">
         <nz-space [nzSize]="'small'">
         <button
+        type="submit"
         [disabled]="!(experience.status === 'VALID') || !experience.dirty"
-        *nzSpaceItem nz-button nzType="primary" (click)="submitExperience(experience)">
-            Submit
+        *nzSpaceItem nz-button nzType="primary" (click)="submitNewExperience(experience)">
+          Submit
         </button>
         <button
         class="btn-sm" 
@@ -63,12 +68,17 @@
         (nzOnConfirm)="deleteExperience(idx, experience)"
         (nzOnCancel)="cancelDelete()"
       >
-        <span nz-icon nzType="delete" nzTheme="fill">Remove </span>
+       Remove
       </button>
         </nz-space>
     </nz-form-control>
   </nz-form-item>
+  </nz-card>
+  </nz-list-item>
 </div>
+
+</div>
+</nz-list>
 <nz-form-item>
   <nz-form-control class="btn-center">
       <nz-space [nzSize]="'small'">
