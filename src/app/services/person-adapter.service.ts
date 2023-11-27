@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CreateExperiencesGQL, EditExperiencesDocument, Exact, Experience, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery } from '../generated/graphql';
-import { Apollo } from 'apollo-angular';
+import { Apollo, MutationResult } from 'apollo-angular';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AbstractControl } from '@angular/forms';
 import { QueryRef } from 'apollo-angular';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,12 @@ export class PersonAdapterService {
   experiencesResponse: Experience[] | undefined = undefined;
   personQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
   editedPerson!: PersonWithAllTypeFragment | null | undefined;
-  isLoading: boolean = false;
   
   constructor(
-    private apollo: Apollo, private qlFilterService: QLFilterBuilderService, private notification: NzNotificationService, private ceGQL: CreateExperiencesGQL, private pGQL: PersonsWithAllGQL
+    private apollo: Apollo, 
+    private qlFilterService: QLFilterBuilderService, 
+    private ceGQL: CreateExperiencesGQL, 
+    private pGQL: PersonsWithAllGQL
   ) {
   }
 
@@ -27,7 +29,7 @@ export class PersonAdapterService {
     });
    }
   
-  updatePersonExperiences(personId: string, $event: AbstractControl<any,any>): void {
+  updatePersonExperiences(personId: string, $event: AbstractControl<any,any>): Observable<MutationResult<unknown>> {
     const experience = $event;
     let input = {
       person: {id: personId},
@@ -39,7 +41,7 @@ export class PersonAdapterService {
     }
     const experienceExists = this.experiencesResponse?.find(e => e.id === experience.get("id")?.value);
     if(experienceExists) {
-      this.apollo.mutate({mutation: EditExperiencesDocument, variables: {
+      return this.apollo.mutate({mutation: EditExperiencesDocument, variables: {
         where: {
           person: {
             id: personId
@@ -56,23 +58,10 @@ export class PersonAdapterService {
           connect: this.qlFilterService.connectWhere('id', input.skills ?? '') as any
         }],
       }
-    }}).subscribe(({}) => {
-      this.notification.create(
-        'success',
-        'Success',
-        `Experience for ${input.name} was successfully edited.`
-      );
-    }, (error: any) => {
-      this.notification.create(
-        'error',
-        'Error',
-        `Error occured during edition of experience: ${error}`
-      )
-    });
-    return;
+    }})
     }
     
-    this.ceGQL.mutate({
+    return this.ceGQL.mutate({
       input: [
         {
           name: experience.get('name')?.value ?? '',
@@ -93,18 +82,6 @@ export class PersonAdapterService {
           },
         }
       ]
-    }).subscribe(() => {
-      this.notification.create(
-        'success',
-        'Success',
-        `Experience for ${input.name} was successfully added.`
-      );
-    }, (error: any) => {
-      this.notification.create(
-        'error',
-        'Error',
-        `${error}`
-      )
-    });    
+    })
   }
 }

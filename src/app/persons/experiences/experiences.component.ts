@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
 import { Experience, PersonWithAllTypeFragment, } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
@@ -20,7 +21,9 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
   readonly subscription: Subscription = new Subscription();
 
  constructor(
-    private personAdapterService: PersonAdapterService, private route: ActivatedRoute,
+    private personAdapterService: PersonAdapterService, 
+    private route: ActivatedRoute,
+    private notification: NzNotificationService
     ) { 
       this.subscription.add(
         this.route.params.subscribe(params => {
@@ -48,13 +51,24 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
 
   submitExperience($event: AbstractControl<any,any>): void {
     this.isLoading = true;
-    this.personAdapterService.updatePersonExperiences(this.personId, $event);
+    this.personAdapterService.updatePersonExperiences(this.personId, $event).subscribe(() => {
+      this.notification.create(
+        'success',
+        'Success',
+        `Experience for ${this.editedPerson?.name} was successfully changed.`
+      );
+    }, (error: any) => {
+      this.notification.create(
+        'error',
+        'Error',
+        `Error occured during edition of experience: ${error}`
+      )
+    });;
     this.isLoading = false;
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
-
 
 }
