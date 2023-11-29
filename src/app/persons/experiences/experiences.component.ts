@@ -1,23 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
-import { Experience, PersonWithAllTypeFragment, } from 'src/app/generated/graphql';
+import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment, UpdateExperiencesMutationResponse, } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
-import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 
 @Component({
   selector: 'app-experiences',
   templateUrl: './experiences.component.html',
-  styleUrls: ['./experiences.component.scss']
+  styleUrls: ['./experiences.component.scss'],
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   editedPerson!: PersonWithAllTypeFragment | null | undefined;
   personId!: string;
-  qlFilterService = new QLFilterBuilderService();
-  experiencesResponse: Experience[] | undefined = undefined;
   readonly subscription: Subscription = new Subscription();
 
  constructor(
@@ -30,7 +27,6 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         this.personId = params['id'];
       }));
       this.personAdapterService.setPersonQueryRef(this.personId);
-      
     }
 
   ngOnInit(): void {
@@ -51,6 +47,25 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
 
   submitExperience($event: AbstractControl<any,any>): void {
     this.isLoading = true;
+    const experienceExists = $event.get("id")?.value;
+    if(!experienceExists) {
+      this.personAdapterService.createPersonExperience(this.personId, $event).subscribe(() => {
+        
+      this.notification.create(
+        'success',
+        'Success',
+        `Experience for ${this.editedPerson?.name} was successfully created.`
+        );
+      }, (error: any) => {
+        this.notification.create(
+          'error',
+          'Error',
+          `Error occured during creation of experience: ${error}`
+        )
+      });
+      this.personAdapterService.personQueryRef?.refetch();
+      return;
+    }
     this.personAdapterService.updatePersonExperiences(this.personId, $event).subscribe(() => {
       this.notification.create(
         'success',
@@ -63,7 +78,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         'Error',
         `Error occured during edition of experience: ${error}`
       )
-    });;
+    });
     this.isLoading = false;
   }
 

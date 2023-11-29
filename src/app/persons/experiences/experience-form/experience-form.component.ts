@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -13,7 +13,7 @@ type ExperienceFormType = FormGroup<{
 @Component({
   selector: 'app-experience-form',
   templateUrl: './experience-form.component.html',
-  styleUrls: ['./experience-form.component.scss']
+  styleUrls: ['./experience-form.component.scss'],
 })
 export class ExperienceFormComponent implements OnChanges {
   @Input() person!: Person | any;
@@ -34,12 +34,14 @@ export class ExperienceFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes || !changes.person || !changes.person.currentValue) return;
-    this.refetch(changes.person.currentValue.experiences );
+    
+    this.rebuildFormGroup(changes.person.currentValue.experiences);
   }
 
-  private refetch(experiences: Experience[]): void {
+  private rebuildFormGroup(experiences: Experience[]): void {
     const workExperiencesFormArray = this.experienceForm.get('experiences') as FormArray;
     const e = experiences.map(e => ({...e, skills: e.skills.map(s => s.id)}));
+    workExperiencesFormArray.clear();
     e.forEach((experience) => {      
       const newWorkExperience = this.fb.group({
        ...experience,
@@ -71,7 +73,7 @@ export class ExperienceFormComponent implements OnChanges {
   }
 
   submitNewExperience(experience: AbstractControl<any,any>): void {
-    this.submitted.emit(experience)
+    this.submitted.emit(experience);
   }
   
 
@@ -86,7 +88,6 @@ export class ExperienceFormComponent implements OnChanges {
         'Success',
         `Experience was successfully deleted.`
         );
-        this.submitted.emit(this.experienceForm);
       }, (error: any) => {
         this.notification.create(
           'error',
