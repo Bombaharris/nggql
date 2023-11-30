@@ -49,7 +49,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     const experienceExists = $event.get("id")?.value;
     if(!experienceExists) {
-      this.personAdapterService.createPersonExperience(this.personId, $event).subscribe(() => {
+      this.personAdapterService.submitPersonExperience<CreateExperiencesMutation>(this.personId, $event, true).subscribe(() => {
         
       this.notification.create(
         'success',
@@ -66,7 +66,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
       this.personAdapterService.personQueryRef?.refetch();
       return;
     }
-    this.personAdapterService.updatePersonExperiences(this.personId, $event).subscribe(() => {
+    this.personAdapterService.submitPersonExperience<EditExperiencesMutation>(this.personId, $event, false).subscribe(() => {
       this.notification.create(
         'success',
         'Success',

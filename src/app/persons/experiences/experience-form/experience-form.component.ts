@@ -15,7 +15,7 @@ type ExperienceFormType = FormGroup<{
   templateUrl: './experience-form.component.html',
   styleUrls: ['./experience-form.component.scss'],
 })
-export class ExperienceFormComponent implements OnChanges {
+export class ExperienceFormComponent implements OnInit, OnChanges {
   @Input() person!: Person | any;
   @Output() submitted = new EventEmitter<AbstractControl<any,any>>();
   @Output() canceled = new EventEmitter();
@@ -32,9 +32,13 @@ export class ExperienceFormComponent implements OnChanges {
     this.skills$ = this.sGQL.watch().valueChanges.pipe(map((result) => result.data.skills));
   }
 
+  ngOnInit(): void {
+    if(!this.person) return;
+    this.experienceForm.patchValue(this.person.experiences);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes || !changes.person || !changes.person.currentValue) return;
-    
     this.rebuildFormGroup(changes.person.currentValue.experiences);
   }
 

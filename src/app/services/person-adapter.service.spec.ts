@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { PersonAdapterService } from './person-adapter.service';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CreateExperiencesGQL, EditExperiencesDocument, PersonsWithAllGQL } from '../generated/graphql';
+import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, EditExperiencesDocument, PersonsWithAllGQL } from '../generated/graphql';
 
 describe('PersonAdapterService', () => {
   let service: PersonAdapterService;
@@ -25,7 +25,45 @@ describe('PersonAdapterService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should update person experiences when experience exists', (done) => {
+  it('should create person experience when experiences does not exists', (done) => {
+    const personId = 'MrGreen';
+    const experienceId = '2';
+    const experience = new FormGroup({
+      id: new FormControl(experienceId),
+      name: new FormControl('Created Experience'),
+      description: new FormControl('Created Description'),
+      startedFrom: new FormControl('2022-01-01'),
+      gainedAt: new FormControl('2022-12-31'),
+      skills: new FormControl('skill1,skill2'),
+    });
+
+    const createExperience = {
+      data: {
+        createExperiences: {
+          experiences: [
+            {
+              id: experienceId,
+              name: 'Created Experience',
+              description: 'Created Description',
+              startedFrom: '2022-01-01',
+              gainedAt: '2022-12-31',
+              skills: [],
+            },
+          ],
+        },
+      }, loading: false, error: null
+    };
+    
+    service.submitPersonExperience<CreateExperiencesMutation>(personId, experience, true).subscribe(r => {
+      expect(r).toEqual(createExperience);
+      done();
+    });
+
+    apolloController.expectOne(CreateExperiencesDocument).flush(createExperience);
+    apolloController.verify();
+  });
+
+  it('should edit person experience when experiences exists', (done) => {
     const personId = 'MrGreen';
     const experienceId = '2';
     const experience = new FormGroup({
@@ -37,9 +75,9 @@ describe('PersonAdapterService', () => {
       skills: new FormControl('skill1,skill2'),
     });
 
-    const updateExperiences = {
+    const createExperience = {
       data: {
-        updateExperiences: {
+        createExperiences: {
           experiences: [
             {
               id: experienceId,
@@ -54,12 +92,12 @@ describe('PersonAdapterService', () => {
       }, loading: false, error: null
     };
     
-    service.updatePersonExperiences(personId, experience).subscribe(r => {
-      expect(r).toEqual(updateExperiences);
+    service.submitPersonExperience<CreateExperiencesMutation>(personId, experience, true).subscribe(r => {
+      expect(r).toEqual(createExperience);
       done();
     });
 
-    apolloController.expectOne(EditExperiencesDocument).flush(updateExperiences);
+    apolloController.expectOne(CreateExperiencesDocument).flush(createExperience);
     apolloController.verify();
   });
 });
