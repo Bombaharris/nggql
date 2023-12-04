@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
-import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment, UpdateExperiencesMutationResponse, } from 'src/app/generated/graphql';
+import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment, PersonsWithAllQuery, UpdateExperiencesMutationResponse, } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 
 @Component({
@@ -56,6 +56,9 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         'Success',
         `Experience for ${this.editedPerson?.name} was successfully created.`
         );
+        this.personAdapterService?.refetch(this.personId)?.then(res => {
+          this.editedPerson = res.data.people[0];
+        });
       }, (error: any) => {
         this.notification.create(
           'error',
@@ -63,7 +66,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
           `Error occured during creation of experience: ${error}`
         )
       });
-      this.personAdapterService.personQueryRef?.refetch();
+     
       return;
     }
     this.personAdapterService.submitPersonExperience<EditExperiencesMutation>(this.personId, $event, false).subscribe(() => {
@@ -72,6 +75,9 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         'Success',
         `Experience for ${this.editedPerson?.name} was successfully changed.`
       );
+      this.personAdapterService?.refetch(this.personId)?.then(res => {
+        this.editedPerson = res.data.people[0];
+      });
     }, (error: any) => {
       this.notification.create(
         'error',
@@ -79,6 +85,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         `Error occured during edition of experience: ${error}`
       )
     });
+   
     this.isLoading = false;
   }
 

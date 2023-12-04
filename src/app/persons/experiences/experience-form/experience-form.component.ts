@@ -14,6 +14,7 @@ type ExperienceFormType = FormGroup<{
   selector: 'app-experience-form',
   templateUrl: './experience-form.component.html',
   styleUrls: ['./experience-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExperienceFormComponent implements OnInit, OnChanges {
   @Input() person!: Person | any;
@@ -34,7 +35,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     if(!this.person) return;
-    this.experienceForm.patchValue(this.person.experiences);
+    this.experienceForm.patchValue({experiences: this.person.experiences});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -99,6 +100,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
           `Error occured during edition of experience: ${error}`
           )
         });
+
     }
 
   cancelDelete(){

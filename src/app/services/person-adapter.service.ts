@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, EditExperiencesDocument, EditExperiencesMutation, Exact, Experience, ExperienceDataFragment, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery } from '../generated/graphql';
+import { CreateExperiencesDocument, EditExperiencesDocument, Exact, InputMaybe, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery } from '../generated/graphql';
 import { Apollo, MutationResult } from 'apollo-angular';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
 import { AbstractControl } from '@angular/forms';
 import { QueryRef } from 'apollo-angular';
 import { Observable } from 'rxjs';
+import { ApolloQueryResult } from '@apollo/client/core/types';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,11 @@ export class PersonAdapterService {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
-    
    }
+
+   refetch(personId: string): Promise<ApolloQueryResult<PersonsWithAllQuery>> | undefined {
+    return this.personQueryRef?.refetch({where: {id: personId}});
+  }
 
   submitPersonExperience<T>(personId: string, $event: AbstractControl<any, any>, isCreate: boolean): Observable<MutationResult<T>> {
     const experience = $event;
