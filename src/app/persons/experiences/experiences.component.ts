@@ -1,41 +1,36 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, AbstractControl } from '@angular/forms';
-import { ActivatedRoute, Event } from '@angular/router';
-import { Apollo, QueryRef } from 'apollo-angular';
+import { AbstractControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
-import { CreateExperiencesGQL, EditExperiencesDocument, Exact, Experience, ExperiencesByPersonGQL, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, SkillsGQL } from 'src/app/generated/graphql';
-import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
+import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment, PersonsWithAllQuery, UpdateExperiencesMutationResponse, } from 'src/app/generated/graphql';
+import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 
 @Component({
   selector: 'app-experiences',
   templateUrl: './experiences.component.html',
-  styleUrls: ['./experiences.component.scss']
+  styleUrls: ['./experiences.component.scss'],
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   editedPerson!: PersonWithAllTypeFragment | null | undefined;
-  personQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
-  personId!: string | undefined;
-  qlFilterService = new QLFilterBuilderService();
-  experiencesResponse: Experience[] | undefined = undefined;
+  personId!: string;
   readonly subscription: Subscription = new Subscription();
 
  constructor(
-    private pGQL: PersonsWithAllGQL, private route: ActivatedRoute, private apollo: Apollo, private ceGQL: CreateExperiencesGQL, private notification: NzNotificationService
+    private personAdapterService: PersonAdapterService, 
+    private route: ActivatedRoute,
+    private notification: NzNotificationService
     ) { 
       this.subscription.add(
         this.route.params.subscribe(params => {
         this.personId = params['id'];
       }));
-      this.personQueryRef = this.pGQL.watch({where:{id: this.personId}}, {
-        fetchPolicy: 'cache-and-network',
-        errorPolicy: 'all'
-      });
+      this.personAdapterService.setPersonQueryRef(this.personId);
     }
 
   ngOnInit(): void {
-    this.personQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
+    this.personAdapterService.personQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
       if(loading) {
         this.isLoading = loading;
       }
@@ -52,40 +47,37 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
 
   submitExperience($event: AbstractControl<any,any>): void {
     this.isLoading = true;
-    const experience = $event;
-    let input = {
-      person: {id: this.personId},
-      name: experience.get('name')?.value ?? '',
-      description: experience.get('description')?.value ?? '',
-      startedFrom: experience.get('startedFrom')?.value ?? '',
-      gainedAt: experience.get('gainedAt')?.value ?? '',
-      skills: experience.get('skills')!.value ?? ''
-    }
-    const experienceExists = this.experiencesResponse?.find(e => e.id === experience.get("id")?.value);
-    if(experienceExists) {
-      this.apollo.mutate({mutation: EditExperiencesDocument, variables: {
-        where: {
-          person: {
-            id: this.personId
-          },
-        id: experience.get("id")!.value
-      },
-      update: {
-        name: input.name,
-        description: input.description,
-        startedFrom: input.startedFrom,
-        gainedAt: input.gainedAt,
-        skills: [{
-          disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-          connect: this.qlFilterService.connectWhere('id', input.skills ?? '') as any
-        }],
-      }
-    }}).subscribe(({}) => {
+    const experienceExists = $event.get("id")?.value;
+    if(!experienceExists) {
+      this.personAdapterService.submitPersonExperience<CreateExperiencesMutation>(this.personId, $event, true).subscribe(() => {
+        
       this.notification.create(
         'success',
         'Success',
-        `Experience for ${input.name} was successfully edited.`
+        `Experience for ${this.editedPerson?.name} was successfully created.`
+        );
+        this.personAdapterService?.refetch(this.personId)?.then(res => {
+          this.editedPerson = res.data.people[0];
+        });
+      }, (error: any) => {
+        this.notification.create(
+          'error',
+          'Error',
+          `Error occured during creation of experience: ${error}`
+        )
+      });
+     
+      return;
+    }
+    this.personAdapterService.submitPersonExperience<EditExperiencesMutation>(this.personId, $event, false).subscribe(() => {
+      this.notification.create(
+        'success',
+        'Success',
+        `Experience for ${this.editedPerson?.name} was successfully changed.`
       );
+      this.personAdapterService?.refetch(this.personId)?.then(res => {
+        this.editedPerson = res.data.people[0];
+      });
     }, (error: any) => {
       this.notification.create(
         'error',
@@ -93,51 +85,12 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         `Error occured during edition of experience: ${error}`
       )
     });
+   
     this.isLoading = false;
-    return;
-    }
-    
-    this.ceGQL.mutate({
-      input: [
-        {
-          name: experience.get('name')?.value ?? '',
-          description: experience.get('description')?.value ?? '',
-          startedFrom: experience.get('startedFrom')?.value ?? '',
-          gainedAt: experience.get('gainedAt')?.value ?? '',
-          skills: {
-            connect: this.qlFilterService.connectWhere('id', experience.get('skills')?.value ?? '') as any
-          },
-          person: {
-            "connect": {
-              "where": {
-                "node": {
-                  "id": this.personId
-                }
-              }
-            }
-          },
-        }
-      ]
-    }).subscribe(() => {
-      this.notification.create(
-        'success',
-        'Success',
-        `Experience for ${input.name} was successfully added.`
-      );
-    }, (error: any) => {
-      this.notification.create(
-        'error',
-        'Error',
-        `${error}`
-      )
-    });
-    this.isLoading = false;
-    
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
-
 
 }
