@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { CreatePeopleGQL, Department, DepartmentsGQL, DepartmentsQuery, Person, PersonCreateInput, PersonUpdateInput, Project, ProjectsWithAllGQL, ProjectsWithAllQuery, Role, RolesGQL, RolesQuery, Seniority, Skill, SkillsGQL, SkillsQuery, UpdatePeopleGQL } from '../../generated/graphql';
-import { QLFilterBuilderService } from '../../services/ql-filter-builder.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Observable } from 'rxjs';
+import { CreatePeopleGQL, Department, DepartmentsQuery, Person, PersonCreateInput, PersonUpdateInput, Project, ProjectsWithAllQuery, Role, RolesQuery, Seniority, Skill, SkillsQuery, UpdatePeopleGQL } from '../../generated/graphql';
+import { QLFilterBuilderService } from '../../services/ql-filter-builder.service';
 
 @Component({
   selector: 'app-person-form',
@@ -14,10 +13,10 @@ export class PersonFormComponent implements OnInit {
   @Input() person!: Person | any;
   @Output() submitted = new EventEmitter();
   @Output() canceled = new EventEmitter();
-  deps$: Observable<DepartmentsQuery['departments']>;
-  projects$: Observable<ProjectsWithAllQuery['projects']>;
-  skills$: Observable<SkillsQuery['skills']>;
-  roles$: Observable<RolesQuery['roles']>;
+  @Input() deps$: Observable<DepartmentsQuery['departments']> = new Observable();
+  @Input() projects$: Observable<ProjectsWithAllQuery['projects']> = new Observable();
+  @Input() skills$: Observable<SkillsQuery['skills']> = new Observable();
+  @Input() roles$: Observable<RolesQuery['roles']> = new Observable();
   seniority = Object.values(Seniority);
   personForm = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -33,30 +32,11 @@ export class PersonFormComponent implements OnInit {
 
   constructor(
     private qlFilterService: QLFilterBuilderService,
-    private prGQL: ProjectsWithAllGQL,
     private createPGQL: CreatePeopleGQL,
     private updatePGQL: UpdatePeopleGQL,
-    private sGQL: SkillsGQL,
-    private rGQL: RolesGQL,
-    private dGQL: DepartmentsGQL,
     private notification: NzNotificationService
   ) {
-    this.deps$ = this.dGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.departments)
-      );
-    this.projects$ = this.prGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.projects)
-      );
-    this.skills$ = this.sGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.skills)
-      );
-    this.roles$ = this.rGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.roles)
-      );
+ 
   }
 
   ngOnInit(): void {
