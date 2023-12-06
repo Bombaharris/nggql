@@ -143,7 +143,7 @@
 [nzTitle]="editedPerson ? editedPerson.name + ' ' + editedPerson.surname : 'Create person'"
 (nzOnClose)="closeForm()">
 <div *nzDrawerContent>
-  <app-person-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-person-form>
+  <app-person-form [deps$]="deps$" [projects$]="projects$" [skills$]="skills$" [roles$]="roles$" [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm(true)"></app-person-form>
 </div>
 </nz-drawer>
 

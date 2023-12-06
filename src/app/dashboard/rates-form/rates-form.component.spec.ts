@@ -43,7 +43,6 @@ describe('RatesFormComponent', () => {
     ratesComponent = ratesFormFixture.componentInstance;
     dashboardFixture = TestBed.createComponent(DashboardComponent);
     dashboard = dashboardFixture.componentInstance;
-    dashboard.openForm("experience");
     ratesComponent.isLoading = false;
     ratesComponent.ratesForm.get("rates")?.value.push(ratesComponent.addNewForm())
     ratesComponent.person = {
@@ -57,6 +56,7 @@ describe('RatesFormComponent', () => {
       roles: [],
       skills: [],
     }
+    dashboard.openForm("rates", ratesComponent.person);
     dashboardFixture.detectChanges();
     ratesFormFixture.detectChanges();
   });
