@@ -13,7 +13,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GraphQLModule } from 'src/app/graphql.module';
-import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 
 describe('ExperiencesComponent', () => {
   let experiencesComponent: ExperiencesComponent;
@@ -23,7 +22,7 @@ describe('ExperiencesComponent', () => {
   let fb = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExperiencesComponent, ExperienceFormComponent, CustomDatePipe ],
+      declarations: [ ExperiencesComponent, ExperienceFormComponent ],
       imports: [ RouterTestingModule.withRoutes(
         [
           {path: 'persons/:id/experiences', component: ExperiencesComponent}
