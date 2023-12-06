@@ -7,11 +7,12 @@ import { ExperienceFormComponent } from './experiences/experience-form/experienc
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from '../ng-zorro-antd.module';
 import { ExperiencesComponent } from './experiences/experiences.component';
+import { CustomDatePipe } from '../pipes/custom-date.pipe';
 
 
 @NgModule({
   declarations: [
-    PersonsComponent, ExperienceFormComponent, ExperiencesComponent
+    PersonsComponent, ExperienceFormComponent, ExperiencesComponent, CustomDatePipe
   ],
   imports: [
     CommonModule,
