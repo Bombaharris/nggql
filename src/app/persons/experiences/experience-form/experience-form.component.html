@@ -6,7 +6,7 @@
       <div nz-row [nzGutter]="24">
   <div nz-col [nzXXl]="24" [nzXl]="24" *ngFor="let experience of experiences.controls; let idx = index" [formGroupName]="idx">
     <nz-list-item>
-      <nz-card [nzTitle]="getTitle(experience)">
+      <nz-card [nzTitle]="(experience.value.name + ' ' + (experience.value.startedFrom | date:'mediumDate') + ' - ' + (experience.value.gainedAt | date:'mediumDate'))">
       <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Name is required.">
