@@ -49,22 +49,6 @@ describe('DashboardApiService', () => {
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
   });
 
-  it('should remove person', (done) => {
-    const personId = 'MrGreen';
-    const mockMutationResult = {
-      data: {
-        deletePeople:{
-          nodesDeleted: 1
-        }
-      },
-    };
-      service.removePerson<DeletePersonsMutation>(personId, DeletePersonsDocument).subscribe(r => {
-        expect(r).toBeTruthy();
-      });
-      
-      done();
-      TestBed.inject(ApolloTestingController).expectOne(DeletePersonsDocument).flush(mockMutationResult);
 
-  });
 });
 

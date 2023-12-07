@@ -2,7 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { PersonAdapterService } from './person-adapter.service';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, EditExperiencesDocument, PersonsWithAllGQL } from '../generated/graphql';
+import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, CreatePeopleMutation, DeletePersonsDocument, DeletePersonsMutation, EditExperiencesDocument, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
+import { PersonForm } from '../dashboard/person-form/person-form.component';
 
 describe('PersonAdapterService', () => {
   let service: PersonAdapterService;
@@ -23,6 +24,62 @@ describe('PersonAdapterService', () => {
 
   it('should create the service', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should create person when person does not exists', (done) => {
+    const personId = 'MrGreen';
+    const person: FormGroup<PersonForm> = new FormGroup({
+      name: new FormControl("Ralph"),
+      surname: new FormControl("Green"),
+      birthday: new FormControl("1982-06-01"),
+      departments: new FormControl({id: "Frontend", name:"Frontend"}),
+      projects: new FormControl({id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}),
+      skills: new FormControl({
+        id: "Vue",
+        name: "Vue"
+      }),
+      roles: new FormControl({
+        id: "Frontend",
+        name: "Frontend"
+      }),
+      seniority: new FormControl(["Vue"]),
+      rates: new FormControl({id:"Senior", name:"Senior", value:"100", validFrom:"2022-01-01"})
+    });
+
+    const createPerson = {
+      data: {
+        updatePeople: {
+          people: [
+            {
+              id: personId,
+              name: '"Ralph"',
+              surname: '"Green"',
+              birthday: '1982-06-01',
+              departments: [{id: "Frontend", name:"Frontend"}],
+              projects: [{id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}],
+              roles: [{
+                id: "Frontend",
+                name: "Frontend"
+              }],
+              seniority: null,
+              rates: [{id:"Senior", name:"Senior", value:100, validFrom:"2022-01-01"}],
+              skills: [{
+                id: "Vue",
+                name: "Vue"
+              }],
+            },
+          ],
+        },
+      }, loading: false, error: null,
+    };
+    
+    service.submitPerson<UpdatePeopleMutation>(person, personId).subscribe(r => {
+      expect(r).toEqual(createPerson);
+      done();
+    });
+
+    apolloController.expectOne(UpdatePeopleDocument).flush(createPerson);
+    apolloController.verify();
   });
 
   it('should create person experience when experiences does not exists', (done) => {
@@ -99,5 +156,23 @@ describe('PersonAdapterService', () => {
 
     apolloController.expectOne(CreateExperiencesDocument).flush(createExperience);
     apolloController.verify();
+  });
+
+  it('should remove person', (done) => {
+    const personId = 'MrGreen';
+    const mockMutationResult = {
+      data: {
+        deletePeople:{
+          nodesDeleted: 1
+        }
+      },
+    };
+      service.removePerson<DeletePersonsMutation>(personId, DeletePersonsDocument).subscribe(r => {
+        expect(r).toBeTruthy();
+      });
+      
+      done();
+      TestBed.inject(ApolloTestingController).expectOne(DeletePersonsDocument).flush(mockMutationResult);
+
   });
 });
