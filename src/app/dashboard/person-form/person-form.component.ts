@@ -2,15 +2,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable } from 'rxjs';
-import { CreatePeopleGQL, Department, DepartmentsQuery, Person, PersonCreateInput, PersonUpdateInput, Project, ProjectsWithAllQuery, Role, RolesQuery, Seniority, Skill, SkillsQuery, UpdatePeopleGQL } from '../../generated/graphql';
-import { QLFilterBuilderService } from '../../services/ql-filter-builder.service';
+import { CreatePeopleGQL, Department, DepartmentsQuery, Person, Project, ProjectsWithAllQuery, Role, RolesQuery, Seniority, Skill, SkillsQuery, UpdatePeopleGQL } from '../../generated/graphql';
+import { PersonAdapterService } from './../../services/person-adapter.service';
 
+export type PersonForm = {
+    name: FormControl,
+    surname: FormControl,
+    birthday: FormControl,
+    departments: FormControl,
+    projects: FormControl,
+    skills: FormControl,
+    roles: FormControl,
+    seniority: FormControl,
+    rates: FormControl
+}
 @Component({
   selector: 'app-person-form',
   templateUrl: './person-form.component.html'
 })
 export class PersonFormComponent implements OnInit {
-  @Input() person!: Person | any;
+  person!: Person | any;
   @Output() submitted = new EventEmitter();
   @Output() canceled = new EventEmitter();
   @Input() deps$: Observable<DepartmentsQuery['departments']> = new Observable();
@@ -18,7 +29,7 @@ export class PersonFormComponent implements OnInit {
   @Input() skills$: Observable<SkillsQuery['skills']> = new Observable();
   @Input() roles$: Observable<RolesQuery['roles']> = new Observable();
   seniority = Object.values(Seniority);
-  personForm = new FormGroup({
+  personForm: FormGroup<PersonForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
     surname: new FormControl(null, Validators.required),
     birthday: new FormControl(),
@@ -31,12 +42,10 @@ export class PersonFormComponent implements OnInit {
   });
 
   constructor(
-    private qlFilterService: QLFilterBuilderService,
-    private createPGQL: CreatePeopleGQL,
-    private updatePGQL: UpdatePeopleGQL,
+    private personAdapterService: PersonAdapterService,
     private notification: NzNotificationService
   ) {
- 
+      this.person = personAdapterService.editedPerson;
   }
 
   ngOnInit(): void {
@@ -60,40 +69,13 @@ export class PersonFormComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.person) {
-      let input: PersonUpdateInput = {
-        name: this.personForm.get('name')?.value as any,
-        surname: this.personForm.get('surname')?.value as any,
-        birthday: this.personForm.get('birthday')?.value as any,
-        seniority: this.personForm.get('seniority')?.value as any,
-        skills: [{
-          disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('skills')?.value) as any
-        }],
-        projects: [{
-          disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('projects')?.value) as any
-        }],
-        departments: [{
-          disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('departments')?.value) as any
-        }],
-        roles: [{
-          disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('roles')?.value) as any
-        }],
-      };
-      this.updatePGQL.mutate({
-        where: {
-          id: this.person.id
-        },
-        update: input
-      }).subscribe(() => {
+    if(this.person){
+    this.personAdapterService.submitPerson<UpdatePeopleGQL>(this.personForm, this.person.id).subscribe(() => {
         this.submitted.emit();
         this.notification.create(
           'success',
           'Success',
-          `User ${input.name} ${input.surname} was successfully edited.`
+          `User ${this.person?.name} ${this.person.surname} was successfully edited.`
         );
         this.resetForm();
       }, (error: any) => {
@@ -103,31 +85,15 @@ export class PersonFormComponent implements OnInit {
           `${error}`
         )
       });
-    } else {
-      let input: PersonCreateInput = {
-        name: this.personForm.get('name')?.value as any,
-        surname: this.personForm.get('surname')?.value as any,
-        birthday: this.personForm.get('birthday')?.value as any,
-        skills: {
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('skills')?.value) as any
-        },
-        projects: {
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('projects')?.value) as any
-        },
-        departments: {
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('departments')?.value) as any
-        },
-        roles: {
-          connect: this.qlFilterService.connectWhere('id', this.personForm.get('roles')?.value) as any
-        },
-        seniority: this.personForm.get('seniority')?.value as any
-    };
-      this.createPGQL.mutate({ input }).subscribe(() => {
+      return;
+    }
+
+    this.personAdapterService.submitPerson<CreatePeopleGQL>(this.personForm).subscribe(() => {
         this.submitted.emit();
         this.notification.create(
           'success',
           'Success',
-          `User ${input.name} ${input.surname} was successfully added.`
+          `User ${this.personForm.get('name')?.value} ${this.personForm.get('surname')?.value} was successfully added.`
         );
         this.resetForm();
       }, (error: any) => {
@@ -138,5 +104,4 @@ export class PersonFormComponent implements OnInit {
         )
       });
     }
-  }
 }
