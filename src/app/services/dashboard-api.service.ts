@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DepartmentsQuery, Exact, InputMaybe, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllQuery, RolesQuery, SkillsQuery } from '../generated/graphql';
-import { Apollo, MutationResult, QueryRef, TypedDocumentNode } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
+import { DocumentNode } from 'graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DocumentNode } from 'graphql';
+import { Exact, InputMaybe, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery } from '../generated/graphql';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +27,6 @@ export class DashboardApiService {
       .pipe(
         map((result) => result.data[k]),
       );
-   }
-
-   removePerson<T>(id: string, document: DocumentNode): Observable<MutationResult<T>> {
-    return this.apollo.mutate<T>({mutation: document, context:{where: {id}}});
    }
 
   }

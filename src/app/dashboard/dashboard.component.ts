@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
+import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 import { DeletePersonsDocument, DeletePersonsMutation, DepartmentsDocument, DepartmentsQuery, PersonWithAllTypeFragment, ProjectsWithAllDocument, ProjectsWithAllQuery, RolesDocument, RolesQuery, SkillsDocument, SkillsQuery } from '../generated/graphql';
 import { DashboardApiService } from '../services/dashboard-api.service';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private qlFilterService: QLFilterBuilderService,
     private dashboardApiService: DashboardApiService,
+    private personAdapterService: PersonAdapterService,
     private notification: NzNotificationService
   ) {
     this.subscription.add(
@@ -73,7 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   
   removePerson(person: PersonWithAllTypeFragment): void {
     this.isConfirmModal = true;
-    this.dashboardApiService.removePerson<DeletePersonsMutation>(person.id, DeletePersonsDocument).subscribe(
+    this.personAdapterService.removePerson<DeletePersonsMutation>(person.id, DeletePersonsDocument).subscribe(
       () => {
         this.dashboardApiService.personsQueryRef.refetch();
       }, 
@@ -96,13 +98,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     openForm(formType: "person" | "rates" | null, person?: PersonWithAllTypeFragment): void {
       this.isFormVisible = true;
       this.currentForm = formType;
-      if(person) this.editedPerson = person;
+      if(person) {
+        this.editedPerson = person;
+        this.personAdapterService.setEditedPerson(person);
+      }
     }
 
     closeForm(refetch?: boolean | undefined): void {
       this.isFormVisible = false;
       this.currentForm = null;
       this.editedPerson = null;
+      this.personAdapterService.setEditedPerson(null);
       if(refetch) this.dashboardApiService.personsQueryRef.refetch();
     }
 

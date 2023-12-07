@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DeleteExperiencesDocument, Exact, Experience, ExperienceDataFragment, ExperienceWhere,  ExperiencesByPersonGQL, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../../generated/graphql';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
+import { DeleteExperiencesDocument, Exact, Experience, ExperienceWhere, ExperiencesByPersonQuery, InputMaybe, Person, SkillsGQL, SkillsQuery } from '../../../generated/graphql';
+import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 
 type ExperienceFormType = FormGroup<{
   experiences: FormArray<FormControl>;
@@ -29,7 +30,11 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
   });
   experienceQueryRef: QueryRef<ExperiencesByPersonQuery, Exact<{ where?: InputMaybe<ExperienceWhere> | undefined; }>> | undefined = undefined;
 
-  constructor(private apollo: Apollo, private sGQL: SkillsGQL, private rGQL: ExperiencesByPersonGQL, private notification: NzNotificationService, private fb: FormBuilder) {
+  constructor(
+    private apollo: Apollo, 
+    private sGQL: SkillsGQL, 
+    private notification: NzNotificationService, 
+    private fb: FormBuilder) {
     this.skills$ = this.sGQL.watch().valueChanges.pipe(map((result) => result.data.skills));
   }
 
@@ -43,12 +48,6 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
     this.rebuildFormGroup(changes.person.currentValue.experiences);
   }
 
-  getTitle(experience: AbstractControl<any,any>): string {
-    const name = experience.get('name')?.value;
-    const startedFrom = experience.get('startedFrom')?.value ? new Date(experience.get('startedFrom')?.value).toLocaleDateString("pl-PL") : undefined;
-    const gainedAt = experience.get('gainedAt')?.value ? new Date(experience.get('gainedAt')?.value).toLocaleDateString("pl-PL") : undefined;
-    return (name && startedFrom && gainedAt) ? name + ' ' + startedFrom +' - '+ gainedAt : 'New Experience';
-  }
   private rebuildFormGroup(experiences: Experience[]): void {
     const workExperiencesFormArray = this.experienceForm.get('experiences') as FormArray;
     const e = experiences.map(e => ({...e, skills: e.skills.map(s => s.id)})).sort((a,b) => {
