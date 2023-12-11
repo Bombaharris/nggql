@@ -8,24 +8,18 @@ import { Exact, InputMaybe, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery 
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardApiService {
-  personsQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>>;
+export class ApolloClientService {
   
   constructor(
-    private pGQL: PersonsWithAllGQL,
     private apollo: Apollo,
   ) {
-    this.personsQueryRef = this.pGQL.watch({}, {
-      fetchPolicy: 'cache-and-network',
-      errorPolicy: 'all'
-    });
-   }
+  }
 
-   fetchValuesForSearchBar<T>(query: DocumentNode, key: string):  Observable<T[Exclude<keyof T, "__typename">]> {
+   fetchValues<T>(query: DocumentNode, key: string):  Observable<T[Exclude<keyof T, "__typename">]> {
     const k = key as keyof Omit<T, "__typename">;
     return this.apollo.watchQuery<T>({query}).valueChanges
       .pipe(
-        map((result) => result.data[k]),
+        map((result) => result.data[k])
       );
    }
 

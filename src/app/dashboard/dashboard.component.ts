@@ -3,9 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
-import { DeletePersonsDocument, DeletePersonsMutation, DepartmentsDocument, DepartmentsQuery, PersonWithAllTypeFragment, ProjectsWithAllDocument, ProjectsWithAllQuery, RolesDocument, RolesQuery, SkillsDocument, SkillsQuery } from '../generated/graphql';
-import { DashboardApiService } from '../services/dashboard-api.service';
+import { DeletePersonsDocument, DeletePersonsMutation, DepartmentsQuery, PersonWithAllTypeFragment, ProjectsWithAllQuery, RolesDocument, RolesQuery, SkillsQuery } from '../generated/graphql';
+import { DepartmentsAdapterService } from '../services/departments-adapter.service';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
+import { RolesAdapterService } from '../services/roles-adapter.service';
+import { SkillsAdapterService } from '../services/skills-adapter.service';
+import { ProjectsAdapterService } from './../services/projects-adapter.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,10 +22,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
-  deps$: Observable<DepartmentsQuery['departments']>;
-  projects$: Observable<ProjectsWithAllQuery['projects']>;
-  skills$: Observable<SkillsQuery['skills']>;
-  roles$: Observable<RolesQuery['roles']>;
+  departments!: Observable<DepartmentsQuery['departments']>;
+  projects!: Observable<ProjectsWithAllQuery['projects']>;
+  skills!: Observable<SkillsQuery['skills']>;
+  roles!: Observable<RolesQuery['roles']>;
   filterForm = new FormGroup({
     deps: new FormControl(),
     projects: new FormControl(),
@@ -34,12 +37,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private qlFilterService: QLFilterBuilderService,
-    private dashboardApiService: DashboardApiService,
+    private departmentsAdapterService: DepartmentsAdapterService,
     private personAdapterService: PersonAdapterService,
+    private rolesAdapterService: RolesAdapterService,
+    private projectsAdapterService: ProjectsAdapterService,
+    private skillsAdapterService: SkillsAdapterService,
     private notification: NzNotificationService
   ) {
     this.subscription.add(
-      this.dashboardApiService.personsQueryRef.valueChanges.subscribe(({ data, loading, errors }) => {
+      this.personAdapterService.personsQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
           this.isLoading = loading;
         }
@@ -54,10 +60,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
     );
      
-    this.deps$ = this.dashboardApiService.fetchValuesForSearchBar<DepartmentsQuery>(DepartmentsDocument, 'departments');
-    this.projects$ = this.dashboardApiService.fetchValuesForSearchBar<ProjectsWithAllQuery>(ProjectsWithAllDocument, 'projects');
-    this.skills$ = this.dashboardApiService.fetchValuesForSearchBar<SkillsQuery>(SkillsDocument, 'skills');
-    this.roles$ = this.dashboardApiService.fetchValuesForSearchBar<RolesQuery>(RolesDocument, 'roles');
+    this.departments = this.departmentsAdapterService.fetch();
+    this.projects = this.projectsAdapterService.fetch();
+    this.skills = this.skillsAdapterService.fetch();
+    this.roles = this.rolesAdapterService.fetch();
   }
 
   ngOnInit(): void {
@@ -67,7 +73,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.qlFilterService.andWhere('projects_SOME','id', values.projects);
         this.qlFilterService.andWhere('skills_SOME','id', values.skills);
         this.qlFilterService.andWhere('roles_SOME','id', values.roles);
-        this.dashboardApiService.personsQueryRef.refetch(this.qlFilterService.getVariables());
+        this.personAdapterService.personsQueryRef?.refetch(this.qlFilterService.getVariables());
       })
     );
   }
@@ -77,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isConfirmModal = true;
     this.personAdapterService.removePerson<DeletePersonsMutation>(person.id, DeletePersonsDocument).subscribe(
       () => {
-        this.dashboardApiService.personsQueryRef.refetch();
+        this.personAdapterService.personsQueryRef?.refetch();
       }, 
       (error) => {
         this.notification.create(
@@ -105,11 +111,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     closeForm(refetch?: boolean | undefined): void {
+      if(refetch) {
+        this.personAdapterService.personsQueryRef?.refetch();
+        this.notification.create(
+          'success',
+          'Success',
+          `User ${this.editedPerson?.name} ${this.editedPerson?.surname} was successfully ${this.editedPerson?.id ? 'edited' : 'created'}.`
+        );
+      }
       this.isFormVisible = false;
       this.currentForm = null;
       this.editedPerson = null;
       this.personAdapterService.setEditedPerson(null);
-      if(refetch) this.dashboardApiService.personsQueryRef.refetch();
+    }
+
+    errorHandler(error: any): void {
+      this.notification.create(
+        'error',
+        'Error',
+        `${error}`
+      )
     }
 
   ngOnDestroy(): void {
