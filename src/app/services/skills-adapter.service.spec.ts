@@ -1,21 +1,20 @@
 import { TestBed } from '@angular/core/testing';
+
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { DeletePersonsDocument, DeletePersonsGQL, DeletePersonsMutation, SkillsDocument, SkillsGQL } from '../generated/graphql';
-import { DashboardApiService } from './dashboard-api.service';
 import { DocumentNode } from 'graphql';
+import { SkillsDocument, SkillsQuery } from '../generated/graphql';
+import { SkillsAdapterService } from './skills-adapter.service';
 
-
-
-describe('DashboardApiService', () => {
-  let service: DashboardApiService;
+describe('RolesAdapterService', () => {
+  let service: SkillsAdapterService;
   let apolloController: ApolloTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({  
       imports: [ApolloTestingModule],
-      providers: [DashboardApiService, DeletePersonsGQL, SkillsGQL],
+      providers: [SkillsAdapterService],
       });
-      service = TestBed.inject(DashboardApiService);
+      service = TestBed.inject(SkillsAdapterService);
       apolloController = TestBed.inject(ApolloTestingController);
   });
 
@@ -27,7 +26,7 @@ describe('DashboardApiService', () => {
     apolloController.verify();
   });
   
-  it('fetchValuesForSearchBar', (done) => {
+  it('fetchValues of skills', (done) => {
     const query: DocumentNode = SkillsDocument;
     const key = 'skills';
 
@@ -35,14 +34,14 @@ describe('DashboardApiService', () => {
           data: {
           [key]: [
                 {
-                    "id": "Angular",
+                    "id": "1",
                     "name": "Angular",
                 },
             ]
         }
       };
      
-     service.fetchValuesForSearchBar(query, key).subscribe((result) => {
+      service.fetchValues<SkillsQuery>(query, key).subscribe((result: SkillsQuery['skills']) => {
       expect(result).toEqual(mockSkills.data[key]);
     });
     done();
@@ -51,4 +50,3 @@ describe('DashboardApiService', () => {
 
 
 });
-

@@ -30,7 +30,7 @@
         nzPlaceHolder="Please select departments"
         formControlName="departments"
         >
-        <nz-option *ngFor="let dep of deps$ | async" [nzLabel]="dep.name" [nzValue]="dep.id"></nz-option>
+        <nz-option *ngFor="let dep of departments" [nzLabel]="dep.name" [nzValue]="dep.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -43,7 +43,7 @@
         nzPlaceHolder="Please select skills"
         formControlName="skills"
         >
-        <nz-option *ngFor="let skill of skills$ | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+        <nz-option *ngFor="let skill of skills" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -56,7 +56,7 @@
         nzPlaceHolder="Please select projects"
         formControlName="projects"
         >
-        <nz-option *ngFor="let project of projects$ | async" [nzLabel]="project.name" [nzValue]="project.id"></nz-option>
+        <nz-option *ngFor="let project of projects" [nzLabel]="project.name" [nzValue]="project.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -69,7 +69,7 @@
         nzPlaceHolder="Please select roles"
         formControlName="roles"
         >
-        <nz-option *ngFor="let role of roles$ | async" [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
+        <nz-option *ngFor="let role of roles" [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

@@ -4,7 +4,7 @@ import { ApolloQueryResult } from '@apollo/client/core/types';
 import { Apollo, MutationResult, QueryRef } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { Observable } from 'rxjs';
-import { PersonForm } from '../dashboard/person-form/person-form.component';
+import { PersonForm } from '../dashboard/person-form/models/PersonFormModels';
 import { CreateExperiencesDocument, CreatePeopleDocument, EditExperiencesDocument, Exact, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, UpdatePeopleDocument } from '../generated/graphql';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
 
@@ -12,7 +12,7 @@ import { QLFilterBuilderService } from './ql-filter-builder.service';
   providedIn: 'root'
 })
 export class PersonAdapterService {
-  personQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
+  personsQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
   editedPerson: PersonWithAllTypeFragment | null = null;
 
   constructor(
@@ -20,17 +20,21 @@ export class PersonAdapterService {
     private qlFilterService: QLFilterBuilderService, 
     private pGQL: PersonsWithAllGQL
   ) {
+    this.personsQueryRef = this.pGQL.watch({}, {
+      fetchPolicy: 'cache-and-network',
+      errorPolicy: 'all'
+    });
   }
   
   setPersonQueryRef(personId: string): void {
-    this.personQueryRef = this.pGQL.watch({where:{id: personId}}, {
+    this.personsQueryRef = this.pGQL.watch({where:{id: personId}}, {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
   }
   
   refetch(personId: string): Promise<ApolloQueryResult<PersonsWithAllQuery>> | undefined {
-    return this.personQueryRef?.refetch({where: {id: personId}});
+    return this.personsQueryRef?.refetch({where: {id: personId}});
   }
   
   setEditedPerson(person: PersonWithAllTypeFragment | null): void {

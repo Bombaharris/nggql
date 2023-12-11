@@ -1,21 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Observable } from 'rxjs';
+import { ProjectsAdapterService } from 'src/app/services/projects-adapter.service';
+import { RolesAdapterService } from 'src/app/services/roles-adapter.service';
+import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
 import { CreatePeopleGQL, Department, DepartmentsQuery, Person, Project, ProjectsWithAllQuery, Role, RolesQuery, Seniority, Skill, SkillsQuery, UpdatePeopleGQL } from '../../generated/graphql';
+import { DepartmentsAdapterService } from './../../services/departments-adapter.service';
 import { PersonAdapterService } from './../../services/person-adapter.service';
+import { PersonForm } from './models/PersonFormModels';
 
-export type PersonForm = {
-    name: FormControl,
-    surname: FormControl,
-    birthday: FormControl,
-    departments: FormControl,
-    projects: FormControl,
-    skills: FormControl,
-    roles: FormControl,
-    seniority: FormControl,
-    rates: FormControl
-}
 @Component({
   selector: 'app-person-form',
   templateUrl: './person-form.component.html'
@@ -24,10 +16,11 @@ export class PersonFormComponent implements OnInit {
   person!: Person | any;
   @Output() submitted = new EventEmitter();
   @Output() canceled = new EventEmitter();
-  @Input() deps$: Observable<DepartmentsQuery['departments']> = new Observable();
-  @Input() projects$: Observable<ProjectsWithAllQuery['projects']> = new Observable();
-  @Input() skills$: Observable<SkillsQuery['skills']> = new Observable();
-  @Input() roles$: Observable<RolesQuery['roles']> = new Observable();
+  @Output() error = new EventEmitter();
+  departments!: DepartmentsQuery['departments'];
+  projects!: ProjectsWithAllQuery['projects'];
+  skills!: SkillsQuery['skills'];
+  roles!: RolesQuery['roles'];
   seniority = Object.values(Seniority);
   personForm: FormGroup<PersonForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -43,9 +36,16 @@ export class PersonFormComponent implements OnInit {
 
   constructor(
     private personAdapterService: PersonAdapterService,
-    private notification: NzNotificationService
+    private departmentsAdapterService: DepartmentsAdapterService,
+    private skillsAdapterService: SkillsAdapterService,
+    private rolesAdapterService: RolesAdapterService,
+    private projectsAdapterService: ProjectsAdapterService,
   ) {
       this.person = personAdapterService.editedPerson;
+      this.departments = this.departmentsAdapterService.departments;
+      this.skills = this.skillsAdapterService.skills;
+      this.roles = this.rolesAdapterService.roles;
+      this.projects = this.projectsAdapterService.projects;
   }
 
   ngOnInit(): void {
@@ -72,36 +72,18 @@ export class PersonFormComponent implements OnInit {
     if(this.person){
     this.personAdapterService.submitPerson<UpdatePeopleGQL>(this.personForm, this.person.id).subscribe(() => {
         this.submitted.emit();
-        this.notification.create(
-          'success',
-          'Success',
-          `User ${this.person?.name} ${this.person.surname} was successfully edited.`
-        );
         this.resetForm();
       }, (error: any) => {
-        this.notification.create(
-          'error',
-          'Error',
-          `${error}`
-        )
+        this.error.emit(error);
       });
       return;
     }
 
     this.personAdapterService.submitPerson<CreatePeopleGQL>(this.personForm).subscribe(() => {
         this.submitted.emit();
-        this.notification.create(
-          'success',
-          'Success',
-          `User ${this.personForm.get('name')?.value} ${this.personForm.get('surname')?.value} was successfully added.`
-        );
         this.resetForm();
       }, (error: any) => {
-        this.notification.create(
-          'error',
-          'Error',
-          `${error}`
-        )
+        this.error.emit(error);
       });
     }
 }
