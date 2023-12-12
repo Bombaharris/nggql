@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProjectsAdapterService } from './projects-adapter.service';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { DocumentNode } from 'graphql';
-import { DeletePersonsGQL, SkillsGQL, DepartmentsDocument, DepartmentsQuery, ProjectsDocument, ProjectsQuery } from '../generated/graphql';
+import { ProjectsDocument, ProjectsQuery } from '../generated/graphql';
+import { ProjectsAdapterService } from './projects-adapter.service';
 
 describe('ProjectsAdapterService', () => {
   let service: ProjectsAdapterService;

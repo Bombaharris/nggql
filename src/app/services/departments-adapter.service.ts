@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentsAdapterService extends ApolloClientService{
+export class DepartmentsAdapterService extends ApolloClientService {
   departments!: DepartmentsQuery['departments'];
   
   constructor(apollo: Apollo) {

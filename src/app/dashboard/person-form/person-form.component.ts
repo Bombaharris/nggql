@@ -16,7 +16,6 @@ export class PersonFormComponent implements OnInit {
   person!: Person | any;
   @Output() submitted: EventEmitter<FormGroup<PersonForm>> = new EventEmitter();
   @Output() canceled = new EventEmitter();
-  @Output() error = new EventEmitter();
   departments!: DepartmentsQuery['departments'];
   projects!: ProjectsWithAllQuery['projects'];
   skills!: SkillsQuery['skills'];

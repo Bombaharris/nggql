@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { DocumentNode } from 'graphql';
-import { DeletePersonsGQL, DepartmentsDocument, DepartmentsQuery, SkillsGQL } from '../generated/graphql';
+import { DepartmentsDocument, DepartmentsQuery } from '../generated/graphql';
 import { DepartmentsAdapterService } from './departments-adapter.service';
 
 describe('DepartmentsAdapterService', () => {
