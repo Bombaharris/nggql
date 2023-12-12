@@ -89,6 +89,22 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
+  removePersonsExperience(id: string): void {
+    this.personAdapterService.removePersonsExperience(id).subscribe(() => {
+      this.notification.create(
+        'success',
+        'Success',
+        `Experience was successfully deleted.`
+        );
+      }, (error: any) => {
+        this.notification.create(
+          'error',
+          'Error',
+          `Error occured during edition of experience: ${error}`
+          )
+        });
+  }
+
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }

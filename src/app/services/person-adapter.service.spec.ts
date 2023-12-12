@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { PersonForm } from '../dashboard/person-form/models/PersonFormModels';
+import { PersonForm } from '../dashboard/person-form/models/person-form.model';
 import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, DeletePersonsDocument, DeletePersonsMutation, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
 import { PersonAdapterService } from './person-adapter.service';
 

@@ -4,8 +4,8 @@ import { ApolloQueryResult } from '@apollo/client/core/types';
 import { Apollo, MutationResult, QueryRef } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { Observable } from 'rxjs';
-import { PersonForm } from '../dashboard/person-form/models/PersonFormModels';
-import { CreateExperiencesDocument, CreatePeopleDocument, EditExperiencesDocument, Exact, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, UpdatePeopleDocument } from '../generated/graphql';
+import { PersonForm } from '../dashboard/person-form/models/person-form.model';
+import { CreateExperiencesDocument, CreatePeopleDocument, DeleteExperiencesDocument, DeleteExperiencesMutation, EditExperiencesDocument, Exact, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, UpdatePeopleDocument } from '../generated/graphql';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
 
 @Injectable({
@@ -120,5 +120,9 @@ export class PersonAdapterService {
     const mutationDocument = isCreate ? CreateExperiencesDocument : EditExperiencesDocument;
     const variables = isCreate ? { input } : { where:{ id: experience.get('id')?.value }, update: input };
     return this.apollo.mutate({ mutation: mutationDocument, variables }) as Observable<MutationResult<T>>;
+  }
+
+  removePersonsExperience(id: string): Observable<MutationResult<DeleteExperiencesMutation>> {
+    return this.apollo.mutate<DeleteExperiencesMutation>({mutation: DeleteExperiencesDocument, variables:{where: {id: id}}});
   }
 }
