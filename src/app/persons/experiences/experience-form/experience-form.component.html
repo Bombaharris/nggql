@@ -46,7 +46,7 @@
           nzPlaceHolder="Please select skills"
           formControlName="skills"
           >
-          <nz-option *ngFor="let skill of skills$ | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+          <nz-option *ngFor="let skill of skills" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>

@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProjectsAdapterService } from 'src/app/services/projects-adapter.service';
 import { RolesAdapterService } from 'src/app/services/roles-adapter.service';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
-import { CreatePeopleGQL, Department, DepartmentsQuery, Person, Project, ProjectsWithAllQuery, Role, RolesQuery, Seniority, Skill, SkillsQuery, UpdatePeopleGQL } from '../../generated/graphql';
+import { Department, DepartmentsQuery, Person, Project, ProjectsWithAllQuery, Role, RolesQuery, Seniority, Skill, SkillsQuery } from '../../generated/graphql';
 import { DepartmentsAdapterService } from './../../services/departments-adapter.service';
 import { PersonAdapterService } from './../../services/person-adapter.service';
-import { PersonForm } from './models/PersonFormModels';
+import { PersonForm } from './models/person-form.model';
 
 @Component({
   selector: 'app-person-form',
@@ -14,7 +14,7 @@ import { PersonForm } from './models/PersonFormModels';
 })
 export class PersonFormComponent implements OnInit {
   person!: Person | any;
-  @Output() submitted = new EventEmitter();
+  @Output() submitted: EventEmitter<FormGroup<PersonForm>> = new EventEmitter();
   @Output() canceled = new EventEmitter();
   @Output() error = new EventEmitter();
   departments!: DepartmentsQuery['departments'];
@@ -69,21 +69,7 @@ export class PersonFormComponent implements OnInit {
   }
 
   submit(): void {
-    if(this.person){
-    this.personAdapterService.submitPerson<UpdatePeopleGQL>(this.personForm, this.person.id).subscribe(() => {
-        this.submitted.emit();
-        this.resetForm();
-      }, (error: any) => {
-        this.error.emit(error);
-      });
-      return;
-    }
-
-    this.personAdapterService.submitPerson<CreatePeopleGQL>(this.personForm).subscribe(() => {
-        this.submitted.emit();
-        this.resetForm();
-      }, (error: any) => {
-        this.error.emit(error);
-      });
-    }
+    this.submitted.emit(this.personForm);
+    this.resetForm();
+  }
 }

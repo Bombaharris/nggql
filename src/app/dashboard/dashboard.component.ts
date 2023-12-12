@@ -3,12 +3,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Observable, Subscription } from 'rxjs';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
-import { DeletePersonsDocument, DeletePersonsMutation, DepartmentsQuery, PersonWithAllTypeFragment, ProjectsWithAllQuery, RolesDocument, RolesQuery, SkillsQuery } from '../generated/graphql';
+import { CreatePeopleGQL, DeletePersonsDocument, DeletePersonsMutation, DepartmentsQuery, PersonWithAllTypeFragment, ProjectsWithAllQuery, RolesQuery, SkillsQuery, UpdatePeopleGQL } from '../generated/graphql';
 import { DepartmentsAdapterService } from '../services/departments-adapter.service';
 import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
 import { RolesAdapterService } from '../services/roles-adapter.service';
 import { SkillsAdapterService } from '../services/skills-adapter.service';
 import { ProjectsAdapterService } from './../services/projects-adapter.service';
+import { PersonForm } from './person-form/models/person-form.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,10 +23,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
-  departments!: Observable<DepartmentsQuery['departments']>;
-  projects!: Observable<ProjectsWithAllQuery['projects']>;
-  skills!: Observable<SkillsQuery['skills']>;
-  roles!: Observable<RolesQuery['roles']>;
+  departments$!: Observable<DepartmentsQuery['departments']>;
+  projects$!: Observable<ProjectsWithAllQuery['projects']>;
+  skills$!: Observable<SkillsQuery['skills']>;
+  roles$!: Observable<RolesQuery['roles']>;
   filterForm = new FormGroup({
     deps: new FormControl(),
     projects: new FormControl(),
@@ -60,10 +61,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
     );
      
-    this.departments = this.departmentsAdapterService.fetch();
-    this.projects = this.projectsAdapterService.fetch();
-    this.skills = this.skillsAdapterService.fetch();
-    this.roles = this.rolesAdapterService.fetch();
+    this.departments$ = this.departmentsAdapterService.fetch();
+    this.projects$ = this.projectsAdapterService.fetch();
+    this.skills$ = this.skillsAdapterService.fetch();
+    this.roles$ = this.rolesAdapterService.fetch();
   }
 
   ngOnInit(): void {
@@ -110,27 +111,51 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     }
 
-    closeForm(refetch?: boolean | undefined): void {
-      if(refetch) {
-        this.personAdapterService.personsQueryRef?.refetch();
-        this.notification.create(
-          'success',
-          'Success',
-          `User ${this.editedPerson?.name} ${this.editedPerson?.surname} was successfully ${this.editedPerson?.id ? 'edited' : 'created'}.`
-        );
-      }
+    clearForm(): void {
       this.isFormVisible = false;
       this.currentForm = null;
       this.editedPerson = null;
       this.personAdapterService.setEditedPerson(null);
     }
 
-    errorHandler(error: any): void {
-      this.notification.create(
-        'error',
-        'Error',
-        `${error}`
-      )
+    closeForm(personForm?: FormGroup<PersonForm>): void {
+      if(personForm) {
+        const name = personForm.get('name')?.value;
+        const surname = personForm.get('surname')?.value;
+        if(this.editedPerson){
+        this.personAdapterService.submitPerson<UpdatePeopleGQL>(personForm, this.editedPerson.id).subscribe((data) => {
+          this.notification.create(
+            'success',
+            'Success',
+            `User ${name} ${surname} was successfully edited.`
+            );
+        }, (error: any) => {
+          this.notification.create(
+            'error',
+            'Error',
+            `${error}`
+          )
+        });
+        this.clearForm();
+        return;
+      }
+  
+      this.personAdapterService.submitPerson<CreatePeopleGQL>(personForm).subscribe(() => {
+        this.notification.create(
+          'success',
+          'Success',
+          `User ${name} ${surname} was successfully created.`
+          );
+          this.personAdapterService.personsQueryRef?.refetch();
+      }, (error: any) => {
+          this.notification.create(
+            'error',
+            'Error',
+            `${error}`
+          )
+        });
+      }   
+      this.clearForm();
     }
 
   ngOnDestroy(): void {
