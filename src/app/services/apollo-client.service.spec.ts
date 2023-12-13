@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { DeletePersonsDocument, DeletePersonsGQL, DeletePersonsMutation, SkillsDocument, SkillsGQL, SkillsQuery } from '../generated/graphql';
-import { ApolloClientService } from './apollo-client.service';
 import { DocumentNode } from 'graphql';
+import { DeletePersonsGQL, SkillsDocument, SkillsGQL, SkillsQuery } from '../generated/graphql';
+import { ApolloClientService } from './apollo-client.service';
 
 
 

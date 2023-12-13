@@ -7,7 +7,7 @@ import { Apollo } from 'apollo-angular';
 @Injectable({
   providedIn: 'root'
 })
-export class RolesAdapterService extends ApolloClientService{
+export class RolesAdapterService extends ApolloClientService {
   roles!: RolesQuery['roles'];
   
   constructor(apollo: Apollo) { 

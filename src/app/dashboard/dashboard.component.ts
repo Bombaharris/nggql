@@ -122,8 +122,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if(personForm) {
         const name = personForm.get('name')?.value;
         const surname = personForm.get('surname')?.value;
-        if(this.editedPerson){
-        this.personAdapterService.submitPerson<UpdatePeopleGQL>(personForm, this.editedPerson.id).subscribe((data) => {
+        if(this.editedPerson) {
+        this.personAdapterService.submitPerson<UpdatePeopleGQL>(personForm, this.editedPerson.id).subscribe(() => {
           this.notification.create(
             'success',
             'Success',

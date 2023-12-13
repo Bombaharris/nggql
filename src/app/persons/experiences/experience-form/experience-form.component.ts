@@ -46,7 +46,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
 
   private rebuildFormGroup(experiences: Experience[]): void {
     const workExperiencesFormArray = this.experienceForm.get('experiences') as FormArray;
-    const e = experiences.map(e => ({...e, skills: e.skills.map(s => s.id)})).sort((a,b) => {
+    const e = experiences.map(exp => ({...exp, skills: exp.skills.map(s => s.id)})).sort((a,b) => {
       const dB = new Date(b.startedFrom).getTime();
       const dA = new Date(a.startedFrom).getTime();
       return dB - dA;
@@ -77,7 +77,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
     })
   }
 
-  addNewForm(){
+  addNewForm() {
     if(!this.experiences) return;
     this.experiences.push(this.newExperienceGroup());
   }
@@ -96,7 +96,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
 
     }
 
-  cancelDelete(){
+  cancelDelete() {
     this.confirmModal = false;
   }
 }

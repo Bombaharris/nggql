@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Apollo, QueryRef } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Exact, InputMaybe, PersonWhere, PersonsWithAllGQL, PersonsWithAllQuery } from '../generated/graphql';
 
 @Injectable({
   providedIn: 'root'

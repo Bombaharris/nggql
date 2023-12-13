@@ -9,6 +9,7 @@ import {Observable } from 'rxjs';
 })
 export class SkillsAdapterService extends ApolloClientService {
   skills!: SkillsQuery['skills'];
+  
   constructor(apollo: Apollo) {
     super(apollo);
    }
