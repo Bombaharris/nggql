@@ -16,28 +16,28 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^14.2.4",
-    "@angular/cdk": "^14.2.4",
-    "@angular/common": "^14.2.4",
-    "@angular/compiler": "^14.2.4",
-    "@angular/core": "^14.2.4",
-    "@angular/forms": "^14.2.4",
-    "@angular/language-service": "^14.2.4",
-    "@angular/platform-browser": "^14.2.4",
-    "@angular/platform-browser-dynamic": "^14.2.4",
-    "@angular/router": "^14.2.4",
-    "@apollo/client": "^3.6.9",
-    "apollo-angular": "^4.0.1",
+    "@angular/animations": "^17.0.6",
+    "@angular/cdk": "^17.0.3",
+    "@angular/common": "^17.0.6",
+    "@angular/compiler": "^17.0.6",
+    "@angular/core": "^17.0.6",
+    "@angular/forms": "^17.0.6",
+    "@angular/language-service": "^17.0.6",
+    "@angular/platform-browser": "^17.0.6",
+    "@angular/platform-browser-dynamic": "^17.0.6",
+    "@angular/router": "^17.0.6",
+    "@apollo/client": "^3.8.8",
+    "apollo-angular": "^5.0.1",
     "graphql": "^16.6.0",
-    "ng-zorro-antd": "^14.0.0",
+    "ng-zorro-antd": "^17.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "^0.14.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.4",
-    "@angular/cli": "^14.2.4",
-    "@angular/compiler-cli": "^14.2.4",
+    "@angular-devkit/build-angular": "^17.0.6",
+    "@angular/cli": "^17.0.6",
+    "@angular/compiler-cli": "^17.0.6",
     "@graphql-codegen/cli": "^2.13.2",
     "@graphql-codegen/introspection": "^2.2.1",
     "@graphql-codegen/typescript-apollo-angular": "^3.5.3",
@@ -51,6 +51,6 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "prettier": "^2.7.1",
-    "typescript": "~4.6.4"
+    "typescript": "^5.2.2"
   }
 }
