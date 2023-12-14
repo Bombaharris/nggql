@@ -6,6 +6,6 @@
             <nz-breadcrumb-item>Experience</nz-breadcrumb-item>
             <nz-breadcrumb-item>{{editedPerson?.name}} {{editedPerson?.surname}}</nz-breadcrumb-item>
         </nz-breadcrumb>
-        <app-experience-form [person]="editedPerson" (submitted)="submitExperience($event)"></app-experience-form>
+        <app-experience-form [person]="editedPerson" (submitted)="submitExperience($event)" (deleted)="removePersonsExperience($event)"></app-experience-form>
     </nz-content>
 </nz-layout>

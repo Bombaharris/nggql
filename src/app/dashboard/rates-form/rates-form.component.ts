@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { QueryRef, Apollo } from 'apollo-angular';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -11,7 +11,7 @@ import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.servi
   templateUrl: './rates-form.component.html',
   styleUrls: ['./rates-form.component.scss']
 })
-export class RatesFormComponent implements OnInit {
+export class RatesFormComponent implements OnInit, OnDestroy {
   @Input() person!: Person | any;
   ratesResponse: Rate[] | undefined = undefined;
   @Output() submitted = new EventEmitter();
@@ -79,7 +79,7 @@ export class RatesFormComponent implements OnInit {
     })
   }
 
-  addNewForm(){
+  addNewForm() {
     if(!this.rates) return;
     this.rates.push(this.newRateGroup());
   }
@@ -103,7 +103,7 @@ export class RatesFormComponent implements OnInit {
         });
     }
 
-  submitRate(rate: AbstractControl<Rate,Rate>){
+  submitRate(rate: AbstractControl<Rate,Rate>) {
     let input = {
       person: {id:this.person.id},
       value: rate.get('value')?.value ?? '',

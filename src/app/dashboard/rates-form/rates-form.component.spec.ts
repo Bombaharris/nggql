@@ -1,27 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RatesFormComponent } from './rates-form.component';
-import { Overlay } from '@angular/cdk/overlay';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { DashboardComponent } from '../dashboard.component';
-import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { Overlay } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GraphQLModule } from 'src/app/graphql.module';
+import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
+import { DashboardComponent } from '../dashboard.component';
+import { RatesFormComponent } from './rates-form.component';
 
 describe('RatesFormComponent', () => {
-  let controller: ApolloTestingController;
   let dashboard: DashboardComponent;
   let ratesComponent: RatesFormComponent;
   let ratesFormFixture: ComponentFixture<RatesFormComponent>;
   let dashboardFixture: ComponentFixture<DashboardComponent>;
-  let fb: FormBuilder;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RatesFormComponent, DashboardComponent ],
@@ -43,7 +40,6 @@ describe('RatesFormComponent', () => {
     ratesComponent = ratesFormFixture.componentInstance;
     dashboardFixture = TestBed.createComponent(DashboardComponent);
     dashboard = dashboardFixture.componentInstance;
-    dashboard.openForm("experience");
     ratesComponent.isLoading = false;
     ratesComponent.ratesForm.get("rates")?.value.push(ratesComponent.addNewForm())
     ratesComponent.person = {
@@ -57,6 +53,7 @@ describe('RatesFormComponent', () => {
       roles: [],
       skills: [],
     }
+    dashboard.openForm("rates", ratesComponent.person);
     dashboardFixture.detectChanges();
     ratesFormFixture.detectChanges();
   });

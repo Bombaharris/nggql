@@ -1,11 +1,15 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DepartmentsGQL, DepartmentsQuery, Exact, InputMaybe, Person, DeletePersonsGQL, DeletePersonsDocument, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, ProjectsWithAllGQL, ProjectsWithAllQuery, RolesGQL, RolesQuery, SkillConnectInput, SkillsGQL, SkillsQuery } from '../generated/graphql';
-import { QueryRef } from 'apollo-angular';
-import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Observable, Subscription } from 'rxjs';
+import { PersonAdapterService } from 'src/app/services/person-adapter.service';
+import { CreatePeopleGQL, DeletePersonsDocument, DeletePersonsMutation, DepartmentsQuery, PersonWithAllTypeFragment, ProjectsWithAllQuery, RolesQuery, SkillsQuery, UpdatePeopleGQL } from '../generated/graphql';
+import { DepartmentsAdapterService } from '../services/departments-adapter.service';
+import { QLFilterBuilderService } from '../services/ql-filter-builder.service';
+import { RolesAdapterService } from '../services/roles-adapter.service';
+import { SkillsAdapterService } from '../services/skills-adapter.service';
+import { ProjectsAdapterService } from './../services/projects-adapter.service';
+import { PersonForm } from './person-form/models/person-form.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,15 +19,14 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 export class DashboardComponent implements OnInit, OnDestroy {
   isFormVisible = false;
   isLoading = false;
-  currentForm: "experience" | "person" | "rates" | null = null;
+  currentForm: "person" | "rates" | null = null;
   expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
-  queryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>>;
-  deps$: Observable<DepartmentsQuery['departments']>;
-  projects$: Observable<ProjectsWithAllQuery['projects']>;
-  skills$: Observable<SkillsQuery['skills']>;
-  roles$: Observable<RolesQuery['roles']>;
+  departments$!: Observable<DepartmentsQuery['departments']>;
+  projects$!: Observable<ProjectsWithAllQuery['projects']>;
+  skills$!: Observable<SkillsQuery['skills']>;
+  roles$!: Observable<RolesQuery['roles']>;
   filterForm = new FormGroup({
     deps: new FormControl(),
     projects: new FormControl(),
@@ -35,21 +38,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private qlFilterService: QLFilterBuilderService,
-    private pGQL: PersonsWithAllGQL,
-    private rpGQL: DeletePersonsGQL,
-    private prGQL: ProjectsWithAllGQL,
-    private sGQL: SkillsGQL,
-    private rGQL: RolesGQL,
-    private dGQL: DepartmentsGQL,
+    private departmentsAdapterService: DepartmentsAdapterService,
+    private personAdapterService: PersonAdapterService,
+    private rolesAdapterService: RolesAdapterService,
+    private projectsAdapterService: ProjectsAdapterService,
+    private skillsAdapterService: SkillsAdapterService,
     private notification: NzNotificationService
   ) {
-    this.queryRef = this.pGQL.watch({}, {
-      fetchPolicy: 'cache-and-network',
-      errorPolicy: 'all'
-    });
-
     this.subscription.add(
-      this.queryRef.valueChanges.subscribe(({ data, loading, errors }) => {
+      this.personAdapterService.personsQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
           this.isLoading = loading;
         }
@@ -63,23 +60,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       })
     );
-
-    this.deps$ = this.dGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.departments)
-      );
-    this.projects$ = this.prGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.projects)
-      );
-    this.skills$ = this.sGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.skills)
-      );
-    this.roles$ = this.rGQL.watch().valueChanges
-      .pipe(
-        map((result) => result.data.roles)
-      );
+     
+    this.departments$ = this.departmentsAdapterService.fetch();
+    this.projects$ = this.projectsAdapterService.fetch();
+    this.skills$ = this.skillsAdapterService.fetch();
+    this.roles$ = this.rolesAdapterService.fetch();
   }
 
   ngOnInit(): void {
@@ -89,7 +74,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.qlFilterService.andWhere('projects_SOME','id', values.projects);
         this.qlFilterService.andWhere('skills_SOME','id', values.skills);
         this.qlFilterService.andWhere('roles_SOME','id', values.roles);
-        this.queryRef.refetch(this.qlFilterService.getVariables());
+        this.personAdapterService.personsQueryRef?.refetch(this.qlFilterService.getVariables());
       })
     );
   }
@@ -97,9 +82,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   
   removePerson(person: PersonWithAllTypeFragment): void {
     this.isConfirmModal = true;
-    this.rpGQL.mutate({ where: {id: person.id}}).subscribe(
+    this.personAdapterService.removePerson<DeletePersonsMutation>(person.id, DeletePersonsDocument).subscribe(
       () => {
-        this.queryRef.refetch();
+        this.personAdapterService.personsQueryRef?.refetch();
       }, 
       (error) => {
         this.notification.create(
@@ -117,16 +102,60 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
     }
 
-    openForm(formType: "experience" | "person" | "rates" | null, person?: PersonWithAllTypeFragment): void {
+    openForm(formType: "person" | "rates" | null, person?: PersonWithAllTypeFragment): void {
       this.isFormVisible = true;
       this.currentForm = formType;
-      if(person) this.editedPerson = person;
+      if(person) {
+        this.editedPerson = person;
+        this.personAdapterService.setEditedPerson(person);
+      }
     }
 
-    closeForm(refetch?: boolean | undefined): void {
+    clearForm(): void {
       this.isFormVisible = false;
       this.currentForm = null;
-      if(refetch) this.queryRef.refetch();
+      this.editedPerson = null;
+      this.personAdapterService.setEditedPerson(null);
+    }
+
+    closeForm(personForm?: FormGroup<PersonForm>): void {
+      if(personForm) {
+        const name = personForm.get('name')?.value;
+        const surname = personForm.get('surname')?.value;
+        if(this.editedPerson) {
+        this.personAdapterService.submitPerson<UpdatePeopleGQL>(personForm, this.editedPerson.id).subscribe(() => {
+          this.notification.create(
+            'success',
+            'Success',
+            `User ${name} ${surname} was successfully edited.`
+            );
+        }, (error: any) => {
+          this.notification.create(
+            'error',
+            'Error',
+            `${error}`
+          )
+        });
+        this.clearForm();
+        return;
+      }
+  
+      this.personAdapterService.submitPerson<CreatePeopleGQL>(personForm).subscribe(() => {
+        this.notification.create(
+          'success',
+          'Success',
+          `User ${name} ${surname} was successfully created.`
+          );
+          this.personAdapterService.personsQueryRef?.refetch();
+      }, (error: any) => {
+          this.notification.create(
+            'error',
+            'Error',
+            `${error}`
+          )
+        });
+      }   
+      this.clearForm();
     }
 
   ngOnDestroy(): void {

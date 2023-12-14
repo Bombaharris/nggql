@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
-import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment, PersonsWithAllQuery, UpdateExperiencesMutationResponse, } from 'src/app/generated/graphql';
+import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.personAdapterService.personQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
+    this.personAdapterService.personsQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
       if(loading) {
         this.isLoading = loading;
       }
@@ -87,6 +87,22 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     });
    
     this.isLoading = false;
+  }
+
+  removePersonsExperience(id: string): void {
+    this.personAdapterService.removePersonsExperience(id).subscribe(() => {
+      this.notification.create(
+        'success',
+        'Success',
+        `Experience was successfully deleted.`
+        );
+      }, (error: any) => {
+        this.notification.create(
+          'error',
+          'Error',
+          `Error occured during edition of experience: ${error}`
+          )
+        });
   }
 
   ngOnDestroy(): void {

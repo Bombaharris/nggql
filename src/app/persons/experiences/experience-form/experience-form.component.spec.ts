@@ -1,29 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-import { ExperienceFormComponent } from './experience-form.component';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Overlay } from '@angular/cdk/overlay';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { of } from 'rxjs';
-import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { Overlay } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { of } from 'rxjs';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GraphQLModule } from 'src/app/graphql.module';
+import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 import { ExperiencesComponent } from '../experiences.component';
+import { ExperienceFormComponent } from './experience-form.component';
 
 describe('ExperienceFormComponent', () => {
   let experienceFormComponent: ExperienceFormComponent;
-  let experiencesComponent: ExperiencesComponent;
   let experienceFormFixture: ComponentFixture<ExperienceFormComponent>;
   let experiencesFixture: ComponentFixture<ExperiencesComponent>;
-  let router: Router;
-  let route: ActivatedRoute;
   let fb: FormBuilder = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -52,11 +49,8 @@ describe('ExperienceFormComponent', () => {
       ]
     })
     .compileComponents();
-    router = TestBed.inject(Router);
-    route = TestBed.inject(ActivatedRoute)
     experiencesFixture = TestBed.createComponent(ExperiencesComponent);
     experienceFormFixture = TestBed.createComponent(ExperienceFormComponent);
-    experiencesComponent = experiencesFixture.componentInstance;
     experienceFormComponent = experienceFormFixture.componentInstance;
     experienceFormComponent.person = {
     id: "Zub",
