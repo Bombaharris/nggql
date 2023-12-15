@@ -30,7 +30,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.personAdapterService.personsQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
+    this.personAdapterService.personQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
       if(loading) {
         this.isLoading = loading;
       }

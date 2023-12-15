@@ -13,6 +13,7 @@ import { QLFilterBuilderService } from './ql-filter-builder.service';
 })
 export class PersonAdapterService {
   personsQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
+  personQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
   editedPerson: PersonWithAllTypeFragment | null = null;
 
   constructor(
@@ -27,14 +28,14 @@ export class PersonAdapterService {
   }
   
   setPersonQueryRef(personId: string): void {
-    this.personsQueryRef = this.pGQL.watch({where:{id: personId}}, {
+    this.personQueryRef = this.pGQL.watch({where:{id: personId}}, {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
   }
   
   refetch(personId: string): Promise<ApolloQueryResult<PersonsWithAllQuery>> | undefined {
-    return this.personsQueryRef?.refetch({where: {id: personId}});
+    return this.personQueryRef?.refetch({where: {id: personId}});
   }
   
   setEditedPerson(person: PersonWithAllTypeFragment | null): void {
