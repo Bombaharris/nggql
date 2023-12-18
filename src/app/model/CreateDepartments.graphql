@@ -1,0 +1,16 @@
+mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
+  createDepartments(input: $input) {
+    departments {
+      id
+      name
+      manager {
+        name
+        surname
+      }
+      persons {
+        name
+        surname
+      }
+    }
+  }
+}

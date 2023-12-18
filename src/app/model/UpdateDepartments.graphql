@@ -1,0 +1,18 @@
+mutation UpdateDepartments($where: DepartmentWhere, $update: DepartmentUpdateInput) {
+  updateDepartments(where: $where, update: $update) {
+    departments {
+     id
+     name
+      manager {
+        id
+        name
+        surname
+      }
+      persons {
+        id
+        name
+        surname
+      }
+    }
+  }
+}
