@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
-import { DepartmentsQuery } from '../generated/graphql';
-import { Subscription } from 'rxjs';
-import { DepartmentsAdapterService } from '../services/departments-adapter.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Subscription } from 'rxjs';
+import { CreateDepartmentsGQL, DepartmentPartFragment, DepartmentsDetailsQuery, UpdateDepartmentsGQL } from '../generated/graphql';
+import { DepartmentsAdapterService } from '../services/departments-adapter.service';
+import { DepartmentForm } from './department-form/models/department-form.model';
 
 @Component({
   selector: 'app-departments',
   templateUrl: './departments.component.html',
   styleUrl: './departments.component.scss'
 })
-export class DepartmentsComponent {
+export class DepartmentsComponent implements OnInit {
   isFormVisible = false;
   isLoading = false;
   currentForm: "department" | null = null;
-  expandSet = new Set<string>();
-  departments!: DepartmentsQuery['departments'];
-  editedDepartment!: DepartmentsQuery['departments'] | null;
+  departments!: DepartmentPartFragment[];
+  editedDepartment!: DepartmentPartFragment | null;
   isConfirmModal: boolean = false;
   readonly subscription: Subscription = new Subscription();
 
@@ -40,11 +41,17 @@ export class DepartmentsComponent {
     );
   }
 
+  ngOnInit(): void {
+    if(!this.departments){
+        this.departmentsAdapterService.departmentsQueryRef?.refetch();
+      }
+  }
+
   
-  removeDepartment(department: DepartmentsQuery['departments']): void {
+  removeDepartment(department: DepartmentsDetailsQuery['departments']): void {
     this.isConfirmModal = true;
     if(!department) return;
-    this.departmentsAdapterService.removeDepartment<DeleteDepartments>(department.id, DeleteDepartmentsDocument).subscribe(
+    this.departmentsAdapterService.removeDepartment(department[0].id).subscribe(
       () => {
         this.departmentsAdapterService.departmentsQueryRef?.refetch();
       }, 
@@ -59,12 +66,12 @@ export class DepartmentsComponent {
       this.notification.create(
         'success',
         'Success',
-        `${department.name} was successfully removed.`
+        `${department[0].name} was successfully removed.`
         )
       });
     }
 
-    openForm(formType: "department" | null, department?: DepartmentsQuery['departments']): void {
+    openForm(formType: "department" | null, department?: DepartmentPartFragment): void {
       this.isFormVisible = true;
       this.currentForm = formType;
       if(department) {
@@ -83,7 +90,6 @@ export class DepartmentsComponent {
     closeForm(departmentForm?: FormGroup<DepartmentForm>): void {
       if(departmentForm) {
         const name = departmentForm.get('name')?.value;
-        const manager = departmentForm.get('manager')?.value;
         if(this.editedDepartment) {
         this.departmentsAdapterService.submitDepartment<UpdateDepartmentsGQL>(departmentForm, this.editedDepartment.id).subscribe(() => {
           this.notification.create(

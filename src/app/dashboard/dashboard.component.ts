@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isFormVisible = false;
   isLoading = false;
   currentForm: "person" | "rates" | null = null;
-  expandSet = new Set<string>();
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
   departments$!: Observable<DepartmentsQuery['departments']>;
@@ -56,6 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
         if(data && data.people) {
           this.people = data.people;
+          personAdapterService.setPeople(data.people);
           this.isLoading = false;
         }
       })

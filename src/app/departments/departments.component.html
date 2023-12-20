@@ -21,12 +21,17 @@
       <tr>
         <th>Name</th>
         <th>Manager</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let department of table.data">
         <td>{{ department.name }}</td>
-        <td>{{ department.manager }}</td>
+        <td>{{ department.manager?.name }} {{ department.manager?.surname }}</td>
+        <td> 
+          <button nz-button nzType="link" (click)="openForm('department', department)">Edit</button>
+          <a nz-button nzType="link" [routerLink]="['../departments/', department.id, 'transfer']">Transfer</a>
+        </td>
       </tr>
     </tbody>
   </nz-table>

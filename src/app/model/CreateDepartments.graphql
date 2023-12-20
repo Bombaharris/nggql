@@ -1,16 +1,16 @@
-mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
-  createDepartments(input: $input) {
-    departments {
+fragment DepartmentPart on Department {
       id
       name
       manager {
+        id
         name
         surname
       }
-      persons {
-        name
-        surname
-      }
+}
+mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
+  createDepartments(input: $input) {
+    departments {
+      ...DepartmentPart
     }
   }
 }

@@ -17,7 +17,16 @@ export class QLFilterBuilderService {
     this.condition.where.AND = this.condition.where.AND.concat(params);
   }
 
-  connectWhere<T>(nodeProperty: string, cond: string | number | T | Array<string | number | T>): object {
+  connectWhere<T>(nodeProperty: string, cond: string | number | T | Array<string | number | T>, single: boolean = false): object {
+    if(single) {
+      return {
+        where: {
+          node: {
+            [nodeProperty]: cond
+          }
+        }
+      }
+    }
     let params = [];
     if (Array.isArray(cond)) {
       params = cond.map((sId: string | number| T) => {
