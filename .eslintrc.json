@@ -14,18 +14,26 @@
         ],
         "createDefaultProgram": true
       },
+      "plugins": [
+        "@typescript-eslint",
+        "@stylistic",
+        "@stylistic/ts"
+      ],
       "extends": [
-        "@stylistic/js",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
-        "@typescript-eslint/comma-dangle": "off",
-        "@typescript-eslint/no-extra-parens": "error",
+        "comma-dangle": "off",
+        "@stylistic/comma-dangle": "off",
+        "no-extra-parens": "off",
+        "@stylistic/no-extra-parens": "error",
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-unused-expressions": "error",
+        "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "error",
-        "@typescript-eslint/space-before-blocks": "error",
+        "space-before-blocks": "off",
+        "@stylistic/space-before-blocks": "error",
         "@angular-eslint/directive-selector": [
           "error",
           {

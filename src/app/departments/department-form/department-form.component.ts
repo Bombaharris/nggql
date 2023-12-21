@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartmentPartFragment, Person } from 'src/app/generated/graphql';
 import { DepartmentsAdapterService } from 'src/app/services/departments-adapter.service';
@@ -10,7 +10,7 @@ import { DepartmentForm } from './models/department-form.model';
   templateUrl: './department-form.component.html',
   styleUrl: './department-form.component.scss'
 })
-export class DepartmentFormComponent {
+export class DepartmentFormComponent implements OnInit {
   people!: Person[] | any;
   department: DepartmentPartFragment | null = null;
   @Output() submitted: EventEmitter<FormGroup<DepartmentForm>> = new EventEmitter();

@@ -42,7 +42,7 @@ export class DepartmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!this.departments){
+    if(!this.departments) {
         this.departmentsAdapterService.departmentsQueryRef?.refetch();
       }
   }
