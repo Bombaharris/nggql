@@ -11,8 +11,10 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GraphQLModule } from 'src/app/graphql.module';
 import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
-import { DashboardComponent } from '../dashboard.component';
+import { DashboardComponent } from '../../../dashboard/dashboard.component';
 import { RatesFormComponent } from './rates-form.component';
+import { RatesComponent } from '../rates.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RatesFormComponent', () => {
   let dashboard: DashboardComponent;
@@ -22,7 +24,14 @@ describe('RatesFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RatesFormComponent, DashboardComponent ],
-      imports: [AppRoutingModule,
+      imports: [RouterTestingModule.withRoutes(
+        [
+          {path: 'persons/:id/rates', component: RatesComponent}
+        ], {
+          
+        }
+        ),
+        AppRoutingModule,
         BrowserModule,
         GraphQLModule,
         HttpClientModule,

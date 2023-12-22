@@ -120,7 +120,7 @@
         <nz-space [nzSize]="'small'">
            <button *nzSpaceItem nz-button nzType="link" (click)="openForm('person', person)">Edit</button>
           <a *nzSpaceItem nz-button nzType="link" [routerLink]="['../persons/', person.id, 'experiences']">Edit experience</a>
-          <button *nzSpaceItem nz-button nzType="link" (click)="openForm('rates', person)">Edit rates</button>
+          <a *nzSpaceItem nz-button nzType="link" [routerLink]="['../persons/', person.id, 'rates']">Edit rates</a>
           <button *nzSpaceItem
           nzType="link"
           nz-popconfirm
@@ -145,18 +145,4 @@
 <div *nzDrawerContent>
   <app-person-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-person-form>
 </div>
-</nz-drawer>
-
-
-<nz-drawer
-*ngIf="currentForm === 'rates'"
-[nzBodyStyle]="{ overflow: 'auto' }"
-[nzMaskClosable]="true"
-[nzWidth]="'40%'"
-[nzVisible]="isFormVisible"
-[nzTitle]="editedPerson ? 'Edit rates': 'Create rates'"
-(nzOnClose)="closeForm()">
-<div *nzDrawerContent>
-    <app-rates-form [person]="editedPerson" (canceled)="closeForm()" (submitted)="closeForm()"></app-rates-form>
-  </div>
 </nz-drawer>

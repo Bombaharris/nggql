@@ -5,7 +5,7 @@ import { Apollo, MutationResult, QueryRef } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { Observable } from 'rxjs';
 import { PersonForm } from '../dashboard/person-form/models/person-form.model';
-import { CreateExperiencesDocument, CreatePeopleDocument, DeleteExperiencesDocument, DeleteExperiencesMutation, EditExperiencesDocument, Exact, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, UpdatePeopleDocument } from '../generated/graphql';
+import { CreateExperiencesDocument, CreatePeopleDocument, CreateRatesDocument, DeleteExperiencesDocument, DeleteExperiencesMutation, DeleteRatesDocument, DeleteRatesMutation, EditExperiencesDocument, Exact, InputMaybe, PersonWhere, PersonWithAllTypeFragment, PersonsWithAllGQL, PersonsWithAllQuery, UpdatePeopleDocument, UpdateRatesDocument } from '../generated/graphql';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
 
 @Injectable({
@@ -128,7 +128,44 @@ export class PersonAdapterService {
     return this.apollo.mutate({ mutation: mutationDocument, variables }) as Observable<MutationResult<T>>;
   }
 
+  submitPersonRates<T>(personId: string, $event: AbstractControl<any, any>, isCreate: boolean): Observable<MutationResult<T>> {
+    const rate = $event;
+    const input: any = {
+      person:  {
+        connect: {
+          where: {
+            node: {
+              id: personId
+            }
+          }
+        }
+      },
+      name: rate.get('name')?.value ?? '',
+      description: rate.get('description')?.value ?? '',
+      startedFrom: rate.get('startedFrom')?.value ?? '',
+      gainedAt: rate.get('gainedAt')?.value ?? '',
+    };
+    if (!isCreate) {
+      input.skills = {
+        disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
+        connect: this.qlFilterService.connectWhere('id', rate.get('skills')?.value ?? '') as any
+      };
+    } else {
+      input.skills = {
+        connect: this.qlFilterService.connectWhere('id', rate.get('skills')?.value ?? '') as any
+      };
+    }
+  //TODO
+    const mutationDocument = isCreate ? CreateRatesDocument : UpdateRatesDocument;
+    const variables = isCreate ? { input } : { where:{ id: rate.get('id')?.value }, update: input };
+    return this.apollo.mutate({ mutation: mutationDocument, variables }) as Observable<MutationResult<T>>;
+  }
+
   removePersonsExperience(id: string): Observable<MutationResult<DeleteExperiencesMutation>> {
     return this.apollo.mutate<DeleteExperiencesMutation>({mutation: DeleteExperiencesDocument, variables:{where: {id: id}}});
+  }
+
+  removePersonsRate(id: string): Observable<MutationResult<DeleteRatesMutation>> {
+    return this.apollo.mutate<DeleteRatesMutation>({mutation: DeleteRatesDocument, variables:{where: {id: id}}});
   }
 }

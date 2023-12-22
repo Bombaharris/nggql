@@ -179,4 +179,42 @@ describe('PersonAdapterService', () => {
       TestBed.inject(ApolloTestingController).expectOne(DeletePersonsDocument).flush(mockMutationResult);
 
   });
+
+  it('should create person rate when experiences does not exists', (done) => {
+    const personId = 'MrGreen';
+    const rateId = '2';
+    const rate = new FormGroup({
+      id: new FormControl(rateId),
+      name: new FormControl('Updated Rate'),
+      description: new FormControl('Updated Description'),
+      startedFrom: new FormControl('2022-01-01'),
+      gainedAt: new FormControl('2022-12-31'),
+      skills: new FormControl('skill1,skill2'),
+    });
+
+    const createRate = {
+      data: {
+        createRate: {
+          rate: [
+            {
+              id: rateId,
+              name: 'Created Rate',
+              description: 'Created Rate Description',
+              startedFrom: '2022-01-01',
+              gainedAt: '2022-12-31',
+              skills: [],
+            },
+          ],
+        },
+      }, loading: false, error: null
+    };
+    
+    service.submitPersonRate<CreateRatesMutation>(personId, rate, true).subscribe(r => {
+      expect(r).toEqual(createRate);
+      done();
+    });
+
+    apolloController.expectOne(CreateExperiencesDocument).flush(createRate);
+    apolloController.verify();
+  });
 });
