@@ -92,7 +92,7 @@ export class PersonAdapterService {
   }
 
   removePerson<T>(id: string, document: DocumentNode): Observable<MutationResult<T>> {
-    return this.apollo.mutate<T>({mutation: document, context:{where: {id}}});
+    return this.apollo.mutate<T>({mutation: document, variables:{where: {id}}});
    }
 
   submitPersonExperience<T>(personId: string, $event: AbstractControl<any, any>, isCreate: boolean): Observable<MutationResult<T>> {

@@ -1,0 +1,49 @@
+<nz-breadcrumb>
+    <nz-breadcrumb-item><a [routerLink]="['../']">Software House</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item>Departments</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div nz-row nzJustify="end">
+    <div nz-col [nzSpan]="20">
+      <h1 nz-typography>Departments</h1>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <button nz-button nzBlock nzType="default" (click)="openForm('department')">Create department</button>
+    </div>
+  </div>
+  
+  <nz-table
+    #table
+    [nzData]="departments"
+    [nzBordered]="true"
+    [nzLoading]="isLoading"
+    [nzPageSize]="100">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Manager</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let department of table.data">
+        <td>{{ department.name }}</td>
+        <td>{{ department.manager?.name }} {{ department.manager?.surname }}</td>
+        <td> 
+          <button nz-button nzType="link" (click)="openForm('department', department)">Edit</button>
+          <a nz-button nzType="link" [routerLink]="['./', department.id, 'transfer']">Transfer</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-drawer
+  *ngIf="currentForm === 'department'"
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="true"
+  [nzWidth]="'40%'"
+  [nzVisible]="isFormVisible"
+  [nzTitle]="editedDepartment ? editedDepartment.name : 'Create department'"
+  (nzOnClose)="closeForm()">
+  <div *nzDrawerContent>
+    <app-department-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-department-form>
+  </div>
+  </nz-drawer>
