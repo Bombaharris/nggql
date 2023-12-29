@@ -58,11 +58,8 @@ export class RatesFormComponent implements OnInit, OnChanges {
 
   newRatesGroup(): FormGroup {
     return this.fb.group({
-      name: ["", [Validators.required]],
-      description: ["", [Validators.required]],
+      value: ["", [Validators.required]],
       startedFrom: ["", [Validators.required]],
-      gainedAt: ["", [Validators.required]],
-       skills: [],
     })
   }
 

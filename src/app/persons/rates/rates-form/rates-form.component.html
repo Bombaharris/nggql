@@ -1,42 +1,65 @@
-<form nz-form [formGroup]="ratesForm" >
+<div class="ratesForm" >
+  <nz-empty *ngIf="!ratesList || ratesList.length === 0"></nz-empty>
+  
+  <form nz-form [formGroup]="ratesForm" >
     <ng-container formArrayName="rates">
-      <div *ngFor="let rate of ratesList.controls; let idx = index" [formGroupName]="idx">
-        <nz-divider [nzText]="(idx+1).toString()+' ' + (rate.value.value ?? '')"></nz-divider> 
-        <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Value</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Value is required.">
-          <input nz-input type="number" formControlName="value" id="value" />
+      <nz-list nzGrid>
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzXXl]="24" [nzXl]="24" *ngFor="let ratesList of ratesList.controls; let idx = index" [formGroupName]="idx">
+            <nz-list-item>
+              <nz-card [nzTitle]="(ratesList.value.name + ' ' + (ratesList.value.startedFrom | date:'mediumDate') + ' - ' + (ratesList.value.gainedAt | date:'mediumDate'))">
+                <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="value">Value</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Value is required.">
+                  <input nz-input type="number" formControlName="value" id="value" />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="startedFrom" nzRequired>Valid from</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid starting date!">
+                    <nz-date-picker formControlName="startedFrom"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+
+
+            <nz-form-item>
+              <nz-form-control class="btn-center">
+                  <nz-space [nzSize]="'small'">
+                  <button
+                  type="submit"
+                  [disabled]="!(ratesList.status === 'VALID') || !ratesList.dirty"
+                  *nzSpaceItem nz-button nzType="primary" (click)="submitNewRate(ratesList)">
+                    Submit
+                  </button>
+                  <button
+                  class="btn-sm" 
+                  nzDanger
+                  nz-button
+                  nzType="primary"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure you want to delete this experience?"
+                  (nzOnConfirm)="deleteRate(idx, ratesList)"
+                  (nzOnCancel)="cancelDelete()"
+                >
+                 Remove
+                </button>
+                  </nz-space>
+              </nz-form-control>
+            </nz-form-item>
+            </nz-card>
+            </nz-list-item>
+          </div>
+        </div>
+      </nz-list>
+      <nz-form-item>
+        <nz-form-control class="btn-center">
+            <nz-space [nzSize]="'small'">
+            <button nzSize="large" *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
+                Add new
+            </button>
+            </nz-space>
         </nz-form-control>
       </nz-form-item>
-      
-      <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="validFrom" nzRequired>Valid from</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid starting date!">
-              <nz-date-picker formControlName="validFrom"></nz-date-picker>
-          </nz-form-control>
-      </nz-form-item>
-    <nz-form-item>
-      <nz-form-control class="btn-center">
-          <nz-space [nzSize]="'small'">
-          <button *nzSpaceItem nz-button nzType="primary" [disabled]="ratesForm.status !== 'VALID'" (click)="submitNewRate(rate)">
-              Submit
-          </button>
-  
-        <button class="btn-sm" nz-button nzType="default" nzDanger (click)="deleteRate(idx, rate)">
-            Remove
-        </button>
-          </nz-space>
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <nz-form-item>
-    <nz-form-control class="btn-center">
-        <nz-space [nzSize]="'small'">
-        <button *nzSpaceItem nz-button nzType="primary" [disabled]="ratesForm.status !== 'VALID'" (click)="addNewForm()">
-            Add new
-        </button>
-        </nz-space>
-    </nz-form-control>
-  </nz-form-item>
-  </ng-container>
-  </form>
+      </ng-container>
+      </form>
+      </div>
