@@ -57,6 +57,7 @@ describe('PersonAdapterService', () => {
               surname: '"Green"',
               birthday: '1982-06-01',
               departments: [{id: "Frontend", name:"Frontend"}],
+              location: {longitude: 0, latitude:0},
               projects: [{id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}],
               roles: [{
                 id: "Frontend",
@@ -106,6 +107,7 @@ describe('PersonAdapterService', () => {
               startedFrom: '2022-01-01',
               gainedAt: '2022-12-31',
               skills: [],
+              person: {name: 'MrGreen'}
             },
           ],
         },
@@ -144,6 +146,7 @@ describe('PersonAdapterService', () => {
               startedFrom: '2022-01-01',
               gainedAt: '2022-12-31',
               skills: [],
+              person: {"name": "MrGreen"}
             },
           ],
         },

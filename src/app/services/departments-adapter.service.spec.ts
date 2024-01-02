@@ -34,7 +34,7 @@ describe('DepartmentsAdapterService', () => {
           data: {
           [key]: [
                 {
-                    "id": "1",
+                    "id": "Frontend",
                     "name": "Frontend",
                     "manager": {
                       "id": "MrGreen",
