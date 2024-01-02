@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { GraphQLModule } from '../graphql.module';
+import { DepartmentsRoutingModule } from './departments-routing.module';
 import { DepartmentsComponent } from './departments.component';
+import { DepartmentsModule } from './departments.module';
 
 describe('DepartmentsComponent', () => {
   let component: DepartmentsComponent;
@@ -8,7 +13,16 @@ describe('DepartmentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DepartmentsComponent]
+      declarations: [
+        DepartmentsComponent,
+      ],
+      imports: [
+        DepartmentsModule, 
+        DepartmentsRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        HttpClientModule,
+        HttpClientJsonpModule,]
     })
     .compileComponents();
     

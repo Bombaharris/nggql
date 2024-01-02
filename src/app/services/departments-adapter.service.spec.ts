@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { DocumentNode } from 'graphql';
-import { DepartmentsDocument, DepartmentsQuery } from '../generated/graphql';
+import { DepartmentPartFragment, DepartmentsDocument, DepartmentsQuery, UpdateDepartmentsDocument, UpdateDepartmentsMutation } from '../generated/graphql';
 import { DepartmentsAdapterService } from './departments-adapter.service';
 
 describe('DepartmentsAdapterService', () => {
@@ -50,6 +50,49 @@ describe('DepartmentsAdapterService', () => {
     done();
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockDepartments);
   });
+
+  it('manage persons in department', (done) => {
+    const query: DocumentNode = UpdateDepartmentsDocument;
+
+    const mockDepartments: DepartmentPartFragment = 
+                {
+                    "id": "Frontend",
+                    "name": "Frontend",
+                    "manager": {
+                      "id": "MrGreen",
+                      "name": "Ralph",
+                      "surname": "Green"
+                    },
+                };
+
+    const mockResult: UpdateDepartmentsMutation = {
+      updateDepartments: {
+        departments: [{
+          "id": "Frontend",
+          "name": "Frontend",
+          "manager": {
+            "id": "MrGreen",
+            "name": "Ralph",
+            "surname": "Green"
+          },
+          "persons": [
+            {
+              "id": "Zub",
+              "name" : "Michael",
+              "surname" : "Zubenstein"
+            }
+          ]
+        }]
+      }
+    }
+     
+     service.managePersonsInDepartment(["Zub"], mockDepartments, ["MrGreen"]).subscribe((result) => {
+      expect(result.data).toEqual(mockResult);
+    });
+    done();
+    TestBed.inject(ApolloTestingController).expectOne(query).flush({data: mockResult});
+  });
+
 
 
 });
