@@ -33,7 +33,7 @@ describe('PersonAdapterService', () => {
       name: new FormControl("Ralph"),
       surname: new FormControl("Green"),
       birthday: new FormControl("1982-06-01"),
-      departments: new FormControl({id: "Frontend", name:"Frontend"}),
+      departments: new FormControl({id: "Frontend", name:"Frontend", manager: {id: "MrGreen", name: "Ralph", surname: "Green"}}),
       projects: new FormControl({id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}),
       skills: new FormControl({
         id: "Vue",
@@ -56,7 +56,7 @@ describe('PersonAdapterService', () => {
               name: '"Ralph"',
               surname: '"Green"',
               birthday: '1982-06-01',
-              departments: [{id: "Frontend", name:"Frontend"}],
+              departments: [{id: "Frontend", name:"Frontend", manager: {id: "MrGreen", name: "Ralph", surname: "Green"}}],
               location: {longitude: 0, latitude:0},
               projects: [{id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}],
               roles: [{
