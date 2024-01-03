@@ -146,7 +146,7 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
       this.notification.create( 
         'success',
         'Success',
-        `Users ${users} were successfully added to the ${this.department.name ?? ''} department.`)
+        `Users ${users} were successfully added to the ${this.department?.name ?? ''} department.`)
       });
       this.departmentsAdapterService.departmentsQueryRef?.refetch();
       this.isLoading = false;

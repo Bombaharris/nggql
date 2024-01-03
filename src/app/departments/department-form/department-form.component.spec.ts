@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DepartmentFormComponent } from './department-form.component';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -9,7 +8,7 @@ import { GraphQLModule } from 'src/app/graphql.module';
 import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 import { DepartmentsListComponent } from '../departments-list/departments-list.component';
 import { DepartmentsRoutingModule } from '../departments-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { DepartmentFormComponent } from './department-form.component';
 
 describe('DepartmentFormComponent', () => {
   let component: DepartmentFormComponent;
@@ -28,8 +27,6 @@ describe('DepartmentFormComponent', () => {
           DepartmentsRoutingModule,
           BrowserModule,
           GraphQLModule,
-          HttpClientModule,
-          HttpClientJsonpModule,
           BrowserAnimationsModule,
           ReactiveFormsModule,
       ]
