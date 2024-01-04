@@ -6,16 +6,16 @@
 </nz-breadcrumb>
 <div nz-row nzJustify="start">
   <div nz-col [nzSpan]="20">
-    <h1 nz-typography>Transfer people to {{departmentName}} department</h1>
+    <h1 nz-typography>Transfer people</h1>
   </div>
 </div>
 <nz-transfer
-[nzDisabled]="isLoading"
-[nzDataSource]="list"
-nzShowSearch
-[nzTitles]="['Employees', departmentName]"
-[nzOperations]="['add to ' + departmentName, 'remove from ' + departmentName]"
-[nzListStyle]="{ 'width.rem': 40, 'height.rem': 40, 'margin': '0 auto' }"
-[nzFilterOption]="filterOption"
-(nzChange)="change($event)"
+  [nzDisabled]="isLoading"
+  [nzDataSource]="list"
+  nzShowSearch
+  [nzTitles]="['Employees', departmentName]"
+  [nzOperations]="['add to ' + departmentName, 'remove from ' + departmentName]"
+  [nzListStyle]="{ 'width.rem': 40, 'height.rem': 40, 'margin': '0 auto' }"
+  [nzFilterOption]="filterOption"
+  (nzChange)="change($event)"
 ></nz-transfer>
