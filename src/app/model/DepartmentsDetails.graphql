@@ -1,0 +1,16 @@
+query DepartmentsDetails{
+    departments{
+        id
+        name
+        manager{
+            id
+            name
+            surname
+        }
+        persons{
+            id
+            name
+            surname
+        }
+    }
+}

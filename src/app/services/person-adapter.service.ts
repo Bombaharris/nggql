@@ -15,7 +15,8 @@ export class PersonAdapterService {
   personsQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
   personQueryRef: QueryRef<PersonsWithAllQuery, Exact<{ where?: InputMaybe<PersonWhere> | undefined; }>> | undefined = undefined;
   editedPerson: PersonWithAllTypeFragment | null = null;
-
+  people: PersonWithAllTypeFragment[] | null = null;
+  
   constructor(
     private apollo: Apollo, 
     private qlFilterService: QLFilterBuilderService, 
@@ -25,6 +26,10 @@ export class PersonAdapterService {
       fetchPolicy: 'cache-and-network',
       errorPolicy: 'all'
     });
+  }
+
+  setPeople(people: PersonWithAllTypeFragment[] | null) {
+    this.people = people;
   }
   
   setPersonQueryRef(personId: string): void {
@@ -87,7 +92,7 @@ export class PersonAdapterService {
   }
 
   removePerson<T>(id: string, document: DocumentNode): Observable<MutationResult<T>> {
-    return this.apollo.mutate<T>({mutation: document, context:{where: {id}}});
+    return this.apollo.mutate<T>({mutation: document, variables:{where: {id}}});
    }
 
   submitPersonExperience<T>(personId: string, $event: AbstractControl<any, any>, isCreate: boolean): Observable<MutationResult<T>> {

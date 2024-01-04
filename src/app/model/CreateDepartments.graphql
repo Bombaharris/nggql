@@ -1,0 +1,16 @@
+fragment DepartmentPart on Department {
+      id
+      name
+      manager {
+        id
+        name
+        surname
+      }
+}
+mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
+  createDepartments(input: $input) {
+    departments {
+      ...DepartmentPart
+    }
+  }
+}

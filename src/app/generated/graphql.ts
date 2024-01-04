@@ -4225,6 +4225,15 @@ export type UpdateSkillsMutationResponse = {
   skills: Array<Skill>;
 };
 
+export type DepartmentPartFragment = { __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null };
+
+export type CreateDepartmentsMutationVariables = Exact<{
+  input: Array<DepartmentCreateInput> | DepartmentCreateInput;
+}>;
+
+
+export type CreateDepartmentsMutation = { __typename?: 'Mutation', createDepartments: { __typename?: 'CreateDepartmentsMutationResponse', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null }> } };
+
 export type CreateExperiencesMutationVariables = Exact<{
   input: Array<ExperienceCreateInput> | ExperienceCreateInput;
 }>;
@@ -4246,6 +4255,13 @@ export type CreateRatesMutationVariables = Exact<{
 
 export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
 
+export type DeleteDepartmentsMutationVariables = Exact<{
+  where?: InputMaybe<DepartmentWhere>;
+}>;
+
+
+export type DeleteDepartmentsMutation = { __typename?: 'Mutation', deleteDepartments: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
 export type DeleteExperiencesMutationVariables = Exact<{
   where?: InputMaybe<ExperienceWhere>;
 }>;
@@ -4266,6 +4282,11 @@ export type DeleteRatesMutationVariables = Exact<{
 
 
 export type DeleteRatesMutation = { __typename?: 'Mutation', deleteRates: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
+export type DepartmentsDetailsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DepartmentsDetailsQuery = { __typename?: 'Query', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> };
 
 export type DepartmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4325,6 +4346,14 @@ export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
 
+export type UpdateDepartmentsMutationVariables = Exact<{
+  where?: InputMaybe<DepartmentWhere>;
+  update?: InputMaybe<DepartmentUpdateInput>;
+}>;
+
+
+export type UpdateDepartmentsMutation = { __typename?: 'Mutation', updateDepartments: { __typename?: 'UpdateDepartmentsMutationResponse', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> } };
+
 export type UpdatePeopleMutationVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
   update?: InputMaybe<PersonUpdateInput>;
@@ -4341,6 +4370,17 @@ export type UpdateRatesMutationVariables = Exact<{
 
 export type UpdateRatesMutation = { __typename?: 'Mutation', updateRates: { __typename?: 'UpdateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string, name: string } }> } };
 
+export const DepartmentPartFragmentDoc = gql`
+    fragment DepartmentPart on Department {
+  id
+  name
+  manager {
+    id
+    name
+    surname
+  }
+}
+    `;
 export const ExperienceDataFragmentDoc = gql`
     fragment ExperienceData on Experience {
   id
@@ -4397,6 +4437,26 @@ export const PersonWithAllTypeFragmentDoc = gql`
   }
 }
     ${ExperienceDataFragmentDoc}`;
+export const CreateDepartmentsDocument = gql`
+    mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
+  createDepartments(input: $input) {
+    departments {
+      ...DepartmentPart
+    }
+  }
+}
+    ${DepartmentPartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateDepartmentsGQL extends Apollo.Mutation<CreateDepartmentsMutation, CreateDepartmentsMutationVariables> {
+    document = CreateDepartmentsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreateExperiencesDocument = gql`
     mutation CreateExperiences($input: [ExperienceCreateInput!]!) {
   createExperiences(input: $input) {
@@ -4470,6 +4530,24 @@ export const CreateRatesDocument = gql`
       super(apollo);
     }
   }
+export const DeleteDepartmentsDocument = gql`
+    mutation DeleteDepartments($where: DepartmentWhere) {
+  deleteDepartments(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteDepartmentsGQL extends Apollo.Mutation<DeleteDepartmentsMutation, DeleteDepartmentsMutationVariables> {
+    document = DeleteDepartmentsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const DeleteExperiencesDocument = gql`
     mutation DeleteExperiences($where: ExperienceWhere) {
   deleteExperiences(where: $where) {
@@ -4519,6 +4597,35 @@ export const DeleteRatesDocument = gql`
   })
   export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
     document = DeleteRatesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DepartmentsDetailsDocument = gql`
+    query DepartmentsDetails {
+  departments {
+    id
+    name
+    manager {
+      id
+      name
+      surname
+    }
+    persons {
+      id
+      name
+      surname
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DepartmentsDetailsGQL extends Apollo.Query<DepartmentsDetailsQuery, DepartmentsDetailsQueryVariables> {
+    document = DepartmentsDetailsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4714,6 +4821,37 @@ export const RolesDocument = gql`
   })
   export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
     document = RolesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateDepartmentsDocument = gql`
+    mutation UpdateDepartments($where: DepartmentWhere, $update: DepartmentUpdateInput) {
+  updateDepartments(where: $where, update: $update) {
+    departments {
+      id
+      name
+      manager {
+        id
+        name
+        surname
+      }
+      persons {
+        id
+        name
+        surname
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateDepartmentsGQL extends Apollo.Mutation<UpdateDepartmentsMutation, UpdateDepartmentsMutationVariables> {
+    document = UpdateDepartmentsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

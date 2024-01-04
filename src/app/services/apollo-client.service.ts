@@ -14,6 +14,9 @@ export class ApolloClientService {
   ) {
   }
 
+  get _apollo() {
+    return this.apollo;
+  }
    fetchValues<T>(query: DocumentNode, key: string):  Observable<T[Exclude<keyof T, "__typename">]> {
     const k = key as keyof Omit<T, "__typename">;
     return this.apollo.watchQuery<T>({query}).valueChanges

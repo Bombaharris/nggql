@@ -9,13 +9,15 @@ describe('DepartmentsAdapterService', () => {
   let service: DepartmentsAdapterService;
   let apolloController: ApolloTestingController;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({  
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({  
       imports: [ApolloTestingModule],
       providers: [DepartmentsAdapterService],
-      });
+      })
+      .compileComponents();
       service = TestBed.inject(DepartmentsAdapterService);
       apolloController = TestBed.inject(ApolloTestingController);
+      
   });
 
   it('should be created', () => {
@@ -34,7 +36,7 @@ describe('DepartmentsAdapterService', () => {
           data: {
           [key]: [
                 {
-                    "id": "1",
+                    "id": "Frontend",
                     "name": "Frontend",
                     "manager": {
                       "id": "MrGreen",
@@ -50,6 +52,8 @@ describe('DepartmentsAdapterService', () => {
     done();
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockDepartments);
   });
+
+
 
 
 });
