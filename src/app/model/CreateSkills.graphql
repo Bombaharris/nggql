@@ -1,0 +1,11 @@
+fragment SkillPart on Skill {
+      id
+      name
+}
+mutation CreateSkills($input: [SkillCreateInput!]!) {
+  createSkills(input: $input) {
+    skills {
+      ...SkillPart
+    }
+  }
+}
