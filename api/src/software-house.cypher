@@ -89,9 +89,9 @@ CREATE (Architect:Role {id: "Architect", name:"Architect"})
 
 CREATE (Department207400:Department {id: "207400", name:"Frontend"})
 
-// CREATE (SeniorRate:Rate {id: "SeniorRate",validFrom: "2017-01-01", value: 1000})
-// CREATE (RegularRate:Rate {id: "RegularRate",validFrom: "2017-01-01", value: 800})
-// CREATE (JuniorRate:Rate {id: "JuniorRate",validFrom: "2017-01-01", value: 600})
+CREATE (SeniorRate:Rate {id: "SeniorRate",validFrom: "2017-01-01", value: 1000})
+CREATE (RegularRate:Rate {id: "RegularRate",validFrom: "2017-01-01", value: 800})
+CREATE (JuniorRate:Rate {id: "JuniorRate",validFrom: "2017-01-01", value: 600})
 
 // To Create skill at once
 // MATCH
