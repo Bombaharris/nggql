@@ -4380,10 +4380,14 @@ export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
 
-export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
+export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
+
+export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
 
 export type SkillsWithLimitQueryVariables = Exact<{
   options?: InputMaybe<SkillOptions>;
@@ -4980,8 +4984,8 @@ export const SkillsDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
-    document = SkillsDocument;
+  export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
+    document = RolesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
