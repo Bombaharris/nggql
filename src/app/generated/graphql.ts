@@ -4262,6 +4262,15 @@ export type CreateRatesMutationVariables = Exact<{
 
 export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
 
+export type SkillPartFragment = { __typename?: 'Skill', id: string, name: string };
+
+export type CreateSkillsMutationVariables = Exact<{
+  input: Array<SkillCreateInput> | SkillCreateInput;
+}>;
+
+
+export type CreateSkillsMutation = { __typename?: 'Mutation', createSkills: { __typename?: 'CreateSkillsMutationResponse', skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
+
 export type DeleteDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
 }>;
@@ -4296,6 +4305,13 @@ export type DeleteRatesMutationVariables = Exact<{
 
 
 export type DeleteRatesMutation = { __typename?: 'Mutation', deleteRates: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
+export type DeleteSkillsMutationVariables = Exact<{
+  where?: InputMaybe<SkillWhere>;
+}>;
+
+
+export type DeleteSkillsMutation = { __typename?: 'Mutation', deleteSkills: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
 export type DepartmentsDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4352,15 +4368,15 @@ export type RatesByPersonQueryVariables = Exact<{
 
 export type RatesByPersonQuery = { __typename?: 'Query', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number }> };
 
-export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
-
 export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
+
+export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
 export type UpdateDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
@@ -4403,6 +4419,12 @@ export const DepartmentPartFragmentDoc = gql`
     name
     surname
   }
+}
+    `;
+export const SkillPartFragmentDoc = gql`
+    fragment SkillPart on Skill {
+  id
+  name
 }
     `;
 export const ExperienceDataFragmentDoc = gql`
@@ -4591,6 +4613,26 @@ export const CreateRatesDocument = gql`
       super(apollo);
     }
   }
+export const CreateSkillsDocument = gql`
+    mutation CreateSkills($input: [SkillCreateInput!]!) {
+  createSkills(input: $input) {
+    skills {
+      ...SkillPart
+    }
+  }
+}
+    ${SkillPartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateSkillsGQL extends Apollo.Mutation<CreateSkillsMutation, CreateSkillsMutationVariables> {
+    document = CreateSkillsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const DeleteDepartmentsDocument = gql`
     mutation DeleteDepartments($where: DepartmentWhere) {
   deleteDepartments(where: $where) {
@@ -4676,6 +4718,24 @@ export const DeleteRatesDocument = gql`
   })
   export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
     document = DeleteRatesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteSkillsDocument = gql`
+    mutation DeleteSkills($where: SkillWhere) {
+  deleteSkills(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSkillsGQL extends Apollo.Mutation<DeleteSkillsMutation, DeleteSkillsMutationVariables> {
+    document = DeleteSkillsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4856,25 +4916,6 @@ export const RatesByPersonDocument = gql`
       super(apollo);
     }
   }
-export const SkillsDocument = gql`
-    query Skills {
-  skills {
-    id
-    name
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
-    document = SkillsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const RolesDocument = gql`
     query Roles {
   roles {
@@ -4889,6 +4930,25 @@ export const RolesDocument = gql`
   })
   export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
     document = RolesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SkillsDocument = gql`
+    query Skills {
+  skills {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
+    document = SkillsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

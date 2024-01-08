@@ -1,4 +1,4 @@
-mutation DeleteSkills($where: DepartmentWhere) {
+mutation DeleteSkills($where: SkillWhere) {
   deleteSkills(where: $where) {
     nodesDeleted
   }
