@@ -83,28 +83,6 @@ CREATE (ProjectJava:Project {
     duration: duration({months: 48})
 })
 
-CREATE (Angular:Skill {id: "Angular", name:"Angular"})
-CREATE (Vue:Skill {id: "Vue", name:"Vue"})
-CREATE (React:Skill {id: "React", name:"React"})
-CREATE (Aws:Skill {id: "AWS", name:"AWS"})
-CREATE (Css:Skill {id: "CSS", name:"CSS"})
-CREATE (Docker:Skill {id: "Docker", name:"Docker"})
-CREATE (Html:Skill {id: "HTML", name:"HTML"})
-CREATE (Git:Skill {id: "Git", name:"Git"})
-CREATE (Java:Skill {id: "Java", name:"Java"})
-CREATE (JavaScript:Skill {id: "JavaScript", name:"JavaScript"})
-CREATE (TypeScript:Skill {id: "TypeScript", name:"TypeScript"})
-CREATE (Linux:Skill {id: "Linux", name:"Linux"})
-
-CREATE
-(ProjectAngular)-[:NEED_SKILL]->(Angular),
-(ProjectAngular)-[:NEED_SKILL]->(Css),
-(ProjectAngular)-[:NEED_SKILL]->(TypeScript),
-(ProjectVue)-[:NEED_SKILL]->(Vue),
-(ProjectVue)-[:NEED_SKILL]->(TypeScript),
-(ProjectVue)-[:NEED_SKILL]->(Docker),
-(ProjectJava)-[:NEED_SKILL]->(Java),
-(ProjectJava)-[:NEED_SKILL]->(Angular)
 
 CREATE (FE:Role {id: "Frontend Developer", name:"Frontend Developer"})
 CREATE (Architect:Role {id: "Architect", name:"Architect"})
@@ -114,29 +92,6 @@ CREATE (Department207400:Department {id: "207400", name:"Frontend"})
 // CREATE (SeniorRate:Rate {id: "SeniorRate",validFrom: "2017-01-01", value: 1000})
 // CREATE (RegularRate:Rate {id: "RegularRate",validFrom: "2017-01-01", value: 800})
 // CREATE (JuniorRate:Rate {id: "JuniorRate",validFrom: "2017-01-01", value: 600})
-
-CREATE
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Angular),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Aws),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Css),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Html),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Git),
-(MrGreen)-[:HAS_SKILL {seniority: 'JUNIOR'}]->(Java),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(JavaScript),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(TypeScript),
-(MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Linux),
-(Polon)-[:HAS_SKILL {seniority: 'REGULAR'}]->(JavaScript),
-(Polon)-[:HAS_SKILL {seniority: 'REGULAR'}]->(TypeScript),
-(Polon)-[:HAS_SKILL {seniority: 'REGULAR'}]->(Java),
-(Gocha)-[:HAS_SKILL {seniority: 'SENIOR'}]->(React),
-(Sofia)-[:HAS_SKILL {seniority: 'JUNIOR'}]->(React),
-(Ivan)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Java),
-(Ivan)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Angular),
-(Finger)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Java),
-(Finger)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Angular),
-(Alex)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Angular),
-(Alex)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Vue),
-(Alex)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Java)
 
 // To Create skill at once
 // MATCH
@@ -204,3 +159,4 @@ CREATE
 // Find people to the job
 // MATCH (p:Person)-[:HAS_SKILL {seniority: 'SENIOR'}]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)
 // RETURN p,pr,skill
+
