@@ -14,7 +14,7 @@ describe('SkillsAdapterService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
-      providers: [SkillsAdapterService],
+providers: [SkillsAdapterService],
     });
     service = TestBed.inject(SkillsAdapterService);
     apolloController = TestBed.inject(ApolloTestingController);
@@ -145,6 +145,33 @@ describe('SkillsAdapterService', () => {
 
     apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
     apolloController.verify();
+  })
+
+  it('submits skill to a list', (done) => {
+
+    const skill: FormGroup<SkillForm> = new FormGroup({
+      name: new FormControl("AnotherSkill"),
+    });
+
+      const createSkill = {
+        data: {
+          createSkills: {
+            skills: [
+              {
+                name: '"AnotherSkill"',
+              },
+            ],
+          },
+        }, loading: false, error: null,
+      };
+     
+      service.submitSkill<CreateSkillsMutation>(skill.value.name).subscribe(r => {
+        expect(r.data?.createSkills.skills[0].name).toEqual(createSkill.data.createSkills.skills[0].name);
+        done();
+      });
+  
+      apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
+      apolloController.verify();
   })
 
 
