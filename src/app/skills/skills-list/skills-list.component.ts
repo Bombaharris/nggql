@@ -16,7 +16,6 @@ export class SkillsListComponent implements OnInit {
   isLoading = false;
   currentForm: "skill" | null = null;
   skills!: SkillsQuery['skills'];
-  editedSkill!: SkillsQuery['skills'] | null;
   isConfirmModal: boolean = false;
   readonly subscription: Subscription = new Subscription();
 

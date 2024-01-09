@@ -2,8 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { DocumentNode } from 'graphql';
-import { SkillsDocument, SkillsQuery } from '../generated/graphql';
+import { CreateSkillsDocument, CreateSkillsMutation, SkillsDocument, SkillsQuery } from '../generated/graphql';
 import { SkillsAdapterService } from './skills-adapter.service';
+import { SkillForm } from '../skills/skills-form/models/skill-form.model';
+import { FormGroup, FormControl } from '@angular/forms';
 
 describe('RolesAdapterService', () => {
   let service: SkillsAdapterService;
@@ -47,6 +49,33 @@ describe('RolesAdapterService', () => {
     done();
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
   });
+
+  it('submits skill to a list', (done) => {
+
+    const skill: FormGroup<SkillForm> = new FormGroup({
+      name: new FormControl("AnotherSkill"),
+    });
+
+      const createSkill = {
+        data: {
+          createSkills: {
+            skills: [
+              {
+                name: '"AnotherSkill"',
+              },
+            ],
+          },
+        }, loading: false, error: null,
+      };
+     
+      service.submitSkill<CreateSkillsMutation>(skill).subscribe(r => {
+        expect(r.data?.createSkills.skills[0].name).toEqual(createSkill.data.createSkills.skills[0].name);
+        done();
+      });
+  
+      apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
+      apolloController.verify();
+  })
 
 
 });
