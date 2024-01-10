@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
-import { CreateSkillsGQL, SkillsQuery } from 'src/app/generated/graphql';
+import { CreateSkillsGQL, SkillsWithLimitQuery } from 'src/app/generated/graphql';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
 import { SkillForm } from '../skills-form/models/skill-form.model';
 
@@ -12,10 +12,14 @@ import { SkillForm } from '../skills-form/models/skill-form.model';
   styleUrl: './skills-list.component.scss'
 })
 export class SkillsListComponent implements OnInit {
+  pageIndex = 1;
+  pageSize = 10;
+  total = 1000000;
+  feed!: SkillsWithLimitQuery['skills'];
   isFormVisible = false;
   isLoading = false;
   currentForm: "skill" | null = null;
-  skills!: SkillsQuery['skills'];
+  skills!: SkillsWithLimitQuery['skills'];
   isConfirmModal: boolean = false;
   readonly subscription: Subscription = new Subscription();
 
@@ -23,6 +27,7 @@ export class SkillsListComponent implements OnInit {
     private skillsAdapterService: SkillsAdapterService,
     private notification: NzNotificationService
   ) {
+    this.isLoading = true;
     this.subscription.add(
       this.skillsAdapterService?.skillsQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if (loading) {
@@ -33,7 +38,7 @@ export class SkillsListComponent implements OnInit {
           this.isLoading = false;
         }
         if (data && data.skills) {
-          this.skills = data.skills;
+          this.feed = data.skills;
           this.isLoading = false;
         }
       })
@@ -44,6 +49,24 @@ export class SkillsListComponent implements OnInit {
     if (!this.skills) {
       this.skillsAdapterService.skillsQueryRef?.refetch();
     }
+  }
+
+  async fetchMore(reset:boolean = false) {
+    this.isLoading = true;
+    if (reset) {
+      this.pageIndex = 1;
+    }
+    await this.skillsAdapterService.skillsQueryRef?.fetchMore({
+      variables:{
+        options: {
+          limit: this.pageSize,
+          offset: this.pageIndex
+        },
+      }
+    }).then(result => {
+      this.feed = result.data.skills;
+    });
+    this.isLoading = false;
   }
 
   openForm(formType: "skill" | null): void {

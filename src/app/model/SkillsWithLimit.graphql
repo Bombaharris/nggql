@@ -1,0 +1,6 @@
+query SkillsWithLimit($options: SkillOptions) {
+  skills(options: $options) {
+    id
+    name
+  }
+}

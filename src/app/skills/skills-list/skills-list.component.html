@@ -13,10 +13,15 @@
   
   <nz-table
     #table
-    [nzData]="skills"
+    [nzData]="feed"
     [nzBordered]="true"
     [nzLoading]="isLoading"
-    [nzPageSize]="10">
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="fetchMore()"
+    (nzPageSizeChange)="fetchMore(true)"
+    [(nzPageSize)]="pageSize">
     <thead>
       <tr>
         <th>Skill</th>

@@ -5,10 +5,13 @@ import { Observable } from 'rxjs';
 import {
   CreateSkillsDocument,
   Exact,
+  InputMaybe,
+  SkillOptions,
   SkillPartFragment,
-  SkillsDocument,
-  SkillsGQL,
-  SkillsQuery,
+  SkillsWithLimitDocument,
+  SkillsWithLimitGQL,
+  SkillsWithLimitQuery,
+  SkillsWithLimitQueryVariables
 } from '../generated/graphql';
 import { ApolloClientService } from './apollo-client.service';
 
@@ -16,19 +19,24 @@ import { ApolloClientService } from './apollo-client.service';
   providedIn: 'root',
 })
 export class SkillsAdapterService extends ApolloClientService {
-  skills!: SkillsQuery['skills'];
+  skills!: SkillsWithLimitQuery['skills'];
   skillsQueryRef:
-    | QueryRef<SkillsQuery, Exact<{ [key: string]: never }>>
+    | QueryRef<SkillsWithLimitQuery, Exact<{ options?: InputMaybe<SkillOptions> | undefined; }>>
     | undefined = undefined;
   editedSkill: SkillPartFragment | null = null;
 
   constructor(
     apollo: Apollo,
-    private sGQL: SkillsGQL,
+    private ssGQl: SkillsWithLimitGQL
   ) {
     super(apollo);
-    this.skillsQueryRef = this.sGQL.watch(
-      {},
+    this.skillsQueryRef = this.ssGQl.watch(
+      {
+        options: {
+          limit: 10,
+          offset: 1
+        }
+      },
       {
         fetchPolicy: 'cache-and-network',
         errorPolicy: 'all',
@@ -36,10 +44,14 @@ export class SkillsAdapterService extends ApolloClientService {
     );
   }
 
-  fetch(): Observable<SkillsQuery['skills']> {
-    const data = super.fetchValues<SkillsQuery>(SkillsDocument, 'skills');
+  fetch(): Observable<SkillsWithLimitQuery['skills']> {
+    const data = super.fetchValues<SkillsWithLimitQuery>(SkillsWithLimitDocument, 'skills');
     data.subscribe((skills) => this.skills = skills);
     return data;
+  }
+
+  fetchMore(variables: SkillsWithLimitQueryVariables): void {
+    this.skillsQueryRef?.fetchMore({ variables }).then((skills) => skills.data);
   }
 
   submitSkill<T>(

@@ -4378,6 +4378,13 @@ export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
+export type SkillsWithLimitQueryVariables = Exact<{
+  options?: InputMaybe<SkillOptions>;
+}>;
+
+
+export type SkillsWithLimitQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+
 export type UpdateDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
   update?: InputMaybe<DepartmentUpdateInput>;
@@ -4949,6 +4956,25 @@ export const SkillsDocument = gql`
   })
   export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
     document = SkillsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SkillsWithLimitDocument = gql`
+    query SkillsWithLimit($options: SkillOptions) {
+  skills(options: $options) {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SkillsWithLimitGQL extends Apollo.Query<SkillsWithLimitQuery, SkillsWithLimitQueryVariables> {
+    document = SkillsWithLimitDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
