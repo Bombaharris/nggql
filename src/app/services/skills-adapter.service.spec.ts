@@ -14,7 +14,7 @@ describe('SkillsAdapterService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
-providers: [SkillsAdapterService],
+      providers: [SkillsAdapterService],
     });
     service = TestBed.inject(SkillsAdapterService);
     apolloController = TestBed.inject(ApolloTestingController);
@@ -120,6 +120,68 @@ providers: [SkillsAdapterService],
     apolloController.verify();
   });
 
+  it('fetch more values of skills with limit and offset', (done) => {
+    const query: DocumentNode = SkillsWithLimitDocument;
+    const key = 'skills';
+
+    const mockSkills = {
+      data: {
+        [key]: [
+          {
+            "id": "1",
+            "name": "Angular",
+          },
+          {
+            "id": "2",
+            "name": "Angular2",
+          },
+          {
+            "id": "3",
+            "name": "Angular3",
+          },
+          {
+            "id": "4",
+            "name": "Angular4",
+          },
+          {
+            "id": "5",
+            "name": "Angular5",
+          }, 
+          {
+            "id": "7",
+            "name": "Angular7",
+          }, 
+          {
+            "id": "8",
+            "name": "Angular8",
+          }, 
+          {
+            "id": "9",
+            "name": "Angular9",
+          }, 
+          {
+            "id": "10",
+            "name": "Angular10",
+          }, 
+          {
+            "id": "11",
+            "name": "Angular11",
+          }, 
+          {
+            "id": "12",
+            "name": "Angular12",
+          },
+
+        ]
+      }
+    };
+
+    service.skillsQueryRef?.fetchMore({variables:{options:{limit: 10, offset:1}}}).then((skills) => expect(skills.data.skills).toEqual(mockSkills.data[key]))
+      
+    done();
+    TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
+  });
+
   it('submits skill to a list', (done) => {
 
     const skill: FormGroup<SkillForm> = new FormGroup({
@@ -153,25 +215,25 @@ providers: [SkillsAdapterService],
       name: new FormControl("AnotherSkill"),
     });
 
-      const createSkill = {
-        data: {
-          createSkills: {
-            skills: [
-              {
-                name: '"AnotherSkill"',
-              },
-            ],
-          },
-        }, loading: false, error: null,
-      };
-     
-      service.submitSkill<CreateSkillsMutation>(skill.value.name).subscribe(r => {
-        expect(r.data?.createSkills.skills[0].name).toEqual(createSkill.data.createSkills.skills[0].name);
-        done();
-      });
-  
-      apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
-      apolloController.verify();
+    const createSkill = {
+      data: {
+        createSkills: {
+          skills: [
+            {
+              name: '"AnotherSkill"',
+            },
+          ],
+        },
+      }, loading: false, error: null,
+    };
+
+    service.submitSkill<CreateSkillsMutation>(skill.value.name).subscribe(r => {
+      expect(r.data?.createSkills.skills[0].name).toEqual(createSkill.data.createSkills.skills[0].name);
+      done();
+    });
+
+    apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
+    apolloController.verify();
   })
 
 
