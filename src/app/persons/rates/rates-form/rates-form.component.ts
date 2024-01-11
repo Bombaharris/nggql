@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
-import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
-import { Person, Rate, SkillsQuery } from '../../../generated/graphql';
+import { Person, Rate } from '../../../generated/graphql';
 
 type RateFormType = FormGroup<{
   rates: FormArray<FormControl>;
