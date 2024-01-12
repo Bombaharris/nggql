@@ -214,7 +214,6 @@ describe('SkillsAdapterService', () => {
     const skill: FormGroup<SkillForm> = new FormGroup({
       name: new FormControl("AnotherSkill"),
     });
-
     const createSkill = {
       data: {
         createSkills: {
