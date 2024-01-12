@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { ApolloQueryResult } from '@apollo/client/core/types';
 import { Apollo, MutationResult, QueryRef } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import {
   CreateSkillsDocument,
   Exact,
+  FindSkillDocument,
+  FindSkillQuery,
   InputMaybe,
   SkillOptions,
   SkillPartFragment,
-  SkillsWithLimitDocument,
+  SkillsDocument,
+  SkillsQuery,
   SkillsWithLimitGQL,
   SkillsWithLimitQuery,
   SkillsWithLimitQueryVariables
@@ -44,8 +47,8 @@ export class SkillsAdapterService extends ApolloClientService {
     );
   }
 
-  fetch(): Observable<SkillsWithLimitQuery['skills']> {
-    const data = super.fetchValues<SkillsWithLimitQuery>(SkillsWithLimitDocument, 'skills');
+  fetch(): Observable<SkillsQuery['skills']> {
+    const data = super.fetchValues<SkillsQuery>(SkillsDocument, 'skills');
     data.subscribe((skills) => this.skills = skills);
     return data;
   }
@@ -54,12 +57,15 @@ export class SkillsAdapterService extends ApolloClientService {
     this.skillsQueryRef?.fetchMore({ variables }).then((skills) => skills.data);
   }
 
+  findSkill(name: string): Observable<ApolloQueryResult<FindSkillQuery>> {
+    return super._apollo.query<FindSkillQuery>({ query: FindSkillDocument, variables: { where: { name } } });
+  }
+
   submitSkill<T>(
-    $event: AbstractControl<any, any>,
+    name: string,
   ): Observable<MutationResult<T>> {
-    const skill = $event;
     const input: any = {
-      name: skill.get('name')?.value,
+      name,
     };
 
     const mutation = CreateSkillsDocument;

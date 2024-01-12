@@ -4340,6 +4340,13 @@ export type ExperiencesByPersonQueryVariables = Exact<{
 
 export type ExperiencesByPersonQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
+export type FindSkillQueryVariables = Exact<{
+  where?: InputMaybe<SkillWhere>;
+}>;
+
+
+export type FindSkillQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+
 export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
 export type PersonsWithAllQueryVariables = Exact<{
@@ -4843,6 +4850,25 @@ export const ExperiencesByPersonDocument = gql`
   })
   export class ExperiencesByPersonGQL extends Apollo.Query<ExperiencesByPersonQuery, ExperiencesByPersonQueryVariables> {
     document = ExperiencesByPersonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FindSkillDocument = gql`
+    query FindSkill($where: SkillWhere) {
+  skills(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FindSkillGQL extends Apollo.Query<FindSkillQuery, FindSkillQueryVariables> {
+    document = FindSkillDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -117,7 +117,7 @@ describe('RolesAdapterService', () => {
     const skill: FormGroup<SkillForm> = new FormGroup({
       name: new FormControl("AnotherSkill"),
     });
-
+    const name = skill.get('name')?.value;
     const createSkill = {
       data: {
         createSkills: {
@@ -130,7 +130,7 @@ describe('RolesAdapterService', () => {
       }, loading: false, error: null,
     };
 
-    service.submitSkill<CreateSkillsMutation>(skill).subscribe(r => {
+    service.submitSkill<CreateSkillsMutation>(name).subscribe(r => {
       expect(r.data?.createSkills.skills[0].name).toEqual(createSkill.data.createSkills.skills[0].name);
       done();
     });

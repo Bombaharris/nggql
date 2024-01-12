@@ -51,13 +51,13 @@ export class SkillsListComponent implements OnInit {
     }
   }
 
-  async fetchMore(reset:boolean = false) {
+  async fetchMore(reset: boolean = false) {
     this.isLoading = true;
     if (reset) {
       this.pageIndex = 1;
     }
     await this.skillsAdapterService.skillsQueryRef?.fetchMore({
-      variables:{
+      variables: {
         options: {
           limit: this.pageSize,
           offset: this.pageIndex
@@ -80,24 +80,40 @@ export class SkillsListComponent implements OnInit {
   }
 
   closeForm(skillForm?: FormGroup<SkillForm>): void {
-    if (skillForm) {
-      const name = skillForm.get('name')?.value;
-      this.skillsAdapterService.submitSkill<CreateSkillsGQL>(skillForm).subscribe(() => {
-        this.notification.create(
-          'success',
-          'Success',
-          `Skill ${name} was successfully created.`
-        );
-        this.skillsAdapterService.skillsQueryRef?.refetch();
-      }, (error: any) => {
-        this.notification.create(
-          'error',
-          'Error',
-          `${error}`
-        )
-      });
+    const name = skillForm?.get('name')?.value;
+    if (skillForm && name) {
+      this.skillsAdapterService.findSkill(name).subscribe(({ data }) => {
+        if (data.skills.find(sk => sk.name == name)) {
+          this.notification.create(
+            'error',
+            'Error',
+            `Skill ${name} already exists`
+          );
+        } else {
+          this.skillsAdapterService.submitSkill<CreateSkillsGQL>(name).subscribe(({ loading, errors }) => {
+            if (loading) {
+              this.isLoading = loading;
+            }
+            if (errors) {
+              errors.map((error) => {
+                console.error(error.message);
+              })
+            }
+            this.notification.create(
+              'success',
+              'Success',
+              `Skill ${name} was successfully created.`
+            );
+            this.skillsAdapterService.skillsQueryRef?.refetch();
+          }, (error: any) => {
+            this.notification.create(
+              'error',
+              'Error',
+              `${error}`
+            )
+          });
+        }
+      })
     }
-    this.clearForm();
   }
-
 }
