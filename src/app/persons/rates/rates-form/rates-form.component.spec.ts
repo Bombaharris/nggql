@@ -7,67 +7,79 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { of } from 'rxjs';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GraphQLModule } from 'src/app/graphql.module';
 import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
-import { DashboardComponent } from '../../../dashboard/dashboard.component';
-import { RatesFormComponent } from './rates-form.component';
 import { RatesComponent } from '../rates.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RatesFormComponent } from './rates-form.component';
 
 describe('RatesFormComponent', () => {
-  let dashboard: DashboardComponent;
-  let ratesComponent: RatesFormComponent;
+  let ratesFormComponent: RatesFormComponent;
   let ratesFormFixture: ComponentFixture<RatesFormComponent>;
-  let dashboardFixture: ComponentFixture<DashboardComponent>;
+  let ratesFixture: ComponentFixture<RatesComponent>;
+  let fb: FormBuilder = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RatesFormComponent, DashboardComponent ],
-      imports: [RouterTestingModule.withRoutes(
-        [
-          {path: 'persons/:id/rates', component: RatesComponent}
-        ], {
-          
-        }
-        ),
-        AppRoutingModule,
-        BrowserModule,
-        GraphQLModule,
-        HttpClientModule,
-        HttpClientJsonpModule,
-        ReactiveFormsModule,
-        NgZorroAntdModule,
-        BrowserAnimationsModule,
-        ScrollingModule,
-        DragDropModule,],
-      providers: [NzNotificationService, Overlay, FormBuilder]
+      declarations: [ RatesFormComponent, RatesComponent ],
+      imports: [ RouterTestingModule.withRoutes([]),
+      AppRoutingModule,
+      BrowserModule,
+      GraphQLModule,
+      HttpClientModule,
+      HttpClientJsonpModule,
+      ReactiveFormsModule,
+      NgZorroAntdModule,
+      BrowserAnimationsModule,
+      ScrollingModule,
+      DragDropModule,
+    ],
+    providers: [ApolloTestingModule, NzNotificationService, Overlay, FormBuilder, 
+      {
+        provide: ActivatedRoute,
+        useValue: {
+          params: of({
+            id: "Zub",
+          }),
+        },
+      },
+    ]
     })
     .compileComponents();
-
+    ratesFixture = TestBed.createComponent(RatesComponent);
     ratesFormFixture = TestBed.createComponent(RatesFormComponent);
-    ratesComponent = ratesFormFixture.componentInstance;
-    dashboardFixture = TestBed.createComponent(DashboardComponent);
-    dashboard = dashboardFixture.componentInstance;
-    ratesComponent.isLoading = false;
-    ratesComponent.ratesForm.get("rates")?.value.push(ratesComponent.addNewForm())
-    ratesComponent.person = {
-      id: "MrGreen",
-      name: "Ralph",
-      surname: "Green",
+    ratesFormComponent = ratesFormFixture.componentInstance;
+    ratesFormComponent.person = {
+      id: "Zub",
+      name: "Michael",
+      surname: "Zubenstein",
       departments: [],
-      experiences: [],
+      experiences: [
+        {
+          name: "Onwleo",
+          description: "Large description",
+          startedFrom: '2023-11-11T16:36:52.959Z',
+          gainedAt: '2023-11-23T16:36:52.959Z',
+        }
+      ],
       projects: [],
-      rates: [],
-      roles: [],
-      skills: [],
+    rates: [],
+    roles: [],
     }
-    dashboard.openForm("rates", ratesComponent.person);
-    dashboardFixture.detectChanges();
+    ratesFormComponent.ratesForm = fb.group({
+      rates: fb.array([])
+    });
+    ratesFormComponent.ratesForm.get("rates")?.value.push(ratesFormComponent.newRatesGroup())
+    
+    ratesFixture.detectChanges();
     ratesFormFixture.detectChanges();
   });
 
   it('should create', () => {
-      expect(ratesComponent).toBeTruthy();
-  });
+    expect(ratesFormComponent).toBeTruthy();
+});
 });

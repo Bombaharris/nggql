@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { PersonForm } from '../dashboard/person-form/models/person-form.model';
-import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, DeletePersonsDocument, DeletePersonsMutation, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
+import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, CreateRatesDocument, CreateRatesMutation, DeletePersonsDocument, DeletePersonsMutation, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
 import { PersonAdapterService } from './person-adapter.service';
 
 
@@ -185,36 +185,31 @@ describe('PersonAdapterService', () => {
     const rateId = '2';
     const rate = new FormGroup({
       id: new FormControl(rateId),
-      name: new FormControl('Updated Rate'),
-      description: new FormControl('Updated Description'),
-      startedFrom: new FormControl('2022-01-01'),
-      gainedAt: new FormControl('2022-12-31'),
-      skills: new FormControl('skill1,skill2'),
+      value: new FormControl('Created Rate'),
+      validFrom: new FormControl('2022-01-01'),
     });
 
     const createRate = {
       data: {
-        createRate: {
-          rate: [
+        createRates: {
+          rates: [
             {
               id: rateId,
-              name: 'Created Rate',
-              description: 'Created Rate Description',
-              startedFrom: '2022-01-01',
-              gainedAt: '2022-12-31',
-              skills: [],
-            },
+              value: 23,
+              validFrom: '2022-01-01',
+              person: {id: "MrGreen"}
+             },
           ],
         },
       }, loading: false, error: null
     };
     
-    service.submitPersonRate<CreateRatesMutation>(personId, rate, true).subscribe(r => {
+    service.submitPersonRates<CreateRatesMutation>(personId, rate, true).subscribe(r => {
       expect(r).toEqual(createRate);
       done();
     });
 
-    apolloController.expectOne(CreateExperiencesDocument).flush(createRate);
+    apolloController.expectOne(CreateRatesDocument).flush(createRate);
     apolloController.verify();
   });
 });

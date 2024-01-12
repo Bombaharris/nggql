@@ -140,22 +140,10 @@ export class PersonAdapterService {
           }
         }
       },
-      name: rate.get('name')?.value ?? '',
-      description: rate.get('description')?.value ?? '',
-      startedFrom: rate.get('startedFrom')?.value ?? '',
-      gainedAt: rate.get('gainedAt')?.value ?? '',
+      value: rate.get('value')?.value ?? '',
+      validFrom: rate.get('validFrom')?.value ?? '',
     };
-    if (!isCreate) {
-      input.skills = {
-        disconnect: this.qlFilterService.connectWhere('id_NOT_IN', '') as any,
-        connect: this.qlFilterService.connectWhere('id', rate.get('skills')?.value ?? '') as any
-      };
-    } else {
-      input.skills = {
-        connect: this.qlFilterService.connectWhere('id', rate.get('skills')?.value ?? '') as any
-      };
-    }
-  //TODO
+  
     const mutationDocument = isCreate ? CreateRatesDocument : UpdateRatesDocument;
     const variables = isCreate ? { input } : { where:{ id: rate.get('id')?.value }, update: input };
     return this.apollo.mutate({ mutation: mutationDocument, variables }) as Observable<MutationResult<T>>;
