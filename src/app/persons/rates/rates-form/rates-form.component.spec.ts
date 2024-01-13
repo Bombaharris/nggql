@@ -60,10 +60,8 @@ describe('RatesFormComponent', () => {
       departments: [],
       experiences: [
         {
-          name: "Onwleo",
-          description: "Large description",
-          startedFrom: '2023-11-11T16:36:52.959Z',
-          gainedAt: '2023-11-23T16:36:52.959Z',
+          value: 222,
+          validFrom: '2023-11-11T16:36:52.959Z',
         }
       ],
       projects: [],

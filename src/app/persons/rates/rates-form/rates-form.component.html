@@ -7,7 +7,7 @@
         <div nz-row [nzGutter]="24">
           <div nz-col [nzXXl]="24" [nzXl]="24" *ngFor="let ratesList of ratesList.controls; let idx = index" [formGroupName]="idx">
             <nz-list-item>
-              <nz-card [nzTitle]="(ratesList.value.name + ' ' + (ratesList.value.startedFrom | date:'mediumDate') + ' - ' + (ratesList.value.gainedAt | date:'mediumDate'))">
+              <nz-card [nzTitle]="((ratesList.value.validFrom | date:'mediumDate') + ' ')">
                 <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="value">Value</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Value is required.">
@@ -15,9 +15,9 @@
                 </nz-form-control>
               </nz-form-item>
               <nz-form-item>
-                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="startedFrom" nzRequired>Valid from</nz-form-label>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="validFrom" nzRequired>Valid from</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid starting date!">
-                    <nz-date-picker formControlName="startedFrom"></nz-date-picker>
+                    <nz-date-picker formControlName="validFrom"></nz-date-picker>
                 </nz-form-control>
             </nz-form-item>
 

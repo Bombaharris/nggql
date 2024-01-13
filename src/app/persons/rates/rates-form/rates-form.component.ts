@@ -45,7 +45,6 @@ export class RatesFormComponent implements OnInit, OnChanges {
       const newRate = this.fb.group({
        ...rate,
       });
-      //check if experience already exists, if not omit it
       if(ratesFormArray.controls.find(w => w.get('id')?.value === newRate.get('id')?.value)) return;
       ratesFormArray.push(newRate);
     });
@@ -58,7 +57,7 @@ export class RatesFormComponent implements OnInit, OnChanges {
   newRatesGroup(): FormGroup {
     return this.fb.group({
       value: ["", [Validators.required]],
-      startedFrom: ["", [Validators.required]],
+      validFrom: ["" || new Date(), [Validators.required]],
     })
   }
 
