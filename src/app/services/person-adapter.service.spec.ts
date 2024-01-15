@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { PersonForm } from '../dashboard/person-form/models/person-form.model';
-import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, DeletePersonsDocument, DeletePersonsMutation, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
+import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, CreateRatesDocument, CreateRatesMutation, DeletePersonsDocument, DeletePersonsMutation, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
 import { PersonAdapterService } from './person-adapter.service';
 
 
@@ -178,5 +178,38 @@ describe('PersonAdapterService', () => {
       done();
       TestBed.inject(ApolloTestingController).expectOne(DeletePersonsDocument).flush(mockMutationResult);
 
+  });
+
+  it('should create person rate when experiences does not exists', (done) => {
+    const personId = 'MrGreen';
+    const rateId = '2';
+    const rate = new FormGroup({
+      id: new FormControl(rateId),
+      value: new FormControl('Created Rate'),
+      validFrom: new FormControl('2022-01-01'),
+    });
+
+    const createRate = {
+      data: {
+        createRates: {
+          rates: [
+            {
+              id: rateId,
+              value: 23,
+              validFrom: '2022-01-01',
+              person: {id: "MrGreen"}
+             },
+          ],
+        },
+      }, loading: false, error: null
+    };
+    
+    service.submitPersonRates<CreateRatesMutation>(personId, rate, true).subscribe(r => {
+      expect(r).toEqual(createRate);
+      done();
+    });
+
+    apolloController.expectOne(CreateRatesDocument).flush(createRate);
+    apolloController.verify();
   });
 });

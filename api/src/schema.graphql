@@ -61,7 +61,7 @@ type Rate {
   id: ID! @id(autogenerate: true)
   value: Float!
   validFrom: Date!
-  person: Person! @relationship(type: "HAS_RATE", direction: OUT)
+  person: Person! @relationship(type: "HAS_RATE", direction: IN)
 }
 
 type PersonsToProject {

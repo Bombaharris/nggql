@@ -7,11 +7,13 @@ import { ExperienceFormComponent } from './experiences/experience-form/experienc
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from '../ng-zorro-antd.module';
 import { ExperiencesComponent } from './experiences/experiences.component';
+import { RatesFormComponent } from './rates/rates-form/rates-form.component';
+import { RatesComponent } from './rates/rates.component';
 
 
 @NgModule({
   declarations: [
-    PersonsComponent, ExperienceFormComponent, ExperiencesComponent
+    PersonsComponent, ExperienceFormComponent, ExperiencesComponent, RatesFormComponent, RatesComponent
   ],
   imports: [
     CommonModule,

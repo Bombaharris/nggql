@@ -1,0 +1,12 @@
+<nz-layout>
+    <nz-content>
+        <h1>Rates of {{editedPerson?.name}} {{editedPerson?.surname}}</h1>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>Software House</nz-breadcrumb-item>
+            <nz-breadcrumb-item>Rates</nz-breadcrumb-item>
+            <nz-breadcrumb-item>{{editedPerson?.name}} {{editedPerson?.surname}}</nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <app-rates-form [person]="editedPerson" (submitted)="submitRates($event)" 
+        (deleted)="removePersonsRate($event)"></app-rates-form>
+    </nz-content>
+</nz-layout>

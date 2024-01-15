@@ -19,7 +19,7 @@ import { PersonForm } from './person-form/models/person-form.model';
 export class DashboardComponent implements OnInit, OnDestroy {
   isFormVisible = false;
   isLoading = false;
-  currentForm: "person" | "rates" | null = null;
+  currentForm: "person" | null = null;
   people!: PersonWithAllTypeFragment[];
   editedPerson!: PersonWithAllTypeFragment | null;
   departments$!: Observable<DepartmentsQuery['departments']>;
@@ -102,7 +102,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
     }
 
-    openForm(formType: "person" | "rates" | null, person?: PersonWithAllTypeFragment): void {
+    openForm(formType: "person" | null, person?: PersonWithAllTypeFragment): void {
       this.isFormVisible = true;
       this.currentForm = formType;
       if(person) {
