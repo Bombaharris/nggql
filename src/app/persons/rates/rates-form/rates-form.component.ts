@@ -35,7 +35,7 @@ export class RatesFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes || !changes.person || !changes.person.currentValue) return;
-    this.rebuildFormGroup(changes.person.currentValue.experiences);
+    this.rebuildFormGroup(changes.person.currentValue.rates);
   }
 
   private rebuildFormGroup(rates: Rate[]): void {

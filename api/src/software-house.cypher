@@ -111,9 +111,9 @@ CREATE (Architect:Role {id: "Architect", name:"Architect"})
 
 CREATE (Department207400:Department {id: "207400", name:"Frontend"})
 
-CREATE (SeniorRate:Rate {id: "SeniorRate",validFrom: "2017-01-01", value: 1000})
-CREATE (RegularRate:Rate {id: "RegularRate",validFrom: "2017-01-01", value: 800})
-CREATE (JuniorRate:Rate {id: "JuniorRate",validFrom: "2017-01-01", value: 600})
+// CREATE (SeniorRate:Rate {id: "SeniorRate",validFrom: "2017-01-01", value: 1000})
+// CREATE (RegularRate:Rate {id: "RegularRate",validFrom: "2017-01-01", value: 800})
+// CREATE (JuniorRate:Rate {id: "JuniorRate",validFrom: "2017-01-01", value: 600})
 
 CREATE
 (MrGreen)-[:HAS_SKILL {seniority: 'SENIOR'}]->(Angular),
@@ -145,16 +145,16 @@ CREATE
 // CREATE (person)-[r:HAS_SKILL {seniority: 'SENIOR'}]->(skill)
 // RETURN skill
 
-CREATE
-(MrGreen)-[:HAS_ROLE]->(FE),
-(MrGreen)-[:HAS_ROLE]->(Architect),
-(Polon)-[:HAS_ROLE]->(FE),
-(Zub)-[:HAS_ROLE]->(FE),
-(Alex)-[:HAS_ROLE]->(FE),
-(Gocha)-[:HAS_ROLE]->(FE),
-(Sofia)-[:HAS_ROLE]->(FE),
-(Ivan)-[:HAS_ROLE]->(FE),
-(Finger)-[:HAS_ROLE]->(FE)
+// CREATE
+// (MrGreen)-[:HAS_ROLE]->(FE),
+// (MrGreen)-[:HAS_ROLE]->(Architect),
+// (Polon)-[:HAS_ROLE]->(FE),
+// (Zub)-[:HAS_ROLE]->(FE),
+// (Alex)-[:HAS_ROLE]->(FE),
+// (Gocha)-[:HAS_ROLE]->(FE),
+// (Sofia)-[:HAS_ROLE]->(FE),
+// (Ivan)-[:HAS_ROLE]->(FE),
+// (Finger)-[:HAS_ROLE]->(FE)
 
 
 CREATE
