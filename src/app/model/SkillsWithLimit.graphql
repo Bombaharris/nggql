@@ -3,4 +3,7 @@ query SkillsWithLimit($options: SkillOptions) {
     id
     name
   }
+  skillsAggregate{
+    count
+  }
 }

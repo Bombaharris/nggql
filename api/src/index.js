@@ -4,9 +4,10 @@ import neo4j from 'neo4j-driver';
 import { ApolloServer } from 'apollo-server';
 import fs from "fs";
 import path from "path";
+import {upperDirective} from "./helpers/upperCaseTransform.js";
 
 dotenv.config();
-
+const { upperDirectiveTypeDefs, upperDirectiveTransformer } = upperDirective("uppercase");
 const __dirname = path.resolve();
 const typeDefs = fs.readFileSync(process.env.GRAPHQL_SCHEMA || path.join(__dirname, "src", "schema.graphql")).toString("utf-8");
 
@@ -18,10 +19,12 @@ const driver = neo4j.driver(
   )
 );
 
-const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
+const neoSchema = new Neo4jGraphQL({ typeDefs:[
+  typeDefs, upperDirectiveTypeDefs
+], driver });
 
 const server = new ApolloServer({
-    schema: await neoSchema.getSchema(),
+    schema: upperDirectiveTransformer(await neoSchema.getSchema()),
     context: ({ req }) => ({ req }),
 });
 

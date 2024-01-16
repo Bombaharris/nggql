@@ -7,7 +7,7 @@ import { CreateSkillsDocument, CreateSkillsMutation, SkillsDocument, SkillsQuery
 import { SkillForm } from '../skills/skills-form/models/skill-form.model';
 import { SkillsAdapterService } from './skills-adapter.service';
 
-describe('RolesAdapterService', () => {
+describe('SkillsAdapterService', () => {
   let service: SkillsAdapterService;
   let apolloController: ApolloTestingController;
 
@@ -45,9 +45,10 @@ describe('RolesAdapterService', () => {
 
     service.fetchValues<SkillsQuery>(query, key).subscribe((result: SkillsQuery['skills']) => {
       expect(result).toEqual(mockSkills.data[key]);
+      done();
     });
-    done();
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
+    apolloController.verify();
   });
 
   it('fetch more values of skills with limit and offset', (done) => {
@@ -102,14 +103,21 @@ describe('RolesAdapterService', () => {
             "name": "Angular12",
           },
 
-        ]
-      }
+        ],
+        skillsAggregate:{
+          count:12
+        }
+      },
+     
     };
 
-    service.skillsQueryRef?.fetchMore({variables:{options:{limit: 10, offset:1}}}).then((skills) => expect(skills.data.skills).toEqual(mockSkills.data[key]))
+    service.skillsQueryRef?.fetchMore({variables:{options:{limit: 10, offset:0}}}).then((skills) => {
+      expect(skills.data.skills).toEqual(mockSkills.data[key])
+      done();
+    })
       
-    done();
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
+    apolloController.verify();
   });
 
   it('submits skill to a list', (done) => {

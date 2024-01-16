@@ -37,7 +37,7 @@ export class SkillsAdapterService extends ApolloClientService {
       {
         options: {
           limit: 10,
-          offset: 1
+          offset: 0
         }
       },
       {
@@ -58,7 +58,7 @@ export class SkillsAdapterService extends ApolloClientService {
   }
 
   findSkill(name: string): Observable<ApolloQueryResult<FindSkillQuery>> {
-    return super._apollo.query<FindSkillQuery>({ query: FindSkillDocument, variables: { where: { name } } });
+    return super._apollo.query<FindSkillQuery>({ query: FindSkillDocument, variables: { where: { name_CONTAINS: name } } });
   }
 
   submitSkill<T>(

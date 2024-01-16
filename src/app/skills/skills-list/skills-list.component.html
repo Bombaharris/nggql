@@ -19,9 +19,9 @@
     [nzFrontPagination]="false"
     [nzTotal]="total"
     [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
     (nzPageIndexChange)="fetchMore()"
-    (nzPageSizeChange)="fetchMore(true)"
-    [(nzPageSize)]="pageSize">
+    (nzPageSizeChange)="fetchMore(true)">
     <thead>
       <tr>
         <th>Skill</th>

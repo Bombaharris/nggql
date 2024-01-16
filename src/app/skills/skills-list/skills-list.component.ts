@@ -12,9 +12,9 @@ import { SkillForm } from '../skills-form/models/skill-form.model';
   styleUrl: './skills-list.component.scss'
 })
 export class SkillsListComponent implements OnInit {
-  pageIndex = 1;
+  pageIndex = 0;
   pageSize = 10;
-  total = 1000000;
+  total = 0;
   feed!: SkillsWithLimitQuery['skills'];
   isFormVisible = false;
   isLoading = false;
@@ -39,6 +39,7 @@ export class SkillsListComponent implements OnInit {
         }
         if (data && data.skills) {
           this.feed = data.skills;
+          this.total = data.skillsAggregate.count;
           this.isLoading = false;
         }
       })
@@ -54,13 +55,13 @@ export class SkillsListComponent implements OnInit {
   async fetchMore(reset: boolean = false) {
     this.isLoading = true;
     if (reset) {
-      this.pageIndex = 1;
+      this.pageIndex = 0;
     }
     await this.skillsAdapterService.skillsQueryRef?.fetchMore({
       variables: {
         options: {
           limit: this.pageSize,
-          offset: this.pageIndex
+          offset: this.pageIndex*this.pageSize - this.pageSize
         },
       }
     }).then(result => {
@@ -80,7 +81,7 @@ export class SkillsListComponent implements OnInit {
   }
 
   closeForm(skillForm?: FormGroup<SkillForm>): void {
-    const name = skillForm?.get('name')?.value;
+    const name = skillForm?.get('name')?.value.toUpperCase();
     if (skillForm && name) {
       this.skillsAdapterService.findSkill(name).subscribe(({ data }) => {
         if (data.skills.find(sk => sk.name == name)) {

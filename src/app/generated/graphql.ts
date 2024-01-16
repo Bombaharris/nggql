@@ -4390,7 +4390,7 @@ export type SkillsWithLimitQueryVariables = Exact<{
 }>;
 
 
-export type SkillsWithLimitQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+export type SkillsWithLimitQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }>, skillsAggregate: { __typename?: 'SkillAggregateSelection', count: number } };
 
 export type UpdateDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
@@ -4992,6 +4992,9 @@ export const SkillsWithLimitDocument = gql`
   skills(options: $options) {
     id
     name
+  }
+  skillsAggregate {
+    count
   }
 }
     `;
