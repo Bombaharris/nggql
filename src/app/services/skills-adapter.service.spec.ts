@@ -172,14 +172,21 @@ describe('SkillsAdapterService', () => {
             "name": "Angular12",
           },
 
-        ]
-      }
+        ],
+        skillsAggregate:{
+          count:12
+        }
+      },
+     
     };
 
-    service.skillsQueryRef?.fetchMore({variables:{options:{limit: 10, offset:1}}}).then((skills) => expect(skills.data.skills).toEqual(mockSkills.data[key]))
+    service.skillsQueryRef?.fetchMore({variables:{options:{limit: 10, offset:0}}}).then((skills) => {
+      expect(skills.data.skills).toEqual(mockSkills.data[key])
+      done();
+    })
       
-    done();
     TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
+    apolloController.verify();
   });
 
   it('submits skill to a list', (done) => {

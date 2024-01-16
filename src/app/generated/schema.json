@@ -35641,6 +35641,15 @@
             "deprecationReason": null
           }
         ]
+      },
+      {
+        "name": "uppercase",
+        "description": null,
+        "isRepeatable": false,
+        "locations": [
+          "FIELD_DEFINITION"
+        ],
+        "args": []
       }
     ]
   }
