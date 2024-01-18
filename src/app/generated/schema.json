@@ -4663,59 +4663,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "SCALAR",
-        "name": "Duration",
-        "description": "A duration, represented as an ISO 8601 duration string",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "DurationAggregateSelectionNonNullable",
-        "description": null,
-        "fields": [
-          {
-            "name": "max",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Duration",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "min",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Duration",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "Experience",
         "description": null,
@@ -15548,22 +15495,6 @@
         "description": null,
         "fields": [
           {
-            "name": "duration",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "DurationAggregateSelectionNonNullable",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "id",
             "description": null,
             "args": [],
@@ -16251,186 +16182,6 @@
                   "ofType": null
                 }
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_AVERAGE_EQUAL",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_AVERAGE_GT",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_AVERAGE_GTE",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_AVERAGE_LT",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_AVERAGE_LTE",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MAX_EQUAL",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MAX_GT",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MAX_GTE",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MAX_LT",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MAX_LTE",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MIN_EQUAL",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MIN_GT",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MIN_GTE",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MIN_LT",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "duration_MIN_LTE",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Duration",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -22270,7 +22021,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Duration",
+                "name": "Date",
                 "ofType": null
               }
             },
@@ -22719,22 +22470,6 @@
             "deprecationReason": null
           },
           {
-            "name": "duration",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "DurationAggregateSelectionNonNullable",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "id",
             "description": null,
             "args": [],
@@ -22942,7 +22677,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Duration",
+                "name": "Date",
                 "ofType": null
               }
             },
@@ -23170,7 +22905,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Duration",
+                "name": "Date",
                 "ofType": null
               }
             },
@@ -25856,7 +25591,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Duration",
+              "name": "Date",
               "ofType": null
             },
             "defaultValue": null,
@@ -25995,7 +25730,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Duration",
+              "name": "Date",
               "ofType": null
             },
             "defaultValue": null,
@@ -26007,7 +25742,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Duration",
+              "name": "Date",
               "ofType": null
             },
             "defaultValue": null,
@@ -26019,7 +25754,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Duration",
+              "name": "Date",
               "ofType": null
             },
             "defaultValue": null,
@@ -26037,7 +25772,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Duration",
+                  "name": "Date",
                   "ofType": null
                 }
               }
@@ -26051,7 +25786,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Duration",
+              "name": "Date",
               "ofType": null
             },
             "defaultValue": null,
@@ -26063,7 +25798,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Duration",
+              "name": "Date",
               "ofType": null
             },
             "defaultValue": null,

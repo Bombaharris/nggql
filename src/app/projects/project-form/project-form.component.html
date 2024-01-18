@@ -1,0 +1,85 @@
+<div class="projectsForm">
+    <nz-empty *ngIf="!projects || projects.length === 0"></nz-empty>
+    <form nz-form [formGroup]="projectForm">
+        <ng-container formArrayName="projects">
+            <nz-list nzGrid>
+                <div nz-row [nzGutter]="24">
+                    <div nz-col [nzXXl]="24" [nzXl]="24" *ngFor="let project of projects.controls; let idx = index"
+                        [formGroupName]="idx">
+                        <nz-list-item>
+                            <nz-card
+                                [nzTitle]="(project.value.name + ' ' + (project.value.startedFrom | date:'mediumDate'))">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Name is required.">
+                                        <input nz-input formControlName="name" id="name" />
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Skills</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <nz-select [nzMaxTagCount]="10" nzMode="multiple"
+                                            nzPlaceHolder="Please select skills" formControlName="skills">
+                                            <nz-option *ngFor="let skill of skills" [nzLabel]="skill.name"
+                                                [nzValue]="skill.id"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Persons</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <nz-select [nzMaxTagCount]="10" nzMode="multiple"
+                                            nzPlaceHolder="Please select skills" formControlName="skills">
+                                            <nz-option *ngFor="let person of persons" [nzLabel]="person.name"
+                                                [nzValue]="person.id"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="startedFrom" nzRequired>Started
+                                        from</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid starting date!">
+                                        <nz-date-picker formControlName="startedFrom"></nz-date-picker>
+                                    </nz-form-control>
+                                    <nz-form-label [ngStyle]="{'text-align': 'left', 'margin-left':'0.5rem'}"
+                                        nzFor="duration" nzRequired>Duration</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Select valid duration date!">
+                                        <nz-date-picker formControlName="duration"></nz-date-picker>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-control class="btn-center">
+                                        <nz-space [nzSize]="'small'">
+                                            <button type="submit"
+                                                [disabled]="!(project.status === 'VALID') || !project.dirty"
+                                                *nzSpaceItem nz-button nzType="primary"
+                                                (click)="submitNewProject(project)">
+                                                Submit
+                                            </button>
+                                            <button class="btn-sm" nzDanger nz-button nzType="primary" nz-popconfirm
+                                                nzPopconfirmTitle="Are you sure you want to delete this project?"
+                                                (nzOnConfirm)="deleteProject(idx, project)"
+                                                (nzOnCancel)="cancelDelete()">
+                                                Remove
+                                            </button>
+                                        </nz-space>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </nz-card>
+                        </nz-list-item>
+                    </div>
+
+                </div>
+            </nz-list>
+            <nz-form-item>
+                <nz-form-control class="btn-center">
+                    <nz-space [nzSize]="'small'">
+                        <button nzSize="large" *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
+                            Add new
+                        </button>
+                    </nz-space>
+                </nz-form-control>
+            </nz-form-item>
+        </ng-container>
+    </form>
+</div>

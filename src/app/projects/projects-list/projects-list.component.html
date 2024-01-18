@@ -1,0 +1,40 @@
+<nz-breadcrumb>
+    <nz-breadcrumb-item><a [routerLink]="['../']">Software House</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item>Projects</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div nz-row nzJustify="end">
+    <div nz-col [nzSpan]="20">
+        <h1 nz-typography>Projects</h1>
+    </div>
+    <div nz-col [nzSpan]="4">
+        <button nz-button nzBlock nzType="default" (click)="openForm('project')">Create project</button>
+    </div>
+</div>
+
+<nz-table #table [nzData]="projects" [nzBordered]="true" [nzLoading]="isLoading">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Skills</th>
+            <th>Persons</th>
+            <th>Started from</th>
+            <th>Duration</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let project of table.data">
+            <td>{{ project.name }}</td>
+            <td>{{ project.name }}</td>
+            <td>{{ project.name }}</td>
+            <td>{{ project.startedFrom }}</td>
+            <td>{{ project.duration }}</td>
+        </tr>
+    </tbody>
+</nz-table>
+<nz-drawer *ngIf="currentForm === 'project'" [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="true"
+    [nzWidth]="'40%'" [nzVisible]="isFormVisible" [nzTitle]="'Create project'" (nzOnClose)="closeForm()">
+    <div *nzDrawerContent>
+        <app-projects-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-projects-form>
+    </div>
+</nz-drawer>

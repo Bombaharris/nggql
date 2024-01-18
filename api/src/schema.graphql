@@ -47,7 +47,7 @@ type Project {
   skills: [Skill!]! @relationship(type: "NEED_SKILL", direction:OUT)
   persons: [Person!]! @relationship(type: "HAS_PROJECT", direction: IN)
   startedFrom: Date!
-  duration: Duration!
+  duration: Date!
 }
 
 type Department {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { ProjectsWithAllDocument, ProjectsWithAllQuery } from '../generated/graphql';
+import { Exact, InputMaybe, ProjectsQuery, ProjectsWithAllDocument, ProjectsWithAllQuery } from '../generated/graphql';
 import { ApolloClientService } from './apollo-client.service';
 
 @Injectable({
@@ -9,9 +9,14 @@ import { ApolloClientService } from './apollo-client.service';
 })
 export class ProjectsAdapterService extends ApolloClientService {
   projects!: ProjectsWithAllQuery['projects'];
+  projectsQueryRef:
+    | QueryRef<ProjectsQuery, Exact<{ options?: InputMaybe<ProjectsOptions> | undefined; }>>
+    | undefined = undefined;
+  editedProject: ProjectPartFragment | null = null;
 
   constructor(apollo: Apollo) {
     super(apollo);
+   
    }
 
    fetch(): Observable<ProjectsWithAllQuery['projects']> {
@@ -19,5 +24,7 @@ export class ProjectsAdapterService extends ApolloClientService {
       data.subscribe(projects => {this.projects = projects});
       return data;
     }
+
+    
   }
  

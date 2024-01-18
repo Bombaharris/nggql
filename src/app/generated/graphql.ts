@@ -15,8 +15,6 @@ export type Scalars = {
   Float: number;
   /** A date, represented as a 'yyyy-mm-dd' string */
   Date: any;
-  /** A duration, represented as an ISO 8601 duration string */
-  Duration: any;
 };
 
 export type CreateDepartmentsMutationResponse = {
@@ -541,12 +539,6 @@ export type DepartmentsConnection = {
   edges: Array<DepartmentEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
-};
-
-export type DurationAggregateSelectionNonNullable = {
-  __typename?: 'DurationAggregateSelectionNonNullable';
-  max: Scalars['Duration'];
-  min: Scalars['Duration'];
 };
 
 export type Experience = {
@@ -1793,7 +1785,6 @@ export type PersonProjectProjectsAggregationSelection = {
 
 export type PersonProjectProjectsNodeAggregateSelection = {
   __typename?: 'PersonProjectProjectsNodeAggregateSelection';
-  duration: DurationAggregateSelectionNonNullable;
   id: IdAggregateSelectionNonNullable;
   name: StringAggregateSelectionNonNullable;
 };
@@ -1868,21 +1859,6 @@ export type PersonProjectsNodeAggregationWhereInput = {
   AND?: InputMaybe<Array<PersonProjectsNodeAggregationWhereInput>>;
   NOT?: InputMaybe<PersonProjectsNodeAggregationWhereInput>;
   OR?: InputMaybe<Array<PersonProjectsNodeAggregationWhereInput>>;
-  duration_AVERAGE_EQUAL?: InputMaybe<Scalars['Duration']>;
-  duration_AVERAGE_GT?: InputMaybe<Scalars['Duration']>;
-  duration_AVERAGE_GTE?: InputMaybe<Scalars['Duration']>;
-  duration_AVERAGE_LT?: InputMaybe<Scalars['Duration']>;
-  duration_AVERAGE_LTE?: InputMaybe<Scalars['Duration']>;
-  duration_MAX_EQUAL?: InputMaybe<Scalars['Duration']>;
-  duration_MAX_GT?: InputMaybe<Scalars['Duration']>;
-  duration_MAX_GTE?: InputMaybe<Scalars['Duration']>;
-  duration_MAX_LT?: InputMaybe<Scalars['Duration']>;
-  duration_MAX_LTE?: InputMaybe<Scalars['Duration']>;
-  duration_MIN_EQUAL?: InputMaybe<Scalars['Duration']>;
-  duration_MIN_GT?: InputMaybe<Scalars['Duration']>;
-  duration_MIN_GTE?: InputMaybe<Scalars['Duration']>;
-  duration_MIN_LT?: InputMaybe<Scalars['Duration']>;
-  duration_MIN_LTE?: InputMaybe<Scalars['Duration']>;
   name_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
@@ -2523,7 +2499,7 @@ export type PointInput = {
 
 export type Project = {
   __typename?: 'Project';
-  duration: Scalars['Duration'];
+  duration: Scalars['Date'];
   id: Scalars['ID'];
   name: Scalars['String'];
   persons: Array<Person>;
@@ -2582,7 +2558,6 @@ export type ProjectSkillsConnectionArgs = {
 export type ProjectAggregateSelection = {
   __typename?: 'ProjectAggregateSelection';
   count: Scalars['Int'];
-  duration: DurationAggregateSelectionNonNullable;
   id: IdAggregateSelectionNonNullable;
   name: StringAggregateSelectionNonNullable;
 };
@@ -2606,7 +2581,7 @@ export type ProjectConnectWhere = {
 };
 
 export type ProjectCreateInput = {
-  duration: Scalars['Duration'];
+  duration: Scalars['Date'];
   name: Scalars['String'];
   persons?: InputMaybe<ProjectPersonsFieldInput>;
   skills?: InputMaybe<ProjectSkillsFieldInput>;
@@ -2630,7 +2605,7 @@ export type ProjectEdge = {
 };
 
 export type ProjectOnCreateInput = {
-  duration: Scalars['Duration'];
+  duration: Scalars['Date'];
   name: Scalars['String'];
   startedFrom: Scalars['Date'];
 };
@@ -2914,7 +2889,7 @@ export type ProjectUniqueWhere = {
 };
 
 export type ProjectUpdateInput = {
-  duration?: InputMaybe<Scalars['Duration']>;
+  duration?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
   persons?: InputMaybe<Array<ProjectPersonsUpdateFieldInput>>;
   skills?: InputMaybe<Array<ProjectSkillsUpdateFieldInput>>;
@@ -2925,12 +2900,12 @@ export type ProjectWhere = {
   AND?: InputMaybe<Array<ProjectWhere>>;
   NOT?: InputMaybe<ProjectWhere>;
   OR?: InputMaybe<Array<ProjectWhere>>;
-  duration?: InputMaybe<Scalars['Duration']>;
-  duration_GT?: InputMaybe<Scalars['Duration']>;
-  duration_GTE?: InputMaybe<Scalars['Duration']>;
-  duration_IN?: InputMaybe<Array<Scalars['Duration']>>;
-  duration_LT?: InputMaybe<Scalars['Duration']>;
-  duration_LTE?: InputMaybe<Scalars['Duration']>;
+  duration?: InputMaybe<Scalars['Date']>;
+  duration_GT?: InputMaybe<Scalars['Date']>;
+  duration_GTE?: InputMaybe<Scalars['Date']>;
+  duration_IN?: InputMaybe<Array<Scalars['Date']>>;
+  duration_LT?: InputMaybe<Scalars['Date']>;
+  duration_LTE?: InputMaybe<Scalars['Date']>;
   id?: InputMaybe<Scalars['ID']>;
   id_CONTAINS?: InputMaybe<Scalars['ID']>;
   id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
