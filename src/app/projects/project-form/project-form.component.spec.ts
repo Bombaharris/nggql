@@ -1,5 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GraphQLModule } from 'src/app/graphql.module';
+import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 import { ProjectFormComponent } from './project-form.component';
 
 describe('ProjectFormComponent', () => {
@@ -8,7 +13,16 @@ describe('ProjectFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectFormComponent]
+      declarations: [
+        ProjectFormComponent
+      ],
+      imports: [
+        NgZorroAntdModule,
+        BrowserModule,
+        GraphQLModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+      ]
     })
     .compileComponents();
     

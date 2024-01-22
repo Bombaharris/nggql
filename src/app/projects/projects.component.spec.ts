@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { BrowserModule } from '@angular/platform-browser';
+import { GraphQLModule } from '../graphql.module';
+import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
+import { ProjectsModule } from './projects.module';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -8,7 +12,13 @@ describe('ProjectsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectsComponent]
+      declarations: [ProjectsComponent],
+      imports: [
+        ProjectsModule,
+        ProjectsRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+      ]
     })
     .compileComponents();
     
