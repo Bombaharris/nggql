@@ -1,5 +1,9 @@
-import { FormArray, FormControl, FormGroup } from "@angular/forms"
+import { FormControl } from '@angular/forms';
 
-export type ProjectFormType = FormGroup<{
-    projects: FormArray<FormControl>;
-  }>
+export type ProjectForm = {
+  name: FormControl;
+  startedFrom: FormControl;
+  duration: FormControl;
+  skills: FormControl;
+  persons: FormControl;
+};

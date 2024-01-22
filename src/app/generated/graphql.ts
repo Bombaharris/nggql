@@ -15,6 +15,8 @@ export type Scalars = {
   Float: number;
   /** A date, represented as a 'yyyy-mm-dd' string */
   Date: any;
+  /** A duration, represented as an ISO 8601 duration string */
+  Duration: any;
 };
 
 export type CreateDepartmentsMutationResponse = {
@@ -539,6 +541,12 @@ export type DepartmentsConnection = {
   edges: Array<DepartmentEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type DurationAggregateSelectionNonNullable = {
+  __typename?: 'DurationAggregateSelectionNonNullable';
+  max: Scalars['Duration'];
+  min: Scalars['Duration'];
 };
 
 export type Experience = {
@@ -1785,6 +1793,7 @@ export type PersonProjectProjectsAggregationSelection = {
 
 export type PersonProjectProjectsNodeAggregateSelection = {
   __typename?: 'PersonProjectProjectsNodeAggregateSelection';
+  duration: DurationAggregateSelectionNonNullable;
   id: IdAggregateSelectionNonNullable;
   name: StringAggregateSelectionNonNullable;
 };
@@ -1859,6 +1868,21 @@ export type PersonProjectsNodeAggregationWhereInput = {
   AND?: InputMaybe<Array<PersonProjectsNodeAggregationWhereInput>>;
   NOT?: InputMaybe<PersonProjectsNodeAggregationWhereInput>;
   OR?: InputMaybe<Array<PersonProjectsNodeAggregationWhereInput>>;
+  duration_AVERAGE_EQUAL?: InputMaybe<Scalars['Duration']>;
+  duration_AVERAGE_GT?: InputMaybe<Scalars['Duration']>;
+  duration_AVERAGE_GTE?: InputMaybe<Scalars['Duration']>;
+  duration_AVERAGE_LT?: InputMaybe<Scalars['Duration']>;
+  duration_AVERAGE_LTE?: InputMaybe<Scalars['Duration']>;
+  duration_MAX_EQUAL?: InputMaybe<Scalars['Duration']>;
+  duration_MAX_GT?: InputMaybe<Scalars['Duration']>;
+  duration_MAX_GTE?: InputMaybe<Scalars['Duration']>;
+  duration_MAX_LT?: InputMaybe<Scalars['Duration']>;
+  duration_MAX_LTE?: InputMaybe<Scalars['Duration']>;
+  duration_MIN_EQUAL?: InputMaybe<Scalars['Duration']>;
+  duration_MIN_GT?: InputMaybe<Scalars['Duration']>;
+  duration_MIN_GTE?: InputMaybe<Scalars['Duration']>;
+  duration_MIN_LT?: InputMaybe<Scalars['Duration']>;
+  duration_MIN_LTE?: InputMaybe<Scalars['Duration']>;
   name_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
@@ -2499,7 +2523,7 @@ export type PointInput = {
 
 export type Project = {
   __typename?: 'Project';
-  duration: Scalars['Date'];
+  duration: Scalars['Duration'];
   id: Scalars['ID'];
   name: Scalars['String'];
   persons: Array<Person>;
@@ -2558,6 +2582,7 @@ export type ProjectSkillsConnectionArgs = {
 export type ProjectAggregateSelection = {
   __typename?: 'ProjectAggregateSelection';
   count: Scalars['Int'];
+  duration: DurationAggregateSelectionNonNullable;
   id: IdAggregateSelectionNonNullable;
   name: StringAggregateSelectionNonNullable;
 };
@@ -2581,7 +2606,7 @@ export type ProjectConnectWhere = {
 };
 
 export type ProjectCreateInput = {
-  duration: Scalars['Date'];
+  duration: Scalars['Duration'];
   name: Scalars['String'];
   persons?: InputMaybe<ProjectPersonsFieldInput>;
   skills?: InputMaybe<ProjectSkillsFieldInput>;
@@ -2605,7 +2630,7 @@ export type ProjectEdge = {
 };
 
 export type ProjectOnCreateInput = {
-  duration: Scalars['Date'];
+  duration: Scalars['Duration'];
   name: Scalars['String'];
   startedFrom: Scalars['Date'];
 };
@@ -2889,7 +2914,7 @@ export type ProjectUniqueWhere = {
 };
 
 export type ProjectUpdateInput = {
-  duration?: InputMaybe<Scalars['Date']>;
+  duration?: InputMaybe<Scalars['Duration']>;
   name?: InputMaybe<Scalars['String']>;
   persons?: InputMaybe<Array<ProjectPersonsUpdateFieldInput>>;
   skills?: InputMaybe<Array<ProjectSkillsUpdateFieldInput>>;
@@ -2900,12 +2925,12 @@ export type ProjectWhere = {
   AND?: InputMaybe<Array<ProjectWhere>>;
   NOT?: InputMaybe<ProjectWhere>;
   OR?: InputMaybe<Array<ProjectWhere>>;
-  duration?: InputMaybe<Scalars['Date']>;
-  duration_GT?: InputMaybe<Scalars['Date']>;
-  duration_GTE?: InputMaybe<Scalars['Date']>;
-  duration_IN?: InputMaybe<Array<Scalars['Date']>>;
-  duration_LT?: InputMaybe<Scalars['Date']>;
-  duration_LTE?: InputMaybe<Scalars['Date']>;
+  duration?: InputMaybe<Scalars['Duration']>;
+  duration_GT?: InputMaybe<Scalars['Duration']>;
+  duration_GTE?: InputMaybe<Scalars['Duration']>;
+  duration_IN?: InputMaybe<Array<Scalars['Duration']>>;
+  duration_LT?: InputMaybe<Scalars['Duration']>;
+  duration_LTE?: InputMaybe<Scalars['Duration']>;
   id?: InputMaybe<Scalars['ID']>;
   id_CONTAINS?: InputMaybe<Scalars['ID']>;
   id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
@@ -4223,6 +4248,13 @@ export type CreatePeopleMutationVariables = Exact<{
 
 export type CreatePeopleMutation = { __typename?: 'Mutation', createPeople: { __typename?: 'CreatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, seniority?: Seniority | null, birthday?: any | null }> } };
 
+export type CreateProjectsMutationVariables = Exact<{
+  input: Array<ProjectCreateInput> | ProjectCreateInput;
+}>;
+
+
+export type CreateProjectsMutation = { __typename?: 'Mutation', createProjects: { __typename?: 'CreateProjectsMutationResponse', info: { __typename?: 'CreateInfo', nodesCreated: number } } };
+
 export type CreateRatesMutationVariables = Exact<{
   input: Array<RateCreateInput> | RateCreateInput;
 }>;
@@ -4250,6 +4282,13 @@ export type DeletePersonsMutationVariables = Exact<{
 
 
 export type DeletePersonsMutation = { __typename?: 'Mutation', deletePeople: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
+export type DeleteProjectsMutationVariables = Exact<{
+  where?: InputMaybe<ProjectWhere>;
+}>;
+
+
+export type DeleteProjectsMutation = { __typename?: 'Mutation', deleteProjects: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
 export type DeleteRatesMutationVariables = Exact<{
   where?: InputMaybe<RateWhere>;
@@ -4299,10 +4338,12 @@ export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string }> };
 
+export type ProjectPartFragment = { __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> };
+
 export type ProjectsWithAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsWithAllQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string }> }> };
+export type ProjectsWithAllQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> };
 
 export type RatesByPersonQueryVariables = Exact<{
   where?: InputMaybe<RateWhere>;
@@ -4336,6 +4377,14 @@ export type UpdatePeopleMutationVariables = Exact<{
 
 
 export type UpdatePeopleMutation = { __typename?: 'Mutation', updatePeople: { __typename?: 'UpdatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }> }> } };
+
+export type UpdateProjectsMutationVariables = Exact<{
+  where?: InputMaybe<ProjectWhere>;
+  update?: InputMaybe<ProjectUpdateInput>;
+}>;
+
+
+export type UpdateProjectsMutation = { __typename?: 'Mutation', updateProjects: { __typename?: 'UpdateProjectsMutationResponse', projects: Array<{ __typename?: 'Project', name: string, id: string }> } };
 
 export type UpdateRatesMutationVariables = Exact<{
   where?: InputMaybe<RateWhere>;
@@ -4412,6 +4461,23 @@ export const PersonWithAllTypeFragmentDoc = gql`
   }
 }
     ${ExperienceDataFragmentDoc}`;
+export const ProjectPartFragmentDoc = gql`
+    fragment ProjectPart on Project {
+  id
+  name
+  duration
+  skills {
+    id
+    name
+  }
+  startedFrom
+  persons {
+    id
+    name
+    surname
+  }
+}
+    `;
 export const CreateDepartmentsDocument = gql`
     mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
   createDepartments(input: $input) {
@@ -4475,6 +4541,26 @@ export const CreatePeopleDocument = gql`
   })
   export class CreatePeopleGQL extends Apollo.Mutation<CreatePeopleMutation, CreatePeopleMutationVariables> {
     document = CreatePeopleDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateProjectsDocument = gql`
+    mutation CreateProjects($input: [ProjectCreateInput!]!) {
+  createProjects(input: $input) {
+    info {
+      nodesCreated
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateProjectsGQL extends Apollo.Mutation<CreateProjectsMutation, CreateProjectsMutationVariables> {
+    document = CreateProjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4554,6 +4640,24 @@ export const DeletePersonsDocument = gql`
   })
   export class DeletePersonsGQL extends Apollo.Mutation<DeletePersonsMutation, DeletePersonsMutationVariables> {
     document = DeletePersonsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteProjectsDocument = gql`
+    mutation DeleteProjects($where: ProjectWhere) {
+  deleteProjects(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteProjectsGQL extends Apollo.Mutation<DeleteProjectsMutation, DeleteProjectsMutationVariables> {
+    document = DeleteProjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4717,21 +4821,10 @@ export const ProjectsDocument = gql`
 export const ProjectsWithAllDocument = gql`
     query ProjectsWithAll {
   projects {
-    id
-    name
-    duration
-    skills {
-      id
-      name
-    }
-    startedFrom
-    persons {
-      id
-      name
-    }
+    ...ProjectPart
   }
 }
-    `;
+    ${ProjectPartFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -4882,6 +4975,27 @@ export const UpdatePeopleDocument = gql`
   })
   export class UpdatePeopleGQL extends Apollo.Mutation<UpdatePeopleMutation, UpdatePeopleMutationVariables> {
     document = UpdatePeopleDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateProjectsDocument = gql`
+    mutation UpdateProjects($where: ProjectWhere, $update: ProjectUpdateInput) {
+  updateProjects(where: $where, update: $update) {
+    projects {
+      name
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateProjectsGQL extends Apollo.Mutation<UpdateProjectsMutation, UpdateProjectsMutationVariables> {
+    document = UpdateProjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

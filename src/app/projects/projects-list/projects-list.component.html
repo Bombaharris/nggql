@@ -19,22 +19,45 @@
             <th>Persons</th>
             <th>Started from</th>
             <th>Duration</th>
-
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let project of table.data">
             <td>{{ project.name }}</td>
-            <td>{{ project.name }}</td>
-            <td>{{ project.name }}</td>
+            <td>
+                <nz-tag *ngFor="let skill of project.skills | slice:0:8">
+                    {{ skill.name }}
+                </nz-tag>
+            </td>
+            <td>
+                <nz-tag *ngFor="let person of project.persons">
+                    {{ person.name }} {{person.surname}}
+                </nz-tag>
+            </td>
             <td>{{ project.startedFrom }}</td>
             <td>{{ project.duration }}</td>
+            <td>
+                <nz-space [nzSize]="'small'">
+                    <button *nzSpaceItem nz-button nzType="link" (click)="openForm('project', project)">Edit</button>
+                    <button 
+                        *nzSpaceItem 
+                        nzType="link" 
+                        nz-popconfirm
+                        nzPopconfirmTitle="Do you want to remove this project?" 
+                        (nzOnConfirm)="removeProject(project)"
+                        (nzOnCancel)="isConfirmModal = false" nzPopconfirmPlacement="top" nz-button
+                        nzDanger>
+                        Delete
+                    </button>
+                </nz-space>
+            </td>
         </tr>
     </tbody>
 </nz-table>
 <nz-drawer *ngIf="currentForm === 'project'" [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="true"
     [nzWidth]="'40%'" [nzVisible]="isFormVisible" [nzTitle]="'Create project'" (nzOnClose)="closeForm()">
     <div *nzDrawerContent>
-        <app-projects-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-projects-form>
+        <app-project-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-project-form>
     </div>
 </nz-drawer>

@@ -1,95 +1,98 @@
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
-import { SkillsQuery, PersonsWithAllQuery, Project } from 'src/app/generated/graphql';
-import { ProjectFormType } from 'src/app/projects/project-form/models/project-form.model';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
+import {
+  PersonsWithAllQuery,
+  Project,
+  ProjectPartFragment,
+  SkillsQuery
+} from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
+import { ProjectsAdapterService } from 'src/app/services/projects-adapter.service';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
+import { ProjectForm } from './models/project-form.model';
 
 @Component({
   selector: 'app-project-form',
   templateUrl: './project-form.component.html',
-  styleUrl: './project-form.component.scss'
+  styleUrl: './project-form.component.scss',
 })
-export class ProjectFormComponent implements OnChanges {
-  @Output() submitted = new EventEmitter<AbstractControl<any,any>>();
+export class ProjectFormComponent implements OnInit {
+  @Output() submitted = new EventEmitter<AbstractControl<any, any>>();
   @Output() deleted = new EventEmitter<string>();
   @Output() canceled = new EventEmitter();
+  project: ProjectPartFragment | null = null;
   isLoading: boolean = false;
   confirmModal: boolean = false;
-  skills: SkillsQuery['skills'];
-  persons!: PersonsWithAllQuery['people'] | null;
+  persons!: Observable<PersonsWithAllQuery['people']>;
+  skills!: Observable<SkillsQuery['skills']>;
   qlFilterService = new QLFilterBuilderService();
-  projectForm: ProjectFormType = this.fb.group({
-    projects: this.fb.array([])
+  projectForm: FormGroup<ProjectForm> = new FormGroup({
+    name: new FormControl(null, Validators.required),
+    startedFrom: new FormControl(null, Validators.required),
+    duration: new FormControl(),
+    skills: new FormControl(),
+    persons: new FormControl(),
   });
+
   constructor(
-    private skillsAdapterService: SkillsAdapterService, 
+    private skillsAdapterService: SkillsAdapterService,
     private fb: FormBuilder,
-    private personsAdapterService: PersonAdapterService
-    ) {
-    this.skills = this.skillsAdapterService.skills;
-    this.persons = this.personsAdapterService.people;
+    private personsAdapterService: PersonAdapterService,
+    private projectAdapterService: ProjectsAdapterService,
+  ) {
+    this.project = this.projectAdapterService.editedProject;
+    this.skills = this.skillsAdapterService.fetch();
+    this.persons = this.personsAdapterService.fetch();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(!changes || !changes.person || !changes.person.currentValue) return;
-    this.rebuildFormGroup(changes.person.currentValue.projects);
-  }
-
-  private rebuildFormGroup(projects: Project[]): void {
-    const workProjectsFormArray = this.projectForm.get('projects') as FormArray;
-    const e = projects.map(exp => ({...exp, skills: exp.skills.map(s => s.id)})).sort((a,b) => {
-      const dB = new Date(b.startedFrom).getTime();
-      const dA = new Date(a.startedFrom).getTime();
-      return dB - dA;
-    });
-    workProjectsFormArray.clear();
-    e.forEach((project) => {      
-      const newWorkProject = this.fb.group({
-       ...project,
-        skills: [project.skills]
-      });
-      //check if project already exists, if not omit it
-      if(workProjectsFormArray.controls.find(w => w.get('id')?.value === newWorkProject.get('id')?.value)) return;
-      workProjectsFormArray.push(newWorkProject);
-    });
-  }
-
-  get projects(): FormArray {
-    return this.projectForm.get('projects') as FormArray;
+  ngOnInit(): void {
+    if (this.project) {
+      this.projectForm.patchValue(this.project);
+      this.projectForm
+        .get('skills')
+        ?.patchValue(this.project.skills.map((s) => s.id));
+      this.projectForm
+        .get('persons')
+        ?.patchValue(this.project.persons.map((p) => p.id));
+    }
   }
 
   newProjectGroup(): FormGroup {
     return this.fb.group({
-      name: ["", [Validators.required]],
-      description: ["", [Validators.required]],
-      startedFrom: ["", [Validators.required]],
-      gainedAt: ["", [Validators.required]],
-       skills: [],
-    })
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      startedFrom: ['', [Validators.required]],
+      gainedAt: ['', [Validators.required]],
+      skills: [],
+    });
   }
 
-  addNewForm() {
-    if(!this.projects) return;
-    this.projects.push(this.newProjectGroup());
+  resetForm(): void {
+    this.projectForm.reset();
+    this.project = null;
   }
 
-  submitNewProject(project: AbstractControl<any,any>): void {
-    this.submitted.emit(project);
+  submit(): void {
+    this.submitted.emit(this.projectForm);
+    this.resetForm();
   }
-  
 
-  deleteProject(idx: number, project: AbstractControl<Project,any>) {
-    const id = project.get("id")?.value as string;
-    this.projects.removeAt(idx);
-    //if no Id was found (empty form) just remove it from layout
-    if(!id) return;
+  deleteProject(project: AbstractControl<Project, any>) {
+    const id = project.get('id')?.value as string; //if no Id was found (empty form) just remove it from layout
+    if (!id) return;
     this.deleted.emit(id);
+  }
 
-    }
-
-  cancelDelete() {
-    this.confirmModal = false;
+  cancel(): void {
+    this.resetForm();
+    this.canceled.emit();
   }
 }
