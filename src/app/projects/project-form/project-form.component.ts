@@ -1,10 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {
@@ -17,6 +16,7 @@ import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 import { ProjectsAdapterService } from 'src/app/services/projects-adapter.service';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
+import { durationValidator } from 'src/app/shared/directives/duration-validator.directive';
 import { ProjectForm } from './models/project-form.model';
 
 @Component({
@@ -37,14 +37,13 @@ export class ProjectFormComponent implements OnInit {
   projectForm: FormGroup<ProjectForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
     startedFrom: new FormControl(null, Validators.required),
-    duration: new FormControl(),
+    duration: new FormControl(null, durationValidator(/^P(([0-9]+Y)?([0-9]+M)?([0-9]+W)?([0-9]+D)?(T([0-9]+H)?([0-9]+M)?([0-9]+(\.?[0-9]+)?S)?))?$/)),
     skills: new FormControl(),
     persons: new FormControl(),
   });
 
   constructor(
     private skillsAdapterService: SkillsAdapterService,
-    private fb: FormBuilder,
     private personsAdapterService: PersonAdapterService,
     private projectAdapterService: ProjectsAdapterService,
   ) {
@@ -63,16 +62,6 @@ export class ProjectFormComponent implements OnInit {
         .get('persons')
         ?.patchValue(this.project.persons.map((p) => p.id));
     }
-  }
-
-  newProjectGroup(): FormGroup {
-    return this.fb.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      startedFrom: ['', [Validators.required]],
-      gainedAt: ['', [Validators.required]],
-      skills: [],
-    });
   }
 
   resetForm(): void {
