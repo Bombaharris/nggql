@@ -7,6 +7,7 @@ import { DepartmentPartFragment, PersonWithAllTypeFragment } from 'src/app/gener
 import { DepartmentsAdapterService } from 'src/app/services/departments-adapter.service';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 import { TransferChangeReturn } from './model/department-transfer.model';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-department-transfer',
@@ -22,7 +23,14 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
   departmentsEmployeesIds: string[] = [];
   readonly subscription: Subscription = new Subscription();
   
-  constructor(private cdr: ChangeDetectorRef,private personAdapterService: PersonAdapterService, private departmentsAdapterService: DepartmentsAdapterService, private route: ActivatedRoute, private notification: NzNotificationService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private personAdapterService: PersonAdapterService,
+    private departmentsAdapterService: DepartmentsAdapterService, 
+    private route: ActivatedRoute, 
+    private notification: NzNotificationService,
+    private location: Location
+    ) {
      this.subscription.add(
         this.route.params.subscribe(params => {
           this.departmentId = params['departmentId'];
@@ -153,5 +161,9 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
