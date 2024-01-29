@@ -4,10 +4,12 @@
   <nz-breadcrumb-item><a [routerLink]="['../../']">Departments</a></nz-breadcrumb-item>
   <nz-breadcrumb-item>Transfer</nz-breadcrumb-item>
 </nz-breadcrumb>
-<div nz-row nzJustify="start">
-  <div nz-col [nzSpan]="20">
+<div nz-row nzJustify="start" class="navigationBar">
     <h1 nz-typography>Transfer people</h1>
-  </div>
+    <button nz-button nzType="text" (click)="goBack()">
+      <span nz-icon nzType="left"></span>
+      Go back 
+  </button>
 </div>
 <nz-transfer
   [nzDisabled]="isLoading"

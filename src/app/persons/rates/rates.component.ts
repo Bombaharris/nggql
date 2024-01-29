@@ -5,7 +5,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
 import { CreateRatesMutation, PersonWithAllTypeFragment, UpdateRatesMutation } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-rates',
@@ -21,7 +21,8 @@ export class RatesComponent implements OnInit, OnDestroy {
    constructor(
       private personAdapterService: PersonAdapterService, 
       private route: ActivatedRoute,
-      private notification: NzNotificationService
+      private notification: NzNotificationService,
+      private location: Location
       ) { 
         this.subscription.add(
           this.route.params.subscribe(params => {
@@ -104,6 +105,10 @@ export class RatesComponent implements OnInit, OnDestroy {
             `Error occured during edition of experience: ${error}`
             )
           });
+    }
+
+    goBack(): void {
+      this.location.back();
     }
   
     ngOnDestroy(): void {
