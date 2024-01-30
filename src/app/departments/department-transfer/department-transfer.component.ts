@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { TransferItem } from 'ng-zorro-antd/transfer';
 import { Subscription } from 'rxjs';
@@ -7,7 +7,6 @@ import { DepartmentPartFragment, PersonWithAllTypeFragment } from 'src/app/gener
 import { DepartmentsAdapterService } from 'src/app/services/departments-adapter.service';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 import { TransferChangeReturn } from './model/department-transfer.model';
-import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-department-transfer',
@@ -29,7 +28,7 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
     private departmentsAdapterService: DepartmentsAdapterService, 
     private route: ActivatedRoute, 
     private notification: NzNotificationService,
-    private location: Location
+    private router: Router
     ) {
      this.subscription.add(
         this.route.params.subscribe(params => {
@@ -159,11 +158,13 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
       this.departmentsAdapterService.departmentsQueryRef?.refetch();
       this.isLoading = false;
   }
+  
+  goBack(): void {
+    this.router.navigate(['../'])
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  goBack(): void {
-    this.location.back();
-  }
 }

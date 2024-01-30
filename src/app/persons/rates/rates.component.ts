@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
 import { CreateRatesMutation, PersonWithAllTypeFragment, UpdateRatesMutation } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-rates',
@@ -22,7 +21,7 @@ export class RatesComponent implements OnInit, OnDestroy {
       private personAdapterService: PersonAdapterService, 
       private route: ActivatedRoute,
       private notification: NzNotificationService,
-      private location: Location
+      private router: Router
       ) { 
         this.subscription.add(
           this.route.params.subscribe(params => {
@@ -108,7 +107,7 @@ export class RatesComponent implements OnInit, OnDestroy {
     }
 
     goBack(): void {
-      this.location.back();
+      this.router.navigate(['../'])
     }
   
     ngOnDestroy(): void {
