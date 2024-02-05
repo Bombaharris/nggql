@@ -1,0 +1,7 @@
+mutation CreateProjects($input: [ProjectCreateInput!]!) {
+  createProjects(input: $input) {
+    info {
+      nodesCreated
+    }
+  }
+}

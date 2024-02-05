@@ -1,16 +1,21 @@
-query ProjectsWithAll {
-  projects {
+fragment ProjectPart on Project {
+   id
+  name
+  duration
+  skills {
     id
     name
-    duration
-    skills {
-      id
-      name
-    }
-    startedFrom
-    persons {
-      id
-      name
-    }
+  }
+  startedFrom
+  persons {
+    id
+    name
+    surname
+  }
+}
+
+query ProjectsWithAll {
+  projects {
+   ...ProjectPart
   }
 }

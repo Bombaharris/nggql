@@ -1,0 +1,5 @@
+mutation DeleteProjects($where: ProjectWhere) {
+  deleteProjects(where: $where) {
+    nodesDeleted
+  }
+}

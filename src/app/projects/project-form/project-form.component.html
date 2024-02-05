@@ -1,0 +1,54 @@
+<form nz-form [formGroup]="projectForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="startedFrom" nzRequired>Started from</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-date-picker formControlName="startedFrom"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="duration" nzRequired>Duration</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Duration must be provided with ISO 8601 duration standard">
+        <input nz-input formControlName="duration" id="duration" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'skills'">Skills</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+          [nzMaxTagCount]="10"
+          nzMode="multiple"
+          nzPlaceHolder="Please select skills"
+          formControlName="skills"
+          >
+          <nz-option *ngFor="let skill of skills | async" [nzLabel]="skill.name" [nzValue]="skill.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'persons'">Persons</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+          [nzMaxTagCount]="10"
+          nzMode="multiple"
+          nzPlaceHolder="Please select persons"
+          formControlName="persons"
+          >
+          <nz-option *ngFor="let person of persons | async" [nzLabel]="person.name + ' ' + person.surname" [nzValue]="person.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <nz-space [nzSize]="'small'">
+          <button *nzSpaceItem nz-button nzType="primary" (click)="submit()" [disabled]="!projectForm.valid">Submit</button>
+          <button *nzSpaceItem nz-button (click)="cancel()">Cancel</button>
+        </nz-space>
+      </nz-form-control>
+    </nz-form-item>
+</form>

@@ -4248,6 +4248,13 @@ export type CreatePeopleMutationVariables = Exact<{
 
 export type CreatePeopleMutation = { __typename?: 'Mutation', createPeople: { __typename?: 'CreatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, seniority?: Seniority | null, birthday?: any | null }> } };
 
+export type CreateProjectsMutationVariables = Exact<{
+  input: Array<ProjectCreateInput> | ProjectCreateInput;
+}>;
+
+
+export type CreateProjectsMutation = { __typename?: 'Mutation', createProjects: { __typename?: 'CreateProjectsMutationResponse', info: { __typename?: 'CreateInfo', nodesCreated: number } } };
+
 export type CreateRatesMutationVariables = Exact<{
   input: Array<RateCreateInput> | RateCreateInput;
 }>;
@@ -4275,6 +4282,13 @@ export type DeletePersonsMutationVariables = Exact<{
 
 
 export type DeletePersonsMutation = { __typename?: 'Mutation', deletePeople: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
+export type DeleteProjectsMutationVariables = Exact<{
+  where?: InputMaybe<ProjectWhere>;
+}>;
+
+
+export type DeleteProjectsMutation = { __typename?: 'Mutation', deleteProjects: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
 export type DeleteRatesMutationVariables = Exact<{
   where?: InputMaybe<RateWhere>;
@@ -4324,10 +4338,12 @@ export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string }> };
 
+export type ProjectPartFragment = { __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> };
+
 export type ProjectsWithAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsWithAllQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string }> }> };
+export type ProjectsWithAllQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> };
 
 export type RatesByPersonQueryVariables = Exact<{
   where?: InputMaybe<RateWhere>;
@@ -4361,6 +4377,14 @@ export type UpdatePeopleMutationVariables = Exact<{
 
 
 export type UpdatePeopleMutation = { __typename?: 'Mutation', updatePeople: { __typename?: 'UpdatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }> }> } };
+
+export type UpdateProjectsMutationVariables = Exact<{
+  where?: InputMaybe<ProjectWhere>;
+  update?: InputMaybe<ProjectUpdateInput>;
+}>;
+
+
+export type UpdateProjectsMutation = { __typename?: 'Mutation', updateProjects: { __typename?: 'UpdateProjectsMutationResponse', projects: Array<{ __typename?: 'Project', name: string, id: string }> } };
 
 export type UpdateRatesMutationVariables = Exact<{
   where?: InputMaybe<RateWhere>;
@@ -4437,6 +4461,23 @@ export const PersonWithAllTypeFragmentDoc = gql`
   }
 }
     ${ExperienceDataFragmentDoc}`;
+export const ProjectPartFragmentDoc = gql`
+    fragment ProjectPart on Project {
+  id
+  name
+  duration
+  skills {
+    id
+    name
+  }
+  startedFrom
+  persons {
+    id
+    name
+    surname
+  }
+}
+    `;
 export const CreateDepartmentsDocument = gql`
     mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
   createDepartments(input: $input) {
@@ -4500,6 +4541,26 @@ export const CreatePeopleDocument = gql`
   })
   export class CreatePeopleGQL extends Apollo.Mutation<CreatePeopleMutation, CreatePeopleMutationVariables> {
     document = CreatePeopleDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateProjectsDocument = gql`
+    mutation CreateProjects($input: [ProjectCreateInput!]!) {
+  createProjects(input: $input) {
+    info {
+      nodesCreated
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateProjectsGQL extends Apollo.Mutation<CreateProjectsMutation, CreateProjectsMutationVariables> {
+    document = CreateProjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4579,6 +4640,24 @@ export const DeletePersonsDocument = gql`
   })
   export class DeletePersonsGQL extends Apollo.Mutation<DeletePersonsMutation, DeletePersonsMutationVariables> {
     document = DeletePersonsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteProjectsDocument = gql`
+    mutation DeleteProjects($where: ProjectWhere) {
+  deleteProjects(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteProjectsGQL extends Apollo.Mutation<DeleteProjectsMutation, DeleteProjectsMutationVariables> {
+    document = DeleteProjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4742,21 +4821,10 @@ export const ProjectsDocument = gql`
 export const ProjectsWithAllDocument = gql`
     query ProjectsWithAll {
   projects {
-    id
-    name
-    duration
-    skills {
-      id
-      name
-    }
-    startedFrom
-    persons {
-      id
-      name
-    }
+    ...ProjectPart
   }
 }
-    `;
+    ${ProjectPartFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -4907,6 +4975,27 @@ export const UpdatePeopleDocument = gql`
   })
   export class UpdatePeopleGQL extends Apollo.Mutation<UpdatePeopleMutation, UpdatePeopleMutationVariables> {
     document = UpdatePeopleDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateProjectsDocument = gql`
+    mutation UpdateProjects($where: ProjectWhere, $update: ProjectUpdateInput) {
+  updateProjects(where: $where, update: $update) {
+    projects {
+      name
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateProjectsGQL extends Apollo.Mutation<UpdateProjectsMutation, UpdateProjectsMutationVariables> {
+    document = UpdateProjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

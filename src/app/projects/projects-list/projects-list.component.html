@@ -1,0 +1,63 @@
+<nz-breadcrumb>
+    <nz-breadcrumb-item><a [routerLink]="['../']">Software House</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item>Projects</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div nz-row nzJustify="end">
+    <div nz-col [nzSpan]="20">
+        <h1 nz-typography>Projects</h1>
+    </div>
+    <div nz-col [nzSpan]="4">
+        <button nz-button nzBlock nzType="default" (click)="openForm('project')">Create project</button>
+    </div>
+</div>
+
+<nz-table #table [nzData]="projects" [nzBordered]="true" [nzLoading]="isLoading">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Skills</th>
+            <th>Persons</th>
+            <th>Started from</th>
+            <th>Duration</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let project of table.data">
+            <td>{{ project.name }}</td>
+            <td>
+                <nz-tag *ngFor="let skill of project.skills | slice:0:8">
+                    {{ skill.name }}
+                </nz-tag>
+            </td>
+            <td>
+                <nz-tag *ngFor="let person of project?.persons">
+                    {{ person.name }} {{person.surname}}
+                </nz-tag>
+            </td>
+            <td>{{ project?.startedFrom }}</td>
+            <td>{{ project?.duration | readableDuration }}</td>
+            <td>
+                <nz-space [nzSize]="'small'">
+                    <button *nzSpaceItem nz-button nzType="link" (click)="openForm('project', project)">Edit</button>
+                    <button 
+                        *nzSpaceItem 
+                        nzType="link" 
+                        nz-popconfirm
+                        nzPopconfirmTitle="Do you want to remove this project?" 
+                        (nzOnConfirm)="removeProject(project)"
+                        (nzOnCancel)="isConfirmModal = false" nzPopconfirmPlacement="top" nz-button
+                        nzDanger>
+                        Delete
+                    </button>
+                </nz-space>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<nz-drawer *ngIf="currentForm === 'project'" [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="true"
+    [nzWidth]="'40%'" [nzVisible]="isFormVisible" [nzTitle]="'Create project'" (nzOnClose)="closeForm()">
+    <div *nzDrawerContent>
+        <app-project-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-project-form>
+    </div>
+</nz-drawer>
