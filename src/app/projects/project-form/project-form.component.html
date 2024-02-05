@@ -39,7 +39,7 @@
           nzPlaceHolder="Please select persons"
           formControlName="persons"
           >
-          <nz-option *ngFor="let person of persons | async" [nzLabel]="person.name" [nzValue]="person.id"></nz-option>
+          <nz-option *ngFor="let person of persons | async" [nzLabel]="person.name + ' ' + person.surname" [nzValue]="person.id"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>

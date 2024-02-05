@@ -16,7 +16,7 @@ import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 import { ProjectsAdapterService } from 'src/app/services/projects-adapter.service';
 import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
-import { durationValidator } from 'src/app/shared/directives/duration-validator.directive';
+import { dateTimePeriodValidator } from 'src/app/shared/directives/datetime-period-validator.directive';
 import { ProjectForm } from './models/project-form.model';
 
 @Component({
@@ -37,7 +37,7 @@ export class ProjectFormComponent implements OnInit {
   projectForm: FormGroup<ProjectForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
     startedFrom: new FormControl(null, Validators.required),
-    duration: new FormControl(null, durationValidator(/^P(([0-9]+Y)?([0-9]+M)?([0-9]+W)?([0-9]+D)?(T([0-9]+H)?([0-9]+M)?([0-9]+(\.?[0-9]+)?S)?))?$/)),
+    duration: new FormControl(null, dateTimePeriodValidator()),
     skills: new FormControl(),
     persons: new FormControl(),
   });
