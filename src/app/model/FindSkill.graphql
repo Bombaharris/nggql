@@ -1,5 +1,5 @@
 query FindSkill($where: SkillWhere) {
-  skills(where: $where) {
+  findSkill(where: $where) {
     id
     name
   }

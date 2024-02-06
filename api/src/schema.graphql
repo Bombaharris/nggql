@@ -64,6 +64,10 @@ type Rate {
   person: Person! @relationship(type: "HAS_RATE", direction: IN)
 }
 
+type Query {
+  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""")
+}
+
 type PersonsToProject {
     people: [PersonWithScore] @cypher(statement: """
         MATCH (p:Person)-[:HAS_SKILL]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)

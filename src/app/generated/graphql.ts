@@ -2876,6 +2876,7 @@ export type Query = {
   experiences: Array<Experience>;
   experiencesAggregate: ExperienceAggregateSelection;
   experiencesConnection: ExperiencesConnection;
+  findSkill: Array<Skill>;
   people: Array<Person>;
   peopleAggregate: PersonAggregateSelection;
   peopleConnection: PeopleConnection;
@@ -2929,6 +2930,11 @@ export type QueryExperiencesConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<ExperienceSort>>>;
   where?: InputMaybe<ExperienceWhere>;
+};
+
+
+export type QueryFindSkillArgs = {
+  where?: InputMaybe<SkillWhere>;
 };
 
 
@@ -4042,7 +4048,7 @@ export type FindSkillQueryVariables = Exact<{
 }>;
 
 
-export type FindSkillQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+export type FindSkillQuery = { __typename?: 'Query', findSkill: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
 export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
@@ -4554,7 +4560,7 @@ export const ExperiencesByPersonDocument = gql`
   }
 export const FindSkillDocument = gql`
     query FindSkill($where: SkillWhere) {
-  skills(where: $where) {
+  findSkill(where: $where) {
     id
     name
   }
