@@ -12,10 +12,10 @@
   "dependencies": {
     "@graphql-tools/schema": "^10.0.2",
     "@graphql-tools/utils": "^10.0.12",
-    "@neo4j/graphql": "^3.10.0",
-    "apollo-server": "^3.10.3",
-    "dotenv": "^16.0.3",
-    "graphql": "^16.6.0",
-    "neo4j-driver": "^4.4.10"
+    "@neo4j/graphql": "^4.4.5",
+    "apollo-server": "^3.13.0",
+    "dotenv": "^16.4.1",
+    "graphql": "^16.8.1",
+    "neo4j-driver": "^5.16.0"
   }
 }
