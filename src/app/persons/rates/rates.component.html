@@ -6,7 +6,43 @@
             <nz-breadcrumb-item>Rates</nz-breadcrumb-item>
             <nz-breadcrumb-item>{{editedPerson?.name}} {{editedPerson?.surname}}</nz-breadcrumb-item>
         </nz-breadcrumb>
-        <app-rates-form [person]="editedPerson" (submitted)="submitRates($event)" 
-        (deleted)="removePersonsRate($event)"></app-rates-form>
+        <div nz-row [nzGutter]="24" style="margin-top:40px">
+          <div nz-col [nzSpan]="12">
+          <nz-list nzBordered style="border:none">
+              <nz-list-item *ngFor="let rate of editedPerson?.rates">
+                  <nz-list-item-meta
+                  nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  [nzDescription]="'Valid from: ' + rate.validFrom"
+                >
+                <nz-list-item-meta-title>
+                Rate: {{ rate.value }} PLN
+                </nz-list-item-meta-title>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+              <nz-list-item-action><a (click)="edit(rate.id)">edit</a></nz-list-item-action>
+              <nz-list-item-action>
+                <a 
+                nzDanger
+                nz-button 
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure you want to delete this experience?"
+                (nzOnConfirm)="removePersonsRate(rate.id)"
+                (nzOnCancel)="cancelDelete()"
+                >
+                  delete
+                </a>
+              </nz-list-item-action>
+              </ul>
+              </nz-list-item>
+            </nz-list>
+          </div>
+          <div nz-col [nzSpan]="12" style="margin: auto;">
+            <app-rates-form [rateId]="selectedRateId" 
+            [rates]="editedPerson?.rates"
+              (submitted)="submitRates($event)" 
+            (deleted)="removePersonsRate($event)"></app-rates-form>
+      </div>
+    </div>
     </nz-content>
 </nz-layout>

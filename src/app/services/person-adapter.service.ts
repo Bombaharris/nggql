@@ -241,8 +241,8 @@ export class PersonAdapterService {
           },
         },
       },
-      value: rate.get('value')?.value ?? '',
-      validFrom: rate.get('validFrom')?.value ?? '',
+      value: rate.value.value ?? '',
+      validFrom: rate.value.validFrom ?? '',
     };
 
     const mutationDocument = isCreate

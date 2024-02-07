@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { CreateRatesMutation, PersonWithAllTypeFragment, UpdateRatesMutation } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 
-
 @Component({
   selector: 'app-rates',
   templateUrl: './rates.component.html',
@@ -16,6 +15,8 @@ export class RatesComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     editedPerson!: PersonWithAllTypeFragment | null | undefined;
     personId!: string;
+    confirmModal: boolean = false;
+    selectedRateId: string | undefined; 
     readonly subscription: Subscription = new Subscription();
   
    constructor(
@@ -45,11 +46,14 @@ export class RatesComponent implements OnInit, OnDestroy {
         }
       })    
     }
+
+     get ratesList() {
+      return this.editedPerson?.rates;
+    }
   
     submitRates($event: AbstractControl<any,any>): void {
       this.isLoading = true;
-      const ratesExists = $event.get("id")?.value;
-      if(!ratesExists) {
+      if(!this.selectedRateId) {
         this.personAdapterService.submitPersonRates<CreateRatesMutation>(this.personId, $event, true).subscribe(() => {
           
         this.notification.create(
@@ -70,6 +74,7 @@ export class RatesComponent implements OnInit, OnDestroy {
        
         return;
       }
+      this.selectedRateId = undefined;
       this.personAdapterService.submitPersonRates<UpdateRatesMutation>(this.personId, $event, false).subscribe(() => {
         this.notification.create(
           'success',
@@ -86,7 +91,6 @@ export class RatesComponent implements OnInit, OnDestroy {
           `Error occured during edition of experience: ${error}`
         )
       });
-     
       this.isLoading = false;
     }
   
@@ -97,6 +101,9 @@ export class RatesComponent implements OnInit, OnDestroy {
           'Success',
           `Experience was successfully deleted.`
           );
+          this.personAdapterService?.refetch(this.personId)?.then(res => {
+            this.editedPerson = res.data.people[0];
+          });
         }, (error: any) => {
           this.notification.create(
             'error',
@@ -104,6 +111,14 @@ export class RatesComponent implements OnInit, OnDestroy {
             `Error occured during edition of experience: ${error}`
             )
           });
+    }
+
+    edit(id: string): void {
+      this.selectedRateId = this.editedPerson?.rates.find(e => e.id === id)?.id;
+    }
+
+    cancelDelete() {
+      this.confirmModal = false;
     }
   
     ngOnDestroy(): void {

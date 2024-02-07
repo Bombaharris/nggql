@@ -47,6 +47,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
 
   submitExperience($event: AbstractControl<any,any>): void {
     this.isLoading = true;
+    console.log($event)
     const experienceExists = $event.get("id")?.value;
     if(!experienceExists) {
       this.personAdapterService.submitPersonExperience<CreateExperiencesMutation>(this.personId, $event, true).subscribe(() => {
