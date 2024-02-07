@@ -15,6 +15,8 @@ export class RatesComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     editedPerson!: PersonWithAllTypeFragment | null | undefined;
     personId!: string;
+    confirmModal: boolean = false;
+    selectedRateId: string | undefined;
     readonly subscription: Subscription = new Subscription();
 
    constructor(
@@ -30,6 +32,13 @@ export class RatesComponent implements OnInit, OnDestroy {
         this.personAdapterService.setPersonQueryRef(this.personId);
       }
 
+    get rates() {
+     if (this.editedPerson && Array.isArray(this.editedPerson?.rates)) {
+       return this.editedPerson.rates;
+     }
+
+     return [];
+   }
     ngOnInit(): void {
       this.personAdapterService.personQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
@@ -48,14 +57,13 @@ export class RatesComponent implements OnInit, OnDestroy {
 
     submitRates($event: AbstractControl<any,any>): void {
       this.isLoading = true;
-      const ratesExists = $event.get("id")?.value;
-      if(!ratesExists) {
+      if(!this.selectedRateId) {
         this.personAdapterService.submitPersonRates<CreateRatesMutation>(this.personId, $event, true).subscribe(() => {
 
         this.notification.create(
           'success',
           'Success',
-          `Experience for ${this.editedPerson?.name} was successfully created.`
+          `Rate for ${this.editedPerson?.name} was successfully created.`
           );
           this.personAdapterService?.refetch(this.personId)?.then(res => {
             this.editedPerson = res.data.people[0];
@@ -64,17 +72,18 @@ export class RatesComponent implements OnInit, OnDestroy {
           this.notification.create(
             'error',
             'Error',
-            `Error occured during creation of experience: ${error}`
+            `Error occured during creation of rate: ${error}`
           )
         });
 
         return;
       }
+      this.selectedRateId = undefined;
       this.personAdapterService.submitPersonRates<UpdateRatesMutation>(this.personId, $event, false).subscribe(() => {
         this.notification.create(
           'success',
           'Success',
-          `Experience for ${this.editedPerson?.name} was successfully changed.`
+          `Rate for ${this.editedPerson?.name} was successfully changed.`
         );
         this.personAdapterService?.refetch(this.personId)?.then(res => {
           this.editedPerson = res.data.people[0];
@@ -83,7 +92,7 @@ export class RatesComponent implements OnInit, OnDestroy {
         this.notification.create(
           'error',
           'Error',
-          `Error occured during edition of experience: ${error}`
+          `Error occured during edition of rate: ${error}`
         )
       });
 
@@ -95,19 +104,28 @@ export class RatesComponent implements OnInit, OnDestroy {
         this.notification.create(
           'success',
           'Success',
-          `Experience was successfully deleted.`
+          `Rate was successfully deleted.`
           );
+          this.personAdapterService?.refetch(this.personId)?.then(res => {
+            this.editedPerson = res.data.people[0];
+          });
         }, (error: any) => {
           this.notification.create(
             'error',
             'Error',
-            `Error occured during edition of experience: ${error}`
+            `Error occured during edition of rate: ${error}`
             )
           });
     }
 
+    edit(id: string): void {
+      this.selectedRateId = this.editedPerson?.rates.find(e => e.id === id)?.id;
+    }
+
+    cancelDelete() {
+      this.confirmModal = false;
+    }
     ngOnDestroy(): void {
       this.subscription?.unsubscribe();
     }
-
-  }
+}

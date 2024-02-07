@@ -21,7 +21,6 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     private personAdapterService: PersonAdapterService,
     private route: ActivatedRoute,
     private notification: NzNotificationService,
-    private router: Router
     ) {
       this.subscription.add(
         this.route.params.subscribe(params => {

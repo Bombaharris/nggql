@@ -17,10 +17,8 @@ import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 
 describe('RatesComponent', () => {
   let ratesComponent: RatesComponent;
-  let ratesFormComponent: RatesFormComponent;
   let ratesFixture: ComponentFixture<RatesComponent>;
   let ratesFormFixture: ComponentFixture<RatesFormComponent>;
-  let fb = new FormBuilder();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,7 +27,7 @@ describe('RatesComponent', () => {
       [
         {path: 'persons/:id/rates', component: RatesComponent}
       ], {
-        
+
       }
       ),
       NgZorroAntdModule,
@@ -49,23 +47,8 @@ describe('RatesComponent', () => {
     .compileComponents();
     ratesFixture = TestBed.createComponent(RatesComponent);
     ratesFormFixture = TestBed.createComponent(RatesFormComponent);
-    ratesFormComponent = ratesFormFixture.componentInstance;
     ratesComponent = ratesFixture.componentInstance;
-    ratesFormComponent.person = {
-      id: "MrGreen",
-      name: "Ralph",
-      surname: "Green",
-      departments: [],
-      experiences: [],
-      projects: [],
-      rates: [],
-      roles: [],
-      skills: [],
-    }
-    ratesFormComponent.ratesForm = fb.group({
-      rates: fb.array([])
-    });
-    ratesFormComponent.addNewForm();
+
     ratesFixture.detectChanges();
     ratesFormFixture.detectChanges();
   });
