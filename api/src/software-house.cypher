@@ -111,6 +111,9 @@ CREATE (Architect:Role {id: "Architect", name:"Architect"})
 
 CREATE (Department207400:Department {id: "207400", name:"Frontend"})
 
+CREATE (x:Rate {id: "8cc23862-d800-4c01-bc58-b8e1f5bf49a7",validFrom: "2017-01-01", value: 100})
+CREATE (y:Rate {id: "4f6ea4c8-9186-47c9-b0c8-6b7142d8fe1e",validFrom: "2017-01-01", value: 150})
+CREATE (z:Rate {id: "f7024ea5-aa64-42c9-9d4d-9e933f6fd8e1",validFrom: "2017-01-01", value: 165})
 // CREATE (SeniorRate:Rate {id: "SeniorRate",validFrom: "2017-01-01", value: 1000})
 // CREATE (RegularRate:Rate {id: "RegularRate",validFrom: "2017-01-01", value: 800})
 // CREATE (JuniorRate:Rate {id: "JuniorRate",validFrom: "2017-01-01", value: 600})
@@ -167,14 +170,16 @@ CREATE
 
 
 CREATE
-(MrGreen)-[:HAS_RATE]->(SeniorRate),
-(Polon)-[:HAS_RATE]->(SeniorRate),
-(Zub)-[:HAS_RATE]->(SeniorRate),
-(Alex)-[:HAS_RATE]->(SeniorRate),
-(Sofia)-[:HAS_RATE]->(JuniorRate),
-(Gocha)-[:HAS_RATE]->(RegularRate),
-(Ivan)-[:HAS_RATE]->(SeniorRate),
-(Finger)-[:HAS_RATE]->(SeniorRate)
+// (MrGreen)-[:HAS_RATE]->(SeniorRate),
+// (Polon)-[:HAS_RATE]->(SeniorRate),
+// (Zub)-[:HAS_RATE]->(SeniorRate),
+// (Alex)-[:HAS_RATE]->(SeniorRate),
+// (Sofia)-[:HAS_RATE]->(JuniorRate),
+(Gocha)-[:HAS_RATE]->(x),
+(Gocha)-[:HAS_RATE]->(y),
+(Gocha)-[:HAS_RATE]->(z)
+// (Ivan)-[:HAS_RATE]->(SeniorRate),
+// (Finger)-[:HAS_RATE]->(SeniorRate)
 
 
 CREATE
