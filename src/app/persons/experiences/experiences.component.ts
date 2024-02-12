@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription } from 'rxjs';
 import { CreateExperiencesMutation, EditExperiencesMutation, PersonWithAllTypeFragment } from 'src/app/generated/graphql';
@@ -20,7 +20,8 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
  constructor(
     private personAdapterService: PersonAdapterService, 
     private route: ActivatedRoute,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private router: Router
     ) { 
       this.subscription.add(
         this.route.params.subscribe(params => {
@@ -103,6 +104,10 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
           `Error occured during edition of experience: ${error}`
           )
         });
+  }
+
+  goBack(): void {
+    this.router.navigate(['../'])
   }
 
   ngOnDestroy(): void {

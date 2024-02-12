@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { TransferItem } from 'ng-zorro-antd/transfer';
 import { Subscription } from 'rxjs';
@@ -22,7 +22,14 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
   departmentsEmployeesIds: string[] = [];
   readonly subscription: Subscription = new Subscription();
   
-  constructor(private cdr: ChangeDetectorRef,private personAdapterService: PersonAdapterService, private departmentsAdapterService: DepartmentsAdapterService, private route: ActivatedRoute, private notification: NzNotificationService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private personAdapterService: PersonAdapterService,
+    private departmentsAdapterService: DepartmentsAdapterService, 
+    private route: ActivatedRoute, 
+    private notification: NzNotificationService,
+    private router: Router
+    ) {
      this.subscription.add(
         this.route.params.subscribe(params => {
           this.departmentId = params['departmentId'];
@@ -151,7 +158,13 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
       this.departmentsAdapterService.departmentsQueryRef?.refetch();
       this.isLoading = false;
   }
+  
+  goBack(): void {
+    this.router.navigate(['../'])
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 }

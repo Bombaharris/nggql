@@ -1,6 +1,12 @@
 <nz-layout>
     <nz-content>
-        <h1>Experience of {{editedPerson?.name}} {{editedPerson?.surname}}</h1>
+        <div class="navigationBar">
+            <h1>Experience of {{editedPerson?.name}} {{editedPerson?.surname}}</h1>
+            <button nz-button nzType="text" (click)="goBack()">
+                <span nz-icon nzType="left"></span>
+                Go back 
+            </button>
+        </div>
         <nz-breadcrumb>
             <nz-breadcrumb-item>Software House</nz-breadcrumb-item>
             <nz-breadcrumb-item>Experience</nz-breadcrumb-item>
