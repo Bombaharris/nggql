@@ -1,6 +1,6 @@
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 
 export type DepartmentForm = {
-    name: FormControl,
-    manager: FormControl
-}
+  name: FormControl;
+  manager: FormControl;
+};

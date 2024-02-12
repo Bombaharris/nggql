@@ -1,5 +1,5 @@
-query Skills {
-  skills {
+query Roles {
+  roles {
     id
     name
   }

@@ -31,8 +31,10 @@ export type CreateExperiencesMutationResponse = {
   info: CreateInfo;
 };
 
+/** Information about the number of nodes and relationships created during a create mutation */
 export type CreateInfo = {
   __typename?: 'CreateInfo';
+  /** @deprecated This field has been deprecated because bookmarks are now handled by the driver. */
   bookmark?: Maybe<Scalars['String']>;
   nodesCreated: Scalars['Int'];
   relationshipsCreated: Scalars['Int'];
@@ -44,22 +46,10 @@ export type CreatePeopleMutationResponse = {
   people: Array<Person>;
 };
 
-export type CreatePersonsToProjectsMutationResponse = {
-  __typename?: 'CreatePersonsToProjectsMutationResponse';
-  info: CreateInfo;
-  personsToProjects: Array<PersonsToProject>;
-};
-
 export type CreateProjectsMutationResponse = {
   __typename?: 'CreateProjectsMutationResponse';
   info: CreateInfo;
   projects: Array<Project>;
-};
-
-export type CreateQueryPsMutationResponse = {
-  __typename?: 'CreateQueryPSMutationResponse';
-  info: CreateInfo;
-  queryPS: Array<QueryP>;
 };
 
 export type CreateRatesMutationResponse = {
@@ -74,20 +64,16 @@ export type CreateRolesMutationResponse = {
   roles: Array<Role>;
 };
 
-export type CreateScoresMutationResponse = {
-  __typename?: 'CreateScoresMutationResponse';
-  info: CreateInfo;
-  scores: Array<Score>;
-};
-
 export type CreateSkillsMutationResponse = {
   __typename?: 'CreateSkillsMutationResponse';
   info: CreateInfo;
   skills: Array<Skill>;
 };
 
+/** Information about the number of nodes and relationships deleted during a delete mutation */
 export type DeleteInfo = {
   __typename?: 'DeleteInfo';
+  /** @deprecated This field has been deprecated because bookmarks are now handled by the driver. */
   bookmark?: Maybe<Scalars['String']>;
   nodesDeleted: Scalars['Int'];
   relationshipsDeleted: Scalars['Int'];
@@ -210,7 +196,7 @@ export type DepartmentManagerAggregateInput = {
 
 export type DepartmentManagerConnectFieldInput = {
   connect?: InputMaybe<PersonConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -369,7 +355,7 @@ export type DepartmentPersonsAggregateInput = {
 
 export type DepartmentPersonsConnectFieldInput = {
   connect?: InputMaybe<Array<PersonConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -687,7 +673,7 @@ export type ExperiencePersonAggregateInput = {
 
 export type ExperiencePersonConnectFieldInput = {
   connect?: InputMaybe<PersonConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -839,7 +825,7 @@ export type ExperienceSkillsAggregateInput = {
 
 export type ExperienceSkillsConnectFieldInput = {
   connect?: InputMaybe<Array<SkillConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<SkillConnectWhere>;
 };
@@ -1030,45 +1016,28 @@ export type IdAggregateSelectionNonNullable = {
   shortest: Scalars['ID'];
 };
 
-export type IntAggregateSelectionNullable = {
-  __typename?: 'IntAggregateSelectionNullable';
-  average?: Maybe<Scalars['Float']>;
-  max?: Maybe<Scalars['Int']>;
-  min?: Maybe<Scalars['Int']>;
-  sum?: Maybe<Scalars['Int']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   createDepartments: CreateDepartmentsMutationResponse;
   createExperiences: CreateExperiencesMutationResponse;
   createPeople: CreatePeopleMutationResponse;
-  createPersonsToProjects: CreatePersonsToProjectsMutationResponse;
   createProjects: CreateProjectsMutationResponse;
-  createQueryPS: CreateQueryPsMutationResponse;
   createRates: CreateRatesMutationResponse;
   createRoles: CreateRolesMutationResponse;
-  createScores: CreateScoresMutationResponse;
   createSkills: CreateSkillsMutationResponse;
   deleteDepartments: DeleteInfo;
   deleteExperiences: DeleteInfo;
   deletePeople: DeleteInfo;
-  deletePersonsToProjects: DeleteInfo;
   deleteProjects: DeleteInfo;
-  deleteQueryPS: DeleteInfo;
   deleteRates: DeleteInfo;
   deleteRoles: DeleteInfo;
-  deleteScores: DeleteInfo;
   deleteSkills: DeleteInfo;
   updateDepartments: UpdateDepartmentsMutationResponse;
   updateExperiences: UpdateExperiencesMutationResponse;
   updatePeople: UpdatePeopleMutationResponse;
-  updatePersonsToProjects: UpdatePersonsToProjectsMutationResponse;
   updateProjects: UpdateProjectsMutationResponse;
-  updateQueryPS: UpdateQueryPsMutationResponse;
   updateRates: UpdateRatesMutationResponse;
   updateRoles: UpdateRolesMutationResponse;
-  updateScores: UpdateScoresMutationResponse;
   updateSkills: UpdateSkillsMutationResponse;
 };
 
@@ -1088,18 +1057,8 @@ export type MutationCreatePeopleArgs = {
 };
 
 
-export type MutationCreatePersonsToProjectsArgs = {
-  input: Array<PersonsToProjectCreateInput>;
-};
-
-
 export type MutationCreateProjectsArgs = {
   input: Array<ProjectCreateInput>;
-};
-
-
-export type MutationCreateQueryPsArgs = {
-  input: Array<QueryPCreateInput>;
 };
 
 
@@ -1110,11 +1069,6 @@ export type MutationCreateRatesArgs = {
 
 export type MutationCreateRolesArgs = {
   input: Array<RoleCreateInput>;
-};
-
-
-export type MutationCreateScoresArgs = {
-  input: Array<ScoreCreateInput>;
 };
 
 
@@ -1141,19 +1095,9 @@ export type MutationDeletePeopleArgs = {
 };
 
 
-export type MutationDeletePersonsToProjectsArgs = {
-  where?: InputMaybe<PersonsToProjectWhere>;
-};
-
-
 export type MutationDeleteProjectsArgs = {
   delete?: InputMaybe<ProjectDeleteInput>;
   where?: InputMaybe<ProjectWhere>;
-};
-
-
-export type MutationDeleteQueryPsArgs = {
-  where?: InputMaybe<QueryPWhere>;
 };
 
 
@@ -1165,11 +1109,6 @@ export type MutationDeleteRatesArgs = {
 
 export type MutationDeleteRolesArgs = {
   where?: InputMaybe<RoleWhere>;
-};
-
-
-export type MutationDeleteScoresArgs = {
-  where?: InputMaybe<ScoreWhere>;
 };
 
 
@@ -1212,12 +1151,6 @@ export type MutationUpdatePeopleArgs = {
 };
 
 
-export type MutationUpdatePersonsToProjectsArgs = {
-  update?: InputMaybe<PersonsToProjectUpdateInput>;
-  where?: InputMaybe<PersonsToProjectWhere>;
-};
-
-
 export type MutationUpdateProjectsArgs = {
   connect?: InputMaybe<ProjectConnectInput>;
   connectOrCreate?: InputMaybe<ProjectConnectOrCreateInput>;
@@ -1226,12 +1159,6 @@ export type MutationUpdateProjectsArgs = {
   disconnect?: InputMaybe<ProjectDisconnectInput>;
   update?: InputMaybe<ProjectUpdateInput>;
   where?: InputMaybe<ProjectWhere>;
-};
-
-
-export type MutationUpdateQueryPsArgs = {
-  update?: InputMaybe<QueryPUpdateInput>;
-  where?: InputMaybe<QueryPWhere>;
 };
 
 
@@ -1249,12 +1176,6 @@ export type MutationUpdateRatesArgs = {
 export type MutationUpdateRolesArgs = {
   update?: InputMaybe<RoleUpdateInput>;
   where?: InputMaybe<RoleWhere>;
-};
-
-
-export type MutationUpdateScoresArgs = {
-  update?: InputMaybe<ScoreUpdateInput>;
-  where?: InputMaybe<ScoreWhere>;
 };
 
 
@@ -1527,7 +1448,7 @@ export type PersonDepartmentsAggregateInput = {
 
 export type PersonDepartmentsConnectFieldInput = {
   connect?: InputMaybe<Array<DepartmentConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<DepartmentConnectWhere>;
 };
@@ -1662,7 +1583,7 @@ export type PersonExperiencesAggregateInput = {
 
 export type PersonExperiencesConnectFieldInput = {
   connect?: InputMaybe<Array<ExperienceConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<ExperienceConnectWhere>;
 };
@@ -1812,7 +1733,7 @@ export type PersonProjectsAggregateInput = {
 
 export type PersonProjectsConnectFieldInput = {
   connect?: InputMaybe<Array<ProjectConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<ProjectConnectWhere>;
 };
@@ -1946,7 +1867,7 @@ export type PersonRatesAggregateInput = {
 
 export type PersonRatesConnectFieldInput = {
   connect?: InputMaybe<Array<RateConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<RateConnectWhere>;
 };
@@ -2078,7 +1999,7 @@ export type PersonRolesAggregateInput = {
 };
 
 export type PersonRolesConnectFieldInput = {
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<RoleConnectWhere>;
 };
@@ -2195,7 +2116,7 @@ export type PersonSkillsAggregateInput = {
 
 export type PersonSkillsConnectFieldInput = {
   connect?: InputMaybe<Array<SkillConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<SkillConnectWhere>;
 };
@@ -2454,52 +2375,7 @@ export type PersonWhere = {
   surname_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
-export type PersonWithScore = Person | Score;
-
-export type PersonsToProject = {
-  __typename?: 'PersonsToProject';
-  people?: Maybe<Array<Maybe<PersonWithScore>>>;
-};
-
-export type PersonsToProjectAggregateSelection = {
-  __typename?: 'PersonsToProjectAggregateSelection';
-  count: Scalars['Int'];
-};
-
-export type PersonsToProjectCreateInput = {
-  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
-  _emptyInput?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type PersonsToProjectEdge = {
-  __typename?: 'PersonsToProjectEdge';
-  cursor: Scalars['String'];
-  node: PersonsToProject;
-};
-
-export type PersonsToProjectOptions = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-export type PersonsToProjectUpdateInput = {
-  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
-  _emptyInput?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type PersonsToProjectWhere = {
-  AND?: InputMaybe<Array<PersonsToProjectWhere>>;
-  NOT?: InputMaybe<PersonsToProjectWhere>;
-  OR?: InputMaybe<Array<PersonsToProjectWhere>>;
-};
-
-export type PersonsToProjectsConnection = {
-  __typename?: 'PersonsToProjectsConnection';
-  edges: Array<PersonsToProjectEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
+/** A point in a coordinate system. For more information, see https://neo4j.com/docs/graphql/4/type-definitions/types/spatial/#point */
 export type Point = {
   __typename?: 'Point';
   crs: Scalars['String'];
@@ -2509,12 +2385,14 @@ export type Point = {
   srid: Scalars['Int'];
 };
 
+/** Input type for a point with a distance */
 export type PointDistance = {
   /** The distance in metres to be used when comparing two points */
   distance: Scalars['Float'];
   point: PointInput;
 };
 
+/** Input type for a point */
 export type PointInput = {
   height?: InputMaybe<Scalars['Float']>;
   latitude: Scalars['Float'];
@@ -2669,7 +2547,7 @@ export type ProjectPersonsAggregateInput = {
 
 export type ProjectPersonsConnectFieldInput = {
   connect?: InputMaybe<Array<PersonConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -2808,7 +2686,7 @@ export type ProjectSkillsAggregateInput = {
 
 export type ProjectSkillsConnectFieldInput = {
   connect?: InputMaybe<Array<SkillConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<SkillConnectWhere>;
 };
@@ -2998,27 +2876,19 @@ export type Query = {
   experiences: Array<Experience>;
   experiencesAggregate: ExperienceAggregateSelection;
   experiencesConnection: ExperiencesConnection;
+  findSkill: Array<Skill>;
   people: Array<Person>;
   peopleAggregate: PersonAggregateSelection;
   peopleConnection: PeopleConnection;
-  personsToProjects: Array<PersonsToProject>;
-  personsToProjectsAggregate: PersonsToProjectAggregateSelection;
-  personsToProjectsConnection: PersonsToProjectsConnection;
   projects: Array<Project>;
   projectsAggregate: ProjectAggregateSelection;
   projectsConnection: ProjectsConnection;
-  queryPS: Array<QueryP>;
-  queryPSAggregate: QueryPAggregateSelection;
-  queryPSConnection: QueryPsConnection;
   rates: Array<Rate>;
   ratesAggregate: RateAggregateSelection;
   ratesConnection: RatesConnection;
   roles: Array<Role>;
   rolesAggregate: RoleAggregateSelection;
   rolesConnection: RolesConnection;
-  scores: Array<Score>;
-  scoresAggregate: ScoreAggregateSelection;
-  scoresConnection: ScoresConnection;
   skills: Array<Skill>;
   skillsAggregate: SkillAggregateSelection;
   skillsConnection: SkillsConnection;
@@ -3063,6 +2933,11 @@ export type QueryExperiencesConnectionArgs = {
 };
 
 
+export type QueryFindSkillArgs = {
+  where?: InputMaybe<SkillWhere>;
+};
+
+
 export type QueryPeopleArgs = {
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
@@ -3082,24 +2957,6 @@ export type QueryPeopleConnectionArgs = {
 };
 
 
-export type QueryPersonsToProjectsArgs = {
-  options?: InputMaybe<PersonsToProjectOptions>;
-  where?: InputMaybe<PersonsToProjectWhere>;
-};
-
-
-export type QueryPersonsToProjectsAggregateArgs = {
-  where?: InputMaybe<PersonsToProjectWhere>;
-};
-
-
-export type QueryPersonsToProjectsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PersonsToProjectWhere>;
-};
-
-
 export type QueryProjectsArgs = {
   options?: InputMaybe<ProjectOptions>;
   where?: InputMaybe<ProjectWhere>;
@@ -3116,24 +2973,6 @@ export type QueryProjectsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<ProjectSort>>>;
   where?: InputMaybe<ProjectWhere>;
-};
-
-
-export type QueryQueryPsArgs = {
-  options?: InputMaybe<QueryPOptions>;
-  where?: InputMaybe<QueryPWhere>;
-};
-
-
-export type QueryQueryPsAggregateArgs = {
-  where?: InputMaybe<QueryPWhere>;
-};
-
-
-export type QueryQueryPsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<QueryPWhere>;
 };
 
 
@@ -3175,25 +3014,6 @@ export type QueryRolesConnectionArgs = {
 };
 
 
-export type QueryScoresArgs = {
-  options?: InputMaybe<ScoreOptions>;
-  where?: InputMaybe<ScoreWhere>;
-};
-
-
-export type QueryScoresAggregateArgs = {
-  where?: InputMaybe<ScoreWhere>;
-};
-
-
-export type QueryScoresConnectionArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<Array<InputMaybe<ScoreSort>>>;
-  where?: InputMaybe<ScoreWhere>;
-};
-
-
 export type QuerySkillsArgs = {
   options?: InputMaybe<SkillOptions>;
   where?: InputMaybe<SkillWhere>;
@@ -3210,50 +3030,6 @@ export type QuerySkillsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<SkillSort>>>;
   where?: InputMaybe<SkillWhere>;
-};
-
-export type QueryP = {
-  __typename?: 'QueryP';
-  people?: Maybe<Array<Maybe<Person>>>;
-};
-
-export type QueryPAggregateSelection = {
-  __typename?: 'QueryPAggregateSelection';
-  count: Scalars['Int'];
-};
-
-export type QueryPCreateInput = {
-  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
-  _emptyInput?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type QueryPEdge = {
-  __typename?: 'QueryPEdge';
-  cursor: Scalars['String'];
-  node: QueryP;
-};
-
-export type QueryPOptions = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-export type QueryPsConnection = {
-  __typename?: 'QueryPSConnection';
-  edges: Array<QueryPEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
-export type QueryPUpdateInput = {
-  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
-  _emptyInput?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type QueryPWhere = {
-  AND?: InputMaybe<Array<QueryPWhere>>;
-  NOT?: InputMaybe<QueryPWhere>;
-  OR?: InputMaybe<Array<QueryPWhere>>;
 };
 
 export type Rate = {
@@ -3357,7 +3133,7 @@ export type RatePersonAggregateInput = {
 
 export type RatePersonConnectFieldInput = {
   connect?: InputMaybe<PersonConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -3617,64 +3393,6 @@ export type RolesConnection = {
   totalCount: Scalars['Int'];
 };
 
-export type Score = {
-  __typename?: 'Score';
-  score?: Maybe<Scalars['Int']>;
-};
-
-export type ScoreAggregateSelection = {
-  __typename?: 'ScoreAggregateSelection';
-  count: Scalars['Int'];
-  score: IntAggregateSelectionNullable;
-};
-
-export type ScoreCreateInput = {
-  score?: InputMaybe<Scalars['Int']>;
-};
-
-export type ScoreEdge = {
-  __typename?: 'ScoreEdge';
-  cursor: Scalars['String'];
-  node: Score;
-};
-
-export type ScoreOptions = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  /** Specify one or more ScoreSort objects to sort Scores by. The sorts will be applied in the order in which they are arranged in the array. */
-  sort?: InputMaybe<Array<ScoreSort>>;
-};
-
-/** Fields to sort Scores by. The order in which sorts are applied is not guaranteed when specifying many fields in one ScoreSort object. */
-export type ScoreSort = {
-  score?: InputMaybe<SortDirection>;
-};
-
-export type ScoreUpdateInput = {
-  score?: InputMaybe<Scalars['Int']>;
-  score_DECREMENT?: InputMaybe<Scalars['Int']>;
-  score_INCREMENT?: InputMaybe<Scalars['Int']>;
-};
-
-export type ScoreWhere = {
-  AND?: InputMaybe<Array<ScoreWhere>>;
-  NOT?: InputMaybe<ScoreWhere>;
-  OR?: InputMaybe<Array<ScoreWhere>>;
-  score?: InputMaybe<Scalars['Int']>;
-  score_GT?: InputMaybe<Scalars['Int']>;
-  score_GTE?: InputMaybe<Scalars['Int']>;
-  score_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  score_LT?: InputMaybe<Scalars['Int']>;
-  score_LTE?: InputMaybe<Scalars['Int']>;
-};
-
-export type ScoresConnection = {
-  __typename?: 'ScoresConnection';
-  edges: Array<ScoreEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
 export enum Seniority {
   Junior = 'JUNIOR',
   Regular = 'REGULAR',
@@ -3811,7 +3529,7 @@ export type SkillExperiencesAggregateInput = {
 
 export type SkillExperiencesConnectFieldInput = {
   connect?: InputMaybe<Array<ExperienceConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<ExperienceConnectWhere>;
 };
@@ -3957,7 +3675,7 @@ export type SkillPersonsAggregateInput = {
 
 export type SkillPersonsConnectFieldInput = {
   connect?: InputMaybe<Array<PersonConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -4143,6 +3861,7 @@ export type SkillsConnection = {
   totalCount: Scalars['Int'];
 };
 
+/** An enum for sorting in either ascending or descending order. */
 export enum SortDirection {
   /** Sort by field values in ascending order. */
   Asc = 'ASC',
@@ -4168,8 +3887,10 @@ export type UpdateExperiencesMutationResponse = {
   info: UpdateInfo;
 };
 
+/** Information about the number of nodes and relationships created and deleted during an update mutation */
 export type UpdateInfo = {
   __typename?: 'UpdateInfo';
+  /** @deprecated This field has been deprecated because bookmarks are now handled by the driver. */
   bookmark?: Maybe<Scalars['String']>;
   nodesCreated: Scalars['Int'];
   nodesDeleted: Scalars['Int'];
@@ -4183,22 +3904,10 @@ export type UpdatePeopleMutationResponse = {
   people: Array<Person>;
 };
 
-export type UpdatePersonsToProjectsMutationResponse = {
-  __typename?: 'UpdatePersonsToProjectsMutationResponse';
-  info: UpdateInfo;
-  personsToProjects: Array<PersonsToProject>;
-};
-
 export type UpdateProjectsMutationResponse = {
   __typename?: 'UpdateProjectsMutationResponse';
   info: UpdateInfo;
   projects: Array<Project>;
-};
-
-export type UpdateQueryPsMutationResponse = {
-  __typename?: 'UpdateQueryPSMutationResponse';
-  info: UpdateInfo;
-  queryPS: Array<QueryP>;
 };
 
 export type UpdateRatesMutationResponse = {
@@ -4211,12 +3920,6 @@ export type UpdateRolesMutationResponse = {
   __typename?: 'UpdateRolesMutationResponse';
   info: UpdateInfo;
   roles: Array<Role>;
-};
-
-export type UpdateScoresMutationResponse = {
-  __typename?: 'UpdateScoresMutationResponse';
-  info: UpdateInfo;
-  scores: Array<Score>;
 };
 
 export type UpdateSkillsMutationResponse = {
@@ -4262,6 +3965,15 @@ export type CreateRatesMutationVariables = Exact<{
 
 export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
 
+export type SkillPartFragment = { __typename?: 'Skill', id: string, name: string };
+
+export type CreateSkillsMutationVariables = Exact<{
+  input: Array<SkillCreateInput> | SkillCreateInput;
+}>;
+
+
+export type CreateSkillsMutation = { __typename?: 'Mutation', createSkills: { __typename?: 'CreateSkillsMutationResponse', skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
+
 export type DeleteDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
 }>;
@@ -4297,6 +4009,13 @@ export type DeleteRatesMutationVariables = Exact<{
 
 export type DeleteRatesMutation = { __typename?: 'Mutation', deleteRates: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
+export type DeleteSkillsMutationVariables = Exact<{
+  where?: InputMaybe<SkillWhere>;
+}>;
+
+
+export type DeleteSkillsMutation = { __typename?: 'Mutation', deleteSkills: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
 export type DepartmentsDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4323,6 +4042,13 @@ export type ExperiencesByPersonQueryVariables = Exact<{
 
 
 export type ExperiencesByPersonQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+
+export type FindSkillQueryVariables = Exact<{
+  where?: InputMaybe<SkillWhere>;
+}>;
+
+
+export type FindSkillQuery = { __typename?: 'Query', findSkill: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
 export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
@@ -4352,15 +4078,22 @@ export type RatesByPersonQueryVariables = Exact<{
 
 export type RatesByPersonQuery = { __typename?: 'Query', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number }> };
 
+export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
+
 export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
-export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
+export type SkillsWithLimitQueryVariables = Exact<{
+  options?: InputMaybe<SkillOptions>;
+}>;
 
 
-export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
+export type SkillsWithLimitQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }>, skillsAggregate: { __typename?: 'SkillAggregateSelection', count: number } };
 
 export type UpdateDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
@@ -4403,6 +4136,12 @@ export const DepartmentPartFragmentDoc = gql`
     name
     surname
   }
+}
+    `;
+export const SkillPartFragmentDoc = gql`
+    fragment SkillPart on Skill {
+  id
+  name
 }
     `;
 export const ExperienceDataFragmentDoc = gql`
@@ -4591,6 +4330,26 @@ export const CreateRatesDocument = gql`
       super(apollo);
     }
   }
+export const CreateSkillsDocument = gql`
+    mutation CreateSkills($input: [SkillCreateInput!]!) {
+  createSkills(input: $input) {
+    skills {
+      ...SkillPart
+    }
+  }
+}
+    ${SkillPartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateSkillsGQL extends Apollo.Mutation<CreateSkillsMutation, CreateSkillsMutationVariables> {
+    document = CreateSkillsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const DeleteDepartmentsDocument = gql`
     mutation DeleteDepartments($where: DepartmentWhere) {
   deleteDepartments(where: $where) {
@@ -4676,6 +4435,24 @@ export const DeleteRatesDocument = gql`
   })
   export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
     document = DeleteRatesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteSkillsDocument = gql`
+    mutation DeleteSkills($where: SkillWhere) {
+  deleteSkills(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSkillsGQL extends Apollo.Mutation<DeleteSkillsMutation, DeleteSkillsMutationVariables> {
+    document = DeleteSkillsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -4781,6 +4558,25 @@ export const ExperiencesByPersonDocument = gql`
       super(apollo);
     }
   }
+export const FindSkillDocument = gql`
+    query FindSkill($where: SkillWhere) {
+  findSkill(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FindSkillGQL extends Apollo.Query<FindSkillQuery, FindSkillQueryVariables> {
+    document = FindSkillDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const PersonsWithAllDocument = gql`
     query PersonsWithAll($where: PersonWhere) {
   people(where: $where) {
@@ -4856,6 +4652,25 @@ export const RatesByPersonDocument = gql`
       super(apollo);
     }
   }
+export const RolesDocument = gql`
+    query Roles {
+  roles {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
+    document = RolesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const SkillsDocument = gql`
     query Skills {
   skills {
@@ -4875,11 +4690,14 @@ export const SkillsDocument = gql`
       super(apollo);
     }
   }
-export const RolesDocument = gql`
-    query Roles {
-  roles {
+export const SkillsWithLimitDocument = gql`
+    query SkillsWithLimit($options: SkillOptions) {
+  skills(options: $options) {
     id
     name
+  }
+  skillsAggregate {
+    count
   }
 }
     `;
@@ -4887,8 +4705,8 @@ export const RolesDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
-    document = RolesDocument;
+  export class SkillsWithLimitGQL extends Apollo.Query<SkillsWithLimitQuery, SkillsWithLimitQueryVariables> {
+    document = SkillsWithLimitDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

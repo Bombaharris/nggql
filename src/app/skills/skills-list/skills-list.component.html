@@ -1,0 +1,47 @@
+<nz-breadcrumb>
+    <nz-breadcrumb-item><a [routerLink]="['../']">Software House</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item>Skills</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div nz-row nzJustify="end">
+    <div nz-col [nzSpan]="20">
+      <h1 nz-typography>Skills</h1>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <button nz-button nzBlock nzType="default" (click)="openForm('skill')">Create skill</button>
+    </div>
+  </div>
+  
+  <nz-table
+    #table
+    [nzData]="feed"
+    [nzBordered]="true"
+    [nzLoading]="isLoading"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="fetchMore()"
+    (nzPageSizeChange)="fetchMore(true)">
+    <thead>
+      <tr>
+        <th>Skill</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let skill of table.data">
+        <td>{{ skill.name }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-drawer
+  *ngIf="currentForm === 'skill'"
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="true"
+  [nzWidth]="'40%'"
+  [nzVisible]="isFormVisible"
+  [nzTitle]="'Create skill'"
+  (nzOnClose)="closeForm()">
+  <div *nzDrawerContent>
+    <app-skills-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-skills-form>
+  </div>
+  </nz-drawer>

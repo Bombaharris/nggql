@@ -1,0 +1,6 @@
+query FindSkill($where: SkillWhere) {
+  findSkill(where: $where) {
+    id
+    name
+  }
+}

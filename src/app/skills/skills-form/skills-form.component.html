@@ -1,0 +1,17 @@
+<form nz-form [formGroup]="skillForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <nz-space [nzSize]="'small'">
+        <button *nzSpaceItem nz-button nzType="primary" (click)="submit()" [disabled]="!skillForm.valid">Submit</button>
+        <button *nzSpaceItem nz-button (click)="cancel()">Cancel</button>
+      </nz-space>
+    </nz-form-control>
+  </nz-form-item>
+</form>
