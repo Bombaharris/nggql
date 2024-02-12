@@ -65,14 +65,14 @@ type Rate {
 }
 
 type Query {
-  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""")
+  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""", columnName: """s""")
 }
 
 type PersonsToProject {
-    people: [PersonWithScore] @cypher(statement: """
+ people: [PersonWithScore] @cypher(statement: """
         MATCH (p:Person)-[:HAS_SKILL]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)
         RETURN p,COUNT(*) AS score ORDER BY score DESC
-    """)
+    """, columnName: """p""")
 }
 
 type Score {
@@ -87,6 +87,6 @@ type QueryP {
             statement: """
             MATCH (p:Person)
             RETURN p
-            """
+            """, columnName: """person"""
         )
 }
