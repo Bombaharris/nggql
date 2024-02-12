@@ -46,10 +46,22 @@ export type CreatePeopleMutationResponse = {
   people: Array<Person>;
 };
 
+export type CreatePersonsToProjectsMutationResponse = {
+  __typename?: 'CreatePersonsToProjectsMutationResponse';
+  info: CreateInfo;
+  personsToProjects: Array<PersonsToProject>;
+};
+
 export type CreateProjectsMutationResponse = {
   __typename?: 'CreateProjectsMutationResponse';
   info: CreateInfo;
   projects: Array<Project>;
+};
+
+export type CreateQueryPsMutationResponse = {
+  __typename?: 'CreateQueryPSMutationResponse';
+  info: CreateInfo;
+  queryPS: Array<QueryP>;
 };
 
 export type CreateRatesMutationResponse = {
@@ -62,6 +74,12 @@ export type CreateRolesMutationResponse = {
   __typename?: 'CreateRolesMutationResponse';
   info: CreateInfo;
   roles: Array<Role>;
+};
+
+export type CreateScoresMutationResponse = {
+  __typename?: 'CreateScoresMutationResponse';
+  info: CreateInfo;
+  scores: Array<Score>;
 };
 
 export type CreateSkillsMutationResponse = {
@@ -1016,28 +1034,45 @@ export type IdAggregateSelectionNonNullable = {
   shortest: Scalars['ID'];
 };
 
+export type IntAggregateSelectionNullable = {
+  __typename?: 'IntAggregateSelectionNullable';
+  average?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Int']>;
+  min?: Maybe<Scalars['Int']>;
+  sum?: Maybe<Scalars['Int']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createDepartments: CreateDepartmentsMutationResponse;
   createExperiences: CreateExperiencesMutationResponse;
   createPeople: CreatePeopleMutationResponse;
+  createPersonsToProjects: CreatePersonsToProjectsMutationResponse;
   createProjects: CreateProjectsMutationResponse;
+  createQueryPS: CreateQueryPsMutationResponse;
   createRates: CreateRatesMutationResponse;
   createRoles: CreateRolesMutationResponse;
+  createScores: CreateScoresMutationResponse;
   createSkills: CreateSkillsMutationResponse;
   deleteDepartments: DeleteInfo;
   deleteExperiences: DeleteInfo;
   deletePeople: DeleteInfo;
+  deletePersonsToProjects: DeleteInfo;
   deleteProjects: DeleteInfo;
+  deleteQueryPS: DeleteInfo;
   deleteRates: DeleteInfo;
   deleteRoles: DeleteInfo;
+  deleteScores: DeleteInfo;
   deleteSkills: DeleteInfo;
   updateDepartments: UpdateDepartmentsMutationResponse;
   updateExperiences: UpdateExperiencesMutationResponse;
   updatePeople: UpdatePeopleMutationResponse;
+  updatePersonsToProjects: UpdatePersonsToProjectsMutationResponse;
   updateProjects: UpdateProjectsMutationResponse;
+  updateQueryPS: UpdateQueryPsMutationResponse;
   updateRates: UpdateRatesMutationResponse;
   updateRoles: UpdateRolesMutationResponse;
+  updateScores: UpdateScoresMutationResponse;
   updateSkills: UpdateSkillsMutationResponse;
 };
 
@@ -1057,8 +1092,18 @@ export type MutationCreatePeopleArgs = {
 };
 
 
+export type MutationCreatePersonsToProjectsArgs = {
+  input: Array<PersonsToProjectCreateInput>;
+};
+
+
 export type MutationCreateProjectsArgs = {
   input: Array<ProjectCreateInput>;
+};
+
+
+export type MutationCreateQueryPsArgs = {
+  input: Array<QueryPCreateInput>;
 };
 
 
@@ -1069,6 +1114,11 @@ export type MutationCreateRatesArgs = {
 
 export type MutationCreateRolesArgs = {
   input: Array<RoleCreateInput>;
+};
+
+
+export type MutationCreateScoresArgs = {
+  input: Array<ScoreCreateInput>;
 };
 
 
@@ -1095,9 +1145,19 @@ export type MutationDeletePeopleArgs = {
 };
 
 
+export type MutationDeletePersonsToProjectsArgs = {
+  where?: InputMaybe<PersonsToProjectWhere>;
+};
+
+
 export type MutationDeleteProjectsArgs = {
   delete?: InputMaybe<ProjectDeleteInput>;
   where?: InputMaybe<ProjectWhere>;
+};
+
+
+export type MutationDeleteQueryPsArgs = {
+  where?: InputMaybe<QueryPWhere>;
 };
 
 
@@ -1109,6 +1169,11 @@ export type MutationDeleteRatesArgs = {
 
 export type MutationDeleteRolesArgs = {
   where?: InputMaybe<RoleWhere>;
+};
+
+
+export type MutationDeleteScoresArgs = {
+  where?: InputMaybe<ScoreWhere>;
 };
 
 
@@ -1151,6 +1216,12 @@ export type MutationUpdatePeopleArgs = {
 };
 
 
+export type MutationUpdatePersonsToProjectsArgs = {
+  update?: InputMaybe<PersonsToProjectUpdateInput>;
+  where?: InputMaybe<PersonsToProjectWhere>;
+};
+
+
 export type MutationUpdateProjectsArgs = {
   connect?: InputMaybe<ProjectConnectInput>;
   connectOrCreate?: InputMaybe<ProjectConnectOrCreateInput>;
@@ -1159,6 +1230,12 @@ export type MutationUpdateProjectsArgs = {
   disconnect?: InputMaybe<ProjectDisconnectInput>;
   update?: InputMaybe<ProjectUpdateInput>;
   where?: InputMaybe<ProjectWhere>;
+};
+
+
+export type MutationUpdateQueryPsArgs = {
+  update?: InputMaybe<QueryPUpdateInput>;
+  where?: InputMaybe<QueryPWhere>;
 };
 
 
@@ -1176,6 +1253,12 @@ export type MutationUpdateRatesArgs = {
 export type MutationUpdateRolesArgs = {
   update?: InputMaybe<RoleUpdateInput>;
   where?: InputMaybe<RoleWhere>;
+};
+
+
+export type MutationUpdateScoresArgs = {
+  update?: InputMaybe<ScoreUpdateInput>;
+  where?: InputMaybe<ScoreWhere>;
 };
 
 
@@ -2375,6 +2458,52 @@ export type PersonWhere = {
   surname_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
+export type PersonWithScore = Person | Score;
+
+export type PersonsToProject = {
+  __typename?: 'PersonsToProject';
+  people?: Maybe<Array<Maybe<PersonWithScore>>>;
+};
+
+export type PersonsToProjectAggregateSelection = {
+  __typename?: 'PersonsToProjectAggregateSelection';
+  count: Scalars['Int'];
+};
+
+export type PersonsToProjectCreateInput = {
+  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
+  _emptyInput?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type PersonsToProjectEdge = {
+  __typename?: 'PersonsToProjectEdge';
+  cursor: Scalars['String'];
+  node: PersonsToProject;
+};
+
+export type PersonsToProjectOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type PersonsToProjectUpdateInput = {
+  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
+  _emptyInput?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type PersonsToProjectWhere = {
+  AND?: InputMaybe<Array<PersonsToProjectWhere>>;
+  NOT?: InputMaybe<PersonsToProjectWhere>;
+  OR?: InputMaybe<Array<PersonsToProjectWhere>>;
+};
+
+export type PersonsToProjectsConnection = {
+  __typename?: 'PersonsToProjectsConnection';
+  edges: Array<PersonsToProjectEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
 /** A point in a coordinate system. For more information, see https://neo4j.com/docs/graphql/4/type-definitions/types/spatial/#point */
 export type Point = {
   __typename?: 'Point';
@@ -2880,15 +3009,24 @@ export type Query = {
   people: Array<Person>;
   peopleAggregate: PersonAggregateSelection;
   peopleConnection: PeopleConnection;
+  personsToProjects: Array<PersonsToProject>;
+  personsToProjectsAggregate: PersonsToProjectAggregateSelection;
+  personsToProjectsConnection: PersonsToProjectsConnection;
   projects: Array<Project>;
   projectsAggregate: ProjectAggregateSelection;
   projectsConnection: ProjectsConnection;
+  queryPS: Array<QueryP>;
+  queryPSAggregate: QueryPAggregateSelection;
+  queryPSConnection: QueryPsConnection;
   rates: Array<Rate>;
   ratesAggregate: RateAggregateSelection;
   ratesConnection: RatesConnection;
   roles: Array<Role>;
   rolesAggregate: RoleAggregateSelection;
   rolesConnection: RolesConnection;
+  scores: Array<Score>;
+  scoresAggregate: ScoreAggregateSelection;
+  scoresConnection: ScoresConnection;
   skills: Array<Skill>;
   skillsAggregate: SkillAggregateSelection;
   skillsConnection: SkillsConnection;
@@ -2957,6 +3095,24 @@ export type QueryPeopleConnectionArgs = {
 };
 
 
+export type QueryPersonsToProjectsArgs = {
+  options?: InputMaybe<PersonsToProjectOptions>;
+  where?: InputMaybe<PersonsToProjectWhere>;
+};
+
+
+export type QueryPersonsToProjectsAggregateArgs = {
+  where?: InputMaybe<PersonsToProjectWhere>;
+};
+
+
+export type QueryPersonsToProjectsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PersonsToProjectWhere>;
+};
+
+
 export type QueryProjectsArgs = {
   options?: InputMaybe<ProjectOptions>;
   where?: InputMaybe<ProjectWhere>;
@@ -2973,6 +3129,24 @@ export type QueryProjectsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<ProjectSort>>>;
   where?: InputMaybe<ProjectWhere>;
+};
+
+
+export type QueryQueryPsArgs = {
+  options?: InputMaybe<QueryPOptions>;
+  where?: InputMaybe<QueryPWhere>;
+};
+
+
+export type QueryQueryPsAggregateArgs = {
+  where?: InputMaybe<QueryPWhere>;
+};
+
+
+export type QueryQueryPsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<QueryPWhere>;
 };
 
 
@@ -3014,6 +3188,25 @@ export type QueryRolesConnectionArgs = {
 };
 
 
+export type QueryScoresArgs = {
+  options?: InputMaybe<ScoreOptions>;
+  where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type QueryScoresAggregateArgs = {
+  where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type QueryScoresConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<InputMaybe<ScoreSort>>>;
+  where?: InputMaybe<ScoreWhere>;
+};
+
+
 export type QuerySkillsArgs = {
   options?: InputMaybe<SkillOptions>;
   where?: InputMaybe<SkillWhere>;
@@ -3030,6 +3223,50 @@ export type QuerySkillsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<SkillSort>>>;
   where?: InputMaybe<SkillWhere>;
+};
+
+export type QueryP = {
+  __typename?: 'QueryP';
+  people?: Maybe<Array<Maybe<Person>>>;
+};
+
+export type QueryPAggregateSelection = {
+  __typename?: 'QueryPAggregateSelection';
+  count: Scalars['Int'];
+};
+
+export type QueryPCreateInput = {
+  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
+  _emptyInput?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type QueryPEdge = {
+  __typename?: 'QueryPEdge';
+  cursor: Scalars['String'];
+  node: QueryP;
+};
+
+export type QueryPOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type QueryPsConnection = {
+  __typename?: 'QueryPSConnection';
+  edges: Array<QueryPEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type QueryPUpdateInput = {
+  /** Appears because this input type would be empty otherwise because this type is composed of just generated and/or relationship properties. See https://neo4j.com/docs/graphql-manual/current/troubleshooting/faqs/ */
+  _emptyInput?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type QueryPWhere = {
+  AND?: InputMaybe<Array<QueryPWhere>>;
+  NOT?: InputMaybe<QueryPWhere>;
+  OR?: InputMaybe<Array<QueryPWhere>>;
 };
 
 export type Rate = {
@@ -3389,6 +3626,64 @@ export type RoleWhere = {
 export type RolesConnection = {
   __typename?: 'RolesConnection';
   edges: Array<RoleEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type Score = {
+  __typename?: 'Score';
+  score?: Maybe<Scalars['Int']>;
+};
+
+export type ScoreAggregateSelection = {
+  __typename?: 'ScoreAggregateSelection';
+  count: Scalars['Int'];
+  score: IntAggregateSelectionNullable;
+};
+
+export type ScoreCreateInput = {
+  score?: InputMaybe<Scalars['Int']>;
+};
+
+export type ScoreEdge = {
+  __typename?: 'ScoreEdge';
+  cursor: Scalars['String'];
+  node: Score;
+};
+
+export type ScoreOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more ScoreSort objects to sort Scores by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<ScoreSort>>;
+};
+
+/** Fields to sort Scores by. The order in which sorts are applied is not guaranteed when specifying many fields in one ScoreSort object. */
+export type ScoreSort = {
+  score?: InputMaybe<SortDirection>;
+};
+
+export type ScoreUpdateInput = {
+  score?: InputMaybe<Scalars['Int']>;
+  score_DECREMENT?: InputMaybe<Scalars['Int']>;
+  score_INCREMENT?: InputMaybe<Scalars['Int']>;
+};
+
+export type ScoreWhere = {
+  AND?: InputMaybe<Array<ScoreWhere>>;
+  NOT?: InputMaybe<ScoreWhere>;
+  OR?: InputMaybe<Array<ScoreWhere>>;
+  score?: InputMaybe<Scalars['Int']>;
+  score_GT?: InputMaybe<Scalars['Int']>;
+  score_GTE?: InputMaybe<Scalars['Int']>;
+  score_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  score_LT?: InputMaybe<Scalars['Int']>;
+  score_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type ScoresConnection = {
+  __typename?: 'ScoresConnection';
+  edges: Array<ScoreEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -3904,10 +4199,22 @@ export type UpdatePeopleMutationResponse = {
   people: Array<Person>;
 };
 
+export type UpdatePersonsToProjectsMutationResponse = {
+  __typename?: 'UpdatePersonsToProjectsMutationResponse';
+  info: UpdateInfo;
+  personsToProjects: Array<PersonsToProject>;
+};
+
 export type UpdateProjectsMutationResponse = {
   __typename?: 'UpdateProjectsMutationResponse';
   info: UpdateInfo;
   projects: Array<Project>;
+};
+
+export type UpdateQueryPsMutationResponse = {
+  __typename?: 'UpdateQueryPSMutationResponse';
+  info: UpdateInfo;
+  queryPS: Array<QueryP>;
 };
 
 export type UpdateRatesMutationResponse = {
@@ -3920,6 +4227,12 @@ export type UpdateRolesMutationResponse = {
   __typename?: 'UpdateRolesMutationResponse';
   info: UpdateInfo;
   roles: Array<Role>;
+};
+
+export type UpdateScoresMutationResponse = {
+  __typename?: 'UpdateScoresMutationResponse';
+  info: UpdateInfo;
+  scores: Array<Score>;
 };
 
 export type UpdateSkillsMutationResponse = {
