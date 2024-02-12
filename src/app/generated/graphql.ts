@@ -2500,6 +2500,7 @@ export type PersonsToProjectsConnection = {
   totalCount: Scalars['Int'];
 };
 
+/** A point in a coordinate system. For more information, see https://neo4j.com/docs/graphql/4/type-definitions/types/spatial/#point */
 export type Point = {
   __typename?: 'Point';
   crs: Scalars['String'];
@@ -4535,7 +4536,7 @@ export const CreateDepartmentsDocument = gql`
   })
   export class CreateDepartmentsGQL extends Apollo.Mutation<CreateDepartmentsMutation, CreateDepartmentsMutationVariables> {
     document = CreateDepartmentsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4559,7 +4560,7 @@ export const CreateExperiencesDocument = gql`
   })
   export class CreateExperiencesGQL extends Apollo.Mutation<CreateExperiencesMutation, CreateExperiencesMutationVariables> {
     document = CreateExperiencesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4583,7 +4584,7 @@ export const CreatePeopleDocument = gql`
   })
   export class CreatePeopleGQL extends Apollo.Mutation<CreatePeopleMutation, CreatePeopleMutationVariables> {
     document = CreatePeopleDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4603,7 +4604,7 @@ export const CreateProjectsDocument = gql`
   })
   export class CreateProjectsGQL extends Apollo.Mutation<CreateProjectsMutation, CreateProjectsMutationVariables> {
     document = CreateProjectsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4628,7 +4629,7 @@ export const CreateRatesDocument = gql`
   })
   export class CreateRatesGQL extends Apollo.Mutation<CreateRatesMutation, CreateRatesMutationVariables> {
     document = CreateRatesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4648,7 +4649,7 @@ export const CreateSkillsDocument = gql`
   })
   export class CreateSkillsGQL extends Apollo.Mutation<CreateSkillsMutation, CreateSkillsMutationVariables> {
     document = CreateSkillsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4666,7 +4667,7 @@ export const DeleteDepartmentsDocument = gql`
   })
   export class DeleteDepartmentsGQL extends Apollo.Mutation<DeleteDepartmentsMutation, DeleteDepartmentsMutationVariables> {
     document = DeleteDepartmentsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4684,7 +4685,7 @@ export const DeleteExperiencesDocument = gql`
   })
   export class DeleteExperiencesGQL extends Apollo.Mutation<DeleteExperiencesMutation, DeleteExperiencesMutationVariables> {
     document = DeleteExperiencesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4702,7 +4703,7 @@ export const DeletePersonsDocument = gql`
   })
   export class DeletePersonsGQL extends Apollo.Mutation<DeletePersonsMutation, DeletePersonsMutationVariables> {
     document = DeletePersonsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4720,7 +4721,7 @@ export const DeleteProjectsDocument = gql`
   })
   export class DeleteProjectsGQL extends Apollo.Mutation<DeleteProjectsMutation, DeleteProjectsMutationVariables> {
     document = DeleteProjectsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4738,7 +4739,7 @@ export const DeleteRatesDocument = gql`
   })
   export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
     document = DeleteRatesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4756,7 +4757,7 @@ export const DeleteSkillsDocument = gql`
   })
   export class DeleteSkillsGQL extends Apollo.Mutation<DeleteSkillsMutation, DeleteSkillsMutationVariables> {
     document = DeleteSkillsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4785,7 +4786,7 @@ export const DepartmentsDetailsDocument = gql`
   })
   export class DepartmentsDetailsGQL extends Apollo.Query<DepartmentsDetailsQuery, DepartmentsDetailsQueryVariables> {
     document = DepartmentsDetailsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4807,7 +4808,7 @@ export const DepartmentsDocument = gql`
   })
   export class DepartmentsGQL extends Apollo.Query<DepartmentsQuery, DepartmentsQueryVariables> {
     document = DepartmentsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4838,7 +4839,7 @@ export const EditExperiencesDocument = gql`
   })
   export class EditExperiencesGQL extends Apollo.Mutation<EditExperiencesMutation, EditExperiencesMutationVariables> {
     document = EditExperiencesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4856,7 +4857,7 @@ export const ExperiencesByPersonDocument = gql`
   })
   export class ExperiencesByPersonGQL extends Apollo.Query<ExperiencesByPersonQuery, ExperiencesByPersonQueryVariables> {
     document = ExperiencesByPersonDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4875,7 +4876,7 @@ export const FindSkillDocument = gql`
   })
   export class FindSkillGQL extends Apollo.Query<FindSkillQuery, FindSkillQueryVariables> {
     document = FindSkillDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4893,7 +4894,7 @@ export const PersonsWithAllDocument = gql`
   })
   export class PersonsWithAllGQL extends Apollo.Query<PersonsWithAllQuery, PersonsWithAllQueryVariables> {
     document = PersonsWithAllDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4912,7 +4913,7 @@ export const ProjectsDocument = gql`
   })
   export class ProjectsGQL extends Apollo.Query<ProjectsQuery, ProjectsQueryVariables> {
     document = ProjectsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4930,7 +4931,7 @@ export const ProjectsWithAllDocument = gql`
   })
   export class ProjectsWithAllGQL extends Apollo.Query<ProjectsWithAllQuery, ProjectsWithAllQueryVariables> {
     document = ProjectsWithAllDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4950,7 +4951,7 @@ export const RatesByPersonDocument = gql`
   })
   export class RatesByPersonGQL extends Apollo.Query<RatesByPersonQuery, RatesByPersonQueryVariables> {
     document = RatesByPersonDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4969,7 +4970,7 @@ export const RolesDocument = gql`
   })
   export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
     document = RolesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4988,7 +4989,7 @@ export const SkillsDocument = gql`
   })
   export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
     document = SkillsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5010,7 +5011,7 @@ export const SkillsWithLimitDocument = gql`
   })
   export class SkillsWithLimitGQL extends Apollo.Query<SkillsWithLimitQuery, SkillsWithLimitQueryVariables> {
     document = SkillsWithLimitDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5041,7 +5042,7 @@ export const UpdateDepartmentsDocument = gql`
   })
   export class UpdateDepartmentsGQL extends Apollo.Mutation<UpdateDepartmentsMutation, UpdateDepartmentsMutationVariables> {
     document = UpdateDepartmentsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5096,7 +5097,7 @@ export const UpdatePeopleDocument = gql`
   })
   export class UpdatePeopleGQL extends Apollo.Mutation<UpdatePeopleMutation, UpdatePeopleMutationVariables> {
     document = UpdatePeopleDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5117,7 +5118,7 @@ export const UpdateProjectsDocument = gql`
   })
   export class UpdateProjectsGQL extends Apollo.Mutation<UpdateProjectsMutation, UpdateProjectsMutationVariables> {
     document = UpdateProjectsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5143,7 +5144,7 @@ export const UpdateRatesDocument = gql`
   })
   export class UpdateRatesGQL extends Apollo.Mutation<UpdateRatesMutation, UpdateRatesMutationVariables> {
     document = UpdateRatesDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
