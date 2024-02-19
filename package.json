@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "gql-codegen": "graphql-codegen --config graphql-codegen.yml",
+    "gql-codegen": "graphql-codegen --config graphql-codegen.yml --debug --verbose",
     "gql-codegen:watch": "graphql-codegen --config graphql-codegen.yml --watch",
     "prestart": "npm run gql-codegen",
     "prettier:check": "prettier \"./src/**/*.ts\" --check",
