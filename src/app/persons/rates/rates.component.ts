@@ -16,20 +16,20 @@ export class RatesComponent implements OnInit, OnDestroy {
     editedPerson!: PersonWithAllTypeFragment | null | undefined;
     personId!: string;
     readonly subscription: Subscription = new Subscription();
-  
+
    constructor(
-      private personAdapterService: PersonAdapterService, 
+      private personAdapterService: PersonAdapterService,
       private route: ActivatedRoute,
       private notification: NzNotificationService,
       private router: Router
-      ) { 
+      ) {
         this.subscription.add(
           this.route.params.subscribe(params => {
           this.personId = params['id'];
         }));
         this.personAdapterService.setPersonQueryRef(this.personId);
       }
-  
+
     ngOnInit(): void {
       this.personAdapterService.personQueryRef?.valueChanges.subscribe(({ data, loading, errors }) => {
         if(loading) {
@@ -43,15 +43,15 @@ export class RatesComponent implements OnInit, OnDestroy {
           this.editedPerson = data.people.find(p => p.id === this.personId);
           this.isLoading = false;
         }
-      })    
+      })
     }
-  
+
     submitRates($event: AbstractControl<any,any>): void {
       this.isLoading = true;
       const ratesExists = $event.get("id")?.value;
       if(!ratesExists) {
         this.personAdapterService.submitPersonRates<CreateRatesMutation>(this.personId, $event, true).subscribe(() => {
-          
+
         this.notification.create(
           'success',
           'Success',
@@ -67,7 +67,7 @@ export class RatesComponent implements OnInit, OnDestroy {
             `Error occured during creation of experience: ${error}`
           )
         });
-       
+
         return;
       }
       this.personAdapterService.submitPersonRates<UpdateRatesMutation>(this.personId, $event, false).subscribe(() => {
@@ -86,10 +86,10 @@ export class RatesComponent implements OnInit, OnDestroy {
           `Error occured during edition of experience: ${error}`
         )
       });
-     
+
       this.isLoading = false;
     }
-  
+
     removePersonsRate(id: string): void {
       this.personAdapterService.removePersonsRate(id).subscribe(() => {
         this.notification.create(
@@ -106,12 +106,8 @@ export class RatesComponent implements OnInit, OnDestroy {
           });
     }
 
-    goBack(): void {
-      this.router.navigate(['../'])
-    }
-  
     ngOnDestroy(): void {
       this.subscription?.unsubscribe();
     }
-  
+
   }

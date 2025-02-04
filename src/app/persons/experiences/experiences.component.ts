@@ -18,11 +18,11 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
   readonly subscription: Subscription = new Subscription();
 
  constructor(
-    private personAdapterService: PersonAdapterService, 
+    private personAdapterService: PersonAdapterService,
     private route: ActivatedRoute,
     private notification: NzNotificationService,
     private router: Router
-    ) { 
+    ) {
       this.subscription.add(
         this.route.params.subscribe(params => {
         this.personId = params['id'];
@@ -43,7 +43,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         this.editedPerson = data.people.find(p => p.id === this.personId);
         this.isLoading = false;
       }
-    })    
+    })
   }
 
   submitExperience($event: AbstractControl<any,any>): void {
@@ -51,7 +51,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     const experienceExists = $event.get("id")?.value;
     if(!experienceExists) {
       this.personAdapterService.submitPersonExperience<CreateExperiencesMutation>(this.personId, $event, true).subscribe(() => {
-        
+
       this.notification.create(
         'success',
         'Success',
@@ -67,7 +67,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
           `Error occured during creation of experience: ${error}`
         )
       });
-     
+
       return;
     }
     this.personAdapterService.submitPersonExperience<EditExperiencesMutation>(this.personId, $event, false).subscribe(() => {
@@ -86,7 +86,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         `Error occured during edition of experience: ${error}`
       )
     });
-   
+
     this.isLoading = false;
   }
 
@@ -104,10 +104,6 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
           `Error occured during edition of experience: ${error}`
           )
         });
-  }
-
-  goBack(): void {
-    this.router.navigate(['../'])
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,6 @@
 <div class="ratesForm" >
   <nz-empty *ngIf="!ratesList || ratesList.length === 0"></nz-empty>
-  
+
   <form nz-form [formGroup]="ratesForm" >
     <ng-container formArrayName="rates">
       <nz-list nzGrid>
@@ -32,7 +32,7 @@
                     Submit
                   </button>
                   <button
-                  class="btn-sm" 
+                  class="btn-sm"
                   nzDanger
                   nz-button
                   nzType="primary"
@@ -54,9 +54,12 @@
       <nz-form-item>
         <nz-form-control class="btn-center">
             <nz-space [nzSize]="'small'">
-            <button nzSize="large" *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
-                Add new
-            </button>
+              <a *nzSpaceItem nz-button nzType="text" [routerLink]="['/dashboard']">
+                <span nz-icon nzType="left"></span> Go back
+              </a>
+              <button nzSize="large" *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
+                  Add new
+              </button>
             </nz-space>
         </nz-form-control>
       </nz-form-item>

@@ -9,7 +9,6 @@ import { DepartmentsComponent } from './departments.component';
 import { DepartmentsListComponent } from './departments-list/departments-list.component';
 import { DepartmentTransferComponent } from './department-transfer/department-transfer.component';
 
-
 @NgModule({
   declarations: [
     DepartmentsComponent, DepartmentFormComponent, DepartmentsListComponent, DepartmentTransferComponent
@@ -19,6 +18,6 @@ import { DepartmentTransferComponent } from './department-transfer/department-tr
     DepartmentsRoutingModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
-  ]
+  ],
 })
 export class DepartmentsModule { }

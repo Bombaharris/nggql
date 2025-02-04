@@ -4,12 +4,8 @@
   <nz-breadcrumb-item><a [routerLink]="['../../']">Departments</a></nz-breadcrumb-item>
   <nz-breadcrumb-item>Transfer</nz-breadcrumb-item>
 </nz-breadcrumb>
-<div nz-row nzJustify="start" class="navigationBar">
+<div nz-row nzJustify="start">
     <h1 nz-typography>Transfer people</h1>
-    <button nz-button nzType="text" (click)="goBack()">
-      <span nz-icon nzType="left"></span>
-      Go back 
-  </button>
 </div>
 <nz-transfer
   [nzDisabled]="isLoading"
@@ -21,3 +17,8 @@
   [nzFilterOption]="filterOption"
   (nzChange)="change($event)"
 ></nz-transfer>
+<div nz-flex nzJustify="center">
+  <a nz-button nzType="text" [routerLink]="['../../']">
+    <span nz-icon nzType="left"></span>  Go back
+  </a>
+</div>

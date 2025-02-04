@@ -21,7 +21,7 @@
           nz-input
           id="description"
           formControlName="description"
-          rows="3" 
+          rows="3"
           placeholder="Describe experience"
         ></textarea>
         </nz-textarea-count>
@@ -60,7 +60,7 @@
           Submit
         </button>
         <button
-        class="btn-sm" 
+        class="btn-sm"
         nzDanger
         nz-button
         nzType="primary"
@@ -82,11 +82,14 @@
 </nz-list>
 <nz-form-item>
   <nz-form-control class="btn-center">
-      <nz-space [nzSize]="'small'">
-      <button nzSize="large" *nzSpaceItem nz-button nzType="primary" (click)="addNewForm()">
+    <nz-space nzSize="middle">
+      <a *nzSpaceItem nz-button nzType="text" [routerLink]="['/dashboard']">
+        <span nz-icon nzType="left"></span>  Go back
+      </a>
+      <button *nzSpaceItem nzSize="large" nz-button nzType="primary" (click)="addNewForm()">
           Add new
       </button>
-      </nz-space>
+    </nz-space>
   </nz-form-control>
 </nz-form-item>
 </ng-container>

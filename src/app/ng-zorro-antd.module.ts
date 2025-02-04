@@ -68,6 +68,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzFlexModule } from "ng-zorro-antd/flex";
 
 @NgModule({
   exports: [
@@ -136,7 +137,8 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzUploadModule,
     NzWaveModule,
     NzResizableModule,
-    NzSpaceModule
+    NzSpaceModule,
+    NzFlexModule,
   ]
 })
 export class NgZorroAntdModule {

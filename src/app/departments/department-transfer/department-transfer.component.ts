@@ -11,7 +11,6 @@ import { TransferChangeReturn } from './model/department-transfer.model';
 @Component({
   selector: 'app-department-transfer',
   templateUrl: './department-transfer.component.html',
-  styleUrl: './department-transfer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentTransferComponent implements OnInit, OnDestroy {
@@ -21,12 +20,12 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
   department!: DepartmentPartFragment;
   departmentsEmployeesIds: string[] = [];
   readonly subscription: Subscription = new Subscription();
-  
+
   constructor(
     private cdr: ChangeDetectorRef,
     private personAdapterService: PersonAdapterService,
-    private departmentsAdapterService: DepartmentsAdapterService, 
-    private route: ActivatedRoute, 
+    private departmentsAdapterService: DepartmentsAdapterService,
+    private route: ActivatedRoute,
     private notification: NzNotificationService,
     private router: Router
     ) {
@@ -35,7 +34,7 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
           this.departmentId = params['departmentId'];
         })
       );
-    this.subscription.add( 
+    this.subscription.add(
       this.departmentsAdapterService.departmentsQueryRef?.valueChanges.subscribe(({data, errors, loading}) => {
       if(errors) {
         errors.map(e => console.error(e));
@@ -63,9 +62,9 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
         }
       })
     )
-      
+
     }
-    
+
     ngOnInit(): void {
       this.isLoading = true;
       this.departmentsAdapterService.departmentsQueryRef?.valueChanges.subscribe(({data, errors, loading}) => {
@@ -115,7 +114,7 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
     this.departmentsEmployeesIds = [...peopleList.filter(p => p.direction === 'right').map(e => e.key)];
     this.cdr.detectChanges();
   }
-  
+
   filterOption(inputValue: string, item: TransferItem): boolean {
     return item.title.toLocaleLowerCase().indexOf(inputValue.toLocaleLowerCase()) > -1;
   }
@@ -132,7 +131,7 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
         if(errors) {
           errors.map((error) => {console.error(error)});
         }
-        this.notification.create( 
+        this.notification.create(
           'success',
           'Success',
           `Users ${users.map(u => u)} were successfully removed from the department.`)
@@ -150,17 +149,13 @@ export class DepartmentTransferComponent implements OnInit, OnDestroy {
         errors.map((error) => {console.error(error)});
       }
       ids.map((id) => this.departmentsEmployeesIds.push(id));
-      this.notification.create( 
+      this.notification.create(
         'success',
         'Success',
         `Users ${users} were successfully added to the ${this.department?.name ?? ''} department.`)
       });
       this.departmentsAdapterService.departmentsQueryRef?.refetch();
       this.isLoading = false;
-  }
-  
-  goBack(): void {
-    this.router.navigate(['../'])
   }
 
   ngOnDestroy(): void {
