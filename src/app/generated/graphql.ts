@@ -2500,7 +2500,6 @@ export type PersonsToProjectsConnection = {
   totalCount: Scalars['Int'];
 };
 
-/** A point in a coordinate system. For more information, see https://neo4j.com/docs/graphql/4/type-definitions/types/spatial/#point */
 export type Point = {
   __typename?: 'Point';
   crs: Scalars['String'];
