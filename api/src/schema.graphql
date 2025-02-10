@@ -5,7 +5,7 @@ enum Seniority {
 }
 
 type Person {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   name: String!
   surname: String!
   birthday: Date
@@ -20,7 +20,7 @@ type Person {
 }
 
 type Experience {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   person: Person @relationship(type: "HAS_EXPERIENCE", direction: IN)
   name: String!
   description: String!
@@ -30,19 +30,19 @@ type Experience {
 }
 
 type Skill {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   name: String!
   persons: [Person!]! @relationship(type: "HAS_SKILL", direction: IN)
   experiences: [Experience!]! @relationship(type: "USED_SKILL", direction: IN)
 }
 
 type Role {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   name: String!
 }
 
 type Project {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   name: String!
   skills: [Skill!]! @relationship(type: "NEED_SKILL", direction:OUT)
   persons: [Person!]! @relationship(type: "HAS_PROJECT", direction: IN)
@@ -51,28 +51,28 @@ type Project {
 }
 
 type Department {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   name: String!
   manager: Person @relationship(type: "MANAGED_BY", direction: OUT)
   persons: [Person!]! @relationship(type: "HAS_DEPARTMENT", direction: IN)
 }
 
 type Rate {
-  id: ID! @id(autogenerate: true)
+  id: ID! @id @unique
   value: Float!
   validFrom: Date!
   person: Person! @relationship(type: "HAS_RATE", direction: IN)
 }
 
 type Query {
-  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""")
+  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""", columnName: """s""")
 }
 
 type PersonsToProject {
-    people: [PersonWithScore] @cypher(statement: """
+ people: [PersonWithScore] @cypher(statement: """
         MATCH (p:Person)-[:HAS_SKILL]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)
         RETURN p,COUNT(*) AS score ORDER BY score DESC
-    """)
+    """, columnName: """p""")
 }
 
 type Score {
@@ -87,6 +87,6 @@ type QueryP {
             statement: """
             MATCH (p:Person)
             RETURN p
-            """
+            """, columnName: """person"""
         )
 }

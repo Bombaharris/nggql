@@ -31,8 +31,10 @@ export type CreateExperiencesMutationResponse = {
   info: CreateInfo;
 };
 
+/** Information about the number of nodes and relationships created during a create mutation */
 export type CreateInfo = {
   __typename?: 'CreateInfo';
+  /** @deprecated This field has been deprecated because bookmarks are now handled by the driver. */
   bookmark?: Maybe<Scalars['String']>;
   nodesCreated: Scalars['Int'];
   relationshipsCreated: Scalars['Int'];
@@ -86,8 +88,10 @@ export type CreateSkillsMutationResponse = {
   skills: Array<Skill>;
 };
 
+/** Information about the number of nodes and relationships deleted during a delete mutation */
 export type DeleteInfo = {
   __typename?: 'DeleteInfo';
+  /** @deprecated This field has been deprecated because bookmarks are now handled by the driver. */
   bookmark?: Maybe<Scalars['String']>;
   nodesDeleted: Scalars['Int'];
   relationshipsDeleted: Scalars['Int'];
@@ -152,8 +156,8 @@ export type DepartmentPersonsConnectionArgs = {
 export type DepartmentAggregateSelection = {
   __typename?: 'DepartmentAggregateSelection';
   count: Scalars['Int'];
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type DepartmentConnectInput = {
@@ -210,7 +214,7 @@ export type DepartmentManagerAggregateInput = {
 
 export type DepartmentManagerConnectFieldInput = {
   connect?: InputMaybe<PersonConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -337,9 +341,9 @@ export type DepartmentPersonManagerAggregationSelection = {
 
 export type DepartmentPersonManagerNodeAggregateSelection = {
   __typename?: 'DepartmentPersonManagerNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type DepartmentPersonPersonsAggregationSelection = {
@@ -350,9 +354,9 @@ export type DepartmentPersonPersonsAggregationSelection = {
 
 export type DepartmentPersonPersonsNodeAggregateSelection = {
   __typename?: 'DepartmentPersonPersonsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type DepartmentPersonsAggregateInput = {
@@ -369,7 +373,7 @@ export type DepartmentPersonsAggregateInput = {
 
 export type DepartmentPersonsConnectFieldInput = {
   connect?: InputMaybe<Array<PersonConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -543,10 +547,10 @@ export type DepartmentsConnection = {
   totalCount: Scalars['Int'];
 };
 
-export type DurationAggregateSelectionNonNullable = {
-  __typename?: 'DurationAggregateSelectionNonNullable';
-  max: Scalars['Duration'];
-  min: Scalars['Duration'];
+export type DurationAggregateSelection = {
+  __typename?: 'DurationAggregateSelection';
+  max?: Maybe<Scalars['Duration']>;
+  min?: Maybe<Scalars['Duration']>;
 };
 
 export type Experience = {
@@ -611,9 +615,9 @@ export type ExperienceSkillsConnectionArgs = {
 export type ExperienceAggregateSelection = {
   __typename?: 'ExperienceAggregateSelection';
   count: Scalars['Int'];
-  description: StringAggregateSelectionNonNullable;
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  description: StringAggregateSelection;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type ExperienceConnectInput = {
@@ -687,7 +691,7 @@ export type ExperiencePersonAggregateInput = {
 
 export type ExperiencePersonConnectFieldInput = {
   connect?: InputMaybe<PersonConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -783,9 +787,9 @@ export type ExperiencePersonPersonAggregationSelection = {
 
 export type ExperiencePersonPersonNodeAggregateSelection = {
   __typename?: 'ExperiencePersonPersonNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type ExperiencePersonRelationship = {
@@ -821,8 +825,8 @@ export type ExperienceSkillSkillsAggregationSelection = {
 
 export type ExperienceSkillSkillsNodeAggregateSelection = {
   __typename?: 'ExperienceSkillSkillsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type ExperienceSkillsAggregateInput = {
@@ -839,7 +843,7 @@ export type ExperienceSkillsAggregateInput = {
 
 export type ExperienceSkillsConnectFieldInput = {
   connect?: InputMaybe<Array<SkillConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<SkillConnectWhere>;
 };
@@ -1016,22 +1020,22 @@ export type ExperiencesConnection = {
   totalCount: Scalars['Int'];
 };
 
-export type FloatAggregateSelectionNonNullable = {
-  __typename?: 'FloatAggregateSelectionNonNullable';
-  average: Scalars['Float'];
-  max: Scalars['Float'];
-  min: Scalars['Float'];
-  sum: Scalars['Float'];
+export type FloatAggregateSelection = {
+  __typename?: 'FloatAggregateSelection';
+  average?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
 };
 
-export type IdAggregateSelectionNonNullable = {
-  __typename?: 'IDAggregateSelectionNonNullable';
-  longest: Scalars['ID'];
-  shortest: Scalars['ID'];
+export type IdAggregateSelection = {
+  __typename?: 'IDAggregateSelection';
+  longest?: Maybe<Scalars['ID']>;
+  shortest?: Maybe<Scalars['ID']>;
 };
 
-export type IntAggregateSelectionNullable = {
-  __typename?: 'IntAggregateSelectionNullable';
+export type IntAggregateSelection = {
+  __typename?: 'IntAggregateSelection';
   average?: Maybe<Scalars['Float']>;
   max?: Maybe<Scalars['Int']>;
   min?: Maybe<Scalars['Int']>;
@@ -1180,33 +1184,18 @@ export type MutationDeleteSkillsArgs = {
 
 
 export type MutationUpdateDepartmentsArgs = {
-  connect?: InputMaybe<DepartmentConnectInput>;
-  connectOrCreate?: InputMaybe<DepartmentConnectOrCreateInput>;
-  create?: InputMaybe<DepartmentRelationInput>;
-  delete?: InputMaybe<DepartmentDeleteInput>;
-  disconnect?: InputMaybe<DepartmentDisconnectInput>;
   update?: InputMaybe<DepartmentUpdateInput>;
   where?: InputMaybe<DepartmentWhere>;
 };
 
 
 export type MutationUpdateExperiencesArgs = {
-  connect?: InputMaybe<ExperienceConnectInput>;
-  connectOrCreate?: InputMaybe<ExperienceConnectOrCreateInput>;
-  create?: InputMaybe<ExperienceRelationInput>;
-  delete?: InputMaybe<ExperienceDeleteInput>;
-  disconnect?: InputMaybe<ExperienceDisconnectInput>;
   update?: InputMaybe<ExperienceUpdateInput>;
   where?: InputMaybe<ExperienceWhere>;
 };
 
 
 export type MutationUpdatePeopleArgs = {
-  connect?: InputMaybe<PersonConnectInput>;
-  connectOrCreate?: InputMaybe<PersonConnectOrCreateInput>;
-  create?: InputMaybe<PersonRelationInput>;
-  delete?: InputMaybe<PersonDeleteInput>;
-  disconnect?: InputMaybe<PersonDisconnectInput>;
   update?: InputMaybe<PersonUpdateInput>;
   where?: InputMaybe<PersonWhere>;
 };
@@ -1219,11 +1208,6 @@ export type MutationUpdatePersonsToProjectsArgs = {
 
 
 export type MutationUpdateProjectsArgs = {
-  connect?: InputMaybe<ProjectConnectInput>;
-  connectOrCreate?: InputMaybe<ProjectConnectOrCreateInput>;
-  create?: InputMaybe<ProjectRelationInput>;
-  delete?: InputMaybe<ProjectDeleteInput>;
-  disconnect?: InputMaybe<ProjectDisconnectInput>;
   update?: InputMaybe<ProjectUpdateInput>;
   where?: InputMaybe<ProjectWhere>;
 };
@@ -1236,11 +1220,6 @@ export type MutationUpdateQueryPsArgs = {
 
 
 export type MutationUpdateRatesArgs = {
-  connect?: InputMaybe<RateConnectInput>;
-  connectOrCreate?: InputMaybe<RateConnectOrCreateInput>;
-  create?: InputMaybe<RateRelationInput>;
-  delete?: InputMaybe<RateDeleteInput>;
-  disconnect?: InputMaybe<RateDisconnectInput>;
   update?: InputMaybe<RateUpdateInput>;
   where?: InputMaybe<RateWhere>;
 };
@@ -1259,11 +1238,6 @@ export type MutationUpdateScoresArgs = {
 
 
 export type MutationUpdateSkillsArgs = {
-  connect?: InputMaybe<SkillConnectInput>;
-  connectOrCreate?: InputMaybe<SkillConnectOrCreateInput>;
-  create?: InputMaybe<SkillRelationInput>;
-  delete?: InputMaybe<SkillDeleteInput>;
-  disconnect?: InputMaybe<SkillDisconnectInput>;
   update?: InputMaybe<SkillUpdateInput>;
   where?: InputMaybe<SkillWhere>;
 };
@@ -1447,9 +1421,9 @@ export type PersonSkillsConnectionArgs = {
 export type PersonAggregateSelection = {
   __typename?: 'PersonAggregateSelection';
   count: Scalars['Int'];
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type PersonConnectInput = {
@@ -1509,8 +1483,8 @@ export type PersonDepartmentDepartmentsAggregationSelection = {
 
 export type PersonDepartmentDepartmentsNodeAggregateSelection = {
   __typename?: 'PersonDepartmentDepartmentsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type PersonDepartmentsAggregateInput = {
@@ -1527,7 +1501,7 @@ export type PersonDepartmentsAggregateInput = {
 
 export type PersonDepartmentsConnectFieldInput = {
   connect?: InputMaybe<Array<DepartmentConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<DepartmentConnectWhere>;
 };
@@ -1643,9 +1617,9 @@ export type PersonExperienceExperiencesAggregationSelection = {
 
 export type PersonExperienceExperiencesNodeAggregateSelection = {
   __typename?: 'PersonExperienceExperiencesNodeAggregateSelection';
-  description: StringAggregateSelectionNonNullable;
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  description: StringAggregateSelection;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type PersonExperiencesAggregateInput = {
@@ -1662,7 +1636,7 @@ export type PersonExperiencesAggregateInput = {
 
 export type PersonExperiencesConnectFieldInput = {
   connect?: InputMaybe<Array<ExperienceConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<ExperienceConnectWhere>;
 };
@@ -1793,9 +1767,9 @@ export type PersonProjectProjectsAggregationSelection = {
 
 export type PersonProjectProjectsNodeAggregateSelection = {
   __typename?: 'PersonProjectProjectsNodeAggregateSelection';
-  duration: DurationAggregateSelectionNonNullable;
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  duration: DurationAggregateSelection;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type PersonProjectsAggregateInput = {
@@ -1812,7 +1786,7 @@ export type PersonProjectsAggregateInput = {
 
 export type PersonProjectsConnectFieldInput = {
   connect?: InputMaybe<Array<ProjectConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<ProjectConnectWhere>;
 };
@@ -1928,8 +1902,8 @@ export type PersonRateRatesAggregationSelection = {
 
 export type PersonRateRatesNodeAggregateSelection = {
   __typename?: 'PersonRateRatesNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  value: FloatAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  value: FloatAggregateSelection;
 };
 
 export type PersonRatesAggregateInput = {
@@ -1946,7 +1920,7 @@ export type PersonRatesAggregateInput = {
 
 export type PersonRatesConnectFieldInput = {
   connect?: InputMaybe<Array<RateConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<RateConnectWhere>;
 };
@@ -2061,8 +2035,8 @@ export type PersonRoleRolesAggregationSelection = {
 
 export type PersonRoleRolesNodeAggregateSelection = {
   __typename?: 'PersonRoleRolesNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type PersonRolesAggregateInput = {
@@ -2078,7 +2052,7 @@ export type PersonRolesAggregateInput = {
 };
 
 export type PersonRolesConnectFieldInput = {
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<RoleConnectWhere>;
 };
@@ -2177,8 +2151,8 @@ export type PersonSkillSkillsAggregationSelection = {
 
 export type PersonSkillSkillsNodeAggregateSelection = {
   __typename?: 'PersonSkillSkillsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type PersonSkillsAggregateInput = {
@@ -2195,7 +2169,7 @@ export type PersonSkillsAggregateInput = {
 
 export type PersonSkillsConnectFieldInput = {
   connect?: InputMaybe<Array<SkillConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<SkillConnectWhere>;
 };
@@ -2456,6 +2430,11 @@ export type PersonWhere = {
 
 export type PersonWithScore = Person | Score;
 
+export type PersonWithScoreWhere = {
+  Person?: InputMaybe<PersonWhere>;
+  Score?: InputMaybe<ScoreWhere>;
+};
+
 export type PersonsToProject = {
   __typename?: 'PersonsToProject';
   people?: Maybe<Array<Maybe<PersonWithScore>>>;
@@ -2500,6 +2479,7 @@ export type PersonsToProjectsConnection = {
   totalCount: Scalars['Int'];
 };
 
+/** A point in a coordinate system. For more information, see https://neo4j.com/docs/graphql/4/type-definitions/types/spatial/#point */
 export type Point = {
   __typename?: 'Point';
   crs: Scalars['String'];
@@ -2509,12 +2489,14 @@ export type Point = {
   srid: Scalars['Int'];
 };
 
+/** Input type for a point with a distance */
 export type PointDistance = {
   /** The distance in metres to be used when comparing two points */
   distance: Scalars['Float'];
   point: PointInput;
 };
 
+/** Input type for a point */
 export type PointInput = {
   height?: InputMaybe<Scalars['Float']>;
   latitude: Scalars['Float'];
@@ -2582,9 +2564,9 @@ export type ProjectSkillsConnectionArgs = {
 export type ProjectAggregateSelection = {
   __typename?: 'ProjectAggregateSelection';
   count: Scalars['Int'];
-  duration: DurationAggregateSelectionNonNullable;
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  duration: DurationAggregateSelection;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type ProjectConnectInput = {
@@ -2650,9 +2632,9 @@ export type ProjectPersonPersonsAggregationSelection = {
 
 export type ProjectPersonPersonsNodeAggregateSelection = {
   __typename?: 'ProjectPersonPersonsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type ProjectPersonsAggregateInput = {
@@ -2669,7 +2651,7 @@ export type ProjectPersonsAggregateInput = {
 
 export type ProjectPersonsConnectFieldInput = {
   connect?: InputMaybe<Array<PersonConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -2790,8 +2772,8 @@ export type ProjectSkillSkillsAggregationSelection = {
 
 export type ProjectSkillSkillsNodeAggregateSelection = {
   __typename?: 'ProjectSkillSkillsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type ProjectSkillsAggregateInput = {
@@ -2808,7 +2790,7 @@ export type ProjectSkillsAggregateInput = {
 
 export type ProjectSkillsConnectFieldInput = {
   connect?: InputMaybe<Array<SkillConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<SkillConnectWhere>;
 };
@@ -3002,6 +2984,7 @@ export type Query = {
   people: Array<Person>;
   peopleAggregate: PersonAggregateSelection;
   peopleConnection: PeopleConnection;
+  personWithScores: Array<PersonWithScore>;
   personsToProjects: Array<PersonsToProject>;
   personsToProjectsAggregate: PersonsToProjectAggregateSelection;
   personsToProjectsConnection: PersonsToProjectsConnection;
@@ -3085,6 +3068,12 @@ export type QueryPeopleConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<PersonSort>>>;
   where?: InputMaybe<PersonWhere>;
+};
+
+
+export type QueryPersonWithScoresArgs = {
+  options?: InputMaybe<QueryOptions>;
+  where?: InputMaybe<PersonWithScoreWhere>;
 };
 
 
@@ -3218,6 +3207,12 @@ export type QuerySkillsConnectionArgs = {
   where?: InputMaybe<SkillWhere>;
 };
 
+/** Input type for options that can be specified on a query operation. */
+export type QueryOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type QueryP = {
   __typename?: 'QueryP';
   people?: Maybe<Array<Maybe<Person>>>;
@@ -3260,6 +3255,11 @@ export type QueryPWhere = {
   AND?: InputMaybe<Array<QueryPWhere>>;
   NOT?: InputMaybe<QueryPWhere>;
   OR?: InputMaybe<Array<QueryPWhere>>;
+  people?: InputMaybe<PersonWhere>;
+  people_ALL?: InputMaybe<PersonWhere>;
+  people_NONE?: InputMaybe<PersonWhere>;
+  people_SINGLE?: InputMaybe<PersonWhere>;
+  people_SOME?: InputMaybe<PersonWhere>;
 };
 
 export type Rate = {
@@ -3297,8 +3297,8 @@ export type RatePersonConnectionArgs = {
 export type RateAggregateSelection = {
   __typename?: 'RateAggregateSelection';
   count: Scalars['Int'];
-  id: IdAggregateSelectionNonNullable;
-  value: FloatAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  value: FloatAggregateSelection;
 };
 
 export type RateConnectInput = {
@@ -3363,7 +3363,7 @@ export type RatePersonAggregateInput = {
 
 export type RatePersonConnectFieldInput = {
   connect?: InputMaybe<PersonConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -3459,9 +3459,9 @@ export type RatePersonPersonAggregationSelection = {
 
 export type RatePersonPersonNodeAggregateSelection = {
   __typename?: 'RatePersonPersonNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type RatePersonRelationship = {
@@ -3553,8 +3553,8 @@ export type Role = {
 export type RoleAggregateSelection = {
   __typename?: 'RoleAggregateSelection';
   count: Scalars['Int'];
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type RoleConnectOrCreateWhere = {
@@ -3631,7 +3631,7 @@ export type Score = {
 export type ScoreAggregateSelection = {
   __typename?: 'ScoreAggregateSelection';
   count: Scalars['Int'];
-  score: IntAggregateSelectionNullable;
+  score: IntAggregateSelection;
 };
 
 export type ScoreCreateInput = {
@@ -3746,8 +3746,8 @@ export type SkillPersonsConnectionArgs = {
 export type SkillAggregateSelection = {
   __typename?: 'SkillAggregateSelection';
   count: Scalars['Int'];
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type SkillConnectInput = {
@@ -3798,9 +3798,9 @@ export type SkillExperienceExperiencesAggregationSelection = {
 
 export type SkillExperienceExperiencesNodeAggregateSelection = {
   __typename?: 'SkillExperienceExperiencesNodeAggregateSelection';
-  description: StringAggregateSelectionNonNullable;
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
+  description: StringAggregateSelection;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
 };
 
 export type SkillExperiencesAggregateInput = {
@@ -3817,7 +3817,7 @@ export type SkillExperiencesAggregateInput = {
 
 export type SkillExperiencesConnectFieldInput = {
   connect?: InputMaybe<Array<ExperienceConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<ExperienceConnectWhere>;
 };
@@ -3944,9 +3944,9 @@ export type SkillPersonPersonsAggregationSelection = {
 
 export type SkillPersonPersonsNodeAggregateSelection = {
   __typename?: 'SkillPersonPersonsNodeAggregateSelection';
-  id: IdAggregateSelectionNonNullable;
-  name: StringAggregateSelectionNonNullable;
-  surname: StringAggregateSelectionNonNullable;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+  surname: StringAggregateSelection;
 };
 
 export type SkillPersonsAggregateInput = {
@@ -3963,7 +3963,7 @@ export type SkillPersonsAggregateInput = {
 
 export type SkillPersonsConnectFieldInput = {
   connect?: InputMaybe<Array<PersonConnectInput>>;
-  /** Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0. */
+  /** Whether or not to overwrite any matching relationship with the new properties. */
   overwrite?: Scalars['Boolean'];
   where?: InputMaybe<PersonConnectWhere>;
 };
@@ -4149,6 +4149,7 @@ export type SkillsConnection = {
   totalCount: Scalars['Int'];
 };
 
+/** An enum for sorting in either ascending or descending order. */
 export enum SortDirection {
   /** Sort by field values in ascending order. */
   Asc = 'ASC',
@@ -4156,10 +4157,10 @@ export enum SortDirection {
   Desc = 'DESC'
 }
 
-export type StringAggregateSelectionNonNullable = {
-  __typename?: 'StringAggregateSelectionNonNullable';
-  longest: Scalars['String'];
-  shortest: Scalars['String'];
+export type StringAggregateSelection = {
+  __typename?: 'StringAggregateSelection';
+  longest?: Maybe<Scalars['String']>;
+  shortest?: Maybe<Scalars['String']>;
 };
 
 export type UpdateDepartmentsMutationResponse = {
@@ -4174,8 +4175,10 @@ export type UpdateExperiencesMutationResponse = {
   info: UpdateInfo;
 };
 
+/** Information about the number of nodes and relationships created and deleted during an update mutation */
 export type UpdateInfo = {
   __typename?: 'UpdateInfo';
+  /** @deprecated This field has been deprecated because bookmarks are now handled by the driver. */
   bookmark?: Maybe<Scalars['String']>;
   nodesCreated: Scalars['Int'];
   nodesDeleted: Scalars['Int'];

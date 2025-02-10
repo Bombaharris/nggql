@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@graphql-tools/schema": "^10.0.2",
-    "@graphql-tools/utils": "^10.0.12",
-    "@neo4j/graphql": "^3.10.0",
-    "apollo-server": "^3.10.3",
-    "dotenv": "^16.0.3",
-    "graphql": "^16.6.0",
-    "neo4j-driver": "^4.4.10"
+    "@graphql-tools/schema": "^10.0.16",
+    "@graphql-tools/utils": "^10.7.2",
+    "@neo4j/graphql": "^5.11.4",
+    "apollo-server": "^3.13.0",
+    "dotenv": "^16.4.7",
+    "graphql": "^16.10.0",
+    "neo4j-driver": "^5.28.0"
   }
 }

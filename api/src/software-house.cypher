@@ -159,4 +159,3 @@ CREATE
 // Find people to the job
 // MATCH (p:Person)-[:HAS_SKILL {seniority: 'SENIOR'}]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)
 // RETURN p,pr,skill
-

@@ -123,7 +123,7 @@
       {
         "kind": "OBJECT",
         "name": "CreateInfo",
-        "description": null,
+        "description": "Information about the number of nodes and relationships created during a create mutation",
         "fields": [
           {
             "name": "bookmark",
@@ -134,8 +134,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field has been deprecated because bookmarks are now handled by the driver."
           },
           {
             "name": "nodesCreated",
@@ -596,7 +596,7 @@
       {
         "kind": "OBJECT",
         "name": "DeleteInfo",
-        "description": null,
+        "description": "Information about the number of nodes and relationships deleted during a delete mutation",
         "fields": [
           {
             "name": "bookmark",
@@ -607,8 +607,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field has been deprecated because bookmarks are now handled by the driver."
           },
           {
             "name": "nodesDeleted",
@@ -1075,7 +1075,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -1091,7 +1091,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -1579,7 +1579,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2708,7 +2708,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -2724,7 +2724,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -2740,7 +2740,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -2806,7 +2806,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -2822,7 +2822,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -2838,7 +2838,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -3014,7 +3014,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -4674,7 +4674,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "DurationAggregateSelectionNonNullable",
+        "name": "DurationAggregateSelection",
         "description": null,
         "fields": [
           {
@@ -4682,13 +4682,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Duration",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Duration",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4698,13 +4694,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Duration",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Duration",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5190,7 +5182,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -5206,7 +5198,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -5222,7 +5214,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -5888,7 +5880,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -6774,7 +6766,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -6790,7 +6782,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -6806,7 +6798,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -7076,7 +7068,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -7092,7 +7084,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -7268,7 +7260,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -9005,7 +8997,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "FloatAggregateSelectionNonNullable",
+        "name": "FloatAggregateSelection",
         "description": null,
         "fields": [
           {
@@ -9013,13 +9005,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9029,13 +9017,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9045,13 +9029,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9061,13 +9041,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9090,7 +9066,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "IDAggregateSelectionNonNullable",
+        "name": "IDAggregateSelection",
         "description": null,
         "fields": [
           {
@@ -9098,13 +9074,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9114,13 +9086,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9143,7 +9111,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "IntAggregateSelectionNullable",
+        "name": "IntAggregateSelection",
         "description": null,
         "fields": [
           {
@@ -9982,66 +9950,6 @@
             "description": null,
             "args": [
               {
-                "name": "connect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "DepartmentConnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "connectOrCreate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "DepartmentConnectOrCreateInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "create",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "DepartmentRelationInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "delete",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "DepartmentDeleteInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "disconnect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "DepartmentDisconnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
                 "name": "update",
                 "description": null,
                 "type": {
@@ -10083,66 +9991,6 @@
             "description": null,
             "args": [
               {
-                "name": "connect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExperienceConnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "connectOrCreate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExperienceConnectOrCreateInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "create",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExperienceRelationInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "delete",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExperienceDeleteInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "disconnect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExperienceDisconnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
                 "name": "update",
                 "description": null,
                 "type": {
@@ -10183,66 +10031,6 @@
             "name": "updatePeople",
             "description": null,
             "args": [
-              {
-                "name": "connect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "PersonConnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "connectOrCreate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "PersonConnectOrCreateInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "create",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "PersonRelationInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "delete",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "PersonDeleteInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "disconnect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "PersonDisconnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "update",
                 "description": null,
@@ -10326,66 +10114,6 @@
             "description": null,
             "args": [
               {
-                "name": "connect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ProjectConnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "connectOrCreate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ProjectConnectOrCreateInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "create",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ProjectRelationInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "delete",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ProjectDeleteInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "disconnect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ProjectDisconnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
                 "name": "update",
                 "description": null,
                 "type": {
@@ -10467,66 +10195,6 @@
             "name": "updateRates",
             "description": null,
             "args": [
-              {
-                "name": "connect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "RateConnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "connectOrCreate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "RateConnectOrCreateInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "create",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "RateRelationInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "delete",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "RateDeleteInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "disconnect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "RateDisconnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "update",
                 "description": null,
@@ -10650,66 +10318,6 @@
             "name": "updateSkills",
             "description": null,
             "args": [
-              {
-                "name": "connect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SkillConnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "connectOrCreate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SkillConnectOrCreateInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "create",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SkillRelationInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "delete",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SkillDeleteInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "disconnect",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SkillDisconnectInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "update",
                 "description": null,
@@ -12110,7 +11718,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -12126,7 +11734,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -12142,7 +11750,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -12806,7 +12414,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -12822,7 +12430,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -12998,7 +12606,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -14103,7 +13711,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -14119,7 +13727,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -14135,7 +13743,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -14311,7 +13919,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -15556,7 +15164,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "DurationAggregateSelectionNonNullable",
+                "name": "DurationAggregateSelection",
                 "ofType": null
               }
             },
@@ -15572,7 +15180,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -15588,7 +15196,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -15764,7 +15372,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -16875,7 +16483,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -16891,7 +16499,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "FloatAggregateSelectionNonNullable",
+                "name": "FloatAggregateSelection",
                 "ofType": null
               }
             },
@@ -17067,7 +16675,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -18189,7 +17797,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -18205,7 +17813,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -18361,7 +17969,7 @@
         "inputFields": [
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -19268,7 +18876,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -19284,7 +18892,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -19460,7 +19068,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -21764,6 +21372,41 @@
         ]
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "PersonWithScoreWhere",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "Person",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PersonWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Score",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "ScoreWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "PersonsToProject",
         "description": null,
@@ -22074,7 +21717,7 @@
       {
         "kind": "OBJECT",
         "name": "Point",
-        "description": null,
+        "description": "A point in a coordinate system. For more information, see https://neo4j.com/docs/graphql/4/type-definitions/types/spatial/#point",
         "fields": [
           {
             "name": "crs",
@@ -22161,7 +21804,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "PointDistance",
-        "description": null,
+        "description": "Input type for a point with a distance",
         "fields": null,
         "inputFields": [
           {
@@ -22204,7 +21847,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "PointInput",
-        "description": null,
+        "description": "Input type for a point",
         "fields": null,
         "inputFields": [
           {
@@ -22727,7 +22370,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "DurationAggregateSelectionNonNullable",
+                "name": "DurationAggregateSelection",
                 "ofType": null
               }
             },
@@ -22743,7 +22386,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -22759,7 +22402,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -23323,7 +22966,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -23339,7 +22982,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -23355,7 +22998,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -23531,7 +23174,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -24693,7 +24336,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -24709,7 +24352,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -24885,7 +24528,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -27058,6 +26701,55 @@
             "deprecationReason": null
           },
           {
+            "name": "personWithScores",
+            "description": null,
+            "args": [
+              {
+                "name": "options",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "QueryOptions",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "PersonWithScoreWhere",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "UNION",
+                    "name": "PersonWithScore",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "personsToProjects",
             "description": null,
             "args": [
@@ -28061,6 +27753,41 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "QueryOptions",
+        "description": "Input type for options that can be specified on a query operation.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "limit",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "offset",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "QueryP",
         "description": null,
@@ -28362,6 +28089,66 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "people",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PersonWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "people_ALL",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PersonWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "people_NONE",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PersonWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "people_SINGLE",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PersonWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "people_SOME",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PersonWhere",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -28632,7 +28419,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -28648,7 +28435,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "FloatAggregateSelectionNonNullable",
+                "name": "FloatAggregateSelection",
                 "ofType": null
               }
             },
@@ -29158,7 +28945,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -30044,7 +29831,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -30060,7 +29847,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -30076,7 +29863,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -30929,7 +30716,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -30945,7 +30732,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -31564,7 +31351,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IntAggregateSelectionNullable",
+                "name": "IntAggregateSelection",
                 "ofType": null
               }
             },
@@ -32442,7 +32229,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -32458,7 +32245,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -32876,7 +32663,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -32892,7 +32679,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -32908,7 +32695,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -33084,7 +32871,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -34277,7 +34064,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IDAggregateSelectionNonNullable",
+                "name": "IDAggregateSelection",
                 "ofType": null
               }
             },
@@ -34293,7 +34080,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -34309,7 +34096,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelectionNonNullable",
+                "name": "StringAggregateSelection",
                 "ofType": null
               }
             },
@@ -34485,7 +34272,7 @@
           },
           {
             "name": "overwrite",
-            "description": "Whether or not to overwrite any matching relationship with the new properties. Will default to `false` in 4.0.0.",
+            "description": "Whether or not to overwrite any matching relationship with the new properties.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -36200,7 +35987,7 @@
       {
         "kind": "ENUM",
         "name": "SortDirection",
-        "description": null,
+        "description": "An enum for sorting in either ascending or descending order.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -36232,7 +36019,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "StringAggregateSelectionNonNullable",
+        "name": "StringAggregateSelection",
         "description": null,
         "fields": [
           {
@@ -36240,13 +36027,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -36256,13 +36039,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -36378,7 +36157,7 @@
       {
         "kind": "OBJECT",
         "name": "UpdateInfo",
-        "description": null,
+        "description": "Information about the number of nodes and relationships created and deleted during an update mutation",
         "fields": [
           {
             "name": "bookmark",
@@ -36389,8 +36168,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field has been deprecated because bookmarks are now handled by the driver."
           },
           {
             "name": "nodesCreated",
