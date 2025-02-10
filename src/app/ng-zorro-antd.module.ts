@@ -1,6 +1,4 @@
-
 import { NgModule } from '@angular/core';
-
 
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
@@ -68,7 +66,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzFlexModule } from "ng-zorro-antd/flex";
+import { NzFlexModule } from 'ng-zorro-antd/flex';
 
 @NgModule({
   exports: [
@@ -139,8 +137,6 @@ import { NzFlexModule } from "ng-zorro-antd/flex";
     NzResizableModule,
     NzSpaceModule,
     NzFlexModule,
-  ]
+  ],
 })
-export class NgZorroAntdModule {
-
-}
+export class NgZorroAntdModule {}

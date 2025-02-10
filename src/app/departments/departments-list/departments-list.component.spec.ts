@@ -16,12 +16,10 @@ describe('DepartmentsListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DepartmentsListComponent],
-      imports: [ 
-        RouterTestingModule.withRoutes(
-        [
-          {path: 'departments', component: DepartmentsListComponent}
-        ]
-        ),
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'departments', component: DepartmentsListComponent },
+        ]),
         NgZorroAntdModule,
         DepartmentsRoutingModule,
         BrowserModule,
@@ -29,10 +27,9 @@ describe('DepartmentsListComponent', () => {
         HttpClientModule,
         HttpClientJsonpModule,
         BrowserAnimationsModule,
-      ]
-    })
-    .compileComponents();
-    
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DepartmentsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

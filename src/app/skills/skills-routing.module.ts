@@ -5,19 +5,19 @@ import { SkillsListComponent } from './skills-list/skills-list.component';
 
 const routes: Routes = [
   {
-      path: '',
-      component: SkillsComponent,
-      children: [
-        {
-          path: '',
-          component: SkillsListComponent
-        },
-      ]
-  }
+    path: '',
+    component: SkillsComponent,
+    children: [
+      {
+        path: '',
+        component: SkillsListComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SkillsRoutingModule { }
+export class SkillsRoutingModule {}

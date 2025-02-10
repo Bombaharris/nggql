@@ -24,46 +24,42 @@ describe('RatesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [ RatesComponent, RatesFormComponent ],
-    imports: [ RouterTestingModule.withRoutes(
-      [
-        {path: 'persons/:id/rates', component: RatesComponent}
-      ], {
-        
-      }
-      ),
-      NgZorroAntdModule,
-      ReactiveFormsModule,
-      AppRoutingModule,
-      BrowserModule,
-      GraphQLModule,
-      HttpClientModule,
-      HttpClientJsonpModule,
-      BrowserAnimationsModule,
-      ScrollingModule,
-      DragDropModule,
-    ],
-    providers: [FormBuilder, Overlay, NzNotificationService,
-    ],
-  })
-    .compileComponents();
+      declarations: [RatesComponent, RatesFormComponent],
+      imports: [
+        RouterTestingModule.withRoutes(
+          [{ path: 'persons/:id/rates', component: RatesComponent }],
+          {},
+        ),
+        NgZorroAntdModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        BrowserAnimationsModule,
+        ScrollingModule,
+        DragDropModule,
+      ],
+      providers: [FormBuilder, Overlay, NzNotificationService],
+    }).compileComponents();
     ratesFixture = TestBed.createComponent(RatesComponent);
     ratesFormFixture = TestBed.createComponent(RatesFormComponent);
     ratesFormComponent = ratesFormFixture.componentInstance;
     ratesComponent = ratesFixture.componentInstance;
     ratesFormComponent.person = {
-      id: "MrGreen",
-      name: "Ralph",
-      surname: "Green",
+      id: 'MrGreen',
+      name: 'Ralph',
+      surname: 'Green',
       departments: [],
       experiences: [],
       projects: [],
       rates: [],
       roles: [],
       skills: [],
-    }
+    };
     ratesFormComponent.ratesForm = fb.group({
-      rates: fb.array([])
+      rates: fb.array([]),
     });
     ratesFormComponent.addNewForm();
     ratesFixture.detectChanges();

@@ -13,19 +13,16 @@ describe('ProjectFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ProjectFormComponent
-      ],
+      declarations: [ProjectFormComponent],
       imports: [
         NgZorroAntdModule,
         BrowserModule,
         GraphQLModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-      ]
-    })
-    .compileComponents();
-    
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProjectFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -14,24 +14,19 @@ describe('ProjectsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ProjectsListComponent
-      ],
+      declarations: [ProjectsListComponent],
       imports: [
-        RouterTestingModule.withRoutes(
-          [
-            {path: 'projects', component: ProjectsListComponent}
-          ]
-          ),
+        RouterTestingModule.withRoutes([
+          { path: 'projects', component: ProjectsListComponent },
+        ]),
         NgZorroAntdModule,
         ProjectsRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
         GraphQLModule,
-      ]
-    })
-    .compileComponents();
-    
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProjectsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

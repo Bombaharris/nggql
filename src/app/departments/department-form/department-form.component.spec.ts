@@ -18,21 +18,18 @@ describe('DepartmentFormComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DepartmentFormComponent],
       imports: [
-        RouterTestingModule.withRoutes(
-          [
-            {path: 'departments', component: DepartmentsListComponent}
-          ]
-          ),
-          NgZorroAntdModule,
-          DepartmentsRoutingModule,
-          BrowserModule,
-          GraphQLModule,
-          BrowserAnimationsModule,
-          ReactiveFormsModule,
-      ]
-    })
-    .compileComponents();
-    
+        RouterTestingModule.withRoutes([
+          { path: 'departments', component: DepartmentsListComponent },
+        ]),
+        NgZorroAntdModule,
+        DepartmentsRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DepartmentFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

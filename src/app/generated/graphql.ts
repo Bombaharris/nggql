@@ -3,9 +3,15 @@ import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -109,19 +115,16 @@ export type Department = {
   personsConnection: DepartmentPersonsConnection;
 };
 
-
 export type DepartmentManagerArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type DepartmentManagerAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type DepartmentManagerConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -131,19 +134,16 @@ export type DepartmentManagerConnectionArgs = {
   where?: InputMaybe<DepartmentManagerConnectionWhere>;
 };
 
-
 export type DepartmentPersonsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type DepartmentPersonsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type DepartmentPersonsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -421,7 +421,9 @@ export type DepartmentPersonsDisconnectFieldInput = {
 
 export type DepartmentPersonsFieldInput = {
   connect?: InputMaybe<Array<DepartmentPersonsConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<DepartmentPersonsConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<DepartmentPersonsConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<DepartmentPersonsCreateFieldInput>>;
 };
 
@@ -473,7 +475,9 @@ export type DepartmentPersonsUpdateConnectionInput = {
 
 export type DepartmentPersonsUpdateFieldInput = {
   connect?: InputMaybe<Array<DepartmentPersonsConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<DepartmentPersonsConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<DepartmentPersonsConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<DepartmentPersonsCreateFieldInput>>;
   delete?: InputMaybe<Array<DepartmentPersonsDeleteFieldInput>>;
   disconnect?: InputMaybe<Array<DepartmentPersonsDisconnectFieldInput>>;
@@ -568,19 +572,16 @@ export type Experience = {
   startedFrom: Scalars['Date'];
 };
 
-
 export type ExperiencePersonArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type ExperiencePersonAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type ExperiencePersonConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -590,19 +591,16 @@ export type ExperiencePersonConnectionArgs = {
   where?: InputMaybe<ExperiencePersonConnectionWhere>;
 };
 
-
 export type ExperienceSkillsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<SkillOptions>;
   where?: InputMaybe<SkillWhere>;
 };
 
-
 export type ExperienceSkillsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<SkillWhere>;
 };
-
 
 export type ExperienceSkillsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -891,7 +889,9 @@ export type ExperienceSkillsDisconnectFieldInput = {
 
 export type ExperienceSkillsFieldInput = {
   connect?: InputMaybe<Array<ExperienceSkillsConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<ExperienceSkillsConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<ExperienceSkillsConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<ExperienceSkillsCreateFieldInput>>;
 };
 
@@ -928,7 +928,9 @@ export type ExperienceSkillsUpdateConnectionInput = {
 
 export type ExperienceSkillsUpdateFieldInput = {
   connect?: InputMaybe<Array<ExperienceSkillsConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<ExperienceSkillsConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<ExperienceSkillsConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<ExperienceSkillsCreateFieldInput>>;
   delete?: InputMaybe<Array<ExperienceSkillsDeleteFieldInput>>;
   disconnect?: InputMaybe<Array<ExperienceSkillsDisconnectFieldInput>>;
@@ -1076,166 +1078,136 @@ export type Mutation = {
   updateSkills: UpdateSkillsMutationResponse;
 };
 
-
 export type MutationCreateDepartmentsArgs = {
   input: Array<DepartmentCreateInput>;
 };
-
 
 export type MutationCreateExperiencesArgs = {
   input: Array<ExperienceCreateInput>;
 };
 
-
 export type MutationCreatePeopleArgs = {
   input: Array<PersonCreateInput>;
 };
-
 
 export type MutationCreatePersonsToProjectsArgs = {
   input: Array<PersonsToProjectCreateInput>;
 };
 
-
 export type MutationCreateProjectsArgs = {
   input: Array<ProjectCreateInput>;
 };
-
 
 export type MutationCreateQueryPsArgs = {
   input: Array<QueryPCreateInput>;
 };
 
-
 export type MutationCreateRatesArgs = {
   input: Array<RateCreateInput>;
 };
-
 
 export type MutationCreateRolesArgs = {
   input: Array<RoleCreateInput>;
 };
 
-
 export type MutationCreateScoresArgs = {
   input: Array<ScoreCreateInput>;
 };
 
-
 export type MutationCreateSkillsArgs = {
   input: Array<SkillCreateInput>;
 };
-
 
 export type MutationDeleteDepartmentsArgs = {
   delete?: InputMaybe<DepartmentDeleteInput>;
   where?: InputMaybe<DepartmentWhere>;
 };
 
-
 export type MutationDeleteExperiencesArgs = {
   delete?: InputMaybe<ExperienceDeleteInput>;
   where?: InputMaybe<ExperienceWhere>;
 };
-
 
 export type MutationDeletePeopleArgs = {
   delete?: InputMaybe<PersonDeleteInput>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type MutationDeletePersonsToProjectsArgs = {
   where?: InputMaybe<PersonsToProjectWhere>;
 };
-
 
 export type MutationDeleteProjectsArgs = {
   delete?: InputMaybe<ProjectDeleteInput>;
   where?: InputMaybe<ProjectWhere>;
 };
 
-
 export type MutationDeleteQueryPsArgs = {
   where?: InputMaybe<QueryPWhere>;
 };
-
 
 export type MutationDeleteRatesArgs = {
   delete?: InputMaybe<RateDeleteInput>;
   where?: InputMaybe<RateWhere>;
 };
 
-
 export type MutationDeleteRolesArgs = {
   where?: InputMaybe<RoleWhere>;
 };
 
-
 export type MutationDeleteScoresArgs = {
   where?: InputMaybe<ScoreWhere>;
 };
-
 
 export type MutationDeleteSkillsArgs = {
   delete?: InputMaybe<SkillDeleteInput>;
   where?: InputMaybe<SkillWhere>;
 };
 
-
 export type MutationUpdateDepartmentsArgs = {
   update?: InputMaybe<DepartmentUpdateInput>;
   where?: InputMaybe<DepartmentWhere>;
 };
-
 
 export type MutationUpdateExperiencesArgs = {
   update?: InputMaybe<ExperienceUpdateInput>;
   where?: InputMaybe<ExperienceWhere>;
 };
 
-
 export type MutationUpdatePeopleArgs = {
   update?: InputMaybe<PersonUpdateInput>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type MutationUpdatePersonsToProjectsArgs = {
   update?: InputMaybe<PersonsToProjectUpdateInput>;
   where?: InputMaybe<PersonsToProjectWhere>;
 };
 
-
 export type MutationUpdateProjectsArgs = {
   update?: InputMaybe<ProjectUpdateInput>;
   where?: InputMaybe<ProjectWhere>;
 };
-
 
 export type MutationUpdateQueryPsArgs = {
   update?: InputMaybe<QueryPUpdateInput>;
   where?: InputMaybe<QueryPWhere>;
 };
 
-
 export type MutationUpdateRatesArgs = {
   update?: InputMaybe<RateUpdateInput>;
   where?: InputMaybe<RateWhere>;
 };
-
 
 export type MutationUpdateRolesArgs = {
   update?: InputMaybe<RoleUpdateInput>;
   where?: InputMaybe<RoleWhere>;
 };
 
-
 export type MutationUpdateScoresArgs = {
   update?: InputMaybe<ScoreUpdateInput>;
   where?: InputMaybe<ScoreWhere>;
 };
-
 
 export type MutationUpdateSkillsArgs = {
   update?: InputMaybe<SkillUpdateInput>;
@@ -1286,19 +1258,16 @@ export type Person = {
   surname: Scalars['String'];
 };
 
-
 export type PersonDepartmentsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<DepartmentOptions>;
   where?: InputMaybe<DepartmentWhere>;
 };
 
-
 export type PersonDepartmentsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<DepartmentWhere>;
 };
-
 
 export type PersonDepartmentsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1308,19 +1277,16 @@ export type PersonDepartmentsConnectionArgs = {
   where?: InputMaybe<PersonDepartmentsConnectionWhere>;
 };
 
-
 export type PersonExperiencesArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<ExperienceOptions>;
   where?: InputMaybe<ExperienceWhere>;
 };
 
-
 export type PersonExperiencesAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<ExperienceWhere>;
 };
-
 
 export type PersonExperiencesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1330,19 +1296,16 @@ export type PersonExperiencesConnectionArgs = {
   where?: InputMaybe<PersonExperiencesConnectionWhere>;
 };
 
-
 export type PersonProjectsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<ProjectOptions>;
   where?: InputMaybe<ProjectWhere>;
 };
 
-
 export type PersonProjectsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<ProjectWhere>;
 };
-
 
 export type PersonProjectsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1352,19 +1315,16 @@ export type PersonProjectsConnectionArgs = {
   where?: InputMaybe<PersonProjectsConnectionWhere>;
 };
 
-
 export type PersonRatesArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<RateOptions>;
   where?: InputMaybe<RateWhere>;
 };
 
-
 export type PersonRatesAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<RateWhere>;
 };
-
 
 export type PersonRatesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1374,19 +1334,16 @@ export type PersonRatesConnectionArgs = {
   where?: InputMaybe<PersonRatesConnectionWhere>;
 };
 
-
 export type PersonRolesArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<RoleOptions>;
   where?: InputMaybe<RoleWhere>;
 };
 
-
 export type PersonRolesAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<RoleWhere>;
 };
-
 
 export type PersonRolesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1396,19 +1353,16 @@ export type PersonRolesConnectionArgs = {
   where?: InputMaybe<PersonRolesConnectionWhere>;
 };
 
-
 export type PersonSkillsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<SkillOptions>;
   where?: InputMaybe<SkillWhere>;
 };
 
-
 export type PersonSkillsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<SkillWhere>;
 };
-
 
 export type PersonSkillsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -1549,7 +1503,9 @@ export type PersonDepartmentsDisconnectFieldInput = {
 
 export type PersonDepartmentsFieldInput = {
   connect?: InputMaybe<Array<PersonDepartmentsConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<PersonDepartmentsConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<PersonDepartmentsConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<PersonDepartmentsCreateFieldInput>>;
 };
 
@@ -1586,7 +1542,9 @@ export type PersonDepartmentsUpdateConnectionInput = {
 
 export type PersonDepartmentsUpdateFieldInput = {
   connect?: InputMaybe<Array<PersonDepartmentsConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<PersonDepartmentsConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<PersonDepartmentsConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<PersonDepartmentsCreateFieldInput>>;
   delete?: InputMaybe<Array<PersonDepartmentsDeleteFieldInput>>;
   disconnect?: InputMaybe<Array<PersonDepartmentsDisconnectFieldInput>>;
@@ -1684,7 +1642,9 @@ export type PersonExperiencesDisconnectFieldInput = {
 
 export type PersonExperiencesFieldInput = {
   connect?: InputMaybe<Array<PersonExperiencesConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<PersonExperiencesConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<PersonExperiencesConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<PersonExperiencesCreateFieldInput>>;
 };
 
@@ -1736,7 +1696,9 @@ export type PersonExperiencesUpdateConnectionInput = {
 
 export type PersonExperiencesUpdateFieldInput = {
   connect?: InputMaybe<Array<PersonExperiencesConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<PersonExperiencesConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<PersonExperiencesConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<PersonExperiencesCreateFieldInput>>;
   delete?: InputMaybe<Array<PersonExperiencesDeleteFieldInput>>;
   disconnect?: InputMaybe<Array<PersonExperiencesDisconnectFieldInput>>;
@@ -2517,19 +2479,16 @@ export type Project = {
   startedFrom: Scalars['Date'];
 };
 
-
 export type ProjectPersonsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type ProjectPersonsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type ProjectPersonsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -2539,19 +2498,16 @@ export type ProjectPersonsConnectionArgs = {
   where?: InputMaybe<ProjectPersonsConnectionWhere>;
 };
 
-
 export type ProjectSkillsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<SkillOptions>;
   where?: InputMaybe<SkillWhere>;
 };
 
-
 export type ProjectSkillsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<SkillWhere>;
 };
-
 
 export type ProjectSkillsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3008,17 +2964,14 @@ export type Query = {
   skillsConnection: SkillsConnection;
 };
 
-
 export type QueryDepartmentsArgs = {
   options?: InputMaybe<DepartmentOptions>;
   where?: InputMaybe<DepartmentWhere>;
 };
 
-
 export type QueryDepartmentsAggregateArgs = {
   where?: InputMaybe<DepartmentWhere>;
 };
-
 
 export type QueryDepartmentsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3027,17 +2980,14 @@ export type QueryDepartmentsConnectionArgs = {
   where?: InputMaybe<DepartmentWhere>;
 };
 
-
 export type QueryExperiencesArgs = {
   options?: InputMaybe<ExperienceOptions>;
   where?: InputMaybe<ExperienceWhere>;
 };
 
-
 export type QueryExperiencesAggregateArgs = {
   where?: InputMaybe<ExperienceWhere>;
 };
-
 
 export type QueryExperiencesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3046,22 +2996,18 @@ export type QueryExperiencesConnectionArgs = {
   where?: InputMaybe<ExperienceWhere>;
 };
 
-
 export type QueryFindSkillArgs = {
   where?: InputMaybe<SkillWhere>;
 };
-
 
 export type QueryPeopleArgs = {
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type QueryPeopleAggregateArgs = {
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type QueryPeopleConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3070,23 +3016,19 @@ export type QueryPeopleConnectionArgs = {
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type QueryPersonWithScoresArgs = {
   options?: InputMaybe<QueryOptions>;
   where?: InputMaybe<PersonWithScoreWhere>;
 };
-
 
 export type QueryPersonsToProjectsArgs = {
   options?: InputMaybe<PersonsToProjectOptions>;
   where?: InputMaybe<PersonsToProjectWhere>;
 };
 
-
 export type QueryPersonsToProjectsAggregateArgs = {
   where?: InputMaybe<PersonsToProjectWhere>;
 };
-
 
 export type QueryPersonsToProjectsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3094,17 +3036,14 @@ export type QueryPersonsToProjectsConnectionArgs = {
   where?: InputMaybe<PersonsToProjectWhere>;
 };
 
-
 export type QueryProjectsArgs = {
   options?: InputMaybe<ProjectOptions>;
   where?: InputMaybe<ProjectWhere>;
 };
 
-
 export type QueryProjectsAggregateArgs = {
   where?: InputMaybe<ProjectWhere>;
 };
-
 
 export type QueryProjectsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3113,17 +3052,14 @@ export type QueryProjectsConnectionArgs = {
   where?: InputMaybe<ProjectWhere>;
 };
 
-
 export type QueryQueryPsArgs = {
   options?: InputMaybe<QueryPOptions>;
   where?: InputMaybe<QueryPWhere>;
 };
 
-
 export type QueryQueryPsAggregateArgs = {
   where?: InputMaybe<QueryPWhere>;
 };
-
 
 export type QueryQueryPsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3131,17 +3067,14 @@ export type QueryQueryPsConnectionArgs = {
   where?: InputMaybe<QueryPWhere>;
 };
 
-
 export type QueryRatesArgs = {
   options?: InputMaybe<RateOptions>;
   where?: InputMaybe<RateWhere>;
 };
 
-
 export type QueryRatesAggregateArgs = {
   where?: InputMaybe<RateWhere>;
 };
-
 
 export type QueryRatesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3150,17 +3083,14 @@ export type QueryRatesConnectionArgs = {
   where?: InputMaybe<RateWhere>;
 };
 
-
 export type QueryRolesArgs = {
   options?: InputMaybe<RoleOptions>;
   where?: InputMaybe<RoleWhere>;
 };
 
-
 export type QueryRolesAggregateArgs = {
   where?: InputMaybe<RoleWhere>;
 };
-
 
 export type QueryRolesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3169,17 +3099,14 @@ export type QueryRolesConnectionArgs = {
   where?: InputMaybe<RoleWhere>;
 };
 
-
 export type QueryScoresArgs = {
   options?: InputMaybe<ScoreOptions>;
   where?: InputMaybe<ScoreWhere>;
 };
 
-
 export type QueryScoresAggregateArgs = {
   where?: InputMaybe<ScoreWhere>;
 };
-
 
 export type QueryScoresConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3188,17 +3115,14 @@ export type QueryScoresConnectionArgs = {
   where?: InputMaybe<ScoreWhere>;
 };
 
-
 export type QuerySkillsArgs = {
   options?: InputMaybe<SkillOptions>;
   where?: InputMaybe<SkillWhere>;
 };
 
-
 export type QuerySkillsAggregateArgs = {
   where?: InputMaybe<SkillWhere>;
 };
-
 
 export type QuerySkillsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3272,19 +3196,16 @@ export type Rate = {
   value: Scalars['Float'];
 };
 
-
 export type RatePersonArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type RatePersonAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type RatePersonConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3684,7 +3605,7 @@ export type ScoresConnection = {
 export enum Seniority {
   Junior = 'JUNIOR',
   Regular = 'REGULAR',
-  Senior = 'SENIOR'
+  Senior = 'SENIOR',
 }
 
 export type Skill = {
@@ -3699,19 +3620,16 @@ export type Skill = {
   personsConnection: SkillPersonsConnection;
 };
 
-
 export type SkillExperiencesArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<ExperienceOptions>;
   where?: InputMaybe<ExperienceWhere>;
 };
 
-
 export type SkillExperiencesAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<ExperienceWhere>;
 };
-
 
 export type SkillExperiencesConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3721,19 +3639,16 @@ export type SkillExperiencesConnectionArgs = {
   where?: InputMaybe<SkillExperiencesConnectionWhere>;
 };
 
-
 export type SkillPersonsArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<PersonOptions>;
   where?: InputMaybe<PersonWhere>;
 };
 
-
 export type SkillPersonsAggregateArgs = {
   directed?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<PersonWhere>;
 };
-
 
 export type SkillPersonsConnectionArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -3865,7 +3780,9 @@ export type SkillExperiencesDisconnectFieldInput = {
 
 export type SkillExperiencesFieldInput = {
   connect?: InputMaybe<Array<SkillExperiencesConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<SkillExperiencesConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<SkillExperiencesConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<SkillExperiencesCreateFieldInput>>;
 };
 
@@ -3917,7 +3834,9 @@ export type SkillExperiencesUpdateConnectionInput = {
 
 export type SkillExperiencesUpdateFieldInput = {
   connect?: InputMaybe<Array<SkillExperiencesConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<SkillExperiencesConnectOrCreateFieldInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<SkillExperiencesConnectOrCreateFieldInput>
+  >;
   create?: InputMaybe<Array<SkillExperiencesCreateFieldInput>>;
   delete?: InputMaybe<Array<SkillExperiencesDeleteFieldInput>>;
   disconnect?: InputMaybe<Array<SkillExperiencesDisconnectFieldInput>>;
@@ -4154,7 +4073,7 @@ export enum SortDirection {
   /** Sort by field values in ascending order. */
   Asc = 'ASC',
   /** Sort by field values in descending order. */
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type StringAggregateSelection = {
@@ -4234,793 +4153,928 @@ export type UpdateSkillsMutationResponse = {
   skills: Array<Skill>;
 };
 
-export type DepartmentPartFragment = { __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null };
+export type DepartmentPartFragment = {
+  __typename?: 'Department';
+  id: string;
+  name: string;
+  manager?: {
+    __typename?: 'Person';
+    id: string;
+    name: string;
+    surname: string;
+  } | null;
+};
 
 export type CreateDepartmentsMutationVariables = Exact<{
   input: Array<DepartmentCreateInput> | DepartmentCreateInput;
 }>;
 
-
-export type CreateDepartmentsMutation = { __typename?: 'Mutation', createDepartments: { __typename?: 'CreateDepartmentsMutationResponse', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null }> } };
+export type CreateDepartmentsMutation = {
+  __typename?: 'Mutation';
+  createDepartments: {
+    __typename?: 'CreateDepartmentsMutationResponse';
+    departments: Array<{
+      __typename?: 'Department';
+      id: string;
+      name: string;
+      manager?: {
+        __typename?: 'Person';
+        id: string;
+        name: string;
+        surname: string;
+      } | null;
+    }>;
+  };
+};
 
 export type CreateExperiencesMutationVariables = Exact<{
   input: Array<ExperienceCreateInput> | ExperienceCreateInput;
 }>;
 
-
-export type CreateExperiencesMutation = { __typename?: 'Mutation', createExperiences: { __typename?: 'CreateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', id: string, name: string, person?: { __typename?: 'Person', name: string } | null }> } };
+export type CreateExperiencesMutation = {
+  __typename?: 'Mutation';
+  createExperiences: {
+    __typename?: 'CreateExperiencesMutationResponse';
+    experiences: Array<{
+      __typename?: 'Experience';
+      id: string;
+      name: string;
+      person?: { __typename?: 'Person'; name: string } | null;
+    }>;
+  };
+};
 
 export type CreatePeopleMutationVariables = Exact<{
   input: Array<PersonCreateInput> | PersonCreateInput;
 }>;
 
-
-export type CreatePeopleMutation = { __typename?: 'Mutation', createPeople: { __typename?: 'CreatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, seniority?: Seniority | null, birthday?: any | null }> } };
+export type CreatePeopleMutation = {
+  __typename?: 'Mutation';
+  createPeople: {
+    __typename?: 'CreatePeopleMutationResponse';
+    people: Array<{
+      __typename?: 'Person';
+      id: string;
+      name: string;
+      surname: string;
+      seniority?: Seniority | null;
+      birthday?: any | null;
+    }>;
+  };
+};
 
 export type CreateProjectsMutationVariables = Exact<{
   input: Array<ProjectCreateInput> | ProjectCreateInput;
 }>;
 
-
-export type CreateProjectsMutation = { __typename?: 'Mutation', createProjects: { __typename?: 'CreateProjectsMutationResponse', info: { __typename?: 'CreateInfo', nodesCreated: number } } };
+export type CreateProjectsMutation = {
+  __typename?: 'Mutation';
+  createProjects: {
+    __typename?: 'CreateProjectsMutationResponse';
+    info: { __typename?: 'CreateInfo'; nodesCreated: number };
+  };
+};
 
 export type CreateRatesMutationVariables = Exact<{
   input: Array<RateCreateInput> | RateCreateInput;
 }>;
 
+export type CreateRatesMutation = {
+  __typename?: 'Mutation';
+  createRates: {
+    __typename?: 'CreateRatesMutationResponse';
+    rates: Array<{
+      __typename?: 'Rate';
+      id: string;
+      validFrom: any;
+      value: number;
+      person: { __typename?: 'Person'; id: string };
+    }>;
+  };
+};
 
-export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
-
-export type SkillPartFragment = { __typename?: 'Skill', id: string, name: string };
+export type SkillPartFragment = {
+  __typename?: 'Skill';
+  id: string;
+  name: string;
+};
 
 export type CreateSkillsMutationVariables = Exact<{
   input: Array<SkillCreateInput> | SkillCreateInput;
 }>;
 
-
-export type CreateSkillsMutation = { __typename?: 'Mutation', createSkills: { __typename?: 'CreateSkillsMutationResponse', skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
+export type CreateSkillsMutation = {
+  __typename?: 'Mutation';
+  createSkills: {
+    __typename?: 'CreateSkillsMutationResponse';
+    skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+  };
+};
 
 export type DeleteDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
 }>;
 
-
-export type DeleteDepartmentsMutation = { __typename?: 'Mutation', deleteDepartments: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+export type DeleteDepartmentsMutation = {
+  __typename?: 'Mutation';
+  deleteDepartments: { __typename?: 'DeleteInfo'; nodesDeleted: number };
+};
 
 export type DeleteExperiencesMutationVariables = Exact<{
   where?: InputMaybe<ExperienceWhere>;
 }>;
 
-
-export type DeleteExperiencesMutation = { __typename?: 'Mutation', deleteExperiences: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+export type DeleteExperiencesMutation = {
+  __typename?: 'Mutation';
+  deleteExperiences: { __typename?: 'DeleteInfo'; nodesDeleted: number };
+};
 
 export type DeletePersonsMutationVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
 }>;
 
-
-export type DeletePersonsMutation = { __typename?: 'Mutation', deletePeople: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+export type DeletePersonsMutation = {
+  __typename?: 'Mutation';
+  deletePeople: { __typename?: 'DeleteInfo'; nodesDeleted: number };
+};
 
 export type DeleteProjectsMutationVariables = Exact<{
   where?: InputMaybe<ProjectWhere>;
 }>;
 
-
-export type DeleteProjectsMutation = { __typename?: 'Mutation', deleteProjects: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+export type DeleteProjectsMutation = {
+  __typename?: 'Mutation';
+  deleteProjects: { __typename?: 'DeleteInfo'; nodesDeleted: number };
+};
 
 export type DeleteRatesMutationVariables = Exact<{
   where?: InputMaybe<RateWhere>;
 }>;
 
-
-export type DeleteRatesMutation = { __typename?: 'Mutation', deleteRates: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+export type DeleteRatesMutation = {
+  __typename?: 'Mutation';
+  deleteRates: { __typename?: 'DeleteInfo'; nodesDeleted: number };
+};
 
 export type DeleteSkillsMutationVariables = Exact<{
   where?: InputMaybe<SkillWhere>;
 }>;
 
+export type DeleteSkillsMutation = {
+  __typename?: 'Mutation';
+  deleteSkills: { __typename?: 'DeleteInfo'; nodesDeleted: number };
+};
 
-export type DeleteSkillsMutation = { __typename?: 'Mutation', deleteSkills: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+export type DepartmentsDetailsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type DepartmentsDetailsQueryVariables = Exact<{ [key: string]: never; }>;
+export type DepartmentsDetailsQuery = {
+  __typename?: 'Query';
+  departments: Array<{
+    __typename?: 'Department';
+    id: string;
+    name: string;
+    manager?: {
+      __typename?: 'Person';
+      id: string;
+      name: string;
+      surname: string;
+    } | null;
+    persons: Array<{
+      __typename?: 'Person';
+      id: string;
+      name: string;
+      surname: string;
+    }>;
+  }>;
+};
 
+export type DepartmentsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type DepartmentsDetailsQuery = { __typename?: 'Query', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> };
-
-export type DepartmentsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DepartmentsQuery = { __typename?: 'Query', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string } | null }> };
+export type DepartmentsQuery = {
+  __typename?: 'Query';
+  departments: Array<{
+    __typename?: 'Department';
+    id: string;
+    name: string;
+    manager?: { __typename?: 'Person'; id: string } | null;
+  }>;
+};
 
 export type EditExperiencesMutationVariables = Exact<{
   where?: InputMaybe<ExperienceWhere>;
   update?: InputMaybe<ExperienceUpdateInput>;
 }>;
 
+export type EditExperiencesMutation = {
+  __typename?: 'Mutation';
+  updateExperiences: {
+    __typename?: 'UpdateExperiencesMutationResponse';
+    experiences: Array<{
+      __typename?: 'Experience';
+      description: string;
+      gainedAt: any;
+      name: string;
+      startedFrom: any;
+      person?: { __typename?: 'Person'; id: string; name: string } | null;
+      skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+    }>;
+  };
+};
 
-export type EditExperiencesMutation = { __typename?: 'Mutation', updateExperiences: { __typename?: 'UpdateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', description: string, gainedAt: any, name: string, startedFrom: any, person?: { __typename?: 'Person', id: string, name: string } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> } };
-
-export type ExperienceDataFragment = { __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+export type ExperienceDataFragment = {
+  __typename?: 'Experience';
+  id: string;
+  name: string;
+  description: string;
+  startedFrom: any;
+  gainedAt: any;
+  skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+};
 
 export type ExperiencesByPersonQueryVariables = Exact<{
   where?: InputMaybe<ExperienceWhere>;
 }>;
 
-
-export type ExperiencesByPersonQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+export type ExperiencesByPersonQuery = {
+  __typename?: 'Query';
+  experiences: Array<{
+    __typename?: 'Experience';
+    id: string;
+    name: string;
+    description: string;
+    startedFrom: any;
+    gainedAt: any;
+    skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+  }>;
+};
 
 export type FindSkillQueryVariables = Exact<{
   where?: InputMaybe<SkillWhere>;
 }>;
 
+export type FindSkillQuery = {
+  __typename?: 'Query';
+  findSkill: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+};
 
-export type FindSkillQuery = { __typename?: 'Query', findSkill: Array<{ __typename?: 'Skill', id: string, name: string }> };
-
-export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+export type PersonWithAllTypeFragment = {
+  __typename?: 'Person';
+  id: string;
+  name: string;
+  surname: string;
+  birthday?: any | null;
+  seniority?: Seniority | null;
+  location?: {
+    __typename?: 'Point';
+    longitude: number;
+    latitude: number;
+  } | null;
+  skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+  roles: Array<{ __typename?: 'Role'; id: string; name: string }>;
+  rates: Array<{
+    __typename?: 'Rate';
+    id: string;
+    value: number;
+    validFrom: any;
+  }>;
+  departments: Array<{
+    __typename?: 'Department';
+    id: string;
+    name: string;
+    manager?: { __typename?: 'Person'; name: string; surname: string } | null;
+  }>;
+  projects: Array<{
+    __typename?: 'Project';
+    id: string;
+    name: string;
+    duration: any;
+    startedFrom: any;
+  }>;
+  experiences: Array<{
+    __typename?: 'Experience';
+    id: string;
+    name: string;
+    description: string;
+    startedFrom: any;
+    gainedAt: any;
+    skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+  }>;
+};
 
 export type PersonsWithAllQueryVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
 }>;
 
+export type PersonsWithAllQuery = {
+  __typename?: 'Query';
+  people: Array<{
+    __typename?: 'Person';
+    id: string;
+    name: string;
+    surname: string;
+    birthday?: any | null;
+    seniority?: Seniority | null;
+    location?: {
+      __typename?: 'Point';
+      longitude: number;
+      latitude: number;
+    } | null;
+    skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+    roles: Array<{ __typename?: 'Role'; id: string; name: string }>;
+    rates: Array<{
+      __typename?: 'Rate';
+      id: string;
+      value: number;
+      validFrom: any;
+    }>;
+    departments: Array<{
+      __typename?: 'Department';
+      id: string;
+      name: string;
+      manager?: { __typename?: 'Person'; name: string; surname: string } | null;
+    }>;
+    projects: Array<{
+      __typename?: 'Project';
+      id: string;
+      name: string;
+      duration: any;
+      startedFrom: any;
+    }>;
+    experiences: Array<{
+      __typename?: 'Experience';
+      id: string;
+      name: string;
+      description: string;
+      startedFrom: any;
+      gainedAt: any;
+      skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+    }>;
+  }>;
+};
 
-export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> }> };
+export type ProjectsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProjectsQuery = {
+  __typename?: 'Query';
+  projects: Array<{ __typename?: 'Project'; id: string; name: string }>;
+};
 
+export type ProjectPartFragment = {
+  __typename?: 'Project';
+  id: string;
+  name: string;
+  duration: any;
+  startedFrom: any;
+  skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+  persons: Array<{
+    __typename?: 'Person';
+    id: string;
+    name: string;
+    surname: string;
+  }>;
+};
 
-export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string }> };
+export type ProjectsWithAllQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ProjectPartFragment = { __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> };
-
-export type ProjectsWithAllQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProjectsWithAllQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> };
+export type ProjectsWithAllQuery = {
+  __typename?: 'Query';
+  projects: Array<{
+    __typename?: 'Project';
+    id: string;
+    name: string;
+    duration: any;
+    startedFrom: any;
+    skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+    persons: Array<{
+      __typename?: 'Person';
+      id: string;
+      name: string;
+      surname: string;
+    }>;
+  }>;
+};
 
 export type RatesByPersonQueryVariables = Exact<{
   where?: InputMaybe<RateWhere>;
 }>;
 
+export type RatesByPersonQuery = {
+  __typename?: 'Query';
+  rates: Array<{
+    __typename?: 'Rate';
+    id: string;
+    validFrom: any;
+    value: number;
+  }>;
+};
 
-export type RatesByPersonQuery = { __typename?: 'Query', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number }> };
+export type RolesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
+export type RolesQuery = {
+  __typename?: 'Query';
+  roles: Array<{ __typename?: 'Role'; id: string; name: string }>;
+};
 
+export type SkillsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
-
-export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+export type SkillsQuery = {
+  __typename?: 'Query';
+  skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+};
 
 export type SkillsWithLimitQueryVariables = Exact<{
   options?: InputMaybe<SkillOptions>;
 }>;
 
-
-export type SkillsWithLimitQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }>, skillsAggregate: { __typename?: 'SkillAggregateSelection', count: number } };
+export type SkillsWithLimitQuery = {
+  __typename?: 'Query';
+  skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+  skillsAggregate: { __typename?: 'SkillAggregateSelection'; count: number };
+};
 
 export type UpdateDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
   update?: InputMaybe<DepartmentUpdateInput>;
 }>;
 
-
-export type UpdateDepartmentsMutation = { __typename?: 'Mutation', updateDepartments: { __typename?: 'UpdateDepartmentsMutationResponse', departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null, persons: Array<{ __typename?: 'Person', id: string, name: string, surname: string }> }> } };
+export type UpdateDepartmentsMutation = {
+  __typename?: 'Mutation';
+  updateDepartments: {
+    __typename?: 'UpdateDepartmentsMutationResponse';
+    departments: Array<{
+      __typename?: 'Department';
+      id: string;
+      name: string;
+      manager?: {
+        __typename?: 'Person';
+        id: string;
+        name: string;
+        surname: string;
+      } | null;
+      persons: Array<{
+        __typename?: 'Person';
+        id: string;
+        name: string;
+        surname: string;
+      }>;
+    }>;
+  };
+};
 
 export type UpdatePeopleMutationVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
   update?: InputMaybe<PersonUpdateInput>;
 }>;
 
-
-export type UpdatePeopleMutation = { __typename?: 'Mutation', updatePeople: { __typename?: 'UpdatePeopleMutationResponse', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }> }> } };
+export type UpdatePeopleMutation = {
+  __typename?: 'Mutation';
+  updatePeople: {
+    __typename?: 'UpdatePeopleMutationResponse';
+    people: Array<{
+      __typename?: 'Person';
+      id: string;
+      name: string;
+      surname: string;
+      birthday?: any | null;
+      seniority?: Seniority | null;
+      location?: {
+        __typename?: 'Point';
+        longitude: number;
+        latitude: number;
+      } | null;
+      skills: Array<{ __typename?: 'Skill'; id: string; name: string }>;
+      roles: Array<{ __typename?: 'Role'; id: string; name: string }>;
+      rates: Array<{
+        __typename?: 'Rate';
+        id: string;
+        value: number;
+        validFrom: any;
+      }>;
+      departments: Array<{
+        __typename?: 'Department';
+        id: string;
+        name: string;
+        manager?: {
+          __typename?: 'Person';
+          name: string;
+          surname: string;
+        } | null;
+      }>;
+      projects: Array<{
+        __typename?: 'Project';
+        id: string;
+        name: string;
+        duration: any;
+        startedFrom: any;
+      }>;
+    }>;
+  };
+};
 
 export type UpdateProjectsMutationVariables = Exact<{
   where?: InputMaybe<ProjectWhere>;
   update?: InputMaybe<ProjectUpdateInput>;
 }>;
 
-
-export type UpdateProjectsMutation = { __typename?: 'Mutation', updateProjects: { __typename?: 'UpdateProjectsMutationResponse', projects: Array<{ __typename?: 'Project', name: string, id: string }> } };
+export type UpdateProjectsMutation = {
+  __typename?: 'Mutation';
+  updateProjects: {
+    __typename?: 'UpdateProjectsMutationResponse';
+    projects: Array<{ __typename?: 'Project'; name: string; id: string }>;
+  };
+};
 
 export type UpdateRatesMutationVariables = Exact<{
   where?: InputMaybe<RateWhere>;
   update?: InputMaybe<RateUpdateInput>;
 }>;
 
-
-export type UpdateRatesMutation = { __typename?: 'Mutation', updateRates: { __typename?: 'UpdateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string, name: string } }> } };
+export type UpdateRatesMutation = {
+  __typename?: 'Mutation';
+  updateRates: {
+    __typename?: 'UpdateRatesMutationResponse';
+    rates: Array<{
+      __typename?: 'Rate';
+      id: string;
+      validFrom: any;
+      value: number;
+      person: { __typename?: 'Person'; id: string; name: string };
+    }>;
+  };
+};
 
 export const DepartmentPartFragmentDoc = gql`
-    fragment DepartmentPart on Department {
-  id
-  name
-  manager {
-    id
-    name
-    surname
-  }
-}
-    `;
-export const SkillPartFragmentDoc = gql`
-    fragment SkillPart on Skill {
-  id
-  name
-}
-    `;
-export const ExperienceDataFragmentDoc = gql`
-    fragment ExperienceData on Experience {
-  id
-  name
-  description
-  startedFrom
-  gainedAt
-  skills {
-    id
-    name
-  }
-}
-    `;
-export const PersonWithAllTypeFragmentDoc = gql`
-    fragment PersonWithAllType on Person {
-  id
-  name
-  surname
-  location {
-    longitude
-    latitude
-  }
-  skills {
-    id
-    name
-  }
-  roles {
-    id
-    name
-  }
-  birthday
-  seniority
-  rates {
-    id
-    value
-    validFrom
-  }
-  departments {
+  fragment DepartmentPart on Department {
     id
     name
     manager {
+      id
       name
       surname
     }
   }
-  projects {
+`;
+export const SkillPartFragmentDoc = gql`
+  fragment SkillPart on Skill {
+    id
+    name
+  }
+`;
+export const ExperienceDataFragmentDoc = gql`
+  fragment ExperienceData on Experience {
+    id
+    name
+    description
+    startedFrom
+    gainedAt
+    skills {
+      id
+      name
+    }
+  }
+`;
+export const PersonWithAllTypeFragmentDoc = gql`
+  fragment PersonWithAllType on Person {
+    id
+    name
+    surname
+    location {
+      longitude
+      latitude
+    }
+    skills {
+      id
+      name
+    }
+    roles {
+      id
+      name
+    }
+    birthday
+    seniority
+    rates {
+      id
+      value
+      validFrom
+    }
+    departments {
+      id
+      name
+      manager {
+        name
+        surname
+      }
+    }
+    projects {
+      id
+      name
+      duration
+      startedFrom
+    }
+    experiences {
+      ...ExperienceData
+    }
+  }
+  ${ExperienceDataFragmentDoc}
+`;
+export const ProjectPartFragmentDoc = gql`
+  fragment ProjectPart on Project {
     id
     name
     duration
-    startedFrom
-  }
-  experiences {
-    ...ExperienceData
-  }
-}
-    ${ExperienceDataFragmentDoc}`;
-export const ProjectPartFragmentDoc = gql`
-    fragment ProjectPart on Project {
-  id
-  name
-  duration
-  skills {
-    id
-    name
-  }
-  startedFrom
-  persons {
-    id
-    name
-    surname
-  }
-}
-    `;
-export const CreateDepartmentsDocument = gql`
-    mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
-  createDepartments(input: $input) {
-    departments {
-      ...DepartmentPart
-    }
-  }
-}
-    ${DepartmentPartFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateDepartmentsGQL extends Apollo.Mutation<CreateDepartmentsMutation, CreateDepartmentsMutationVariables> {
-    document = CreateDepartmentsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateExperiencesDocument = gql`
-    mutation CreateExperiences($input: [ExperienceCreateInput!]!) {
-  createExperiences(input: $input) {
-    experiences {
-      id
-      name
-      person {
-        name
-      }
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateExperiencesGQL extends Apollo.Mutation<CreateExperiencesMutation, CreateExperiencesMutationVariables> {
-    document = CreateExperiencesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreatePeopleDocument = gql`
-    mutation CreatePeople($input: [PersonCreateInput!]!) {
-  createPeople(input: $input) {
-    people {
-      id
-      name
-      surname
-      seniority
-      birthday
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreatePeopleGQL extends Apollo.Mutation<CreatePeopleMutation, CreatePeopleMutationVariables> {
-    document = CreatePeopleDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateProjectsDocument = gql`
-    mutation CreateProjects($input: [ProjectCreateInput!]!) {
-  createProjects(input: $input) {
-    info {
-      nodesCreated
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateProjectsGQL extends Apollo.Mutation<CreateProjectsMutation, CreateProjectsMutationVariables> {
-    document = CreateProjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateRatesDocument = gql`
-    mutation CreateRates($input: [RateCreateInput!]!) {
-  createRates(input: $input) {
-    rates {
-      id
-      validFrom
-      value
-      person {
-        id
-      }
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateRatesGQL extends Apollo.Mutation<CreateRatesMutation, CreateRatesMutationVariables> {
-    document = CreateRatesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateSkillsDocument = gql`
-    mutation CreateSkills($input: [SkillCreateInput!]!) {
-  createSkills(input: $input) {
     skills {
-      ...SkillPart
-    }
-  }
-}
-    ${SkillPartFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateSkillsGQL extends Apollo.Mutation<CreateSkillsMutation, CreateSkillsMutationVariables> {
-    document = CreateSkillsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteDepartmentsDocument = gql`
-    mutation DeleteDepartments($where: DepartmentWhere) {
-  deleteDepartments(where: $where) {
-    nodesDeleted
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteDepartmentsGQL extends Apollo.Mutation<DeleteDepartmentsMutation, DeleteDepartmentsMutationVariables> {
-    document = DeleteDepartmentsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteExperiencesDocument = gql`
-    mutation DeleteExperiences($where: ExperienceWhere) {
-  deleteExperiences(where: $where) {
-    nodesDeleted
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteExperiencesGQL extends Apollo.Mutation<DeleteExperiencesMutation, DeleteExperiencesMutationVariables> {
-    document = DeleteExperiencesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeletePersonsDocument = gql`
-    mutation DeletePersons($where: PersonWhere) {
-  deletePeople(where: $where) {
-    nodesDeleted
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeletePersonsGQL extends Apollo.Mutation<DeletePersonsMutation, DeletePersonsMutationVariables> {
-    document = DeletePersonsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteProjectsDocument = gql`
-    mutation DeleteProjects($where: ProjectWhere) {
-  deleteProjects(where: $where) {
-    nodesDeleted
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteProjectsGQL extends Apollo.Mutation<DeleteProjectsMutation, DeleteProjectsMutationVariables> {
-    document = DeleteProjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteRatesDocument = gql`
-    mutation DeleteRates($where: RateWhere) {
-  deleteRates(where: $where) {
-    nodesDeleted
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
-    document = DeleteRatesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteSkillsDocument = gql`
-    mutation DeleteSkills($where: SkillWhere) {
-  deleteSkills(where: $where) {
-    nodesDeleted
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteSkillsGQL extends Apollo.Mutation<DeleteSkillsMutation, DeleteSkillsMutationVariables> {
-    document = DeleteSkillsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DepartmentsDetailsDocument = gql`
-    query DepartmentsDetails {
-  departments {
-    id
-    name
-    manager {
       id
       name
-      surname
     }
+    startedFrom
     persons {
       id
       name
       surname
     }
   }
-}
-    `;
+`;
+export const CreateDepartmentsDocument = gql`
+  mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
+    createDepartments(input: $input) {
+      departments {
+        ...DepartmentPart
+      }
+    }
+  }
+  ${DepartmentPartFragmentDoc}
+`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DepartmentsDetailsGQL extends Apollo.Query<DepartmentsDetailsQuery, DepartmentsDetailsQueryVariables> {
-    document = DepartmentsDetailsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DepartmentsDocument = gql`
-    query Departments {
-  departments {
-    id
-    name
-    manager {
-      id
-    }
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateDepartmentsGQL extends Apollo.Mutation<
+  CreateDepartmentsMutation,
+  CreateDepartmentsMutationVariables
+> {
+  document = CreateDepartmentsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DepartmentsGQL extends Apollo.Query<DepartmentsQuery, DepartmentsQueryVariables> {
-    document = DepartmentsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const EditExperiencesDocument = gql`
-    mutation EditExperiences($where: ExperienceWhere, $update: ExperienceUpdateInput) {
-  updateExperiences(where: $where, update: $update) {
-    experiences {
-      description
-      gainedAt
-      name
-      person {
+export const CreateExperiencesDocument = gql`
+  mutation CreateExperiences($input: [ExperienceCreateInput!]!) {
+    createExperiences(input: $input) {
+      experiences {
         id
         name
+        person {
+          name
+        }
       }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateExperiencesGQL extends Apollo.Mutation<
+  CreateExperiencesMutation,
+  CreateExperiencesMutationVariables
+> {
+  document = CreateExperiencesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreatePeopleDocument = gql`
+  mutation CreatePeople($input: [PersonCreateInput!]!) {
+    createPeople(input: $input) {
+      people {
+        id
+        name
+        surname
+        seniority
+        birthday
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreatePeopleGQL extends Apollo.Mutation<
+  CreatePeopleMutation,
+  CreatePeopleMutationVariables
+> {
+  document = CreatePeopleDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateProjectsDocument = gql`
+  mutation CreateProjects($input: [ProjectCreateInput!]!) {
+    createProjects(input: $input) {
+      info {
+        nodesCreated
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateProjectsGQL extends Apollo.Mutation<
+  CreateProjectsMutation,
+  CreateProjectsMutationVariables
+> {
+  document = CreateProjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateRatesDocument = gql`
+  mutation CreateRates($input: [RateCreateInput!]!) {
+    createRates(input: $input) {
+      rates {
+        id
+        validFrom
+        value
+        person {
+          id
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateRatesGQL extends Apollo.Mutation<
+  CreateRatesMutation,
+  CreateRatesMutationVariables
+> {
+  document = CreateRatesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateSkillsDocument = gql`
+  mutation CreateSkills($input: [SkillCreateInput!]!) {
+    createSkills(input: $input) {
       skills {
-        id
-        name
+        ...SkillPart
       }
-      startedFrom
     }
+  }
+  ${SkillPartFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateSkillsGQL extends Apollo.Mutation<
+  CreateSkillsMutation,
+  CreateSkillsMutationVariables
+> {
+  document = CreateSkillsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class EditExperiencesGQL extends Apollo.Mutation<EditExperiencesMutation, EditExperiencesMutationVariables> {
-    document = EditExperiencesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const DeleteDepartmentsDocument = gql`
+  mutation DeleteDepartments($where: DepartmentWhere) {
+    deleteDepartments(where: $where) {
+      nodesDeleted
     }
   }
-export const ExperiencesByPersonDocument = gql`
-    query ExperiencesByPerson($where: ExperienceWhere) {
-  experiences(where: $where) {
-    ...ExperienceData
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteDepartmentsGQL extends Apollo.Mutation<
+  DeleteDepartmentsMutation,
+  DeleteDepartmentsMutationVariables
+> {
+  document = DeleteDepartmentsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    ${ExperienceDataFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ExperiencesByPersonGQL extends Apollo.Query<ExperiencesByPersonQuery, ExperiencesByPersonQueryVariables> {
-    document = ExperiencesByPersonDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const DeleteExperiencesDocument = gql`
+  mutation DeleteExperiences($where: ExperienceWhere) {
+    deleteExperiences(where: $where) {
+      nodesDeleted
     }
   }
-export const FindSkillDocument = gql`
-    query FindSkill($where: SkillWhere) {
-  findSkill(where: $where) {
-    id
-    name
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteExperiencesGQL extends Apollo.Mutation<
+  DeleteExperiencesMutation,
+  DeleteExperiencesMutationVariables
+> {
+  document = DeleteExperiencesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FindSkillGQL extends Apollo.Query<FindSkillQuery, FindSkillQueryVariables> {
-    document = FindSkillDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const DeletePersonsDocument = gql`
+  mutation DeletePersons($where: PersonWhere) {
+    deletePeople(where: $where) {
+      nodesDeleted
     }
   }
-export const PersonsWithAllDocument = gql`
-    query PersonsWithAll($where: PersonWhere) {
-  people(where: $where) {
-    ...PersonWithAllType
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeletePersonsGQL extends Apollo.Mutation<
+  DeletePersonsMutation,
+  DeletePersonsMutationVariables
+> {
+  document = DeletePersonsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    ${PersonWithAllTypeFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class PersonsWithAllGQL extends Apollo.Query<PersonsWithAllQuery, PersonsWithAllQueryVariables> {
-    document = PersonsWithAllDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const DeleteProjectsDocument = gql`
+  mutation DeleteProjects($where: ProjectWhere) {
+    deleteProjects(where: $where) {
+      nodesDeleted
     }
   }
-export const ProjectsDocument = gql`
-    query Projects {
-  projects {
-    id
-    name
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteProjectsGQL extends Apollo.Mutation<
+  DeleteProjectsMutation,
+  DeleteProjectsMutationVariables
+> {
+  document = DeleteProjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ProjectsGQL extends Apollo.Query<ProjectsQuery, ProjectsQueryVariables> {
-    document = ProjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const DeleteRatesDocument = gql`
+  mutation DeleteRates($where: RateWhere) {
+    deleteRates(where: $where) {
+      nodesDeleted
     }
   }
-export const ProjectsWithAllDocument = gql`
-    query ProjectsWithAll {
-  projects {
-    ...ProjectPart
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteRatesGQL extends Apollo.Mutation<
+  DeleteRatesMutation,
+  DeleteRatesMutationVariables
+> {
+  document = DeleteRatesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    ${ProjectPartFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ProjectsWithAllGQL extends Apollo.Query<ProjectsWithAllQuery, ProjectsWithAllQueryVariables> {
-    document = ProjectsWithAllDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const DeleteSkillsDocument = gql`
+  mutation DeleteSkills($where: SkillWhere) {
+    deleteSkills(where: $where) {
+      nodesDeleted
     }
   }
-export const RatesByPersonDocument = gql`
-    query RatesByPerson($where: RateWhere) {
-  rates(where: $where) {
-    id
-    validFrom
-    value
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteSkillsGQL extends Apollo.Mutation<
+  DeleteSkillsMutation,
+  DeleteSkillsMutationVariables
+> {
+  document = DeleteSkillsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class RatesByPersonGQL extends Apollo.Query<RatesByPersonQuery, RatesByPersonQueryVariables> {
-    document = RatesByPersonDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const RolesDocument = gql`
-    query Roles {
-  roles {
-    id
-    name
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
-    document = RolesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const SkillsDocument = gql`
-    query Skills {
-  skills {
-    id
-    name
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
-    document = SkillsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const SkillsWithLimitDocument = gql`
-    query SkillsWithLimit($options: SkillOptions) {
-  skills(options: $options) {
-    id
-    name
-  }
-  skillsAggregate {
-    count
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class SkillsWithLimitGQL extends Apollo.Query<SkillsWithLimitQuery, SkillsWithLimitQueryVariables> {
-    document = SkillsWithLimitDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const UpdateDepartmentsDocument = gql`
-    mutation UpdateDepartments($where: DepartmentWhere, $update: DepartmentUpdateInput) {
-  updateDepartments(where: $where, update: $update) {
+export const DepartmentsDetailsDocument = gql`
+  query DepartmentsDetails {
     departments {
       id
       name
@@ -5036,118 +5090,424 @@ export const UpdateDepartmentsDocument = gql`
       }
     }
   }
-}
-    `;
+`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdateDepartmentsGQL extends Apollo.Mutation<UpdateDepartmentsMutation, UpdateDepartmentsMutationVariables> {
-    document = UpdateDepartmentsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root',
+})
+export class DepartmentsDetailsGQL extends Apollo.Query<
+  DepartmentsDetailsQuery,
+  DepartmentsDetailsQueryVariables
+> {
+  document = DepartmentsDetailsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
-export const UpdatePeopleDocument = gql`
-    mutation UpdatePeople($where: PersonWhere, $update: PersonUpdateInput) {
-  updatePeople(where: $where, update: $update) {
-    people {
+}
+export const DepartmentsDocument = gql`
+  query Departments {
+    departments {
       id
       name
-      surname
-      location {
-        longitude
-        latitude
-      }
-      skills {
+      manager {
         id
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DepartmentsGQL extends Apollo.Query<
+  DepartmentsQuery,
+  DepartmentsQueryVariables
+> {
+  document = DepartmentsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const EditExperiencesDocument = gql`
+  mutation EditExperiences(
+    $where: ExperienceWhere
+    $update: ExperienceUpdateInput
+  ) {
+    updateExperiences(where: $where, update: $update) {
+      experiences {
+        description
+        gainedAt
         name
-      }
-      roles {
-        id
-        name
-      }
-      birthday
-      seniority
-      rates {
-        id
-        value
-        validFrom
-      }
-      departments {
-        id
-        name
-        manager {
+        person {
+          id
           name
-          surname
         }
-      }
-      projects {
-        id
-        name
-        duration
+        skills {
+          id
+          name
+        }
         startedFrom
       }
     }
   }
-}
-    `;
+`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdatePeopleGQL extends Apollo.Mutation<UpdatePeopleMutation, UpdatePeopleMutationVariables> {
-    document = UpdatePeopleDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+@Injectable({
+  providedIn: 'root',
+})
+export class EditExperiencesGQL extends Apollo.Mutation<
+  EditExperiencesMutation,
+  EditExperiencesMutationVariables
+> {
+  document = EditExperiencesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ExperiencesByPersonDocument = gql`
+  query ExperiencesByPerson($where: ExperienceWhere) {
+    experiences(where: $where) {
+      ...ExperienceData
     }
   }
-export const UpdateProjectsDocument = gql`
-    mutation UpdateProjects($where: ProjectWhere, $update: ProjectUpdateInput) {
-  updateProjects(where: $where, update: $update) {
-    projects {
-      name
+  ${ExperienceDataFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ExperiencesByPersonGQL extends Apollo.Query<
+  ExperiencesByPersonQuery,
+  ExperiencesByPersonQueryVariables
+> {
+  document = ExperiencesByPersonDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FindSkillDocument = gql`
+  query FindSkill($where: SkillWhere) {
+    findSkill(where: $where) {
       id
+      name
     }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FindSkillGQL extends Apollo.Query<
+  FindSkillQuery,
+  FindSkillQueryVariables
+> {
+  document = FindSkillDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdateProjectsGQL extends Apollo.Mutation<UpdateProjectsMutation, UpdateProjectsMutationVariables> {
-    document = UpdateProjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const PersonsWithAllDocument = gql`
+  query PersonsWithAll($where: PersonWhere) {
+    people(where: $where) {
+      ...PersonWithAllType
     }
   }
-export const UpdateRatesDocument = gql`
-    mutation UpdateRates($where: RateWhere, $update: RateUpdateInput) {
-  updateRates(where: $where, update: $update) {
-    rates {
+  ${PersonWithAllTypeFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PersonsWithAllGQL extends Apollo.Query<
+  PersonsWithAllQuery,
+  PersonsWithAllQueryVariables
+> {
+  document = PersonsWithAllDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ProjectsDocument = gql`
+  query Projects {
+    projects {
+      id
+      name
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProjectsGQL extends Apollo.Query<
+  ProjectsQuery,
+  ProjectsQueryVariables
+> {
+  document = ProjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ProjectsWithAllDocument = gql`
+  query ProjectsWithAll {
+    projects {
+      ...ProjectPart
+    }
+  }
+  ${ProjectPartFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProjectsWithAllGQL extends Apollo.Query<
+  ProjectsWithAllQuery,
+  ProjectsWithAllQueryVariables
+> {
+  document = ProjectsWithAllDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RatesByPersonDocument = gql`
+  query RatesByPerson($where: RateWhere) {
+    rates(where: $where) {
       id
       validFrom
       value
-      person {
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RatesByPersonGQL extends Apollo.Query<
+  RatesByPersonQuery,
+  RatesByPersonQueryVariables
+> {
+  document = RatesByPersonDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RolesDocument = gql`
+  query Roles {
+    roles {
+      id
+      name
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
+  document = RolesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SkillsDocument = gql`
+  query Skills {
+    skills {
+      id
+      name
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
+  document = SkillsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SkillsWithLimitDocument = gql`
+  query SkillsWithLimit($options: SkillOptions) {
+    skills(options: $options) {
+      id
+      name
+    }
+    skillsAggregate {
+      count
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SkillsWithLimitGQL extends Apollo.Query<
+  SkillsWithLimitQuery,
+  SkillsWithLimitQueryVariables
+> {
+  document = SkillsWithLimitDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateDepartmentsDocument = gql`
+  mutation UpdateDepartments(
+    $where: DepartmentWhere
+    $update: DepartmentUpdateInput
+  ) {
+    updateDepartments(where: $where, update: $update) {
+      departments {
         id
         name
+        manager {
+          id
+          name
+          surname
+        }
+        persons {
+          id
+          name
+          surname
+        }
       }
     }
   }
-}
-    `;
+`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdateRatesGQL extends Apollo.Mutation<UpdateRatesMutation, UpdateRatesMutationVariables> {
-    document = UpdateRatesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateDepartmentsGQL extends Apollo.Mutation<
+  UpdateDepartmentsMutation,
+  UpdateDepartmentsMutationVariables
+> {
+  document = UpdateDepartmentsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdatePeopleDocument = gql`
+  mutation UpdatePeople($where: PersonWhere, $update: PersonUpdateInput) {
+    updatePeople(where: $where, update: $update) {
+      people {
+        id
+        name
+        surname
+        location {
+          longitude
+          latitude
+        }
+        skills {
+          id
+          name
+        }
+        roles {
+          id
+          name
+        }
+        birthday
+        seniority
+        rates {
+          id
+          value
+          validFrom
+        }
+        departments {
+          id
+          name
+          manager {
+            name
+            surname
+          }
+        }
+        projects {
+          id
+          name
+          duration
+          startedFrom
+        }
+      }
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdatePeopleGQL extends Apollo.Mutation<
+  UpdatePeopleMutation,
+  UpdatePeopleMutationVariables
+> {
+  document = UpdatePeopleDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateProjectsDocument = gql`
+  mutation UpdateProjects($where: ProjectWhere, $update: ProjectUpdateInput) {
+    updateProjects(where: $where, update: $update) {
+      projects {
+        name
+        id
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateProjectsGQL extends Apollo.Mutation<
+  UpdateProjectsMutation,
+  UpdateProjectsMutationVariables
+> {
+  document = UpdateProjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpdateRatesDocument = gql`
+  mutation UpdateRates($where: RateWhere, $update: RateUpdateInput) {
+    updateRates(where: $where, update: $update) {
+      rates {
+        id
+        validFrom
+        value
+        person {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpdateRatesGQL extends Apollo.Mutation<
+  UpdateRatesMutation,
+  UpdateRatesMutationVariables
+> {
+  document = UpdateRatesDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}

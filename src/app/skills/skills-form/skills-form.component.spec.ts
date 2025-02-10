@@ -19,20 +19,17 @@ describe('SkillsFormComponent', () => {
       declarations: [SkillsFormComponent],
 
       imports: [
-        RouterTestingModule.withRoutes(
-          [
-            { path: 'skills', component: SkillsListComponent }
-          ]
-        ),
+        RouterTestingModule.withRoutes([
+          { path: 'skills', component: SkillsListComponent },
+        ]),
         NgZorroAntdModule,
         DepartmentsRoutingModule,
         BrowserModule,
         GraphQLModule,
         BrowserAnimationsModule,
-        ReactiveFormsModule
-      ]
-    })
-      .compileComponents();
+        ReactiveFormsModule,
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SkillsFormComponent);
     component = fixture.componentInstance;

@@ -14,7 +14,7 @@ import {
   SkillsQuery,
   SkillsWithLimitGQL,
   SkillsWithLimitQuery,
-  SkillsWithLimitQueryVariables
+  SkillsWithLimitQueryVariables,
 } from '../generated/graphql';
 import { ApolloClientService } from './apollo-client.service';
 import { map } from 'rxjs/operators';
@@ -25,21 +25,24 @@ import { map } from 'rxjs/operators';
 export class SkillsAdapterService extends ApolloClientService {
   skills!: SkillsWithLimitQuery['skills'];
   skillsQueryRef:
-    | QueryRef<SkillsWithLimitQuery, Exact<{ options?: InputMaybe<SkillOptions> | undefined; }>>
+    | QueryRef<
+        SkillsWithLimitQuery,
+        Exact<{ options?: InputMaybe<SkillOptions> | undefined }>
+      >
     | undefined = undefined;
   editedSkill: SkillPartFragment | null = null;
 
   constructor(
     apollo: Apollo,
-    private ssGQl: SkillsWithLimitGQL
+    private ssGQl: SkillsWithLimitGQL,
   ) {
     super(apollo);
     this.skillsQueryRef = this.ssGQl.watch(
       {
         options: {
           limit: 10,
-          offset: 0
-        }
+          offset: 0,
+        },
       },
       {
         fetchPolicy: 'cache-and-network',
@@ -59,18 +62,19 @@ export class SkillsAdapterService extends ApolloClientService {
   }
 
   findSkill(name: string): Observable<ApolloQueryResult<FindSkillQuery>> {
-    return super._apollo.query<FindSkillQuery>({ query: FindSkillDocument, variables: { where: { name } } });
+    return super._apollo.query<FindSkillQuery>({
+      query: FindSkillDocument,
+      variables: { where: { name } },
+    });
   }
-  
+
   checkSkillExists(name: string): Observable<FindSkillQuery['findSkill']> {
     return this.findSkill(name).pipe(
-      map((result: ApolloQueryResult<FindSkillQuery>) => result.data.findSkill)
+      map((result: ApolloQueryResult<FindSkillQuery>) => result.data.findSkill),
     );
   }
 
-  submitSkill<T>(
-    name: string,
-  ): Observable<MutationResult<T>> {
+  submitSkill<T>(name: string): Observable<MutationResult<T>> {
     const input: any = {
       name,
     };

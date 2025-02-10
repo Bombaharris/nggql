@@ -1,19 +1,36 @@
 import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
+import {
+  ApolloTestingController,
+  ApolloTestingModule,
+} from 'apollo-angular/testing';
 import { PersonForm } from '../dashboard/person-form/models/person-form.model';
-import { CreateExperiencesDocument, CreateExperiencesGQL, CreateExperiencesMutation, CreateRatesDocument, CreateRatesMutation, DeletePersonsDocument, DeletePersonsMutation, PersonsWithAllGQL, UpdatePeopleDocument, UpdatePeopleMutation } from '../generated/graphql';
+import {
+  CreateExperiencesDocument,
+  CreateExperiencesGQL,
+  CreateExperiencesMutation,
+  CreateRatesDocument,
+  CreateRatesMutation,
+  DeletePersonsDocument,
+  DeletePersonsMutation,
+  PersonsWithAllGQL,
+  UpdatePeopleDocument,
+  UpdatePeopleMutation,
+} from '../generated/graphql';
 import { PersonAdapterService } from './person-adapter.service';
-
 
 describe('PersonAdapterService', () => {
   let service: PersonAdapterService;
   let apolloController: ApolloTestingController;
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
-      providers: [PersonAdapterService, CreateExperiencesGQL, PersonsWithAllGQL],
+      providers: [
+        PersonAdapterService,
+        CreateExperiencesGQL,
+        PersonsWithAllGQL,
+      ],
     });
     service = TestBed.inject(PersonAdapterService);
     apolloController = TestBed.inject(ApolloTestingController);
@@ -30,21 +47,35 @@ describe('PersonAdapterService', () => {
   it('should create person when person does not exists', (done) => {
     const personId = 'MrGreen';
     const person: FormGroup<PersonForm> = new FormGroup({
-      name: new FormControl("Ralph"),
-      surname: new FormControl("Green"),
-      birthday: new FormControl("1982-06-01"),
-      departments: new FormControl({id: "Frontend", name:"Frontend", manager: {id: "MrGreen", name: "Ralph", surname: "Green"}}),
-      projects: new FormControl({id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}),
+      name: new FormControl('Ralph'),
+      surname: new FormControl('Green'),
+      birthday: new FormControl('1982-06-01'),
+      departments: new FormControl({
+        id: 'Frontend',
+        name: 'Frontend',
+        manager: { id: 'MrGreen', name: 'Ralph', surname: 'Green' },
+      }),
+      projects: new FormControl({
+        id: 'AngularProject',
+        name: 'AngularProject',
+        duration: 'year',
+        startedFrom: '2020-02-02',
+      }),
       skills: new FormControl({
-        id: "Vue",
-        name: "Vue"
+        id: 'Vue',
+        name: 'Vue',
       }),
       roles: new FormControl({
-        id: "Frontend",
-        name: "Frontend"
+        id: 'Frontend',
+        name: 'Frontend',
       }),
-      seniority: new FormControl(["Vue"]),
-      rates: new FormControl({id:"Senior", name:"Senior", value:"100", validFrom:"2022-01-01"})
+      seniority: new FormControl(['Vue']),
+      rates: new FormControl({
+        id: 'Senior',
+        name: 'Senior',
+        value: '100',
+        validFrom: '2022-01-01',
+      }),
     });
 
     const createPerson = {
@@ -56,29 +87,57 @@ describe('PersonAdapterService', () => {
               name: '"Ralph"',
               surname: '"Green"',
               birthday: '1982-06-01',
-              departments: [{id: "Frontend", name:"Frontend", manager: {id: "MrGreen", name: "Ralph", surname: "Green"}}],
-              location: {longitude: 0, latitude:0},
-              projects: [{id: "AngularProject", name: "AngularProject", duration: "year", startedFrom:"2020-02-02"}],
-              roles: [{
-                id: "Frontend",
-                name: "Frontend"
-              }],
+              departments: [
+                {
+                  id: 'Frontend',
+                  name: 'Frontend',
+                  manager: { id: 'MrGreen', name: 'Ralph', surname: 'Green' },
+                },
+              ],
+              location: { longitude: 0, latitude: 0 },
+              projects: [
+                {
+                  id: 'AngularProject',
+                  name: 'AngularProject',
+                  duration: 'year',
+                  startedFrom: '2020-02-02',
+                },
+              ],
+              roles: [
+                {
+                  id: 'Frontend',
+                  name: 'Frontend',
+                },
+              ],
               seniority: null,
-              rates: [{id:"Senior", name:"Senior", value:100, validFrom:"2022-01-01"}],
-              skills: [{
-                id: "Vue",
-                name: "Vue"
-              }],
+              rates: [
+                {
+                  id: 'Senior',
+                  name: 'Senior',
+                  value: 100,
+                  validFrom: '2022-01-01',
+                },
+              ],
+              skills: [
+                {
+                  id: 'Vue',
+                  name: 'Vue',
+                },
+              ],
             },
           ],
         },
-      }, loading: false, error: null,
+      },
+      loading: false,
+      error: null,
     };
-    
-    service.submitPerson<UpdatePeopleMutation>(person, personId).subscribe(r => {
-      expect(r).toEqual(createPerson);
-      done();
-    });
+
+    service
+      .submitPerson<UpdatePeopleMutation>(person, personId)
+      .subscribe((r) => {
+        expect(r).toEqual(createPerson);
+        done();
+      });
 
     apolloController.expectOne(UpdatePeopleDocument).flush(createPerson);
     apolloController.verify();
@@ -107,19 +166,29 @@ describe('PersonAdapterService', () => {
               startedFrom: '2022-01-01',
               gainedAt: '2022-12-31',
               skills: [],
-              person: {name: 'MrGreen'}
+              person: { name: 'MrGreen' },
             },
           ],
         },
-      }, loading: false, error: null
+      },
+      loading: false,
+      error: null,
     };
-    
-    service.submitPersonExperience<CreateExperiencesMutation>(personId, experience, true).subscribe(r => {
-      expect(r).toEqual(createExperience);
-      done();
-    });
 
-    apolloController.expectOne(CreateExperiencesDocument).flush(createExperience);
+    service
+      .submitPersonExperience<CreateExperiencesMutation>(
+        personId,
+        experience,
+        true,
+      )
+      .subscribe((r) => {
+        expect(r).toEqual(createExperience);
+        done();
+      });
+
+    apolloController
+      .expectOne(CreateExperiencesDocument)
+      .flush(createExperience);
     apolloController.verify();
   });
 
@@ -146,19 +215,29 @@ describe('PersonAdapterService', () => {
               startedFrom: '2022-01-01',
               gainedAt: '2022-12-31',
               skills: [],
-              person: {"name": "MrGreen"}
+              person: { name: 'MrGreen' },
             },
           ],
         },
-      }, loading: false, error: null
+      },
+      loading: false,
+      error: null,
     };
-    
-    service.submitPersonExperience<CreateExperiencesMutation>(personId, experience, true).subscribe(r => {
-      expect(r).toEqual(createExperience);
-      done();
-    });
 
-    apolloController.expectOne(CreateExperiencesDocument).flush(createExperience);
+    service
+      .submitPersonExperience<CreateExperiencesMutation>(
+        personId,
+        experience,
+        true,
+      )
+      .subscribe((r) => {
+        expect(r).toEqual(createExperience);
+        done();
+      });
+
+    apolloController
+      .expectOne(CreateExperiencesDocument)
+      .flush(createExperience);
     apolloController.verify();
   });
 
@@ -166,18 +245,21 @@ describe('PersonAdapterService', () => {
     const personId = 'MrGreen';
     const mockMutationResult = {
       data: {
-        deletePeople:{
-          nodesDeleted: 1
-        }
+        deletePeople: {
+          nodesDeleted: 1,
+        },
       },
     };
-      service.removePerson<DeletePersonsMutation>(personId, DeletePersonsDocument).subscribe(r => {
+    service
+      .removePerson<DeletePersonsMutation>(personId, DeletePersonsDocument)
+      .subscribe((r) => {
         expect(r).toBeTruthy();
       });
-      
-      done();
-      TestBed.inject(ApolloTestingController).expectOne(DeletePersonsDocument).flush(mockMutationResult);
 
+    done();
+    TestBed.inject(ApolloTestingController)
+      .expectOne(DeletePersonsDocument)
+      .flush(mockMutationResult);
   });
 
   it('should create person rate when experiences does not exists', (done) => {
@@ -197,17 +279,21 @@ describe('PersonAdapterService', () => {
               id: rateId,
               value: 23,
               validFrom: '2022-01-01',
-              person: {id: "MrGreen"}
-             },
+              person: { id: 'MrGreen' },
+            },
           ],
         },
-      }, loading: false, error: null
+      },
+      loading: false,
+      error: null,
     };
-    
-    service.submitPersonRates<CreateRatesMutation>(personId, rate, true).subscribe(r => {
-      expect(r).toEqual(createRate);
-      done();
-    });
+
+    service
+      .submitPersonRates<CreateRatesMutation>(personId, rate, true)
+      .subscribe((r) => {
+        expect(r).toEqual(createRate);
+        done();
+      });
 
     apolloController.expectOne(CreateRatesDocument).flush(createRate);
     apolloController.verify();
