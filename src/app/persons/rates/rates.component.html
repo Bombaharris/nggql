@@ -1,12 +1,51 @@
 <nz-layout>
     <nz-content>
-        <h1>Rates of {{editedPerson?.name}} {{editedPerson?.surname}}</h1>
         <nz-breadcrumb>
             <nz-breadcrumb-item>Software House</nz-breadcrumb-item>
             <nz-breadcrumb-item>Rates</nz-breadcrumb-item>
             <nz-breadcrumb-item>{{editedPerson?.name}} {{editedPerson?.surname}}</nz-breadcrumb-item>
         </nz-breadcrumb>
-        <app-rates-form [person]="editedPerson" (submitted)="submitRates($event)" 
-        (deleted)="removePersonsRate($event)"></app-rates-form>
+        <h1>Rates of {{editedPerson?.name}} {{editedPerson?.surname}}</h1>
+        <div nz-row [nzGutter]="24" style="margin-top:40px" [nzAlign]="rates.length === 0 ? 'middle' : 'top'">
+          <div nz-col nzFlex [nzSpan]="12">
+            <nz-empty *ngIf="rates.length === 0"></nz-empty>
+            <nz-list>
+              <nz-list-item *ngFor="let rate of editedPerson?.rates">
+                  <nz-list-item-meta
+                  nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  [nzDescription]="'Valid from: ' + rate.validFrom"
+                >
+                <nz-list-item-meta-title>
+                Rate: {{ rate.value }} PLN
+                </nz-list-item-meta-title>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+              <nz-list-item-action><a (click)="edit(rate.id)">Edit</a></nz-list-item-action>
+              <nz-list-item-action>
+                <a
+                nzDanger
+                nz-button
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure you want to delete this rate?"
+                (nzOnConfirm)="removePersonsRate(rate.id)"
+                (nzOnCancel)="cancelDelete()"
+                >
+                  Delete
+                </a>
+              </nz-list-item-action>
+              </ul>
+              </nz-list-item>
+            </nz-list>
+            <a nz-button nzType="text" [routerLink]="['/dashboard']">
+              <span nz-icon nzType="left"></span>  Go back
+            </a>
+          </div>
+          <div nz-col [nzSpan]="12" style="margin: auto;">
+            <app-rates-form [rateId]="selectedRateId"
+            [rates]="editedPerson?.rates"
+              (submitted)="submitRates($event)"></app-rates-form>
+      </div>
+    </div>
     </nz-content>
 </nz-layout>

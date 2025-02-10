@@ -4,7 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Overlay } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ describe('RatesFormComponent', () => {
   let ratesFormComponent: RatesFormComponent;
   let ratesFormFixture: ComponentFixture<RatesFormComponent>;
   let ratesFixture: ComponentFixture<RatesComponent>;
-  let fb: FormBuilder = new FormBuilder();
+  let fb: NonNullableFormBuilder = new FormBuilder().nonNullable;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RatesFormComponent, RatesComponent ],
@@ -38,7 +38,7 @@ describe('RatesFormComponent', () => {
       ScrollingModule,
       DragDropModule,
     ],
-    providers: [ApolloTestingModule, NzNotificationService, Overlay, FormBuilder, 
+    providers: [ApolloTestingModule, NzNotificationService, Overlay, FormBuilder,
       {
         provide: ActivatedRoute,
         useValue: {
@@ -53,26 +53,13 @@ describe('RatesFormComponent', () => {
     ratesFixture = TestBed.createComponent(RatesComponent);
     ratesFormFixture = TestBed.createComponent(RatesFormComponent);
     ratesFormComponent = ratesFormFixture.componentInstance;
-    ratesFormComponent.person = {
-      id: "Zub",
-      name: "Michael",
-      surname: "Zubenstein",
-      departments: [],
-      experiences: [
-        {
-          value: 222,
-          validFrom: '2023-11-11T16:36:52.959Z',
-        }
-      ],
-      projects: [],
-    rates: [],
-    roles: [],
-    }
+
     ratesFormComponent.ratesForm = fb.group({
-      rates: fb.array([])
+      id: ['', [Validators.required]],
+      value: [0, [Validators.required]],
+      validFrom: [new Date(), [Validators.required]],
     });
-    ratesFormComponent.ratesForm.get("rates")?.value.push(ratesFormComponent.newRatesGroup())
-    
+
     ratesFixture.detectChanges();
     ratesFormFixture.detectChanges();
   });
