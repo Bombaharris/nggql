@@ -18,10 +18,9 @@ describe('ProjectsComponent', () => {
         ProjectsRoutingModule,
         BrowserModule,
         GraphQLModule,
-      ]
-    })
-    .compileComponents();
-    
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProjectsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

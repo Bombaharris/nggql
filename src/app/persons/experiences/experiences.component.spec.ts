@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed,  } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -22,13 +22,16 @@ describe('ExperiencesComponent', () => {
   let fb = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExperiencesComponent, ExperienceFormComponent ],
-      imports: [ RouterTestingModule.withRoutes(
-        [
-          {path: 'persons/:id/experiences', component: ExperiencesComponent}
-        ], {
-          
-        }
+      declarations: [ExperiencesComponent, ExperienceFormComponent],
+      imports: [
+        RouterTestingModule.withRoutes(
+          [
+            {
+              path: 'persons/:id/experiences',
+              component: ExperiencesComponent,
+            },
+          ],
+          {},
         ),
         NgZorroAntdModule,
         ReactiveFormsModule,
@@ -41,27 +44,25 @@ describe('ExperiencesComponent', () => {
         ScrollingModule,
         DragDropModule,
       ],
-      providers: [FormBuilder, Overlay, NzNotificationService,
-      ],
-    })
-    .compileComponents();
+      providers: [FormBuilder, Overlay, NzNotificationService],
+    }).compileComponents();
     experiencesFixture = TestBed.createComponent(ExperiencesComponent);
     experienceFormFixture = TestBed.createComponent(ExperienceFormComponent);
     experienceFormComponent = experienceFormFixture.componentInstance;
     experiencesComponent = experiencesFixture.componentInstance;
     experienceFormComponent.person = {
-      id: "MrGreen",
-      name: "Ralph",
-      surname: "Green",
+      id: 'MrGreen',
+      name: 'Ralph',
+      surname: 'Green',
       departments: [],
       experiences: [],
       projects: [],
       rates: [],
       roles: [],
       skills: [],
-    }
+    };
     experienceFormComponent.experienceForm = fb.group({
-      experiences: fb.array([])
+      experiences: fb.array([]),
     });
     experienceFormComponent.addNewForm();
     experiencesFixture.detectChanges();
@@ -71,5 +72,4 @@ describe('ExperiencesComponent', () => {
   it('should create', () => {
     expect(experiencesComponent).toBeTruthy();
   });
-
 });

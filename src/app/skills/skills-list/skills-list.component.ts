@@ -90,40 +90,43 @@ export class SkillsListComponent implements OnInit {
   closeForm(skillForm?: FormGroup<SkillForm>): void {
     const name = skillForm?.get('name')?.value;
     if (skillForm && name) {
-    this.skillsAdapterService.checkSkillExists(name).subscribe((skillExists) => {
-        if (skillExists && skillExists.length > 0) {
-          this.notification.create(
-            'error',
-            'Error',
-            `Skill ${name} already exists`,
-          );
-          return;
-        } else {
-          this.skillsAdapterService
-            .submitSkill<CreateSkillsGQL>(name)
-            .subscribe(
-              ({ loading, errors }) => {
-                if (loading) {
-                  this.isLoading = loading;
-                }
-                if (errors) {
-                  errors.map((error) => {
-                    console.error(error.message);
-                  });
-                }
-                this.notification.create(
-                  'success',
-                  'Success',
-                  `Skill ${name} was successfully created.`,
-                );
-                this.skillsAdapterService.skillsQueryRef?.refetch();
-              },
-              (error: any) => {
-                this.notification.create('error', 'Error', `${error}`);
-              },
+      this.skillsAdapterService
+        .checkSkillExists(name)
+        .subscribe((skillExists) => {
+          if (skillExists && skillExists.length > 0) {
+            this.notification.create(
+              'error',
+              'Error',
+              `Skill ${name} already exists`,
             );
-        }})
-        }
+            return;
+          } else {
+            this.skillsAdapterService
+              .submitSkill<CreateSkillsGQL>(name)
+              .subscribe(
+                ({ loading, errors }) => {
+                  if (loading) {
+                    this.isLoading = loading;
+                  }
+                  if (errors) {
+                    errors.map((error) => {
+                      console.error(error.message);
+                    });
+                  }
+                  this.notification.create(
+                    'success',
+                    'Success',
+                    `Skill ${name} was successfully created.`,
+                  );
+                  this.skillsAdapterService.skillsQueryRef?.refetch();
+                },
+                (error: any) => {
+                  this.notification.create('error', 'Error', `${error}`);
+                },
+              );
+          }
+        });
+    }
 
     this.clearForm();
   }

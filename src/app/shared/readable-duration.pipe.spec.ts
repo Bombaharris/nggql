@@ -13,12 +13,16 @@ describe('ReadableDurationPipe', () => {
 
   it('transforms P2Y4M6DT1H2M3S to "2 years, 4 months, 6 days, 1 hour, 2 minutes and 3 seconds"', () => {
     const result = pipe.transform('P2Y4M6DT1H2M3S');
-    expect(result).toBe('2 years, 4 months, 6 days, 1 hour, 2 minutes and 3 seconds');
+    expect(result).toBe(
+      '2 years, 4 months, 6 days, 1 hour, 2 minutes and 3 seconds',
+    );
   });
 
   it('transforms P1Y1M1DT1H1M1S to "1 year, 1 month, 1 day, 1 hour, 1 minute and 1 second"', () => {
     const result = pipe.transform('P1Y1M1DT1H1M1S');
-    expect(result).toBe('1 year, 1 month, 1 day, 1 hour, 1 minute and 1 second');
+    expect(result).toBe(
+      '1 year, 1 month, 1 day, 1 hour, 1 minute and 1 second',
+    );
   });
 
   it('handles single unit durations (e.g., P1Y)', () => {
@@ -47,5 +51,4 @@ describe('ReadableDurationPipe', () => {
     expect(pipe.transform('P0Y0M0DT0H0M0S')).toBe('Invalid duration'); // Assuming all zeroes is invalid
     expect(pipe.transform('P0Y')).toBe('Invalid duration'); // Assuming single zero is invalid
   });
-
 });

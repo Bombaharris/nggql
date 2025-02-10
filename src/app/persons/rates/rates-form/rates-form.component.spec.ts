@@ -25,59 +25,65 @@ describe('RatesFormComponent', () => {
   let fb: FormBuilder = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RatesFormComponent, RatesComponent ],
-      imports: [ RouterTestingModule.withRoutes([]),
-      AppRoutingModule,
-      BrowserModule,
-      GraphQLModule,
-      HttpClientModule,
-      HttpClientJsonpModule,
-      ReactiveFormsModule,
-      NgZorroAntdModule,
-      BrowserAnimationsModule,
-      ScrollingModule,
-      DragDropModule,
-    ],
-    providers: [ApolloTestingModule, NzNotificationService, Overlay, FormBuilder, 
-      {
-        provide: ActivatedRoute,
-        useValue: {
-          params: of({
-            id: "Zub",
-          }),
+      declarations: [RatesFormComponent, RatesComponent],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+        AppRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        ReactiveFormsModule,
+        NgZorroAntdModule,
+        BrowserAnimationsModule,
+        ScrollingModule,
+        DragDropModule,
+      ],
+      providers: [
+        ApolloTestingModule,
+        NzNotificationService,
+        Overlay,
+        FormBuilder,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({
+              id: 'Zub',
+            }),
+          },
         },
-      },
-    ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
     ratesFixture = TestBed.createComponent(RatesComponent);
     ratesFormFixture = TestBed.createComponent(RatesFormComponent);
     ratesFormComponent = ratesFormFixture.componentInstance;
     ratesFormComponent.person = {
-      id: "Zub",
-      name: "Michael",
-      surname: "Zubenstein",
+      id: 'Zub',
+      name: 'Michael',
+      surname: 'Zubenstein',
       departments: [],
       experiences: [
         {
           value: 222,
           validFrom: '2023-11-11T16:36:52.959Z',
-        }
+        },
       ],
       projects: [],
-    rates: [],
-    roles: [],
-    }
+      rates: [],
+      roles: [],
+    };
     ratesFormComponent.ratesForm = fb.group({
-      rates: fb.array([])
+      rates: fb.array([]),
     });
-    ratesFormComponent.ratesForm.get("rates")?.value.push(ratesFormComponent.newRatesGroup())
-    
+    ratesFormComponent.ratesForm
+      .get('rates')
+      ?.value.push(ratesFormComponent.newRatesGroup());
+
     ratesFixture.detectChanges();
     ratesFormFixture.detectChanges();
   });
 
   it('should create', () => {
     expect(ratesFormComponent).toBeTruthy();
-});
+  });
 });

@@ -8,16 +8,12 @@ import { NgZorroAntdModule } from '../ng-zorro-antd.module';
 import { PersonFormComponent } from './person-form/person-form.component';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    PersonFormComponent,
-  ],
+  declarations: [DashboardComponent, PersonFormComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
-  ]
+  ],
 })
-export class DashboardModule {
-}
+export class DashboardModule {}

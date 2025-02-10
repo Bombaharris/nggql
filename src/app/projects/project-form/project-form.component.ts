@@ -3,14 +3,14 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {
   PersonsWithAllQuery,
   Project,
   ProjectPartFragment,
-  SkillsQuery
+  SkillsQuery,
 } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
 import { ProjectsAdapterService } from 'src/app/services/projects-adapter.service';

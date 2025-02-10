@@ -13,19 +13,17 @@ describe('DepartmentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        DepartmentsComponent,
-      ],
+      declarations: [DepartmentsComponent],
       imports: [
-        DepartmentsModule, 
+        DepartmentsModule,
         DepartmentsRoutingModule,
         BrowserModule,
         GraphQLModule,
         HttpClientModule,
-        HttpClientJsonpModule,]
-    })
-    .compileComponents();
-    
+        HttpClientJsonpModule,
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DepartmentsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

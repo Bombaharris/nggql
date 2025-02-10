@@ -11,7 +11,10 @@ import { DepartmentTransferComponent } from './department-transfer/department-tr
 
 @NgModule({
   declarations: [
-    DepartmentsComponent, DepartmentFormComponent, DepartmentsListComponent, DepartmentTransferComponent
+    DepartmentsComponent,
+    DepartmentFormComponent,
+    DepartmentsListComponent,
+    DepartmentTransferComponent,
   ],
   imports: [
     CommonModule,
@@ -20,4 +23,4 @@ import { DepartmentTransferComponent } from './department-transfer/department-tr
     NgZorroAntdModule,
   ],
 })
-export class DepartmentsModule { }
+export class DepartmentsModule {}

@@ -4,7 +4,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
@@ -27,9 +26,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
     ScrollingModule,
     DragDropModule,
   ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US },
-  ],
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

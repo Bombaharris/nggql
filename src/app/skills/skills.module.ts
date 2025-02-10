@@ -8,7 +8,6 @@ import { SkillsComponent } from './skills.component';
 import { SkillsFormComponent } from './skills-form/skills-form.component';
 import { SkillsListComponent } from './skills-list/skills-list.component';
 
-
 @NgModule({
   declarations: [SkillsComponent, SkillsFormComponent, SkillsListComponent],
   imports: [
@@ -16,6 +15,6 @@ import { SkillsListComponent } from './skills-list/skills-list.component';
     SkillsRoutingModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
-  ]
+  ],
 })
-export class SkillsModule { }
+export class SkillsModule {}

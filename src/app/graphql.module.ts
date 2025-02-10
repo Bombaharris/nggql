@@ -8,7 +8,7 @@ const uri = 'http://localhost:4000/graphql/'; // <-- add the URL of the GraphQL 
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const headers = new HttpHeaders({
-    "Access-Control-Allow-Origin": "*",
+    'Access-Control-Allow-Origin': '*',
   });
   return {
     link: httpLink.create({ uri, headers, withCredentials: false }),
@@ -21,7 +21,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
         fetchPolicy: 'cache-first',
         errorPolicy: 'all',
       },
-    }
+    },
   };
 }
 

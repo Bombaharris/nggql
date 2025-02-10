@@ -8,12 +8,13 @@ import { DepartmentForm } from './models/department-form.model';
 @Component({
   selector: 'app-department-form',
   templateUrl: './department-form.component.html',
-  styleUrl: './department-form.component.scss'
+  styleUrl: './department-form.component.scss',
 })
 export class DepartmentFormComponent implements OnInit {
   people!: Person[] | any;
   department: DepartmentPartFragment | null = null;
-  @Output() submitted: EventEmitter<FormGroup<DepartmentForm>> = new EventEmitter();
+  @Output() submitted: EventEmitter<FormGroup<DepartmentForm>> =
+    new EventEmitter();
   @Output() canceled = new EventEmitter();
   departmentForm: FormGroup<DepartmentForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -24,16 +25,18 @@ export class DepartmentFormComponent implements OnInit {
     private personAdapterService: PersonAdapterService,
     private departmentsAdapterService: DepartmentsAdapterService,
   ) {
-      personAdapterService.personsQueryRef?.valueChanges.subscribe(result => {
-        this.people = result.data.people;
-      });
-      this.department = departmentsAdapterService.editedDepartment;
+    personAdapterService.personsQueryRef?.valueChanges.subscribe((result) => {
+      this.people = result.data.people;
+    });
+    this.department = departmentsAdapterService.editedDepartment;
   }
 
   ngOnInit(): void {
     if (this.department) {
       this.departmentForm.patchValue(this.department);
-      this.departmentForm.get('manager')?.patchValue(this.department.manager?.id);
+      this.departmentForm
+        .get('manager')
+        ?.patchValue(this.department.manager?.id);
     }
   }
 

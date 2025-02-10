@@ -7,101 +7,116 @@ const whereVariable = {
     AND: [
       {
         projects_SOME: {
-          id: 1
-        }
-      }
-    ]
-  }
+          id: 1,
+        },
+      },
+    ],
+  },
 };
 const whereVariables = {
   where: {
     AND: [
       {
         projects_SOME: {
-          id: 2
-        }
+          id: 2,
+        },
       },
       {
         projects_SOME: {
-          id: 3
-        }
-      }
-    ]
-  }
+          id: 3,
+        },
+      },
+    ],
+  },
 };
 const whereVariablesComined = {
   where: {
     AND: [
       {
         projects_SOME: {
-          id: 1
-        }
+          id: 1,
+        },
       },
       {
         projects_SOME: {
-          id: 2
-        }
+          id: 2,
+        },
       },
       {
         projects_SOME: {
-          id: 3
-        }
-      }
-    ]
-  }
+          id: 3,
+        },
+      },
+    ],
+  },
 };
 const whereVariableCleared = {
   where: {
-    AND: []
-  }
+    AND: [],
+  },
 };
 const connectWhere = [
   {
     where: {
       node: {
-        id: 1
-      }
-    }
-  }
+        id: 1,
+      },
+    },
+  },
 ];
 
 describe('Service: QLFilterBuilder', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [QLFilterBuilderService]
+      providers: [QLFilterBuilderService],
     });
   });
 
   describe('andWhere', () => {
-    it('string or number', inject([QLFilterBuilderService], (service: QLFilterBuilderService) => {
-      service.andWhere('projects_SOME','id', 1);
-      expect(service.getVariables()).toEqual(whereVariable);
-    }));
+    it('string or number', inject(
+      [QLFilterBuilderService],
+      (service: QLFilterBuilderService) => {
+        service.andWhere('projects_SOME', 'id', 1);
+        expect(service.getVariables()).toEqual(whereVariable);
+      },
+    ));
 
-    it('array', inject([QLFilterBuilderService], (service: QLFilterBuilderService) => {
-      service.andWhere('projects_SOME','id', [2,3]);
-      expect(service.getVariables()).toEqual(whereVariables);
-    }));
+    it('array', inject(
+      [QLFilterBuilderService],
+      (service: QLFilterBuilderService) => {
+        service.andWhere('projects_SOME', 'id', [2, 3]);
+        expect(service.getVariables()).toEqual(whereVariables);
+      },
+    ));
 
-    it('combined', inject([QLFilterBuilderService], (service: QLFilterBuilderService) => {
-      service.andWhere('projects_SOME','id', 1);
-      service.andWhere('projects_SOME','id', [2,3]);
-      expect(service.getVariables()).toEqual(whereVariablesComined);
-    }));
+    it('combined', inject(
+      [QLFilterBuilderService],
+      (service: QLFilterBuilderService) => {
+        service.andWhere('projects_SOME', 'id', 1);
+        service.andWhere('projects_SOME', 'id', [2, 3]);
+        expect(service.getVariables()).toEqual(whereVariablesComined);
+      },
+    ));
   });
 
   describe('clear', () => {
-    it('string or number', inject([QLFilterBuilderService], (service: QLFilterBuilderService) => {
-      service.andWhere('projects_SOME','id', 1);
-      service.clearAndWhere();
-      expect(service.getVariables()).toEqual(whereVariableCleared);
-    }));
+    it('string or number', inject(
+      [QLFilterBuilderService],
+      (service: QLFilterBuilderService) => {
+        service.andWhere('projects_SOME', 'id', 1);
+        service.clearAndWhere();
+        expect(service.getVariables()).toEqual(whereVariableCleared);
+      },
+    ));
   });
 
   describe('connectWhere', () => {
-    it('string or number', inject([QLFilterBuilderService], (service: QLFilterBuilderService) => {
-      expect(service.connectWhere('id', 1)).toEqual(connectWhere);
-      expect(service.connectWhere('id', [1])).toEqual(connectWhere);
-    }));
+    it('string or number', inject(
+      [QLFilterBuilderService],
+      (service: QLFilterBuilderService) => {
+        expect(service.connectWhere('id', 1)).toEqual(connectWhere);
+        expect(service.connectWhere('id', [1])).toEqual(connectWhere);
+      },
+    ));
   });
 });

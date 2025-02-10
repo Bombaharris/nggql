@@ -24,63 +24,68 @@ describe('ExperienceFormComponent', () => {
   let fb: FormBuilder = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExperienceFormComponent, ExperiencesComponent ],
-      imports: [ RouterTestingModule.withRoutes([]),
-      AppRoutingModule,
-      BrowserModule,
-      GraphQLModule,
-      HttpClientModule,
-      HttpClientJsonpModule,
-      ReactiveFormsModule,
-      NgZorroAntdModule,
-      BrowserAnimationsModule,
-      ScrollingModule,
-      DragDropModule,
-    ],
-      providers: [ApolloTestingModule, NzNotificationService, Overlay, FormBuilder, 
+      declarations: [ExperienceFormComponent, ExperiencesComponent],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+        AppRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        ReactiveFormsModule,
+        NgZorroAntdModule,
+        BrowserAnimationsModule,
+        ScrollingModule,
+        DragDropModule,
+      ],
+      providers: [
+        ApolloTestingModule,
+        NzNotificationService,
+        Overlay,
+        FormBuilder,
         {
           provide: ActivatedRoute,
           useValue: {
             params: of({
-              id: "Zub",
+              id: 'Zub',
             }),
           },
         },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
     experiencesFixture = TestBed.createComponent(ExperiencesComponent);
     experienceFormFixture = TestBed.createComponent(ExperienceFormComponent);
     experienceFormComponent = experienceFormFixture.componentInstance;
     experienceFormComponent.person = {
-    id: "Zub",
-    name: "Michael",
-    surname: "Zubenstein",
-    departments: [],
-    experiences: [
-      {
-        name: "Onwleo",
-        description: "Large description",
-        startedFrom: '2023-11-11T16:36:52.959Z',
-        gainedAt: '2023-11-23T16:36:52.959Z',
-      }
-    ],
-    projects: [],
-    rates: [],
-    roles: [],
-     skills: [],
-  }
+      id: 'Zub',
+      name: 'Michael',
+      surname: 'Zubenstein',
+      departments: [],
+      experiences: [
+        {
+          name: 'Onwleo',
+          description: 'Large description',
+          startedFrom: '2023-11-11T16:36:52.959Z',
+          gainedAt: '2023-11-23T16:36:52.959Z',
+        },
+      ],
+      projects: [],
+      rates: [],
+      roles: [],
+      skills: [],
+    };
     experienceFormComponent.experienceForm = fb.group({
-      experiences: fb.array([])
+      experiences: fb.array([]),
     });
-    experienceFormComponent.experienceForm.get("experiences")?.value.push(experienceFormComponent.newExperienceGroup())
-    
+    experienceFormComponent.experienceForm
+      .get('experiences')
+      ?.value.push(experienceFormComponent.newExperienceGroup());
+
     experiencesFixture.detectChanges();
     experienceFormFixture.detectChanges();
   });
 
- 
   it('should create', () => {
-      expect(experienceFormComponent).toBeTruthy();
+    expect(experienceFormComponent).toBeTruthy();
   });
 });

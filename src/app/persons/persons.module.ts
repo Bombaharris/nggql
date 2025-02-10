@@ -10,16 +10,19 @@ import { ExperiencesComponent } from './experiences/experiences.component';
 import { RatesFormComponent } from './rates/rates-form/rates-form.component';
 import { RatesComponent } from './rates/rates.component';
 
-
 @NgModule({
   declarations: [
-    PersonsComponent, ExperienceFormComponent, ExperiencesComponent, RatesFormComponent, RatesComponent
+    PersonsComponent,
+    ExperienceFormComponent,
+    ExperiencesComponent,
+    RatesFormComponent,
+    RatesComponent,
   ],
   imports: [
     CommonModule,
     PersonsRoutingModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
-  ]
+  ],
 })
-export class PersonsModule { }
+export class PersonsModule {}

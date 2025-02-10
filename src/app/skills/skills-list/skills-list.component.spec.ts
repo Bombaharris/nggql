@@ -16,19 +16,16 @@ describe('SkillsListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SkillsListComponent],
       imports: [
-        RouterTestingModule.withRoutes(
-          [
-            {path: 'skills', component: SkillsListComponent}
-          ]
-          ),
-          NgZorroAntdModule,
-          SkillsRoutingModule,
-          BrowserModule,
-          GraphQLModule,
-          BrowserAnimationsModule,
-      ]
-    })
-    .compileComponents();
+        RouterTestingModule.withRoutes([
+          { path: 'skills', component: SkillsListComponent },
+        ]),
+        NgZorroAntdModule,
+        SkillsRoutingModule,
+        BrowserModule,
+        GraphQLModule,
+        BrowserAnimationsModule,
+      ],
+    }).compileComponents();
     fixture = TestBed.createComponent(SkillsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

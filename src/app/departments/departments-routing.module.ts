@@ -11,18 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DepartmentsListComponent
+        component: DepartmentsListComponent,
       },
       {
         path: ':departmentId/transfer',
         component: DepartmentTransferComponent,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DepartmentsRoutingModule { }
+export class DepartmentsRoutingModule {}
