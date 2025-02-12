@@ -4,6 +4,7 @@ export type PersonForm = {
   name: FormControl;
   surname: FormControl;
   birthday: FormControl;
+  bio: FormControl;
   departments: FormControl;
   projects: FormControl;
   skills: FormControl;

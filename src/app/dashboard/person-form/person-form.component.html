@@ -22,6 +22,12 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="bio">Bio</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <textarea nz-input formControlName="bio"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'departments'">Department</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-select
