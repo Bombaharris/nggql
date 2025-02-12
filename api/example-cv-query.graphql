@@ -1,0 +1,57 @@
+fragment commonExperience on Experience {
+  gainedAt
+  startedFrom
+  description
+  skills {
+    name
+  }
+}
+
+query CVQuery {
+  people {
+    name
+    surname
+    seniority
+    bio
+    roles {
+      name
+    }
+    languages: skills(where: {groups:  {
+      id: "Languages"
+    }}) {
+      name
+    }
+    skills(where: {groups_SOME:  {
+      id: "Technologies"
+    }}) {
+      name
+      groups {
+        name
+      }
+      recommendedFor(projectId: "ProjectCV")
+    }
+    experience: experiences(where: {type: DEFAULT}){
+      ...commonExperience
+      role
+      institution
+    }
+    projects: experiences(where: {type: PROJECT}){
+      ...commonExperience
+      name
+      role
+    }
+    education: experiences(where: {type: EDUCATION}){
+      ...commonExperience
+      name
+      institution
+    }
+    courses: experiences(where: {type: COURSE}){
+      ...commonExperience
+      name
+      institution
+    }
+    hobby: experiences(where: {type: HOBBY}){
+      name
+    }
+  }
+}

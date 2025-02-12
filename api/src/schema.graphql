@@ -4,10 +4,19 @@ enum Seniority {
     SENIOR
 }
 
+enum ExperienceType {
+  DEFAULT
+  PROJECT
+  EDUCATION
+  COURSE
+  HOBBY
+}
+
 type Person {
   id: ID! @id @unique
   name: String!
   surname: String!
+  bio: String
   birthday: Date
   location: Point
   seniority: Seniority @coalesce(value: REGULAR)
@@ -21,19 +30,36 @@ type Person {
 
 type Experience {
   id: ID! @id @unique
+  type: ExperienceType! @coalesce(value: DEFAULT)
   person: Person @relationship(type: "HAS_EXPERIENCE", direction: IN)
-  name: String!
-  description: String!
+  name: String
+  role: String
+  institution: String
+  description: String
   skills: [Skill!]! @relationship(type: "USED_SKILL", direction: OUT)
   startedFrom: Date!
-  gainedAt: Date!
+  gainedAt: Date
+}
+
+type SkillGroup {
+  id: ID! @id @unique
+  name: String!
+  skills: [Skill!]! @relationship(type: "BELONGS_TO", direction: IN)
+  parents: [SkillGroup!]! @relationship(type: "BELONGS_TO", direction: OUT)
 }
 
 type Skill {
   id: ID! @id @unique
   name: String!
+  groups: [SkillGroup!]! @cypher(statement: """
+    match (this)-[:BELONGS_TO]->+(sg:SkillGroup) return sg
+  """, columnName: "sg")
   persons: [Person!]! @relationship(type: "HAS_SKILL", direction: IN)
   experiences: [Experience!]! @relationship(type: "USED_SKILL", direction: IN)
+  recommendedFor(projectId: String!): Boolean! @cypher(statement: """
+    MATCH (this)
+    RETURN exists((:Project {id: $projectId})-[:NEED_SKILL]->(this)) as exists
+  """, columnName: "exists")
 }
 
 type Role {
