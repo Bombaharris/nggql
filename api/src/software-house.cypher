@@ -4,7 +4,8 @@ CREATE (MrGreen:Person {
     surname:"Green",
     birthday: "1981-12-30",
     seniority: "SENIOR",
-    location: point({longitude: 51, latitude: 21})
+    location: point({longitude: 51, latitude: 21}),
+    bio: ""
 })
 CREATE (Polon:Person {
     id: "Polon",
@@ -12,7 +13,8 @@ CREATE (Polon:Person {
     surname:"Polon",
     birthday: "1988-11-10",
     seniority: "SENIOR",
-    location: point({longitude: 51, latitude: 21})
+    location: point({longitude: 51, latitude: 21}),
+    bio: ""
 })
 CREATE (Zub:Person {
     id: "Zub",
@@ -20,7 +22,8 @@ CREATE (Zub:Person {
     surname:"Zubenstein",
     birthday: "1981-06-07",
     seniority: "SENIOR",
-    location: point({longitude: 51, latitude: 21})
+    location: point({longitude: 51, latitude: 21}),
+    bio: ""
 })
 CREATE (Gocha:Person {
     id: "Gocha",
@@ -28,7 +31,8 @@ CREATE (Gocha:Person {
     surname:"Stas",
     birthday: "1990-02-08",
     seniority: "REGULAR",
-    location: point({longitude: 51, latitude: 21})
+    location: point({longitude: 51, latitude: 21}),
+    bio: ""
 })
 CREATE (Sofia:Person {
     id: "Sofia",
@@ -36,7 +40,8 @@ CREATE (Sofia:Person {
     surname:"Loren",
     birthday: "1992-04-12",
     seniority: "JUNIOR",
-    location: point({longitude: 51, latitude: 21})
+    location: point({longitude: 51, latitude: 21}),
+    bio: ""
 })
 CREATE (Alex:Person {
     id: "Alex",
@@ -44,7 +49,8 @@ CREATE (Alex:Person {
     surname:"Ross",
     birthday: "1992-12-03",
     seniority: "REGULAR",
-    location: point({longitude: 51, latitude: 19})
+    location: point({longitude: 51, latitude: 19}),
+    bio: ""
 })
 CREATE (Finger:Person {
     id: "Finger",
@@ -52,7 +58,8 @@ CREATE (Finger:Person {
     surname:"Finger",
     birthday: "1989-11-13",
     seniority: "SENIOR",
-    location: point({longitude: 52, latitude: 16})
+    location: point({longitude: 52, latitude: 16}),
+    bio: ""
 })
 CREATE (Ivan:Person {
     id: "Ivan",
@@ -60,7 +67,8 @@ CREATE (Ivan:Person {
     surname:"Ivanesco",
     birthday: "1985-03-06",
     seniority: "SENIOR",
-    location: point({longitude: 52, latitude: 16})
+    location: point({longitude: 52, latitude: 16}),
+    bio: ""
 })
 
 
