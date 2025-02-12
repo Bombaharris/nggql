@@ -1,3 +1,4 @@
+// 1st block
 CREATE (p:Person {
   id: "Kate",
   name:"Kate",
@@ -8,11 +9,13 @@ CREATE (p:Person {
   bio: "Pracował jako lider zespołu z kilkuletnim doświadczeniem w prowadzeniu zespołu 4 programistów. Obecnie koncentruje się na utrzymaniu i rozwoju aplikacji zapewniających wsparcie w zarządzaniu produktami bankowymi. Świetny w komunikacji i znajdowaniu różnych rozwiązań. Zawsze chętny do nauki i rozwijania nowych umiejętności. "
 })
 
+// 2nd block
 MATCH(p:Person {id: "Kate"})
 UNWIND ["React", "Angular", "JavaScript", "Docker", "CSS3", "HTML5", "TypeScript", "SASS", "Linux", "Git", "English", "Polish"] AS skillName
 MERGE (s:Skill { name: skillName })
 CREATE (p)-[:HAS_SKILL {seniority: "REGULAR"}]->(s)
 
+// 3rd block
 CREATE (pr:Project {
   id: "ProjectCV",
   name: "ProjectCV",
@@ -24,6 +27,7 @@ UNWIND ["React", "Angular", "JavaScript"] AS reqSkill
 MERGE (rs:Skill { name: reqSkill })
 CREATE (pr)-[:NEED_SKILL]->(rs)
 
+// 4th block
 MATCH(p:Person {id: "Kate"}), (pr:Project {id: "ProjectCV"})
 WITH p, pr
 UNWIND [
@@ -88,3 +92,5 @@ WITH e, expData
 UNWIND ["React", "Angular", "JavaScript"] AS usedSkill
 MERGE (us:Skill { name: usedSkill })
 CREATE (e)-[:USED_SKILL]->(us)
+
+// recommendation query
