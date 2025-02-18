@@ -82,6 +82,12 @@ export type CreateScoresMutationResponse = {
   scores: Array<Score>;
 };
 
+export type CreateSkillGroupsMutationResponse = {
+  __typename?: 'CreateSkillGroupsMutationResponse';
+  info: CreateInfo;
+  skillGroups: Array<SkillGroup>;
+};
+
 export type CreateSkillsMutationResponse = {
   __typename?: 'CreateSkillsMutationResponse';
   info: CreateInfo;
@@ -587,17 +593,20 @@ export type DurationAggregateSelection = {
 
 export type Experience = {
   __typename?: 'Experience';
-  description: Scalars['String'];
-  gainedAt: Scalars['Date'];
+  description?: Maybe<Scalars['String']>;
+  gainedAt?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
-  name: Scalars['String'];
+  institution?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   person?: Maybe<Person>;
   personAggregate?: Maybe<ExperiencePersonPersonAggregationSelection>;
   personConnection: ExperiencePersonConnection;
+  role?: Maybe<Scalars['String']>;
   skills: Array<Skill>;
   skillsAggregate?: Maybe<ExperienceSkillSkillsAggregationSelection>;
   skillsConnection: ExperienceSkillsConnection;
   startedFrom: Scalars['Date'];
+  type: ExperienceType;
 };
 
 
@@ -649,7 +658,9 @@ export type ExperienceAggregateSelection = {
   count: Scalars['Int'];
   description: StringAggregateSelection;
   id: IdAggregateSelection;
+  institution: StringAggregateSelection;
   name: StringAggregateSelection;
+  role: StringAggregateSelection;
 };
 
 export type ExperienceConnectInput = {
@@ -671,12 +682,15 @@ export type ExperienceConnectWhere = {
 };
 
 export type ExperienceCreateInput = {
-  description: Scalars['String'];
-  gainedAt: Scalars['Date'];
-  name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  gainedAt?: InputMaybe<Scalars['Date']>;
+  institution?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   person?: InputMaybe<ExperiencePersonFieldInput>;
+  role?: InputMaybe<Scalars['String']>;
   skills?: InputMaybe<ExperienceSkillsFieldInput>;
   startedFrom: Scalars['Date'];
+  type: ExperienceType;
 };
 
 export type ExperienceDeleteInput = {
@@ -696,10 +710,13 @@ export type ExperienceEdge = {
 };
 
 export type ExperienceOnCreateInput = {
-  description: Scalars['String'];
-  gainedAt: Scalars['Date'];
-  name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  gainedAt?: InputMaybe<Scalars['Date']>;
+  institution?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Scalars['String']>;
   startedFrom: Scalars['Date'];
+  type: ExperienceType;
 };
 
 export type ExperienceOptions = {
@@ -989,9 +1006,20 @@ export type ExperienceSort = {
   description?: InputMaybe<SortDirection>;
   gainedAt?: InputMaybe<SortDirection>;
   id?: InputMaybe<SortDirection>;
+  institution?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
+  role?: InputMaybe<SortDirection>;
   startedFrom?: InputMaybe<SortDirection>;
+  type?: InputMaybe<SortDirection>;
 };
+
+export enum ExperienceType {
+  Course = 'COURSE',
+  Default = 'DEFAULT',
+  Education = 'EDUCATION',
+  Hobby = 'HOBBY',
+  Project = 'PROJECT'
+}
 
 export type ExperienceUniqueWhere = {
   id?: InputMaybe<Scalars['ID']>;
@@ -1000,10 +1028,13 @@ export type ExperienceUniqueWhere = {
 export type ExperienceUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
   gainedAt?: InputMaybe<Scalars['Date']>;
+  institution?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   person?: InputMaybe<ExperiencePersonUpdateFieldInput>;
+  role?: InputMaybe<Scalars['String']>;
   skills?: InputMaybe<Array<ExperienceSkillsUpdateFieldInput>>;
   startedFrom?: InputMaybe<Scalars['Date']>;
+  type?: InputMaybe<ExperienceType>;
 };
 
 export type ExperienceWhere = {
@@ -1013,12 +1044,12 @@ export type ExperienceWhere = {
   description?: InputMaybe<Scalars['String']>;
   description_CONTAINS?: InputMaybe<Scalars['String']>;
   description_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  description_IN?: InputMaybe<Array<Scalars['String']>>;
+  description_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   description_STARTS_WITH?: InputMaybe<Scalars['String']>;
   gainedAt?: InputMaybe<Scalars['Date']>;
   gainedAt_GT?: InputMaybe<Scalars['Date']>;
   gainedAt_GTE?: InputMaybe<Scalars['Date']>;
-  gainedAt_IN?: InputMaybe<Array<Scalars['Date']>>;
+  gainedAt_IN?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
   gainedAt_LT?: InputMaybe<Scalars['Date']>;
   gainedAt_LTE?: InputMaybe<Scalars['Date']>;
   id?: InputMaybe<Scalars['ID']>;
@@ -1026,16 +1057,26 @@ export type ExperienceWhere = {
   id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
   id_IN?: InputMaybe<Array<Scalars['ID']>>;
   id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  institution?: InputMaybe<Scalars['String']>;
+  institution_CONTAINS?: InputMaybe<Scalars['String']>;
+  institution_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  institution_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  institution_STARTS_WITH?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   name_CONTAINS?: InputMaybe<Scalars['String']>;
   name_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  name_IN?: InputMaybe<Array<Scalars['String']>>;
+  name_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   name_STARTS_WITH?: InputMaybe<Scalars['String']>;
   person?: InputMaybe<PersonWhere>;
   personAggregate?: InputMaybe<ExperiencePersonAggregateInput>;
   personConnection?: InputMaybe<ExperiencePersonConnectionWhere>;
   personConnection_NOT?: InputMaybe<ExperiencePersonConnectionWhere>;
   person_NOT?: InputMaybe<PersonWhere>;
+  role?: InputMaybe<Scalars['String']>;
+  role_CONTAINS?: InputMaybe<Scalars['String']>;
+  role_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  role_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  role_STARTS_WITH?: InputMaybe<Scalars['String']>;
   skillsAggregate?: InputMaybe<ExperienceSkillsAggregateInput>;
   /** Return Experiences where all of the related ExperienceSkillsConnections match this filter */
   skillsConnection_ALL?: InputMaybe<ExperienceSkillsConnectionWhere>;
@@ -1059,6 +1100,8 @@ export type ExperienceWhere = {
   startedFrom_IN?: InputMaybe<Array<Scalars['Date']>>;
   startedFrom_LT?: InputMaybe<Scalars['Date']>;
   startedFrom_LTE?: InputMaybe<Scalars['Date']>;
+  type?: InputMaybe<ExperienceType>;
+  type_IN?: InputMaybe<Array<ExperienceType>>;
 };
 
 export type ExperiencesConnection = {
@@ -1101,6 +1144,7 @@ export type Mutation = {
   createRates: CreateRatesMutationResponse;
   createRoles: CreateRolesMutationResponse;
   createScores: CreateScoresMutationResponse;
+  createSkillGroups: CreateSkillGroupsMutationResponse;
   createSkills: CreateSkillsMutationResponse;
   deleteDepartments: DeleteInfo;
   deleteExperiences: DeleteInfo;
@@ -1111,6 +1155,7 @@ export type Mutation = {
   deleteRates: DeleteInfo;
   deleteRoles: DeleteInfo;
   deleteScores: DeleteInfo;
+  deleteSkillGroups: DeleteInfo;
   deleteSkills: DeleteInfo;
   updateDepartments: UpdateDepartmentsMutationResponse;
   updateExperiences: UpdateExperiencesMutationResponse;
@@ -1121,6 +1166,7 @@ export type Mutation = {
   updateRates: UpdateRatesMutationResponse;
   updateRoles: UpdateRolesMutationResponse;
   updateScores: UpdateScoresMutationResponse;
+  updateSkillGroups: UpdateSkillGroupsMutationResponse;
   updateSkills: UpdateSkillsMutationResponse;
 };
 
@@ -1167,6 +1213,11 @@ export type MutationCreateRolesArgs = {
 
 export type MutationCreateScoresArgs = {
   input: Array<ScoreCreateInput>;
+};
+
+
+export type MutationCreateSkillGroupsArgs = {
+  input: Array<SkillGroupCreateInput>;
 };
 
 
@@ -1222,6 +1273,12 @@ export type MutationDeleteRolesArgs = {
 
 export type MutationDeleteScoresArgs = {
   where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type MutationDeleteSkillGroupsArgs = {
+  delete?: InputMaybe<SkillGroupDeleteInput>;
+  where?: InputMaybe<SkillGroupWhere>;
 };
 
 
@@ -1282,6 +1339,12 @@ export type MutationUpdateRolesArgs = {
 export type MutationUpdateScoresArgs = {
   update?: InputMaybe<ScoreUpdateInput>;
   where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type MutationUpdateSkillGroupsArgs = {
+  update?: InputMaybe<SkillGroupUpdateInput>;
+  where?: InputMaybe<SkillGroupWhere>;
 };
 
 
@@ -1670,7 +1733,9 @@ export type PersonExperienceExperiencesNodeAggregateSelection = {
   __typename?: 'PersonExperienceExperiencesNodeAggregateSelection';
   description: StringAggregateSelection;
   id: IdAggregateSelection;
+  institution: StringAggregateSelection;
   name: StringAggregateSelection;
+  role: StringAggregateSelection;
 };
 
 export type PersonExperiencesAggregateInput = {
@@ -1758,6 +1823,21 @@ export type PersonExperiencesNodeAggregationWhereInput = {
   description_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
   description_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
   description_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  institution_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']>;
+  institution_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
   name_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
@@ -1773,6 +1853,21 @@ export type PersonExperiencesNodeAggregationWhereInput = {
   name_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  role_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']>;
+  role_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
 };
 
 export type PersonExperiencesRelationship = {
@@ -3078,6 +3173,10 @@ export type Query = {
   scores: Array<Score>;
   scoresAggregate: ScoreAggregateSelection;
   scoresConnection: ScoresConnection;
+  skillChildren: Array<SkillChild>;
+  skillGroups: Array<SkillGroup>;
+  skillGroupsAggregate: SkillGroupAggregateSelection;
+  skillGroupsConnection: SkillGroupsConnection;
   skills: Array<Skill>;
   skillsAggregate: SkillAggregateSelection;
   skillsConnection: SkillsConnection;
@@ -3261,6 +3360,31 @@ export type QueryScoresConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<InputMaybe<ScoreSort>>>;
   where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type QuerySkillChildrenArgs = {
+  options?: InputMaybe<QueryOptions>;
+  where?: InputMaybe<SkillChildWhere>;
+};
+
+
+export type QuerySkillGroupsArgs = {
+  options?: InputMaybe<SkillGroupOptions>;
+  where?: InputMaybe<SkillGroupWhere>;
+};
+
+
+export type QuerySkillGroupsAggregateArgs = {
+  where?: InputMaybe<SkillGroupWhere>;
+};
+
+
+export type QuerySkillGroupsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<InputMaybe<SkillGroupSort>>>;
+  where?: InputMaybe<SkillGroupWhere>;
 };
 
 
@@ -3783,11 +3907,13 @@ export type Skill = {
   experiences: Array<Experience>;
   experiencesAggregate?: Maybe<SkillExperienceExperiencesAggregationSelection>;
   experiencesConnection: SkillExperiencesConnection;
+  groups: Array<SkillGroup>;
   id: Scalars['ID'];
   name: Scalars['String'];
   persons: Array<Person>;
   personsAggregate?: Maybe<SkillPersonPersonsAggregationSelection>;
   personsConnection: SkillPersonsConnection;
+  recommendedFor: Scalars['Boolean'];
 };
 
 
@@ -3834,11 +3960,23 @@ export type SkillPersonsConnectionArgs = {
   where?: InputMaybe<SkillPersonsConnectionWhere>;
 };
 
+
+export type SkillRecommendedForArgs = {
+  projectId: Scalars['String'];
+};
+
 export type SkillAggregateSelection = {
   __typename?: 'SkillAggregateSelection';
   count: Scalars['Int'];
   id: IdAggregateSelection;
   name: StringAggregateSelection;
+};
+
+export type SkillChild = Skill | SkillGroup;
+
+export type SkillChildWhere = {
+  Skill?: InputMaybe<SkillWhere>;
+  SkillGroup?: InputMaybe<SkillGroupWhere>;
 };
 
 export type SkillConnectInput = {
@@ -3891,7 +4029,9 @@ export type SkillExperienceExperiencesNodeAggregateSelection = {
   __typename?: 'SkillExperienceExperiencesNodeAggregateSelection';
   description: StringAggregateSelection;
   id: IdAggregateSelection;
+  institution: StringAggregateSelection;
   name: StringAggregateSelection;
+  role: StringAggregateSelection;
 };
 
 export type SkillExperiencesAggregateInput = {
@@ -3979,6 +4119,21 @@ export type SkillExperiencesNodeAggregationWhereInput = {
   description_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
   description_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
   description_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  institution_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']>;
+  institution_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']>;
+  institution_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  institution_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  institution_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
   name_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
@@ -3994,6 +4149,21 @@ export type SkillExperiencesNodeAggregationWhereInput = {
   name_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  role_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']>;
+  role_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']>;
+  role_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  role_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  role_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
 };
 
 export type SkillExperiencesRelationship = {
@@ -4014,6 +4184,471 @@ export type SkillExperiencesUpdateFieldInput = {
   disconnect?: InputMaybe<Array<SkillExperiencesDisconnectFieldInput>>;
   update?: InputMaybe<SkillExperiencesUpdateConnectionInput>;
   where?: InputMaybe<SkillExperiencesConnectionWhere>;
+};
+
+export type SkillGroup = {
+  __typename?: 'SkillGroup';
+  children: Array<SkillChild>;
+  childrenConnection: SkillGroupChildrenConnection;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  parents: Array<SkillGroup>;
+  parentsAggregate?: Maybe<SkillGroupSkillGroupParentsAggregationSelection>;
+  parentsConnection: SkillGroupParentsConnection;
+};
+
+
+export type SkillGroupChildrenArgs = {
+  directed?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<QueryOptions>;
+  where?: InputMaybe<SkillChildWhere>;
+};
+
+
+export type SkillGroupChildrenConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  directed?: InputMaybe<Scalars['Boolean']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SkillGroupChildrenConnectionWhere>;
+};
+
+
+export type SkillGroupParentsArgs = {
+  directed?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<SkillGroupOptions>;
+  where?: InputMaybe<SkillGroupWhere>;
+};
+
+
+export type SkillGroupParentsAggregateArgs = {
+  directed?: InputMaybe<Scalars['Boolean']>;
+  where?: InputMaybe<SkillGroupWhere>;
+};
+
+
+export type SkillGroupParentsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  directed?: InputMaybe<Scalars['Boolean']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<SkillGroupParentsConnectionSort>>;
+  where?: InputMaybe<SkillGroupParentsConnectionWhere>;
+};
+
+export type SkillGroupAggregateSelection = {
+  __typename?: 'SkillGroupAggregateSelection';
+  count: Scalars['Int'];
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+};
+
+export type SkillGroupChildrenConnectInput = {
+  Skill?: InputMaybe<Array<SkillGroupChildrenSkillConnectFieldInput>>;
+  SkillGroup?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectFieldInput>>;
+};
+
+export type SkillGroupChildrenConnectOrCreateInput = {
+  Skill?: InputMaybe<Array<SkillGroupChildrenSkillConnectOrCreateFieldInput>>;
+  SkillGroup?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectOrCreateFieldInput>>;
+};
+
+export type SkillGroupChildrenConnection = {
+  __typename?: 'SkillGroupChildrenConnection';
+  edges: Array<SkillGroupChildrenRelationship>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type SkillGroupChildrenConnectionWhere = {
+  Skill?: InputMaybe<SkillGroupChildrenSkillConnectionWhere>;
+  SkillGroup?: InputMaybe<SkillGroupChildrenSkillGroupConnectionWhere>;
+};
+
+export type SkillGroupChildrenCreateFieldInput = {
+  Skill?: InputMaybe<Array<SkillGroupChildrenSkillCreateFieldInput>>;
+  SkillGroup?: InputMaybe<Array<SkillGroupChildrenSkillGroupCreateFieldInput>>;
+};
+
+export type SkillGroupChildrenCreateInput = {
+  Skill?: InputMaybe<SkillGroupChildrenSkillFieldInput>;
+  SkillGroup?: InputMaybe<SkillGroupChildrenSkillGroupFieldInput>;
+};
+
+export type SkillGroupChildrenDeleteInput = {
+  Skill?: InputMaybe<Array<SkillGroupChildrenSkillDeleteFieldInput>>;
+  SkillGroup?: InputMaybe<Array<SkillGroupChildrenSkillGroupDeleteFieldInput>>;
+};
+
+export type SkillGroupChildrenDisconnectInput = {
+  Skill?: InputMaybe<Array<SkillGroupChildrenSkillDisconnectFieldInput>>;
+  SkillGroup?: InputMaybe<Array<SkillGroupChildrenSkillGroupDisconnectFieldInput>>;
+};
+
+export type SkillGroupChildrenRelationship = {
+  __typename?: 'SkillGroupChildrenRelationship';
+  cursor: Scalars['String'];
+  node: SkillChild;
+};
+
+export type SkillGroupChildrenSkillConnectFieldInput = {
+  connect?: InputMaybe<Array<SkillConnectInput>>;
+  where?: InputMaybe<SkillConnectWhere>;
+};
+
+export type SkillGroupChildrenSkillConnectOrCreateFieldInput = {
+  onCreate: SkillGroupChildrenSkillConnectOrCreateFieldInputOnCreate;
+  where: SkillConnectOrCreateWhere;
+};
+
+export type SkillGroupChildrenSkillConnectOrCreateFieldInputOnCreate = {
+  node: SkillOnCreateInput;
+};
+
+export type SkillGroupChildrenSkillConnectionWhere = {
+  AND?: InputMaybe<Array<SkillGroupChildrenSkillConnectionWhere>>;
+  NOT?: InputMaybe<SkillGroupChildrenSkillConnectionWhere>;
+  OR?: InputMaybe<Array<SkillGroupChildrenSkillConnectionWhere>>;
+  node?: InputMaybe<SkillWhere>;
+};
+
+export type SkillGroupChildrenSkillCreateFieldInput = {
+  node: SkillCreateInput;
+};
+
+export type SkillGroupChildrenSkillDeleteFieldInput = {
+  delete?: InputMaybe<SkillDeleteInput>;
+  where?: InputMaybe<SkillGroupChildrenSkillConnectionWhere>;
+};
+
+export type SkillGroupChildrenSkillDisconnectFieldInput = {
+  disconnect?: InputMaybe<SkillDisconnectInput>;
+  where?: InputMaybe<SkillGroupChildrenSkillConnectionWhere>;
+};
+
+export type SkillGroupChildrenSkillFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupChildrenSkillConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<SkillGroupChildrenSkillConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<SkillGroupChildrenSkillCreateFieldInput>>;
+};
+
+export type SkillGroupChildrenSkillGroupConnectFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupConnectInput>>;
+  where?: InputMaybe<SkillGroupConnectWhere>;
+};
+
+export type SkillGroupChildrenSkillGroupConnectOrCreateFieldInput = {
+  onCreate: SkillGroupChildrenSkillGroupConnectOrCreateFieldInputOnCreate;
+  where: SkillGroupConnectOrCreateWhere;
+};
+
+export type SkillGroupChildrenSkillGroupConnectOrCreateFieldInputOnCreate = {
+  node: SkillGroupOnCreateInput;
+};
+
+export type SkillGroupChildrenSkillGroupConnectionWhere = {
+  AND?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectionWhere>>;
+  NOT?: InputMaybe<SkillGroupChildrenSkillGroupConnectionWhere>;
+  OR?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectionWhere>>;
+  node?: InputMaybe<SkillGroupWhere>;
+};
+
+export type SkillGroupChildrenSkillGroupCreateFieldInput = {
+  node: SkillGroupCreateInput;
+};
+
+export type SkillGroupChildrenSkillGroupDeleteFieldInput = {
+  delete?: InputMaybe<SkillGroupDeleteInput>;
+  where?: InputMaybe<SkillGroupChildrenSkillGroupConnectionWhere>;
+};
+
+export type SkillGroupChildrenSkillGroupDisconnectFieldInput = {
+  disconnect?: InputMaybe<SkillGroupDisconnectInput>;
+  where?: InputMaybe<SkillGroupChildrenSkillGroupConnectionWhere>;
+};
+
+export type SkillGroupChildrenSkillGroupFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<SkillGroupChildrenSkillGroupCreateFieldInput>>;
+};
+
+export type SkillGroupChildrenSkillGroupUpdateConnectionInput = {
+  node?: InputMaybe<SkillGroupUpdateInput>;
+};
+
+export type SkillGroupChildrenSkillGroupUpdateFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<SkillGroupChildrenSkillGroupConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<SkillGroupChildrenSkillGroupCreateFieldInput>>;
+  delete?: InputMaybe<Array<SkillGroupChildrenSkillGroupDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<SkillGroupChildrenSkillGroupDisconnectFieldInput>>;
+  update?: InputMaybe<SkillGroupChildrenSkillGroupUpdateConnectionInput>;
+  where?: InputMaybe<SkillGroupChildrenSkillGroupConnectionWhere>;
+};
+
+export type SkillGroupChildrenSkillUpdateConnectionInput = {
+  node?: InputMaybe<SkillUpdateInput>;
+};
+
+export type SkillGroupChildrenSkillUpdateFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupChildrenSkillConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<SkillGroupChildrenSkillConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<SkillGroupChildrenSkillCreateFieldInput>>;
+  delete?: InputMaybe<Array<SkillGroupChildrenSkillDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<SkillGroupChildrenSkillDisconnectFieldInput>>;
+  update?: InputMaybe<SkillGroupChildrenSkillUpdateConnectionInput>;
+  where?: InputMaybe<SkillGroupChildrenSkillConnectionWhere>;
+};
+
+export type SkillGroupChildrenUpdateInput = {
+  Skill?: InputMaybe<Array<SkillGroupChildrenSkillUpdateFieldInput>>;
+  SkillGroup?: InputMaybe<Array<SkillGroupChildrenSkillGroupUpdateFieldInput>>;
+};
+
+export type SkillGroupConnectInput = {
+  children?: InputMaybe<SkillGroupChildrenConnectInput>;
+  parents?: InputMaybe<Array<SkillGroupParentsConnectFieldInput>>;
+};
+
+export type SkillGroupConnectOrCreateInput = {
+  children?: InputMaybe<SkillGroupChildrenConnectOrCreateInput>;
+  parents?: InputMaybe<Array<SkillGroupParentsConnectOrCreateFieldInput>>;
+};
+
+export type SkillGroupConnectOrCreateWhere = {
+  node: SkillGroupUniqueWhere;
+};
+
+export type SkillGroupConnectWhere = {
+  node: SkillGroupWhere;
+};
+
+export type SkillGroupCreateInput = {
+  children?: InputMaybe<SkillGroupChildrenCreateInput>;
+  name: Scalars['String'];
+  parents?: InputMaybe<SkillGroupParentsFieldInput>;
+};
+
+export type SkillGroupDeleteInput = {
+  children?: InputMaybe<SkillGroupChildrenDeleteInput>;
+  parents?: InputMaybe<Array<SkillGroupParentsDeleteFieldInput>>;
+};
+
+export type SkillGroupDisconnectInput = {
+  children?: InputMaybe<SkillGroupChildrenDisconnectInput>;
+  parents?: InputMaybe<Array<SkillGroupParentsDisconnectFieldInput>>;
+};
+
+export type SkillGroupEdge = {
+  __typename?: 'SkillGroupEdge';
+  cursor: Scalars['String'];
+  node: SkillGroup;
+};
+
+export type SkillGroupOnCreateInput = {
+  name: Scalars['String'];
+};
+
+export type SkillGroupOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more SkillGroupSort objects to sort SkillGroups by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<SkillGroupSort>>;
+};
+
+export type SkillGroupParentsAggregateInput = {
+  AND?: InputMaybe<Array<SkillGroupParentsAggregateInput>>;
+  NOT?: InputMaybe<SkillGroupParentsAggregateInput>;
+  OR?: InputMaybe<Array<SkillGroupParentsAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<SkillGroupParentsNodeAggregationWhereInput>;
+};
+
+export type SkillGroupParentsConnectFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupConnectInput>>;
+  /** Whether or not to overwrite any matching relationship with the new properties. */
+  overwrite?: Scalars['Boolean'];
+  where?: InputMaybe<SkillGroupConnectWhere>;
+};
+
+export type SkillGroupParentsConnectOrCreateFieldInput = {
+  onCreate: SkillGroupParentsConnectOrCreateFieldInputOnCreate;
+  where: SkillGroupConnectOrCreateWhere;
+};
+
+export type SkillGroupParentsConnectOrCreateFieldInputOnCreate = {
+  node: SkillGroupOnCreateInput;
+};
+
+export type SkillGroupParentsConnection = {
+  __typename?: 'SkillGroupParentsConnection';
+  edges: Array<SkillGroupParentsRelationship>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type SkillGroupParentsConnectionSort = {
+  node?: InputMaybe<SkillGroupSort>;
+};
+
+export type SkillGroupParentsConnectionWhere = {
+  AND?: InputMaybe<Array<SkillGroupParentsConnectionWhere>>;
+  NOT?: InputMaybe<SkillGroupParentsConnectionWhere>;
+  OR?: InputMaybe<Array<SkillGroupParentsConnectionWhere>>;
+  node?: InputMaybe<SkillGroupWhere>;
+};
+
+export type SkillGroupParentsCreateFieldInput = {
+  node: SkillGroupCreateInput;
+};
+
+export type SkillGroupParentsDeleteFieldInput = {
+  delete?: InputMaybe<SkillGroupDeleteInput>;
+  where?: InputMaybe<SkillGroupParentsConnectionWhere>;
+};
+
+export type SkillGroupParentsDisconnectFieldInput = {
+  disconnect?: InputMaybe<SkillGroupDisconnectInput>;
+  where?: InputMaybe<SkillGroupParentsConnectionWhere>;
+};
+
+export type SkillGroupParentsFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupParentsConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<SkillGroupParentsConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<SkillGroupParentsCreateFieldInput>>;
+};
+
+export type SkillGroupParentsNodeAggregationWhereInput = {
+  AND?: InputMaybe<Array<SkillGroupParentsNodeAggregationWhereInput>>;
+  NOT?: InputMaybe<SkillGroupParentsNodeAggregationWhereInput>;
+  OR?: InputMaybe<Array<SkillGroupParentsNodeAggregationWhereInput>>;
+  name_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']>;
+  name_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type SkillGroupParentsRelationship = {
+  __typename?: 'SkillGroupParentsRelationship';
+  cursor: Scalars['String'];
+  node: SkillGroup;
+};
+
+export type SkillGroupParentsUpdateConnectionInput = {
+  node?: InputMaybe<SkillGroupUpdateInput>;
+};
+
+export type SkillGroupParentsUpdateFieldInput = {
+  connect?: InputMaybe<Array<SkillGroupParentsConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<SkillGroupParentsConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<SkillGroupParentsCreateFieldInput>>;
+  delete?: InputMaybe<Array<SkillGroupParentsDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<SkillGroupParentsDisconnectFieldInput>>;
+  update?: InputMaybe<SkillGroupParentsUpdateConnectionInput>;
+  where?: InputMaybe<SkillGroupParentsConnectionWhere>;
+};
+
+export type SkillGroupRelationInput = {
+  children?: InputMaybe<SkillGroupChildrenCreateFieldInput>;
+  parents?: InputMaybe<Array<SkillGroupParentsCreateFieldInput>>;
+};
+
+export type SkillGroupSkillGroupParentsAggregationSelection = {
+  __typename?: 'SkillGroupSkillGroupParentsAggregationSelection';
+  count: Scalars['Int'];
+  node?: Maybe<SkillGroupSkillGroupParentsNodeAggregateSelection>;
+};
+
+export type SkillGroupSkillGroupParentsNodeAggregateSelection = {
+  __typename?: 'SkillGroupSkillGroupParentsNodeAggregateSelection';
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+};
+
+/** Fields to sort SkillGroups by. The order in which sorts are applied is not guaranteed when specifying many fields in one SkillGroupSort object. */
+export type SkillGroupSort = {
+  id?: InputMaybe<SortDirection>;
+  name?: InputMaybe<SortDirection>;
+};
+
+export type SkillGroupUniqueWhere = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type SkillGroupUpdateInput = {
+  children?: InputMaybe<SkillGroupChildrenUpdateInput>;
+  name?: InputMaybe<Scalars['String']>;
+  parents?: InputMaybe<Array<SkillGroupParentsUpdateFieldInput>>;
+};
+
+export type SkillGroupWhere = {
+  AND?: InputMaybe<Array<SkillGroupWhere>>;
+  NOT?: InputMaybe<SkillGroupWhere>;
+  OR?: InputMaybe<Array<SkillGroupWhere>>;
+  /** Return SkillGroups where all of the related SkillGroupChildrenConnections match this filter */
+  childrenConnection_ALL?: InputMaybe<SkillGroupChildrenConnectionWhere>;
+  /** Return SkillGroups where none of the related SkillGroupChildrenConnections match this filter */
+  childrenConnection_NONE?: InputMaybe<SkillGroupChildrenConnectionWhere>;
+  /** Return SkillGroups where one of the related SkillGroupChildrenConnections match this filter */
+  childrenConnection_SINGLE?: InputMaybe<SkillGroupChildrenConnectionWhere>;
+  /** Return SkillGroups where some of the related SkillGroupChildrenConnections match this filter */
+  childrenConnection_SOME?: InputMaybe<SkillGroupChildrenConnectionWhere>;
+  /** Return SkillGroups where all of the related SkillChildren match this filter */
+  children_ALL?: InputMaybe<SkillChildWhere>;
+  /** Return SkillGroups where none of the related SkillChildren match this filter */
+  children_NONE?: InputMaybe<SkillChildWhere>;
+  /** Return SkillGroups where one of the related SkillChildren match this filter */
+  children_SINGLE?: InputMaybe<SkillChildWhere>;
+  /** Return SkillGroups where some of the related SkillChildren match this filter */
+  children_SOME?: InputMaybe<SkillChildWhere>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<Scalars['ID']>>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  name_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_IN?: InputMaybe<Array<Scalars['String']>>;
+  name_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  parentsAggregate?: InputMaybe<SkillGroupParentsAggregateInput>;
+  /** Return SkillGroups where all of the related SkillGroupParentsConnections match this filter */
+  parentsConnection_ALL?: InputMaybe<SkillGroupParentsConnectionWhere>;
+  /** Return SkillGroups where none of the related SkillGroupParentsConnections match this filter */
+  parentsConnection_NONE?: InputMaybe<SkillGroupParentsConnectionWhere>;
+  /** Return SkillGroups where one of the related SkillGroupParentsConnections match this filter */
+  parentsConnection_SINGLE?: InputMaybe<SkillGroupParentsConnectionWhere>;
+  /** Return SkillGroups where some of the related SkillGroupParentsConnections match this filter */
+  parentsConnection_SOME?: InputMaybe<SkillGroupParentsConnectionWhere>;
+  /** Return SkillGroups where all of the related SkillGroups match this filter */
+  parents_ALL?: InputMaybe<SkillGroupWhere>;
+  /** Return SkillGroups where none of the related SkillGroups match this filter */
+  parents_NONE?: InputMaybe<SkillGroupWhere>;
+  /** Return SkillGroups where one of the related SkillGroups match this filter */
+  parents_SINGLE?: InputMaybe<SkillGroupWhere>;
+  /** Return SkillGroups where some of the related SkillGroups match this filter */
+  parents_SOME?: InputMaybe<SkillGroupWhere>;
+};
+
+export type SkillGroupsConnection = {
+  __typename?: 'SkillGroupsConnection';
+  edges: Array<SkillGroupEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type SkillOnCreateInput = {
@@ -4187,6 +4822,7 @@ export type SkillRelationInput = {
 export type SkillSort = {
   id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
+  recommendedFor?: InputMaybe<SortDirection>;
 };
 
 export type SkillUniqueWhere = {
@@ -4220,6 +4856,11 @@ export type SkillWhere = {
   experiences_SINGLE?: InputMaybe<ExperienceWhere>;
   /** Return Skills where some of the related Experiences match this filter */
   experiences_SOME?: InputMaybe<ExperienceWhere>;
+  groups?: InputMaybe<SkillGroupWhere>;
+  groups_ALL?: InputMaybe<SkillGroupWhere>;
+  groups_NONE?: InputMaybe<SkillGroupWhere>;
+  groups_SINGLE?: InputMaybe<SkillGroupWhere>;
+  groups_SOME?: InputMaybe<SkillGroupWhere>;
   id?: InputMaybe<Scalars['ID']>;
   id_CONTAINS?: InputMaybe<Scalars['ID']>;
   id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
@@ -4335,11 +4976,24 @@ export type UpdateScoresMutationResponse = {
   scores: Array<Score>;
 };
 
+export type UpdateSkillGroupsMutationResponse = {
+  __typename?: 'UpdateSkillGroupsMutationResponse';
+  info: UpdateInfo;
+  skillGroups: Array<SkillGroup>;
+};
+
 export type UpdateSkillsMutationResponse = {
   __typename?: 'UpdateSkillsMutationResponse';
   info: UpdateInfo;
   skills: Array<Skill>;
 };
+
+export type CommonExperienceFragment = { __typename?: 'Experience', gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> };
+
+export type CvQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CvQueryQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', name: string, surname: string, seniority?: Seniority | null, bio?: string | null, roles: Array<{ __typename?: 'Role', name: string }>, languages: Array<{ __typename?: 'Skill', name: string }>, skills: Array<{ __typename?: 'Skill', name: string, recommendedFor: boolean, groups: Array<{ __typename?: 'SkillGroup', name: string }> }>, experience: Array<{ __typename?: 'Experience', role?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, projects: Array<{ __typename?: 'Experience', name?: string | null, role?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', name?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', name?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', name?: string | null }> }> };
 
 export type DepartmentPartFragment = { __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null };
 
@@ -4355,7 +5009,7 @@ export type CreateExperiencesMutationVariables = Exact<{
 }>;
 
 
-export type CreateExperiencesMutation = { __typename?: 'Mutation', createExperiences: { __typename?: 'CreateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', id: string, name: string, person?: { __typename?: 'Person', name: string } | null }> } };
+export type CreateExperiencesMutation = { __typename?: 'Mutation', createExperiences: { __typename?: 'CreateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, person?: { __typename?: 'Person', name: string } | null }> } };
 
 export type CreatePeopleMutationVariables = Exact<{
   input: Array<PersonCreateInput> | PersonCreateInput;
@@ -4445,16 +5099,16 @@ export type EditExperiencesMutationVariables = Exact<{
 }>;
 
 
-export type EditExperiencesMutation = { __typename?: 'Mutation', updateExperiences: { __typename?: 'UpdateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', description: string, gainedAt: any, name: string, startedFrom: any, person?: { __typename?: 'Person', id: string, name: string } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> } };
+export type EditExperiencesMutation = { __typename?: 'Mutation', updateExperiences: { __typename?: 'UpdateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', description?: string | null, gainedAt?: any | null, name?: string | null, startedFrom: any, person?: { __typename?: 'Person', id: string, name: string } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> } };
 
-export type ExperienceDataFragment = { __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+export type ExperienceDataFragment = { __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
 export type ExperiencesByPersonQueryVariables = Exact<{
   where?: InputMaybe<ExperienceWhere>;
 }>;
 
 
-export type ExperiencesByPersonQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+export type ExperiencesByPersonQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
 export type FindSkillQueryVariables = Exact<{
   where?: InputMaybe<SkillWhere>;
@@ -4463,14 +5117,14 @@ export type FindSkillQueryVariables = Exact<{
 
 export type FindSkillQuery = { __typename?: 'Query', findSkill: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
-export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
 
 export type PersonsWithAllQueryVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
 }>;
 
 
-export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name: string, description: string, startedFrom: any, gainedAt: any, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> }> };
+export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> }> };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4500,6 +5154,13 @@ export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
+
+export type SkillsTreeQueryVariables = Exact<{
+  where?: InputMaybe<SkillGroupWhere>;
+}>;
+
+
+export type SkillsTreeQuery = { __typename?: 'Query', skillGroups: Array<{ __typename?: 'SkillGroup', id: string, name: string, children: Array<{ __typename: 'Skill', id: string, name: string } | { __typename: 'SkillGroup', id: string, name: string, childrenConnection: { __typename?: 'SkillGroupChildrenConnection', totalCount: number } }>, childrenConnection: { __typename?: 'SkillGroupChildrenConnection', totalCount: number } }> };
 
 export type SkillsWithLimitQueryVariables = Exact<{
   options?: InputMaybe<SkillOptions>;
@@ -4540,6 +5201,16 @@ export type UpdateRatesMutationVariables = Exact<{
 
 export type UpdateRatesMutation = { __typename?: 'Mutation', updateRates: { __typename?: 'UpdateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string, name: string } }> } };
 
+export const CommonExperienceFragmentDoc = gql`
+    fragment commonExperience on Experience {
+  gainedAt
+  startedFrom
+  description
+  skills {
+    name
+  }
+}
+    `;
 export const DepartmentPartFragmentDoc = gql`
     fragment DepartmentPart on Department {
   id
@@ -4631,6 +5302,63 @@ export const ProjectPartFragmentDoc = gql`
   }
 }
     `;
+export const CvQueryDocument = gql`
+    query CVQuery {
+  people {
+    name
+    surname
+    seniority
+    bio
+    roles {
+      name
+    }
+    languages: skills(where: {groups: {id: "Languages"}}) {
+      name
+    }
+    skills(where: {groups_SOME: {id: "Technologies"}}) {
+      name
+      groups {
+        name
+      }
+      recommendedFor(projectId: "ProjectCV")
+    }
+    experience: experiences(where: {type: DEFAULT}) {
+      ...commonExperience
+      role
+      institution
+    }
+    projects: experiences(where: {type: PROJECT}) {
+      ...commonExperience
+      name
+      role
+    }
+    education: experiences(where: {type: EDUCATION}) {
+      ...commonExperience
+      name
+      institution
+    }
+    courses: experiences(where: {type: COURSE}) {
+      ...commonExperience
+      name
+      institution
+    }
+    hobby: experiences(where: {type: HOBBY}) {
+      name
+    }
+  }
+}
+    ${CommonExperienceFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CvQueryGQL extends Apollo.Query<CvQueryQuery, CvQueryQueryVariables> {
+    document = CvQueryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreateDepartmentsDocument = gql`
     mutation CreateDepartments($input: [DepartmentCreateInput!]!) {
   createDepartments(input: $input) {
@@ -4646,7 +5374,7 @@ export const CreateDepartmentsDocument = gql`
   })
   export class CreateDepartmentsGQL extends Apollo.Mutation<CreateDepartmentsMutation, CreateDepartmentsMutationVariables> {
     document = CreateDepartmentsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4670,7 +5398,7 @@ export const CreateExperiencesDocument = gql`
   })
   export class CreateExperiencesGQL extends Apollo.Mutation<CreateExperiencesMutation, CreateExperiencesMutationVariables> {
     document = CreateExperiencesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4695,7 +5423,7 @@ export const CreatePeopleDocument = gql`
   })
   export class CreatePeopleGQL extends Apollo.Mutation<CreatePeopleMutation, CreatePeopleMutationVariables> {
     document = CreatePeopleDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4715,7 +5443,7 @@ export const CreateProjectsDocument = gql`
   })
   export class CreateProjectsGQL extends Apollo.Mutation<CreateProjectsMutation, CreateProjectsMutationVariables> {
     document = CreateProjectsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4740,7 +5468,7 @@ export const CreateRatesDocument = gql`
   })
   export class CreateRatesGQL extends Apollo.Mutation<CreateRatesMutation, CreateRatesMutationVariables> {
     document = CreateRatesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4760,7 +5488,7 @@ export const CreateSkillsDocument = gql`
   })
   export class CreateSkillsGQL extends Apollo.Mutation<CreateSkillsMutation, CreateSkillsMutationVariables> {
     document = CreateSkillsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4778,7 +5506,7 @@ export const DeleteDepartmentsDocument = gql`
   })
   export class DeleteDepartmentsGQL extends Apollo.Mutation<DeleteDepartmentsMutation, DeleteDepartmentsMutationVariables> {
     document = DeleteDepartmentsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4796,7 +5524,7 @@ export const DeleteExperiencesDocument = gql`
   })
   export class DeleteExperiencesGQL extends Apollo.Mutation<DeleteExperiencesMutation, DeleteExperiencesMutationVariables> {
     document = DeleteExperiencesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4814,7 +5542,7 @@ export const DeletePersonsDocument = gql`
   })
   export class DeletePersonsGQL extends Apollo.Mutation<DeletePersonsMutation, DeletePersonsMutationVariables> {
     document = DeletePersonsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4832,7 +5560,7 @@ export const DeleteProjectsDocument = gql`
   })
   export class DeleteProjectsGQL extends Apollo.Mutation<DeleteProjectsMutation, DeleteProjectsMutationVariables> {
     document = DeleteProjectsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4850,7 +5578,7 @@ export const DeleteRatesDocument = gql`
   })
   export class DeleteRatesGQL extends Apollo.Mutation<DeleteRatesMutation, DeleteRatesMutationVariables> {
     document = DeleteRatesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4868,7 +5596,7 @@ export const DeleteSkillsDocument = gql`
   })
   export class DeleteSkillsGQL extends Apollo.Mutation<DeleteSkillsMutation, DeleteSkillsMutationVariables> {
     document = DeleteSkillsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4897,7 +5625,7 @@ export const DepartmentsDetailsDocument = gql`
   })
   export class DepartmentsDetailsGQL extends Apollo.Query<DepartmentsDetailsQuery, DepartmentsDetailsQueryVariables> {
     document = DepartmentsDetailsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4919,7 +5647,7 @@ export const DepartmentsDocument = gql`
   })
   export class DepartmentsGQL extends Apollo.Query<DepartmentsQuery, DepartmentsQueryVariables> {
     document = DepartmentsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4950,7 +5678,7 @@ export const EditExperiencesDocument = gql`
   })
   export class EditExperiencesGQL extends Apollo.Mutation<EditExperiencesMutation, EditExperiencesMutationVariables> {
     document = EditExperiencesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4968,7 +5696,7 @@ export const ExperiencesByPersonDocument = gql`
   })
   export class ExperiencesByPersonGQL extends Apollo.Query<ExperiencesByPersonQuery, ExperiencesByPersonQueryVariables> {
     document = ExperiencesByPersonDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -4987,7 +5715,7 @@ export const FindSkillDocument = gql`
   })
   export class FindSkillGQL extends Apollo.Query<FindSkillQuery, FindSkillQueryVariables> {
     document = FindSkillDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5005,7 +5733,7 @@ export const PersonsWithAllDocument = gql`
   })
   export class PersonsWithAllGQL extends Apollo.Query<PersonsWithAllQuery, PersonsWithAllQueryVariables> {
     document = PersonsWithAllDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5024,7 +5752,7 @@ export const ProjectsDocument = gql`
   })
   export class ProjectsGQL extends Apollo.Query<ProjectsQuery, ProjectsQueryVariables> {
     document = ProjectsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5042,7 +5770,7 @@ export const ProjectsWithAllDocument = gql`
   })
   export class ProjectsWithAllGQL extends Apollo.Query<ProjectsWithAllQuery, ProjectsWithAllQueryVariables> {
     document = ProjectsWithAllDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5062,7 +5790,7 @@ export const RatesByPersonDocument = gql`
   })
   export class RatesByPersonGQL extends Apollo.Query<RatesByPersonQuery, RatesByPersonQueryVariables> {
     document = RatesByPersonDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5081,7 +5809,7 @@ export const RolesDocument = gql`
   })
   export class RolesGQL extends Apollo.Query<RolesQuery, RolesQueryVariables> {
     document = RolesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5100,7 +5828,44 @@ export const SkillsDocument = gql`
   })
   export class SkillsGQL extends Apollo.Query<SkillsQuery, SkillsQueryVariables> {
     document = SkillsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SkillsTreeDocument = gql`
+    query SkillsTree($where: SkillGroupWhere) {
+  skillGroups(where: $where) {
+    id
+    name
+    children {
+      ... on SkillGroup {
+        __typename
+        id
+        name
+        childrenConnection {
+          totalCount
+        }
+      }
+      ... on Skill {
+        __typename
+        id
+        name
+      }
+    }
+    childrenConnection {
+      totalCount
+    }
+  }
+}
+    `;
 
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SkillsTreeGQL extends Apollo.Query<SkillsTreeQuery, SkillsTreeQueryVariables> {
+    document = SkillsTreeDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5122,7 +5887,7 @@ export const SkillsWithLimitDocument = gql`
   })
   export class SkillsWithLimitGQL extends Apollo.Query<SkillsWithLimitQuery, SkillsWithLimitQueryVariables> {
     document = SkillsWithLimitDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5153,7 +5918,7 @@ export const UpdateDepartmentsDocument = gql`
   })
   export class UpdateDepartmentsGQL extends Apollo.Mutation<UpdateDepartmentsMutation, UpdateDepartmentsMutationVariables> {
     document = UpdateDepartmentsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5209,7 +5974,7 @@ export const UpdatePeopleDocument = gql`
   })
   export class UpdatePeopleGQL extends Apollo.Mutation<UpdatePeopleMutation, UpdatePeopleMutationVariables> {
     document = UpdatePeopleDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5230,7 +5995,7 @@ export const UpdateProjectsDocument = gql`
   })
   export class UpdateProjectsGQL extends Apollo.Mutation<UpdateProjectsMutation, UpdateProjectsMutationVariables> {
     document = UpdateProjectsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -5256,7 +6021,7 @@ export const UpdateRatesDocument = gql`
   })
   export class UpdateRatesGQL extends Apollo.Mutation<UpdateRatesMutation, UpdateRatesMutationVariables> {
     document = UpdateRatesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }

@@ -12,6 +12,9 @@ import {
   SkillPartFragment,
   SkillsDocument,
   SkillsQuery,
+  SkillsTreeGQL,
+  SkillsTreeQuery,
+  SkillsTreeQueryVariables,
   SkillsWithLimitGQL,
   SkillsWithLimitQuery,
   SkillsWithLimitQueryVariables,
@@ -30,11 +33,13 @@ export class SkillsAdapterService extends ApolloClientService {
         Exact<{ options?: InputMaybe<SkillOptions> | undefined }>
       >
     | undefined = undefined;
+  skillsTreeQueryRef: QueryRef<SkillsTreeQuery, SkillsTreeQueryVariables>;
   editedSkill: SkillPartFragment | null = null;
 
   constructor(
     apollo: Apollo,
     private ssGQl: SkillsWithLimitGQL,
+    private skillsTreeGQl: SkillsTreeGQL,
   ) {
     super(apollo);
     this.skillsQueryRef = this.ssGQl.watch(
@@ -49,11 +54,25 @@ export class SkillsAdapterService extends ApolloClientService {
         errorPolicy: 'all',
       },
     );
+
+    this.skillsTreeQueryRef = this.skillsTreeGQl.watch(
+      {
+        where: {
+          parentsAggregate: {
+            count: 0,
+          },
+        },
+      },
+      {
+        fetchPolicy: 'cache-and-network',
+        errorPolicy: 'all',
+      },
+    );
   }
 
   fetch(): Observable<SkillsQuery['skills']> {
     const data = super.fetchValues<SkillsQuery>(SkillsDocument, 'skills');
-    data.subscribe((skills) => this.skills = skills);
+    data.subscribe((skills) => (this.skills = skills));
     return data;
   }
 

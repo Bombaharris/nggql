@@ -9,16 +9,21 @@ import {
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
 import { SkillForm } from '../skills-form/models/skill-form.model';
 
+interface FeedItem {
+  id: string;
+  name: string;
+  level: number;
+  childrenCount: number;
+  type?: string;
+}
+
 @Component({
   selector: 'app-skills-list',
   templateUrl: './skills-list.component.html',
   styleUrl: './skills-list.component.scss',
 })
 export class SkillsListComponent implements OnInit {
-  pageIndex = 0;
-  pageSize = 10;
-  total = 0;
-  feed!: SkillsWithLimitQuery['skills'];
+  feed: FeedItem[] = [];
   isFormVisible = false;
   isLoading = false;
   currentForm: 'skill' | null = null;
@@ -32,7 +37,7 @@ export class SkillsListComponent implements OnInit {
   ) {
     this.isLoading = true;
     this.subscription.add(
-      this.skillsAdapterService?.skillsQueryRef?.valueChanges.subscribe(
+      this.skillsAdapterService.skillsTreeQueryRef.valueChanges.subscribe(
         ({ data, loading, errors }) => {
           if (loading) {
             this.isLoading = loading;
@@ -41,9 +46,14 @@ export class SkillsListComponent implements OnInit {
             errors.map((e) => console.error(e));
             this.isLoading = false;
           }
-          if (data && data.skills) {
-            this.feed = data.skills;
-            this.total = data.skillsAggregate.count;
+          if (data && data.skillGroups) {
+            this.feed = data.skillGroups.map((skillGroup) => ({
+              id: skillGroup.id,
+              name: skillGroup.name,
+              level: 0,
+              childrenCount: skillGroup.childrenConnection.totalCount,
+              type: skillGroup.__typename,
+            }));
             this.isLoading = false;
           }
         },
@@ -57,24 +67,48 @@ export class SkillsListComponent implements OnInit {
     }
   }
 
-  async fetchMore(reset: boolean = false) {
-    this.isLoading = true;
-    if (reset) {
-      this.pageIndex = 0;
+  async handleExpand(item: FeedItem, index: number, event: boolean) {
+    if (event) {
+      await this.fetchChildren(item, index);
+    } else {
+      this.removeChildrenOf(item, index);
     }
-    await this.skillsAdapterService.skillsQueryRef
-      ?.fetchMore({
-        variables: {
-          options: {
-            limit: this.pageSize,
-            offset: this.pageIndex * this.pageSize - this.pageSize,
-          },
-        },
-      })
-      .then((result) => {
-        this.feed = result.data.skills;
-      });
+  }
+
+  async fetchChildren(item: FeedItem, index: number) {
+    this.isLoading = true;
+    const result = await this.skillsAdapterService.skillsTreeQueryRef.fetchMore(
+      { variables: { where: { id: item.id } } },
+    );
+    this.feed.splice(
+      index + 1,
+      0,
+      ...result.data.skillGroups[0].children.map((skillGroup) => ({
+        id: skillGroup.id,
+        name: skillGroup.name,
+        level: item.level + 1,
+        childrenCount: 'childrenConnection' in skillGroup ? skillGroup.childrenConnection.totalCount : 0,
+        type: skillGroup.__typename,
+      })),
+    );
+    this.feed = [...this.feed];
+
     this.isLoading = false;
+  }
+
+  removeChildrenOf(item: FeedItem, index: number) {
+    const startLevel = item.level;
+    let currentIndex = index + 1;
+
+    for (; currentIndex < this.feed.length; currentIndex++) {
+      const child = this.feed[currentIndex];
+      if (child.level === startLevel) {
+        break;
+      }
+    }
+
+    this.feed.splice(index + 1, currentIndex - index - 1);
+    this.feed = [...this.feed];
   }
 
   openForm(formType: 'skill' | null): void {

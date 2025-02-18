@@ -41,10 +41,12 @@ type Experience {
   gainedAt: Date
 }
 
+union SkillChild = Skill | SkillGroup
+
 type SkillGroup {
   id: ID! @id @unique
   name: String!
-  skills: [Skill!]! @relationship(type: "BELONGS_TO", direction: IN)
+  children: [SkillChild!]! @relationship(type: "BELONGS_TO", direction: IN)
   parents: [SkillGroup!]! @relationship(type: "BELONGS_TO", direction: OUT)
 }
 
@@ -52,7 +54,7 @@ type Skill {
   id: ID! @id @unique
   name: String!
   groups: [SkillGroup!]! @cypher(statement: """
-    match (this)-[:BELONGS_TO]->+(sg:SkillGroup) return sg
+    MATCH (this)-[:BELONGS_TO]->+(sg:SkillGroup) RETURN sg
   """, columnName: "sg")
   persons: [Person!]! @relationship(type: "HAS_SKILL", direction: IN)
   experiences: [Experience!]! @relationship(type: "USED_SKILL", direction: IN)
