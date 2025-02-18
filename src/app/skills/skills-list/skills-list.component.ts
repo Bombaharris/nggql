@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
-  CreateSkillsGQL,
+  SkillsTreeQuery,
   SkillsWithLimitQuery,
 } from 'src/app/generated/graphql';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
-import { SkillForm } from '../skills-form/models/skill-form.model';
+import { MutationResult } from 'apollo-angular';
+import { QlResponseMessageBuilderService } from '../../services/ql-response-message-builder.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import QlResponseHandlerService from '../../services/ql-response-handler.service';
 
-interface FeedItem {
+export type SkillFormType = 'Skill' | 'SkillGroup';
+
+interface ListItem {
   id: string;
   name: string;
   level: number;
   childrenCount: number;
-  type?: string;
+  type?: SkillFormType;
+  parentId: string | null;
 }
 
 @Component({
@@ -23,51 +28,60 @@ interface FeedItem {
   styleUrl: './skills-list.component.scss',
 })
 export class SkillsListComponent implements OnInit {
-  feed: FeedItem[] = [];
-  isFormVisible = false;
-  isLoading = false;
-  currentForm: 'skill' | null = null;
+  listItems: ListItem[] = [];
+  isLoading = new BehaviorSubject(false);
+  currentForm: SkillFormType | null = null;
+  skillId?: string | null = null;
   skills!: SkillsWithLimitQuery['skills'];
-  isConfirmModal: boolean = false;
   readonly subscription: Subscription = new Subscription();
 
   constructor(
     private skillsAdapterService: SkillsAdapterService,
     private notification: NzNotificationService,
+    private qlResponseMessageBuilder: QlResponseMessageBuilderService,
+    private qlResponseHandler: QlResponseHandlerService,
   ) {
-    this.isLoading = true;
+    this.isLoading.next(true);
+
     this.subscription.add(
-      this.skillsAdapterService.skillsTreeQueryRef.valueChanges.subscribe(
-        ({ data, loading, errors }) => {
-          if (loading) {
-            this.isLoading = loading;
-          }
-          if (errors) {
-            errors.map((e) => console.error(e));
-            this.isLoading = false;
-          }
+      this.skillsAdapterService.skillsTreeQueryRef.valueChanges
+        .pipe(
+          this.qlResponseHandler.handleResponse.call(
+            this.qlResponseHandler,
+            this.isLoading,
+          ),
+        )
+        .subscribe(({ data }: MutationResult<SkillsTreeQuery>) => {
+          this.isLoading.next(false);
           if (data && data.skillGroups) {
-            this.feed = data.skillGroups.map((skillGroup) => ({
-              id: skillGroup.id,
-              name: skillGroup.name,
-              level: 0,
-              childrenCount: skillGroup.childrenConnection.totalCount,
-              type: skillGroup.__typename,
-            }));
-            this.isLoading = false;
+            this.listItems = data.skillGroups.map((skillGroup) =>
+              this.skillGroupQLToListItem(skillGroup),
+            );
           }
-        },
-      ),
+        }),
     );
+  }
+
+  get isFormVisible() {
+    return this.currentForm !== null;
+  }
+
+  get drawerTitle() {
+    return '${action} ${type}'
+      .replace('${action}', this.skillId ? 'Edit' : 'Create')
+      .replace(
+        '${type}',
+        this.currentForm === 'SkillGroup' ? 'skill group' : 'skill',
+      );
   }
 
   ngOnInit(): void {
     if (!this.skills) {
-      this.skillsAdapterService.skillsQueryRef?.refetch();
+      this.skillsAdapterService.skillsQueryRef.refetch();
     }
   }
 
-  async handleExpand(item: FeedItem, index: number, event: boolean) {
+  async handleExpand(item: ListItem, index: number, event: boolean) {
     if (event) {
       await this.fetchChildren(item, index);
     } else {
@@ -75,93 +89,137 @@ export class SkillsListComponent implements OnInit {
     }
   }
 
-  async fetchChildren(item: FeedItem, index: number) {
-    this.isLoading = true;
+  async fetchChildren(item: ListItem, index: number) {
+    this.isLoading.next(true);
+
     const result = await this.skillsAdapterService.skillsTreeQueryRef.fetchMore(
       { variables: { where: { id: item.id } } },
     );
-    this.feed.splice(
+    this.listItems.splice(
       index + 1,
       0,
-      ...result.data.skillGroups[0].children.map((skillGroup) => ({
-        id: skillGroup.id,
-        name: skillGroup.name,
-        level: item.level + 1,
-        childrenCount: 'childrenConnection' in skillGroup ? skillGroup.childrenConnection.totalCount : 0,
-        type: skillGroup.__typename,
-      })),
+      ...result.data.skillGroups[0].children.map((skillGroup) =>
+        this.skillGroupQLToListItem(skillGroup, item),
+      ),
     );
-    this.feed = [...this.feed];
+    this.listItems = [...this.listItems];
 
-    this.isLoading = false;
+    this.isLoading.next(false);
   }
 
-  removeChildrenOf(item: FeedItem, index: number) {
+  removeChildrenOf(item: ListItem, index: number) {
     const startLevel = item.level;
     let currentIndex = index + 1;
 
-    for (; currentIndex < this.feed.length; currentIndex++) {
-      const child = this.feed[currentIndex];
+    for (; currentIndex < this.listItems.length; currentIndex++) {
+      const child = this.listItems[currentIndex];
       if (child.level === startLevel) {
         break;
       }
     }
 
-    this.feed.splice(index + 1, currentIndex - index - 1);
-    this.feed = [...this.feed];
+    this.listItems.splice(index + 1, currentIndex - index - 1);
+    this.listItems = [...this.listItems];
   }
 
-  openForm(formType: 'skill' | null): void {
-    this.isFormVisible = true;
+  openForm(formType: SkillFormType | null, skillId?: string | null): void {
+    this.skillId = skillId;
     this.currentForm = formType;
   }
 
-  clearForm(): void {
-    this.isFormVisible = false;
+  closeForm(): void {
+    this.skillId = null;
     this.currentForm = null;
   }
 
-  closeForm(skillForm?: FormGroup<SkillForm>): void {
-    const name = skillForm?.get('name')?.value;
-    if (skillForm && name) {
-      this.skillsAdapterService
-        .checkSkillExists(name)
-        .subscribe((skillExists) => {
-          if (skillExists && skillExists.length > 0) {
-            this.notification.create(
-              'error',
-              'Error',
-              `Skill ${name} already exists`,
-            );
-            return;
-          } else {
-            this.skillsAdapterService
-              .submitSkill<CreateSkillsGQL>(name)
-              .subscribe(
-                ({ loading, errors }) => {
-                  if (loading) {
-                    this.isLoading = loading;
-                  }
-                  if (errors) {
-                    errors.map((error) => {
-                      console.error(error.message);
-                    });
-                  }
-                  this.notification.create(
-                    'success',
-                    'Success',
-                    `Skill ${name} was successfully created.`,
-                  );
-                  this.skillsAdapterService.skillsQueryRef?.refetch();
-                },
-                (error: any) => {
-                  this.notification.create('error', 'Error', `${error}`);
-                },
-              );
-          }
-        });
-    }
+  handleSubmitted(observable: Observable<MutationResult>) {
+    this.isLoading.next(true);
 
-    this.clearForm();
+    observable
+      .pipe(
+        this.qlResponseHandler.handleResponse.call(
+          this.qlResponseHandler,
+          this.isLoading,
+        ),
+      )
+      .subscribe(({ data }) => {
+        this.skillsAdapterService.skillsTreeQueryRef.refetch();
+        this.notification.create(
+          'success',
+          'Success',
+          this.qlResponseMessageBuilder.buildMessage(
+            data.createSkills?.info ??
+              data.createSkillGroups?.info ??
+              data.updateSkills?.info ??
+              data.updateSkillGroups?.info ??
+              data.deleteSkills ??
+              data.deleteSkillGroups,
+            ['skill', 'skills'],
+          ),
+        );
+      });
+  }
+
+  removeSkill(skill: ListItem) {
+    if (!skill.type) return;
+
+    this.handleSubmitted(
+      {
+        Skill: () => this.skillsAdapterService.deleteSkill(skill.id),
+        SkillGroup: () => this.skillsAdapterService.deleteGroup(skill.id),
+      }[skill.type](),
+    );
+  }
+
+  handleDrop({ previousIndex, currentIndex }: CdkDragDrop<ListItem[]>) {
+    const item = this.listItems[previousIndex];
+    const newParentId = this.listItems[currentIndex].parentId;
+
+    this.isLoading.next(true);
+    this.skillsAdapterService
+      .updateAssignmentToParents(
+        item.type!,
+        item.id,
+        [item.parentId].filter(Boolean),
+        [newParentId].filter(Boolean),
+      )
+      .pipe(
+        this.qlResponseHandler.handleResponse.call(
+          this.qlResponseHandler,
+          this.isLoading,
+        ),
+      )
+      .subscribe(({ data }) => {
+        this.skillsAdapterService.skillsTreeQueryRef.refetch();
+        this.notification.create(
+          'success',
+          'Success',
+          data?.info
+            ? this.qlResponseMessageBuilder.buildUpdatedMessage(data?.info, [
+                'skill',
+                'skills',
+              ])
+            : '',
+        );
+      });
+  }
+
+  private skillGroupQLToListItem(
+    skillGroup:
+      | SkillsTreeQuery['skillGroups'][number]
+      | SkillsTreeQuery['skillGroups'][number]['children'][number],
+    parentItem?: ListItem,
+  ) {
+    return {
+      id: skillGroup.id,
+      name: skillGroup.name,
+      level: parentItem ? parentItem.level + 1 : 0,
+      childrenCount:
+        'childrenConnection' in skillGroup
+          ? skillGroup.childrenConnection.totalCount
+          : 0,
+      type: skillGroup.__typename,
+      parentId: parentItem?.id ?? null,
+    };
   }
 }

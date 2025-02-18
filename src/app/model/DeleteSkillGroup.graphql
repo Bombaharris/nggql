@@ -1,0 +1,5 @@
+mutation DeleteSkillGroups($where: SkillGroupWhere) {
+  deleteSkillGroups(where: $where) {
+    nodesDeleted
+  }
+}

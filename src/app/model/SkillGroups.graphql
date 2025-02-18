@@ -1,0 +1,6 @@
+query SkillGroups($where: SkillGroupWhere) {
+  skillGroups(where: $where) {
+    id
+    name
+  }
+}

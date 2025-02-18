@@ -1,0 +1,31 @@
+query SkillData ($groupId: ID, $skillId: ID) {
+  skillGroups(where:  { id: $groupId }) {
+    id
+    name
+    parents {
+      id
+      name
+    }
+    childrenGroups: children(where:  {SkillGroup:  {}}) {
+      ... on SkillGroup {
+        id
+        name
+      }
+    }
+    childrenSkills: children(where:  {Skill:  {}}) {
+      ... on Skill {
+        id
+        name
+      }
+    }
+  }
+
+  skills(where: { id: $skillId }) {
+    id
+    name
+    groups {
+      id
+      name
+    }
+  }
+}

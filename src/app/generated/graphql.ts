@@ -5032,6 +5032,13 @@ export type CreateRatesMutationVariables = Exact<{
 
 export type CreateRatesMutation = { __typename?: 'Mutation', createRates: { __typename?: 'CreateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string } }> } };
 
+export type CreateSkillGroupsMutationVariables = Exact<{
+  input: Array<SkillGroupCreateInput> | SkillGroupCreateInput;
+}>;
+
+
+export type CreateSkillGroupsMutation = { __typename?: 'Mutation', createSkillGroups: { __typename?: 'CreateSkillGroupsMutationResponse', info: { __typename?: 'CreateInfo', nodesCreated: number, relationshipsCreated: number } } };
+
 export type SkillPartFragment = { __typename?: 'Skill', id: string, name: string };
 
 export type CreateSkillsMutationVariables = Exact<{
@@ -5039,7 +5046,7 @@ export type CreateSkillsMutationVariables = Exact<{
 }>;
 
 
-export type CreateSkillsMutation = { __typename?: 'Mutation', createSkills: { __typename?: 'CreateSkillsMutationResponse', skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
+export type CreateSkillsMutation = { __typename?: 'Mutation', createSkills: { __typename?: 'CreateSkillsMutationResponse', info: { __typename?: 'CreateInfo', nodesCreated: number, relationshipsCreated: number }, skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
 
 export type DeleteDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
@@ -5082,6 +5089,13 @@ export type DeleteSkillsMutationVariables = Exact<{
 
 
 export type DeleteSkillsMutation = { __typename?: 'Mutation', deleteSkills: { __typename?: 'DeleteInfo', nodesDeleted: number } };
+
+export type DeleteSkillGroupsMutationVariables = Exact<{
+  where?: InputMaybe<SkillGroupWhere>;
+}>;
+
+
+export type DeleteSkillGroupsMutation = { __typename?: 'Mutation', deleteSkillGroups: { __typename?: 'DeleteInfo', nodesDeleted: number } };
 
 export type DepartmentsDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5150,6 +5164,21 @@ export type RolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type RolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'Role', id: string, name: string }> };
 
+export type SkillDataQueryVariables = Exact<{
+  groupId?: InputMaybe<Scalars['ID']>;
+  skillId?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type SkillDataQuery = { __typename?: 'Query', skillGroups: Array<{ __typename?: 'SkillGroup', id: string, name: string, parents: Array<{ __typename?: 'SkillGroup', id: string, name: string }>, childrenGroups: Array<{ __typename?: 'Skill' } | { __typename?: 'SkillGroup', id: string, name: string }>, childrenSkills: Array<{ __typename?: 'Skill', id: string, name: string } | { __typename?: 'SkillGroup' }> }>, skills: Array<{ __typename?: 'Skill', id: string, name: string, groups: Array<{ __typename?: 'SkillGroup', id: string, name: string }> }> };
+
+export type SkillGroupsQueryVariables = Exact<{
+  where?: InputMaybe<SkillGroupWhere>;
+}>;
+
+
+export type SkillGroupsQuery = { __typename?: 'Query', skillGroups: Array<{ __typename?: 'SkillGroup', id: string, name: string }> };
+
 export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5200,6 +5229,22 @@ export type UpdateRatesMutationVariables = Exact<{
 
 
 export type UpdateRatesMutation = { __typename?: 'Mutation', updateRates: { __typename?: 'UpdateRatesMutationResponse', rates: Array<{ __typename?: 'Rate', id: string, validFrom: any, value: number, person: { __typename?: 'Person', id: string, name: string } }> } };
+
+export type UpdateSkillGroupsMutationVariables = Exact<{
+  where?: InputMaybe<SkillGroupWhere>;
+  update?: InputMaybe<SkillGroupUpdateInput>;
+}>;
+
+
+export type UpdateSkillGroupsMutation = { __typename?: 'Mutation', updateSkillGroups: { __typename?: 'UpdateSkillGroupsMutationResponse', info: { __typename?: 'UpdateInfo', nodesCreated: number, nodesDeleted: number, relationshipsCreated: number, relationshipsDeleted: number }, skillGroups: Array<{ __typename?: 'SkillGroup', id: string, name: string }> } };
+
+export type UpdateSkillMutationVariables = Exact<{
+  where?: InputMaybe<SkillWhere>;
+  update?: InputMaybe<SkillUpdateInput>;
+}>;
+
+
+export type UpdateSkillMutation = { __typename?: 'Mutation', updateSkills: { __typename?: 'UpdateSkillsMutationResponse', info: { __typename?: 'UpdateInfo', nodesCreated: number, nodesDeleted: number, relationshipsCreated: number, relationshipsDeleted: number }, skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
 
 export const CommonExperienceFragmentDoc = gql`
     fragment commonExperience on Experience {
@@ -5473,9 +5518,34 @@ export const CreateRatesDocument = gql`
       super(apollo);
     }
   }
+export const CreateSkillGroupsDocument = gql`
+    mutation CreateSkillGroups($input: [SkillGroupCreateInput!]!) {
+  createSkillGroups(input: $input) {
+    info {
+      nodesCreated
+      relationshipsCreated
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateSkillGroupsGQL extends Apollo.Mutation<CreateSkillGroupsMutation, CreateSkillGroupsMutationVariables> {
+    document = CreateSkillGroupsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreateSkillsDocument = gql`
     mutation CreateSkills($input: [SkillCreateInput!]!) {
   createSkills(input: $input) {
+    info {
+      nodesCreated
+      relationshipsCreated
+    }
     skills {
       ...SkillPart
     }
@@ -5596,6 +5666,24 @@ export const DeleteSkillsDocument = gql`
   })
   export class DeleteSkillsGQL extends Apollo.Mutation<DeleteSkillsMutation, DeleteSkillsMutationVariables> {
     document = DeleteSkillsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteSkillGroupsDocument = gql`
+    mutation DeleteSkillGroups($where: SkillGroupWhere) {
+  deleteSkillGroups(where: $where) {
+    nodesDeleted
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSkillGroupsGQL extends Apollo.Mutation<DeleteSkillGroupsMutation, DeleteSkillGroupsMutationVariables> {
+    document = DeleteSkillGroupsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -5814,6 +5902,68 @@ export const RolesDocument = gql`
       super(apollo);
     }
   }
+export const SkillDataDocument = gql`
+    query SkillData($groupId: ID, $skillId: ID) {
+  skillGroups(where: {id: $groupId}) {
+    id
+    name
+    parents {
+      id
+      name
+    }
+    childrenGroups: children(where: {SkillGroup: {}}) {
+      ... on SkillGroup {
+        id
+        name
+      }
+    }
+    childrenSkills: children(where: {Skill: {}}) {
+      ... on Skill {
+        id
+        name
+      }
+    }
+  }
+  skills(where: {id: $skillId}) {
+    id
+    name
+    groups {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SkillDataGQL extends Apollo.Query<SkillDataQuery, SkillDataQueryVariables> {
+    document = SkillDataDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SkillGroupsDocument = gql`
+    query SkillGroups($where: SkillGroupWhere) {
+  skillGroups(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SkillGroupsGQL extends Apollo.Query<SkillGroupsQuery, SkillGroupsQueryVariables> {
+    document = SkillGroupsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const SkillsDocument = gql`
     query Skills {
   skills {
@@ -6021,6 +6171,60 @@ export const UpdateRatesDocument = gql`
   })
   export class UpdateRatesGQL extends Apollo.Mutation<UpdateRatesMutation, UpdateRatesMutationVariables> {
     document = UpdateRatesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateSkillGroupsDocument = gql`
+    mutation UpdateSkillGroups($where: SkillGroupWhere, $update: SkillGroupUpdateInput) {
+  updateSkillGroups(where: $where, update: $update) {
+    info {
+      nodesCreated
+      nodesDeleted
+      relationshipsCreated
+      relationshipsDeleted
+    }
+    skillGroups {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateSkillGroupsGQL extends Apollo.Mutation<UpdateSkillGroupsMutation, UpdateSkillGroupsMutationVariables> {
+    document = UpdateSkillGroupsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateSkillDocument = gql`
+    mutation UpdateSkill($where: SkillWhere, $update: SkillUpdateInput) {
+  updateSkills(where: $where, update: $update) {
+    info {
+      nodesCreated
+      nodesDeleted
+      relationshipsCreated
+      relationshipsDeleted
+    }
+    skills {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateSkillGQL extends Apollo.Mutation<UpdateSkillMutation, UpdateSkillMutationVariables> {
+    document = UpdateSkillDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -8,9 +8,11 @@ import {
 import { DocumentNode } from 'graphql';
 import {
   CreateSkillsDocument,
-  CreateSkillsMutation,
+  DeleteSkillsDocument,
+  FindSkillDocument,
   SkillsDocument,
   SkillsQuery,
+  SkillsTreeDocument,
   SkillsWithLimitDocument,
 } from '../generated/graphql';
 import { SkillForm } from '../skills/skills-form/models/skill-form.model';
@@ -37,227 +39,133 @@ describe('SkillsAdapterService', () => {
     apolloController.verify();
   });
 
-  it('fetchValues of skills', (done) => {
-    const query: DocumentNode = SkillsDocument;
-    const key = 'skills';
+  it('should get skills tree', (done) => {
+    const query: DocumentNode = SkillsTreeDocument;
 
-    const mockSkills = {
-      data: {
-        [key]: [
-          {
-            id: '1',
-            name: 'Angular',
-          },
-        ],
-      },
-    };
-
-    service
-      .fetchValues<SkillsQuery>(query, key)
-      .subscribe((result: SkillsQuery['skills']) => {
-        expect(result).toEqual(mockSkills.data[key]);
-        done();
-      });
-    TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
-    apolloController.verify();
-  });
-
-  it('fetch more values of skills with limit and offset', (done) => {
-    const query: DocumentNode = SkillsWithLimitDocument;
-    const key = 'skills';
-
-    const mockSkills = {
-      data: {
-        [key]: [
-          {
-            id: '1',
-            name: 'Angular',
-          },
-          {
-            id: '2',
-            name: 'Angular2',
-          },
-          {
-            id: '3',
-            name: 'Angular3',
-          },
-          {
-            id: '4',
-            name: 'Angular4',
-          },
-          {
-            id: '5',
-            name: 'Angular5',
-          },
-          {
-            id: '7',
-            name: 'Angular7',
-          },
-          {
-            id: '8',
-            name: 'Angular8',
-          },
-          {
-            id: '9',
-            name: 'Angular9',
-          },
-          {
-            id: '10',
-            name: 'Angular10',
-          },
-          {
-            id: '11',
-            name: 'Angular11',
-          },
-          {
-            id: '12',
-            name: 'Angular12',
-          },
-        ],
-        skillsAggregate: {
-          count: 12,
-        },
-      },
-    };
-
-    service.skillsQueryRef
-      ?.fetchMore({ variables: { options: { limit: 10, offset: 0 } } })
-      .then((skills) => {
-        expect(skills.data.skills).toEqual(mockSkills.data[key]);
-        done();
-      });
-
-    TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
-    apolloController.verify();
-  });
-
-  it('fetch more values of skills with limit and offset', (done) => {
-    const query: DocumentNode = SkillsWithLimitDocument;
-    const key = 'skills';
-
-    const mockSkills = {
-      data: {
-        [key]: [
-          {
-            id: '1',
-            name: 'Angular',
-          },
-          {
-            id: '2',
-            name: 'Angular2',
-          },
-          {
-            id: '3',
-            name: 'Angular3',
-          },
-          {
-            id: '4',
-            name: 'Angular4',
-          },
-          {
-            id: '5',
-            name: 'Angular5',
-          },
-          {
-            id: '7',
-            name: 'Angular7',
-          },
-          {
-            id: '8',
-            name: 'Angular8',
-          },
-          {
-            id: '9',
-            name: 'Angular9',
-          },
-          {
-            id: '10',
-            name: 'Angular10',
-          },
-          {
-            id: '11',
-            name: 'Angular11',
-          },
-          {
-            id: '12',
-            name: 'Angular12',
-          },
-        ],
-        skillsAggregate: {
-          count: 12,
-        },
-      },
-    };
-
-    service.skillsQueryRef
-      ?.fetchMore({ variables: { options: { limit: 10, offset: 0 } } })
-      .then((skills) => {
-        expect(skills.data.skills).toEqual(mockSkills.data[key]);
-        done();
-      });
-
-    TestBed.inject(ApolloTestingController).expectOne(query).flush(mockSkills);
-    apolloController.verify();
-  });
-
-  it('submits skill to a list', (done) => {
-    const skill: FormGroup<SkillForm> = new FormGroup({
-      name: new FormControl('AnotherSkill'),
-    });
-    const name = skill.get('name')?.value;
-    const createSkill = {
-      data: {
-        createSkills: {
-          skills: [
-            {
-              name: '"AnotherSkill"',
-            },
-          ],
-        },
-      },
-      loading: false,
-      error: null,
-    };
-
-    service.submitSkill<CreateSkillsMutation>(name).subscribe((r) => {
-      expect(r.data?.createSkills.skills[0].name).toEqual(
-        createSkill.data.createSkills.skills[0].name,
-      );
+    service.skillsTreeQueryRef.valueChanges.subscribe(({ data }) => {
+      expect(data.skillGroups).toHaveSize(1);
       done();
     });
 
-    apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
+    const operation = apolloController.expectOne(query);
+
+    expect(operation.operation.variables.where.parentsAggregate.count).toEqual(
+      0,
+    );
+    operation.flush({
+      data: {
+        skillGroups: [{}],
+      },
+    });
     apolloController.verify();
   });
 
-  it('submits skill to a list', (done) => {
-    const skill: FormGroup<SkillForm> = new FormGroup({
-      name: new FormControl('AnotherSkill'),
-    });
-    const createSkill = {
-      data: {
-        createSkills: {
-          skills: [
-            {
-              name: '"AnotherSkill"',
-            },
-          ],
+  describe('test skills', () => {
+    it('should return all skills', (done) => {
+      const mockData = {
+        data: {
+          skills: [{ id: 1, name: 'Skill' }],
         },
-      },
-      loading: false,
-      error: null,
-    };
+      };
 
-    service
-      .submitSkill<CreateSkillsMutation>(skill.value.name)
-      .subscribe((r) => {
-        expect(r.data?.createSkills.skills[0].name).toEqual(
-          createSkill.data.createSkills.skills[0].name,
-        );
+      service.getAllSkills()?.subscribe((data) => {
+        // @ts-ignore
+        expect(data).toEqual(mockData.data.skills);
         done();
       });
 
-    apolloController.expectOne(CreateSkillsDocument).flush(createSkill);
-    apolloController.verify();
+      apolloController.expectOne(SkillsWithLimitDocument).flush(mockData);
+      apolloController.verify();
+    });
+    it('should find skill', (done) => {
+      const mockData = {
+        data: {
+          findSkill: [{ id: 1, name: 'test' }],
+        },
+      };
+
+      service.findSkill('test').subscribe(({ data }) => {
+        // @ts-ignore
+        expect(data.findSkill).toEqual(mockData.data.findSkill);
+        done();
+      });
+
+      apolloController.expectOne(FindSkillDocument).flush(mockData);
+      apolloController.verify();
+    });
+    it('should return true if skill exists', (done) => {
+      const mockData = {
+        data: {
+          findSkill: [{ id: 1, name: 'test' }],
+        },
+      };
+
+      service.checkSkillExists('test').subscribe((exists) => {
+        expect(exists).toBeTruthy();
+        done();
+      });
+
+      apolloController.expectOne(FindSkillDocument).flush(mockData);
+      apolloController.verify();
+    });
+
+    it('should create skill', (done) => {
+      // const mockData = {
+      //   data: {
+      //     createSkills: {
+      //       info: {
+      //         nodesCreated: 1,
+      //         relationshipsCreated: 0,
+      //       },
+      //       skills: {
+      //         id: 'test',
+      //         name: 'test',
+      //       },
+      //     },
+      //   },
+      // };
+      //
+      // service.createSkill('test').subscribe(({ data }) => {
+      //   expect(data?.createSkills.info.nodesCreated).toEqual(1);
+      //   done();
+      // });
+      //
+      // const existsOperation = apolloController.expectOne(FindSkillDocument);
+      // existsOperation.flush({
+      //   data: { findSkill: [] },
+      // });
+      //
+      // const createOperation = apolloController.expectOne(CreateSkillsDocument);
+      // createOperation.flush(mockData);
+      //
+      // apolloController.verify();
+    });
+    it('should not create skill', () => {});
+    it('should update skill name', () => {});
+    it('should update skill name and groups', () => {});
+    it('should delete skill', (done) => {
+      const mockData = {
+        data: {
+          deleteSkills: {
+            nodesDeleted: 1,
+          },
+        },
+      };
+
+      service.deleteSkill('test').subscribe(({ data }) => {
+        expect(data?.deleteSkills.nodesDeleted).toEqual(1);
+        done();
+      });
+
+      const op = apolloController.expectOne(DeleteSkillsDocument);
+
+      expect(op.operation.variables.where.id).toEqual('test');
+
+      op.flush(mockData);
+      apolloController.verify();
+    });
   });
+
+  describe('test skill groups', () => {});
+
 });

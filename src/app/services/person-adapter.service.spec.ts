@@ -50,6 +50,7 @@ describe('PersonAdapterService', () => {
       name: new FormControl('Ralph'),
       surname: new FormControl('Green'),
       birthday: new FormControl('1982-06-01'),
+      bio: new FormControl(''),
       departments: new FormControl({
         id: 'Frontend',
         name: 'Frontend',

@@ -1,0 +1,14 @@
+mutation UpdateSkill($where: SkillWhere, $update: SkillUpdateInput) {
+  updateSkills(where: $where update: $update) {
+    info {
+      nodesCreated
+      nodesDeleted
+      relationshipsCreated
+      relationshipsDeleted
+    }
+    skills {
+      id
+      name
+    }
+  }
+}

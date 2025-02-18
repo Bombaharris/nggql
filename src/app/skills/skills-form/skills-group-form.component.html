@@ -7,16 +7,36 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="groups">Groups</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="parents">Parents</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-select
-        [nzId]="'groups'"
-        formControlName="groups"
+        [nzId]="'parents'"
+        formControlName="parents"
         nzAllowClear
         [nzMode]="'multiple'"
-        nzPlaceHolder="Skill groups that should include this skill"
+        nzPlaceHolder="Skill groups that should include this group"
       >
         <nz-option *ngFor="let option of groups" [nzLabel]="option.label" [nzValue]="option.value" />
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="children">Children</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        [nzId]="'children'"
+        formControlName="children"
+        nzAllowClear
+        [nzMode]="'multiple'"
+        nzPlaceHolder="Skills or skill groups that should belong to this group"
+      >
+        <nz-option-group nzLabel="Skill Groups">
+          <nz-option *ngFor="let option of groups" [nzLabel]="option.label" [nzValue]="option.value" />
+        </nz-option-group>
+        <nz-option-group nzLabel="Skills">
+          <nz-option *ngFor="let option of skills" [nzLabel]="option.label" [nzValue]="option.value" />
+        </nz-option-group>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

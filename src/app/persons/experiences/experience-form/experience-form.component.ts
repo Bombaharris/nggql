@@ -28,6 +28,7 @@ import {
   Person,
   SkillsQuery,
 } from '../../../generated/graphql';
+import {Observable} from "rxjs";
 
 type ExperienceFormType = FormGroup<{
   experiences: FormArray<FormControl>;
@@ -45,7 +46,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
   @Output() canceled = new EventEmitter();
   isLoading: boolean = false;
   confirmModal: boolean = false;
-  skills: SkillsQuery['skills'];
+  skills: Observable<SkillsQuery['skills']>;
   qlFilterService = new QLFilterBuilderService();
   experienceForm: ExperienceFormType = this.fb.group({
     experiences: this.fb.array([]),
@@ -61,7 +62,7 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
     private skillsAdapterService: SkillsAdapterService,
     private fb: FormBuilder,
   ) {
-    this.skills = this.skillsAdapterService.skills;
+    this.skills = this.skillsAdapterService.getAllSkills();
   }
 
   ngOnInit(): void {

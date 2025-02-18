@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { difference } from '../shared/set-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +65,32 @@ export class QLFilterBuilderService {
 
   getVariables(): object {
     return this.condition;
+  }
+
+  updateArrayFieldQuery(
+    oldValues: any[],
+    newValues: any[],
+    nodeProperty: string,
+  ) {
+    const { connect, disconnect } = this.toConnectAndDisconnectQuery(
+      oldValues,
+      newValues,
+    );
+
+    return {
+      connect: this.connectWhere(nodeProperty, connect),
+      disconnect: this.connectWhere(nodeProperty, disconnect),
+    };
+  }
+
+  toConnectAndDisconnectQuery(oldValues: any[], newValues: any[]) {
+    const newSet = new Set(newValues);
+    const oldSet = new Set(oldValues);
+
+    return {
+      connect: Array.from(difference(newSet, oldSet)),
+      disconnect: Array.from(difference(oldSet, newSet)),
+    };
   }
 
   private prepareConditions(

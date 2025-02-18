@@ -1,0 +1,14 @@
+mutation UpdateSkillGroups($where: SkillGroupWhere, $update: SkillGroupUpdateInput) {
+  updateSkillGroups(where:  $where update: $update) {
+    info {
+      nodesCreated
+      nodesDeleted
+      relationshipsCreated
+      relationshipsDeleted
+    }
+    skillGroups {
+      id
+      name
+    }
+  }
+}
