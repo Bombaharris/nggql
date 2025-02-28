@@ -82,6 +82,12 @@ export type CreateScoresMutationResponse = {
   scores: Array<Score>;
 };
 
+export type CreateSkillGroupAggregatesMutationResponse = {
+  __typename?: 'CreateSkillGroupAggregatesMutationResponse';
+  info: CreateInfo;
+  skillGroupAggregates: Array<SkillGroupAggregate>;
+};
+
 export type CreateSkillGroupsMutationResponse = {
   __typename?: 'CreateSkillGroupsMutationResponse';
   info: CreateInfo;
@@ -1144,6 +1150,7 @@ export type Mutation = {
   createRates: CreateRatesMutationResponse;
   createRoles: CreateRolesMutationResponse;
   createScores: CreateScoresMutationResponse;
+  createSkillGroupAggregates: CreateSkillGroupAggregatesMutationResponse;
   createSkillGroups: CreateSkillGroupsMutationResponse;
   createSkills: CreateSkillsMutationResponse;
   deleteDepartments: DeleteInfo;
@@ -1155,6 +1162,7 @@ export type Mutation = {
   deleteRates: DeleteInfo;
   deleteRoles: DeleteInfo;
   deleteScores: DeleteInfo;
+  deleteSkillGroupAggregates: DeleteInfo;
   deleteSkillGroups: DeleteInfo;
   deleteSkills: DeleteInfo;
   updateDepartments: UpdateDepartmentsMutationResponse;
@@ -1166,6 +1174,7 @@ export type Mutation = {
   updateRates: UpdateRatesMutationResponse;
   updateRoles: UpdateRolesMutationResponse;
   updateScores: UpdateScoresMutationResponse;
+  updateSkillGroupAggregates: UpdateSkillGroupAggregatesMutationResponse;
   updateSkillGroups: UpdateSkillGroupsMutationResponse;
   updateSkills: UpdateSkillsMutationResponse;
 };
@@ -1213,6 +1222,11 @@ export type MutationCreateRolesArgs = {
 
 export type MutationCreateScoresArgs = {
   input: Array<ScoreCreateInput>;
+};
+
+
+export type MutationCreateSkillGroupAggregatesArgs = {
+  input: Array<SkillGroupAggregateCreateInput>;
 };
 
 
@@ -1273,6 +1287,11 @@ export type MutationDeleteRolesArgs = {
 
 export type MutationDeleteScoresArgs = {
   where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type MutationDeleteSkillGroupAggregatesArgs = {
+  where?: InputMaybe<SkillGroupAggregateWhere>;
 };
 
 
@@ -1339,6 +1358,12 @@ export type MutationUpdateRolesArgs = {
 export type MutationUpdateScoresArgs = {
   update?: InputMaybe<ScoreUpdateInput>;
   where?: InputMaybe<ScoreWhere>;
+};
+
+
+export type MutationUpdateSkillGroupAggregatesArgs = {
+  update?: InputMaybe<SkillGroupAggregateUpdateInput>;
+  where?: InputMaybe<SkillGroupAggregateWhere>;
 };
 
 
@@ -3174,6 +3199,9 @@ export type Query = {
   scoresAggregate: ScoreAggregateSelection;
   scoresConnection: ScoresConnection;
   skillChildren: Array<SkillChild>;
+  skillGroupAggregates: Array<SkillGroupAggregate>;
+  skillGroupAggregatesAggregate: SkillGroupAggregateAggregateSelection;
+  skillGroupAggregatesConnection: SkillGroupAggregatesConnection;
   skillGroups: Array<SkillGroup>;
   skillGroupsAggregate: SkillGroupAggregateSelection;
   skillGroupsConnection: SkillGroupsConnection;
@@ -3366,6 +3394,25 @@ export type QueryScoresConnectionArgs = {
 export type QuerySkillChildrenArgs = {
   options?: InputMaybe<QueryOptions>;
   where?: InputMaybe<SkillChildWhere>;
+};
+
+
+export type QuerySkillGroupAggregatesArgs = {
+  options?: InputMaybe<SkillGroupAggregateOptions>;
+  where?: InputMaybe<SkillGroupAggregateWhere>;
+};
+
+
+export type QuerySkillGroupAggregatesAggregateArgs = {
+  where?: InputMaybe<SkillGroupAggregateWhere>;
+};
+
+
+export type QuerySkillGroupAggregatesConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<InputMaybe<SkillGroupAggregateSort>>>;
+  where?: InputMaybe<SkillGroupAggregateWhere>;
 };
 
 
@@ -3908,6 +3955,7 @@ export type Skill = {
   experiencesAggregate?: Maybe<SkillExperienceExperiencesAggregationSelection>;
   experiencesConnection: SkillExperiencesConnection;
   groups: Array<SkillGroup>;
+  groupsAggregate_: SkillGroupAggregate;
   id: Scalars['ID'];
   name: Scalars['String'];
   persons: Array<Person>;
@@ -4234,11 +4282,68 @@ export type SkillGroupParentsConnectionArgs = {
   where?: InputMaybe<SkillGroupParentsConnectionWhere>;
 };
 
+export type SkillGroupAggregate = {
+  __typename?: 'SkillGroupAggregate';
+  count: Scalars['Int'];
+};
+
+export type SkillGroupAggregateAggregateSelection = {
+  __typename?: 'SkillGroupAggregateAggregateSelection';
+  count: IntAggregateSelection;
+};
+
+export type SkillGroupAggregateCreateInput = {
+  count: Scalars['Int'];
+};
+
+export type SkillGroupAggregateEdge = {
+  __typename?: 'SkillGroupAggregateEdge';
+  cursor: Scalars['String'];
+  node: SkillGroupAggregate;
+};
+
+export type SkillGroupAggregateOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more SkillGroupAggregateSort objects to sort SkillGroupAggregates by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<SkillGroupAggregateSort>>;
+};
+
 export type SkillGroupAggregateSelection = {
   __typename?: 'SkillGroupAggregateSelection';
   count: Scalars['Int'];
   id: IdAggregateSelection;
   name: StringAggregateSelection;
+};
+
+/** Fields to sort SkillGroupAggregates by. The order in which sorts are applied is not guaranteed when specifying many fields in one SkillGroupAggregateSort object. */
+export type SkillGroupAggregateSort = {
+  count?: InputMaybe<SortDirection>;
+};
+
+export type SkillGroupAggregateUpdateInput = {
+  count?: InputMaybe<Scalars['Int']>;
+  count_DECREMENT?: InputMaybe<Scalars['Int']>;
+  count_INCREMENT?: InputMaybe<Scalars['Int']>;
+};
+
+export type SkillGroupAggregateWhere = {
+  AND?: InputMaybe<Array<SkillGroupAggregateWhere>>;
+  NOT?: InputMaybe<SkillGroupAggregateWhere>;
+  OR?: InputMaybe<Array<SkillGroupAggregateWhere>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_IN?: InputMaybe<Array<Scalars['Int']>>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type SkillGroupAggregatesConnection = {
+  __typename?: 'SkillGroupAggregatesConnection';
+  edges: Array<SkillGroupAggregateEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type SkillGroupChildrenConnectInput = {
@@ -4820,6 +4925,7 @@ export type SkillRelationInput = {
 
 /** Fields to sort Skills by. The order in which sorts are applied is not guaranteed when specifying many fields in one SkillSort object. */
 export type SkillSort = {
+  groupsAggregate_?: InputMaybe<SortDirection>;
   id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
   recommendedFor?: InputMaybe<SortDirection>;
@@ -4857,6 +4963,7 @@ export type SkillWhere = {
   /** Return Skills where some of the related Experiences match this filter */
   experiences_SOME?: InputMaybe<ExperienceWhere>;
   groups?: InputMaybe<SkillGroupWhere>;
+  groupsAggregate_?: InputMaybe<SkillGroupAggregateWhere>;
   groups_ALL?: InputMaybe<SkillGroupWhere>;
   groups_NONE?: InputMaybe<SkillGroupWhere>;
   groups_SINGLE?: InputMaybe<SkillGroupWhere>;
@@ -4974,6 +5081,12 @@ export type UpdateScoresMutationResponse = {
   __typename?: 'UpdateScoresMutationResponse';
   info: UpdateInfo;
   scores: Array<Score>;
+};
+
+export type UpdateSkillGroupAggregatesMutationResponse = {
+  __typename?: 'UpdateSkillGroupAggregatesMutationResponse';
+  info: UpdateInfo;
+  skillGroupAggregates: Array<SkillGroupAggregate>;
 };
 
 export type UpdateSkillGroupsMutationResponse = {
@@ -5189,7 +5302,7 @@ export type SkillsTreeQueryVariables = Exact<{
 }>;
 
 
-export type SkillsTreeQuery = { __typename?: 'Query', skillGroups: Array<{ __typename?: 'SkillGroup', id: string, name: string, children: Array<{ __typename: 'Skill', id: string, name: string } | { __typename: 'SkillGroup', id: string, name: string, childrenConnection: { __typename?: 'SkillGroupChildrenConnection', totalCount: number } }>, childrenConnection: { __typename?: 'SkillGroupChildrenConnection', totalCount: number } }> };
+export type SkillsTreeQuery = { __typename?: 'Query', skillGroups: Array<{ __typename?: 'SkillGroup', id: string, name: string, children: Array<{ __typename: 'Skill', id: string, name: string } | { __typename: 'SkillGroup', id: string, name: string, childrenConnection: { __typename?: 'SkillGroupChildrenConnection', totalCount: number } }>, childrenConnection: { __typename?: 'SkillGroupChildrenConnection', totalCount: number } }>, skills: Array<{ __typename: 'Skill', id: string, name: string }> };
 
 export type SkillsWithLimitQueryVariables = Exact<{
   options?: InputMaybe<SkillOptions>;
@@ -6006,6 +6119,11 @@ export const SkillsTreeDocument = gql`
     childrenConnection {
       totalCount
     }
+  }
+  skills(where: {groupsAggregate_: {count: 0}}) {
+    id
+    name
+    __typename
   }
 }
     `;

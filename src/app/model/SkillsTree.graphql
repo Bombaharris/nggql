@@ -21,4 +21,11 @@ query SkillsTree($where: SkillGroupWhere) {
       totalCount
     }
   }
+  skills(where: { groupsAggregate_: {
+    count: 0
+  }}) {
+    id
+    name
+    __typename
+  }
 }

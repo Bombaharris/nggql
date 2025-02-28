@@ -29,7 +29,7 @@ const whereVariables = {
     ],
   },
 };
-const whereVariablesComined = {
+const whereVariablesCombined = {
   where: {
     AND: [
       {
@@ -94,7 +94,7 @@ describe('Service: QLFilterBuilder', () => {
       (service: QLFilterBuilderService) => {
         service.andWhere('projects_SOME', 'id', 1);
         service.andWhere('projects_SOME', 'id', [2, 3]);
-        expect(service.getVariables()).toEqual(whereVariablesComined);
+        expect(service.getVariables()).toEqual(whereVariablesCombined);
       },
     ));
   });
@@ -118,5 +118,12 @@ describe('Service: QLFilterBuilder', () => {
         expect(service.connectWhere('id', [1])).toEqual(connectWhere);
       },
     ));
+  });
+
+  describe('toConnectAndDisconnectQuery', () => {
+    it('should return data which items should be connected and which disconnected', () => {
+      const service = TestBed.inject(QLFilterBuilderService);
+      expect(service.toConnectAndDisconnectQuery(['a', 'b', 'c'], ['a', 'b', 'd'])).toEqual({ connect: ['d'], disconnect: ['c'] });
+    });
   });
 });

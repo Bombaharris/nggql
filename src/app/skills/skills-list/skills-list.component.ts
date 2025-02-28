@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import {
   SkillsTreeQuery,
   SkillsWithLimitQuery,
@@ -9,7 +9,8 @@ import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
 import { MutationResult } from 'apollo-angular';
 import { QlResponseMessageBuilderService } from '../../services/ql-response-message-builder.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import QlResponseHandlerService from '../../services/ql-response-handler.service';
+import handleResponse from '../../shared/operators/handle-response';
+import { throttleTime } from 'rxjs/operators';
 
 export type SkillFormType = 'Skill' | 'SkillGroup';
 
@@ -29,7 +30,9 @@ interface ListItem {
 })
 export class SkillsListComponent implements OnInit {
   listItems: ListItem[] = [];
-  isLoading = new BehaviorSubject(false);
+  private loadingSubject = new BehaviorSubject(false);
+  isLoading: Observable<boolean>;
+  error = new Subject<string>();
   currentForm: SkillFormType | null = null;
   skillId?: string | null = null;
   skills!: SkillsWithLimitQuery['skills'];
@@ -39,23 +42,21 @@ export class SkillsListComponent implements OnInit {
     private skillsAdapterService: SkillsAdapterService,
     private notification: NzNotificationService,
     private qlResponseMessageBuilder: QlResponseMessageBuilderService,
-    private qlResponseHandler: QlResponseHandlerService,
   ) {
-    this.isLoading.next(true);
+    this.isLoading = this.loadingSubject.pipe(
+      throttleTime(150, undefined, { leading: true, trailing: true }),
+    );
 
+    this.error.subscribe((error) => this.notification.error('Error', error));
+
+    this.loadingSubject.next(true);
     this.subscription.add(
       this.skillsAdapterService.skillsTreeQueryRef.valueChanges
-        .pipe(
-          this.qlResponseHandler.handleResponse.call(
-            this.qlResponseHandler,
-            this.isLoading,
-          ),
-        )
+        .pipe(handleResponse(this.loadingSubject, this.error))
         .subscribe(({ data }: MutationResult<SkillsTreeQuery>) => {
-          this.isLoading.next(false);
           if (data && data.skillGroups) {
-            this.listItems = data.skillGroups.map((skillGroup) =>
-              this.skillGroupQLToListItem(skillGroup),
+            this.listItems = [...data.skillGroups, ...data.skills].map(
+              (skillGroup) => this.skillGroupQLToListItem(skillGroup),
             );
           }
         }),
@@ -90,7 +91,7 @@ export class SkillsListComponent implements OnInit {
   }
 
   async fetchChildren(item: ListItem, index: number) {
-    this.isLoading.next(true);
+    this.loadingSubject.next(true);
 
     const result = await this.skillsAdapterService.skillsTreeQueryRef.fetchMore(
       { variables: { where: { id: item.id } } },
@@ -104,7 +105,7 @@ export class SkillsListComponent implements OnInit {
     );
     this.listItems = [...this.listItems];
 
-    this.isLoading.next(false);
+    this.loadingSubject.next(false);
   }
 
   removeChildrenOf(item: ListItem, index: number) {
@@ -133,15 +134,10 @@ export class SkillsListComponent implements OnInit {
   }
 
   handleSubmitted(observable: Observable<MutationResult>) {
-    this.isLoading.next(true);
+    this.loadingSubject.next(true);
 
     observable
-      .pipe(
-        this.qlResponseHandler.handleResponse.call(
-          this.qlResponseHandler,
-          this.isLoading,
-        ),
-      )
+      .pipe(handleResponse(this.loadingSubject, this.error))
       .subscribe(({ data }) => {
         this.skillsAdapterService.skillsTreeQueryRef.refetch();
         this.notification.create(
@@ -175,7 +171,8 @@ export class SkillsListComponent implements OnInit {
     const item = this.listItems[previousIndex];
     const newParentId = this.listItems[currentIndex].parentId;
 
-    this.isLoading.next(true);
+    this.loadingSubject.next(true);
+
     this.skillsAdapterService
       .updateAssignmentToParents(
         item.type!,
@@ -183,22 +180,17 @@ export class SkillsListComponent implements OnInit {
         [item.parentId].filter(Boolean),
         [newParentId].filter(Boolean),
       )
-      .pipe(
-        this.qlResponseHandler.handleResponse.call(
-          this.qlResponseHandler,
-          this.isLoading,
-        ),
-      )
+      .pipe(handleResponse(this.loadingSubject, this.error))
       .subscribe(({ data }) => {
         this.skillsAdapterService.skillsTreeQueryRef.refetch();
         this.notification.create(
           'success',
           'Success',
-          data?.info
-            ? this.qlResponseMessageBuilder.buildUpdatedMessage(data?.info, [
-                'skill',
-                'skills',
-              ])
+          data?.updateSkillGroups.info
+            ? this.qlResponseMessageBuilder.buildUpdatedMessage(
+                data?.updateSkillGroups.info,
+                ['skill', 'skills'],
+              )
             : '',
         );
       });

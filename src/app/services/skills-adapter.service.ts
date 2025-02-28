@@ -30,14 +30,14 @@ import {
   SkillsWithLimitGQL,
   SkillsWithLimitQuery,
   UpdateSkillDocument,
-  UpdateSkillGroupsDocument,
+  UpdateSkillGroupsDocument, UpdateSkillGroupsMutation,
   UpdateSkillGroupsMutationResponse,
   UpdateSkillGroupsMutationVariables,
   UpdateSkillMutation,
   UpdateSkillMutationVariables,
 } from '../generated/graphql';
 import { ApolloClientService } from './apollo-client.service';
-import { map, mergeAll, single } from 'rxjs/operators';
+import { map, mergeMap, single } from 'rxjs/operators';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
 import { TypedDocumentNode } from '@apollo/client/core';
 
@@ -193,7 +193,7 @@ export class SkillsAdapterService extends ApolloClientService {
     variables: UpdateSkillGroupsMutationVariables['update'],
   ) {
     return super._apollo.mutate<
-      UpdateSkillGroupsMutationResponse,
+      UpdateSkillGroupsMutation,
       UpdateSkillGroupsMutationVariables
     >({
       mutation: UpdateSkillGroupsDocument,
@@ -257,19 +257,17 @@ export class SkillsAdapterService extends ApolloClientService {
 
     return merge(
       trueObservable.pipe(
-        map(() => {
-          throw Error('');
+        mergeMap(() => {
+          throw Error(`Skill ${name} already exists!`);
         }),
-        mergeAll(),
       ),
       falseObservable.pipe(
-        map(() =>
+        mergeMap(() =>
           super._apollo.mutate<T, V>({
             mutation,
             variables,
           }),
         ),
-        mergeAll(),
       ),
     );
   }

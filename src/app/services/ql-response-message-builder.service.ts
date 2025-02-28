@@ -3,7 +3,7 @@ import { CreateInfo, DeleteInfo, UpdateInfo } from '../generated/graphql';
 
 type ResponseDataInfo = CreateInfo | UpdateInfo | DeleteInfo;
 
-enum ResponseMessageType {
+export enum ResponseMessageType {
   Created = 'Created',
   Updated = 'Updated',
   Deleted = 'Deleted',
@@ -15,7 +15,7 @@ enum ResponseMessageType {
   providedIn: 'root',
 })
 export class QlResponseMessageBuilderService {
-  buildMessage(info: ResponseDataInfo, subjectNames: [singular: string, plural: string],) {
+  buildMessage(info: ResponseDataInfo, subjectNames: [singular: string, plural: string]) {
     switch(info.__typename) {
       case 'CreateInfo':
         return this.buildCreatedMessage(info, subjectNames);
@@ -94,7 +94,7 @@ export class QlResponseMessageBuilderService {
         ),
         this.buildFromTemplate(
           ResponseMessageType.Disconnect,
-          info.nodesDeleted,
+          info.relationshipsDeleted,
           ['other node', 'other nodes'],
           'together',
         ),
@@ -111,7 +111,7 @@ export class QlResponseMessageBuilderService {
     return `${action} ${count} ${this.getSubjectName(
       subjectNames,
       count,
-    )} ${suffix}`;
+    )}${suffix ? ` ${suffix}` : ''}`;
   }
 
   getSubjectName(

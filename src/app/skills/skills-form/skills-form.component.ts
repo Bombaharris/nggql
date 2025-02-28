@@ -8,7 +8,7 @@ import {
   SkillFormBaseDirective,
 } from './skill-form-base.directive';
 import { EMPTY, merge } from 'rxjs';
-import { map, mergeAll } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-skills-form',
@@ -86,22 +86,24 @@ export class SkillsFormComponent
       return;
     }
 
-    const observable = this.skillsAdapterService.createSkill(values.name).pipe(
-      map(({ data }) => {
-        const id = data?.createSkills.skills[0].id;
+    const observable = merge(
+      this.skillsAdapterService.createSkill(values.name),
+      this.skillsAdapterService.createSkill(values.name).pipe(
+        mergeMap(({ data }) => {
+          const id = data?.createSkills.skills[0].id;
 
-        if (id) {
-          return this.skillsAdapterService.updateAssignmentToParents(
-            'Skill',
-            id,
-            [],
-            values.groups,
-          );
-        }
+          if (id) {
+            return this.skillsAdapterService.updateAssignmentToParents(
+              'Skill',
+              id,
+              [],
+              values.groups,
+            );
+          }
 
-        return EMPTY;
-      }),
-      mergeAll(),
+          return EMPTY;
+        }),
+      ),
     );
 
     this.submitted.emit(observable);
