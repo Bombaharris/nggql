@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import {
   CreateExperiencesMutation,
   EditExperiencesMutation,
+  ExperienceType,
   PersonWithAllTypeFragment,
 } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
@@ -21,6 +22,15 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
   personId!: string;
   readonly subscription: Subscription = new Subscription();
 
+  readonly experienceTypeTitlesMap = {
+    [ExperienceType.Default]: 'Experience',
+    [ExperienceType.Project]: 'Projects',
+    [ExperienceType.Education]: 'Education',
+    [ExperienceType.Course]: 'Courses',
+    [ExperienceType.Hobby]: 'Hobbies',
+  };
+  readonly experienceTypeData: {type: ExperienceType, title: string}[];
+
   constructor(
     private personAdapterService: PersonAdapterService,
     private route: ActivatedRoute,
@@ -33,6 +43,11 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
       }),
     );
     this.personAdapterService.setPersonQueryRef(this.personId);
+
+    this.experienceTypeData = Object.entries(this.experienceTypeTitlesMap).map(([key, value]) => ({
+      type: key as ExperienceType,
+      title: value,
+    }));
   }
 
   ngOnInit(): void {
@@ -53,13 +68,24 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     );
   }
 
-  submitExperience($event: AbstractControl<any, any>): void {
+  getExperienceByType(type: ExperienceType) {
+    return {
+      [ExperienceType.Default]: () => this.editedPerson?.experience,
+      [ExperienceType.Education]: () => this.editedPerson?.education,
+      [ExperienceType.Hobby]: () => this.editedPerson?.hobby,
+      [ExperienceType.Project]: () => this.editedPerson?.projectExperience,
+      [ExperienceType.Course]: () => this.editedPerson?.courses,
+    }[type]() ?? [];
+  }
+
+  submitExperience($event: AbstractControl<any, any>, experienceType: ExperienceType): void {
     this.isLoading = true;
     const experienceExists = $event.get('id')?.value;
     if (!experienceExists) {
       this.personAdapterService
         .submitPersonExperience<CreateExperiencesMutation>(
           this.personId,
+          experienceType,
           $event,
           true,
         )
@@ -88,6 +114,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     this.personAdapterService
       .submitPersonExperience<EditExperiencesMutation>(
         this.personId,
+        experienceType,
         $event,
         false,
       )

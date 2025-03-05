@@ -16,12 +16,13 @@ import { GraphQLModule } from 'src/app/graphql.module';
 import { NgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 import { ExperiencesComponent } from '../experiences.component';
 import { ExperienceFormComponent } from './experience-form.component';
+import { ExperienceType } from '../../../generated/graphql';
+import { CvDateModule } from '../../../shared/pipes/cv-date.module';
 
 describe('ExperienceFormComponent', () => {
   let experienceFormComponent: ExperienceFormComponent;
   let experienceFormFixture: ComponentFixture<ExperienceFormComponent>;
   let experiencesFixture: ComponentFixture<ExperiencesComponent>;
-  let fb: FormBuilder = new FormBuilder();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExperienceFormComponent, ExperiencesComponent],
@@ -37,6 +38,7 @@ describe('ExperienceFormComponent', () => {
         BrowserAnimationsModule,
         ScrollingModule,
         DragDropModule,
+        CvDateModule,
       ],
       providers: [
         ApolloTestingModule,
@@ -56,30 +58,16 @@ describe('ExperienceFormComponent', () => {
     experiencesFixture = TestBed.createComponent(ExperiencesComponent);
     experienceFormFixture = TestBed.createComponent(ExperienceFormComponent);
     experienceFormComponent = experienceFormFixture.componentInstance;
-    experienceFormComponent.person = {
-      id: 'Zub',
-      name: 'Michael',
-      surname: 'Zubenstein',
-      departments: [],
-      experiences: [
-        {
-          name: 'Onwleo',
-          description: 'Large description',
-          startedFrom: '2023-11-11T16:36:52.959Z',
-          gainedAt: '2023-11-23T16:36:52.959Z',
-        },
-      ],
-      projects: [],
-      rates: [],
-      roles: [],
-      skills: [],
-    };
-    experienceFormComponent.experienceForm = fb.group({
-      experiences: fb.array([]),
-    });
-    experienceFormComponent.experienceForm
-      .get('experiences')
-      ?.value.push(experienceFormComponent.newExperienceGroup());
+    experienceFormComponent.experienceType = ExperienceType.Default;
+    experienceFormComponent.experienceData = [
+      {
+        name: 'Frontend Developer',
+        institution: 'Onwelo',
+        description: 'Large description',
+        startedFrom: '2023-11-11T16:36:52.959Z',
+        gainedAt: '2023-11-23T16:36:52.959Z',
+      },
+    ];
 
     experiencesFixture.detectChanges();
     experienceFormFixture.detectChanges();

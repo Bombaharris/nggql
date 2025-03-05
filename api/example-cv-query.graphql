@@ -1,4 +1,4 @@
-fragment commonExperience on Experience {
+fragment _commonExperience on Experience {
   gainedAt
   startedFrom
   description
@@ -31,22 +31,22 @@ query CVQuery {
       recommendedFor(projectId: "ProjectCV")
     }
     experience: experiences(where: {type: DEFAULT}){
-      ...commonExperience
+      ..._commonExperience
       role
       institution
     }
     projects: experiences(where: {type: PROJECT}){
-      ...commonExperience
+      ..._commonExperience
       name
       role
     }
     education: experiences(where: {type: EDUCATION}){
-      ...commonExperience
+      ..._commonExperience
       name
       institution
     }
     courses: experiences(where: {type: COURSE}){
-      ...commonExperience
+      ..._commonExperience
       name
       institution
     }

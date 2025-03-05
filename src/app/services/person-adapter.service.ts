@@ -23,6 +23,7 @@ import {
   PersonsWithAllQuery,
   UpdatePeopleDocument,
   UpdateRatesDocument,
+  ExperienceType,
 } from '../generated/graphql';
 import { QLFilterBuilderService } from './ql-filter-builder.service';
 import { map } from 'rxjs/operators';
@@ -66,7 +67,7 @@ export class PersonAdapterService {
       .valueChanges.pipe(
         map(
           (result: ApolloQueryResult<PersonsWithAllQuery>) =>
-            this.people = result.data.people,
+            (this.people = result.data.people),
         ),
       );
   }
@@ -177,6 +178,7 @@ export class PersonAdapterService {
 
   submitPersonExperience<T>(
     personId: string,
+    type: ExperienceType,
     $event: AbstractControl<any, any>,
     isCreate: boolean,
   ): Observable<MutationResult<T>> {
@@ -191,10 +193,13 @@ export class PersonAdapterService {
           },
         },
       },
-      name: experience.get('name')?.value ?? '',
-      description: experience.get('description')?.value ?? '',
+      type,
+      name: experience.get('name')?.value,
+      description: experience.get('description')?.value,
+      role: experience.get('role')?.value,
+      institution: experience.get('institution')?.value,
       startedFrom: experience.get('startedFrom')?.value ?? '',
-      gainedAt: experience.get('gainedAt')?.value ?? '',
+      gainedAt: experience.get('gainedAt')?.value ?? null,
     };
     if (!isCreate) {
       input.skills = {

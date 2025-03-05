@@ -5101,7 +5101,7 @@ export type UpdateSkillsMutationResponse = {
   skills: Array<Skill>;
 };
 
-export type CommonExperienceFragment = { __typename?: 'Experience', gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> };
+export type _CommonExperienceFragment = { __typename?: 'Experience', gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> };
 
 export type CvQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5122,7 +5122,7 @@ export type CreateExperiencesMutationVariables = Exact<{
 }>;
 
 
-export type CreateExperiencesMutation = { __typename?: 'Mutation', createExperiences: { __typename?: 'CreateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, person?: { __typename?: 'Person', name: string } | null }> } };
+export type CreateExperiencesMutation = { __typename?: 'Mutation', createExperiences: { __typename?: 'CreateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, person?: { __typename?: 'Person', name: string } | null, skills: Array<{ __typename?: 'Skill', name: string }> }> } };
 
 export type CreatePeopleMutationVariables = Exact<{
   input: Array<PersonCreateInput> | PersonCreateInput;
@@ -5228,6 +5228,18 @@ export type EditExperiencesMutationVariables = Exact<{
 
 export type EditExperiencesMutation = { __typename?: 'Mutation', updateExperiences: { __typename?: 'UpdateExperiencesMutationResponse', experiences: Array<{ __typename?: 'Experience', description?: string | null, gainedAt?: any | null, name?: string | null, startedFrom: any, person?: { __typename?: 'Person', id: string, name: string } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> } };
 
+export type CommonExperienceFragment = { __typename?: 'Experience', gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> };
+
+export type DefaultExperienceFragment = { __typename?: 'Experience', role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> };
+
+export type ProjectExperienceFragment = { __typename?: 'Experience', name?: string | null, role?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> };
+
+export type EducationOrCourseExperienceFragment = { __typename?: 'Experience', name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> };
+
+export type HobbyExperienceFragment = { __typename?: 'Experience', name?: string | null };
+
+export type AllExperienceFieldsFragment = { __typename?: 'Experience', name?: string | null, role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> };
+
 export type ExperienceDataFragment = { __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
 export type ExperiencesByPersonQueryVariables = Exact<{
@@ -5244,14 +5256,16 @@ export type FindSkillQueryVariables = Exact<{
 
 export type FindSkillQuery = { __typename?: 'Query', findSkill: Array<{ __typename?: 'Skill', id: string, name: string }> };
 
-export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> };
+export type ExperienceOfPersonFragment = { __typename?: 'Person', experience: Array<{ __typename?: 'Experience', id: string, role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, projectExperience: Array<{ __typename?: 'Experience', id: string, name?: string | null, role?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', id: string, name?: string | null }> };
+
+export type PersonWithAllTypeFragment = { __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experience: Array<{ __typename?: 'Experience', id: string, role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, projectExperience: Array<{ __typename?: 'Experience', id: string, name?: string | null, role?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', id: string, name?: string | null }> };
 
 export type PersonsWithAllQueryVariables = Exact<{
   where?: InputMaybe<PersonWhere>;
 }>;
 
 
-export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experiences: Array<{ __typename?: 'Experience', id: string, name?: string | null, description?: string | null, startedFrom: any, gainedAt?: any | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }> }> }> };
+export type PersonsWithAllQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', id: string, name: string, surname: string, bio?: string | null, birthday?: any | null, seniority?: Seniority | null, location?: { __typename?: 'Point', longitude: number, latitude: number } | null, skills: Array<{ __typename?: 'Skill', id: string, name: string }>, roles: Array<{ __typename?: 'Role', id: string, name: string }>, rates: Array<{ __typename?: 'Rate', id: string, value: number, validFrom: any }>, departments: Array<{ __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', name: string, surname: string } | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, duration: any, startedFrom: any }>, experience: Array<{ __typename?: 'Experience', id: string, role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, projectExperience: Array<{ __typename?: 'Experience', id: string, name?: string | null, role?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', id: string, name?: string | null }> }> };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5359,8 +5373,8 @@ export type UpdateSkillMutationVariables = Exact<{
 
 export type UpdateSkillMutation = { __typename?: 'Mutation', updateSkills: { __typename?: 'UpdateSkillsMutationResponse', info: { __typename?: 'UpdateInfo', nodesCreated: number, nodesDeleted: number, relationshipsCreated: number, relationshipsDeleted: number }, skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
 
-export const CommonExperienceFragmentDoc = gql`
-    fragment commonExperience on Experience {
+export const _CommonExperienceFragmentDoc = gql`
+    fragment _commonExperience on Experience {
   gainedAt
   startedFrom
   description
@@ -5386,6 +5400,24 @@ export const SkillPartFragmentDoc = gql`
   name
 }
     `;
+export const CommonExperienceFragmentDoc = gql`
+    fragment CommonExperience on Experience {
+  gainedAt
+  startedFrom
+  skills {
+    name
+  }
+}
+    `;
+export const AllExperienceFieldsFragmentDoc = gql`
+    fragment AllExperienceFields on Experience {
+  ...CommonExperience
+  name
+  role
+  institution
+  description
+}
+    ${CommonExperienceFragmentDoc}`;
 export const ExperienceDataFragmentDoc = gql`
     fragment ExperienceData on Experience {
   id
@@ -5399,6 +5431,62 @@ export const ExperienceDataFragmentDoc = gql`
   }
 }
     `;
+export const DefaultExperienceFragmentDoc = gql`
+    fragment DefaultExperience on Experience {
+  ...CommonExperience
+  role
+  institution
+  description
+}
+    ${CommonExperienceFragmentDoc}`;
+export const ProjectExperienceFragmentDoc = gql`
+    fragment ProjectExperience on Experience {
+  ...CommonExperience
+  name
+  role
+  description
+}
+    ${CommonExperienceFragmentDoc}`;
+export const EducationOrCourseExperienceFragmentDoc = gql`
+    fragment EducationOrCourseExperience on Experience {
+  ...CommonExperience
+  name
+  institution
+  description
+}
+    ${CommonExperienceFragmentDoc}`;
+export const HobbyExperienceFragmentDoc = gql`
+    fragment HobbyExperience on Experience {
+  name
+}
+    `;
+export const ExperienceOfPersonFragmentDoc = gql`
+    fragment ExperienceOfPerson on Person {
+  experience: experiences(where: {type: DEFAULT}) {
+    id
+    ...DefaultExperience
+  }
+  projectExperience: experiences(where: {type: PROJECT}) {
+    id
+    ...ProjectExperience
+  }
+  education: experiences(where: {type: EDUCATION}) {
+    id
+    ...EducationOrCourseExperience
+  }
+  courses: experiences(where: {type: COURSE}) {
+    id
+    ...EducationOrCourseExperience
+  }
+  hobby: experiences(where: {type: HOBBY}) {
+    id
+    ...HobbyExperience
+  }
+}
+    ${DefaultExperienceFragmentDoc}
+${ProjectExperienceFragmentDoc}
+${EducationOrCourseExperienceFragmentDoc}
+${HobbyExperienceFragmentDoc}`;
 export const PersonWithAllTypeFragmentDoc = gql`
     fragment PersonWithAllType on Person {
   id
@@ -5438,11 +5526,9 @@ export const PersonWithAllTypeFragmentDoc = gql`
     duration
     startedFrom
   }
-  experiences {
-    ...ExperienceData
-  }
+  ...ExperienceOfPerson
 }
-    ${ExperienceDataFragmentDoc}`;
+    ${ExperienceOfPersonFragmentDoc}`;
 export const ProjectPartFragmentDoc = gql`
     fragment ProjectPart on Project {
   id
@@ -5481,22 +5567,22 @@ export const CvQueryDocument = gql`
       recommendedFor(projectId: "ProjectCV")
     }
     experience: experiences(where: {type: DEFAULT}) {
-      ...commonExperience
+      ..._commonExperience
       role
       institution
     }
     projects: experiences(where: {type: PROJECT}) {
-      ...commonExperience
+      ..._commonExperience
       name
       role
     }
     education: experiences(where: {type: EDUCATION}) {
-      ...commonExperience
+      ..._commonExperience
       name
       institution
     }
     courses: experiences(where: {type: COURSE}) {
-      ...commonExperience
+      ..._commonExperience
       name
       institution
     }
@@ -5505,7 +5591,7 @@ export const CvQueryDocument = gql`
     }
   }
 }
-    ${CommonExperienceFragmentDoc}`;
+    ${_CommonExperienceFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -5542,14 +5628,14 @@ export const CreateExperiencesDocument = gql`
   createExperiences(input: $input) {
     experiences {
       id
-      name
+      ...AllExperienceFields
       person {
         name
       }
     }
   }
 }
-    `;
+    ${AllExperienceFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

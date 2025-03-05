@@ -1,48 +1,69 @@
+fragment ExperienceOfPerson on Person {
+  experience: experiences(where: { type: DEFAULT }) {
+    id
+    ...DefaultExperience
+  }
+  projectExperience: experiences(where: { type: PROJECT }) {
+    id
+    ...ProjectExperience
+  }
+  education: experiences(where: { type: EDUCATION }) {
+    id
+    ...EducationOrCourseExperience
+  }
+  courses: experiences(where: { type: COURSE }) {
+    id
+    ...EducationOrCourseExperience
+  }
+  hobby: experiences(where: { type: HOBBY }) {
+    id
+    ...HobbyExperience
+  }
+}
+
 fragment PersonWithAllType on Person {
-   id
+  id
+  name
+  surname
+  bio
+  location {
+    longitude
+    latitude
+  }
+  skills {
+    id
     name
-    surname
-    bio
-    location {
-      longitude
-      latitude
-    }
-    skills {
-      id
+  }
+  roles {
+    id
+    name
+  }
+  birthday
+  seniority
+  rates {
+    id
+    value
+    validFrom
+  }
+  departments {
+    id
+    name
+    manager {
       name
-    }
-    roles {
-      id
-      name
-    }
-    birthday
-    seniority
-    rates {
-      id
-      value
-      validFrom
-    }
-    departments {
-      id
-      name
-      manager {
-        name
-        surname
-      }
-    }
-    projects {
-      id
-      name
-      duration
-      startedFrom
-    }
-    experiences{
-      ...ExperienceData
+      surname
     }
   }
+  projects {
+    id
+    name
+    duration
+    startedFrom
+  }
+  ...ExperienceOfPerson
+}
 
 query PersonsWithAll($where: PersonWhere) {
   people(where: $where) {
-   ...PersonWithAllType
-}
+    ...PersonWithAllType
+  }
 }
