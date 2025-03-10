@@ -44,8 +44,8 @@
   <nz-form-item nz-row class="register-area">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
       <nz-space [nzSize]="'small'">
-        <button *nzSpaceItem nz-button nzType="primary" type="submit" [disabled]="!skillForm.valid">Submit</button>
-        <button *nzSpaceItem nz-button (click)="cancel()">Cancel</button>
+        <button *nzSpaceItem nz-button nzType="primary" [disabled]="!skillForm.valid">Submit</button>
+        <button *nzSpaceItem nz-button type="button" (click)="cancel()">Cancel</button>
       </nz-space>
     </nz-form-control>
   </nz-form-item>

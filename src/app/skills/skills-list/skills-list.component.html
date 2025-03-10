@@ -67,11 +67,13 @@
       *ngIf="currentForm === 'Skill'"
       [skillId]="skillId"
       (submitted)="handleSubmitted($event)"
+      (canceled)="closeForm()"
     ></app-skills-form>
     <app-skill-groups-form
       *ngIf="currentForm === 'SkillGroup'"
       [skillId]="skillId"
       (submitted)="handleSubmitted($event)"
+      (canceled)="closeForm()"
     ></app-skill-groups-form>
   </div>
 </nz-drawer>
