@@ -63,34 +63,4 @@ describe('ExperiencesComponent', () => {
   it('should create', () => {
     expect(experiencesComponent).toBeTruthy();
   });
-
-  it('should return experience by type', () => {
-    experiencesComponent.editedPerson = createSpyObj('Person', [], {
-      experience: [{ id: 'a' }],
-      education: [{ id: 'b' }],
-      hobby: [{ id: 'c' }],
-      projectExperience: [{ id: 'd' }],
-      courses: [{ id: 'e' }],
-    });
-
-    expect(
-      experiencesComponent.getExperienceByType(ExperienceType.Default),
-    ).toEqual([{ id: 'a' }]);
-
-    expect(
-      experiencesComponent.getExperienceByType(ExperienceType.Education),
-    ).toEqual([{ id: 'b' }]);
-
-    expect(
-      experiencesComponent.getExperienceByType(ExperienceType.Hobby),
-    ).toEqual([{ id: 'c' }]);
-
-    expect(
-      experiencesComponent.getExperienceByType(ExperienceType.Project),
-    ).toEqual([{ id: 'd' }]);
-
-    expect(
-      experiencesComponent.getExperienceByType(ExperienceType.Course),
-    ).toEqual([{ id: 'e' }]);
-  });
 });

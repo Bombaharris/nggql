@@ -1,27 +1,29 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { formatDate } from '@angular/common';
+
+type InputDateType = Date | string | number | null;
 
 @Pipe({
-  name: 'cvDate',
+  name: 'cvDateRange',
 })
-export class CvDate implements PipeTransform {
-  constructor(private datePipe: DatePipe) {}
-
+export class CvDateRangePipe implements PipeTransform {
   transform(
-    value: Date | string | number | null,
-    format?: string,
-    timezone?: string,
-    locale?: string,
+    [from, to]: [InputDateType, InputDateType],
+    fallback = 'present',
+    format = 'mediumDate',
   ) {
-    if (!value) {
-      return 'present';
-    }
+    return `${this.transformDatePart(
+      from,
+      fallback,
+      format,
+    )} - ${this.transformDatePart(to, fallback, format)}`;
+  }
 
-    return this.datePipe.transform(
-      value,
-      format ?? 'mediumDate',
-      timezone,
-      locale ?? 'en-US',
-    );
+  private transformDatePart(
+    date: InputDateType,
+    fallback: string,
+    format = 'mediumDate',
+  ) {
+    return date ? formatDate(date, format, 'en-US') : fallback;
   }
 }

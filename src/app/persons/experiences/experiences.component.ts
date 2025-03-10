@@ -10,6 +10,7 @@ import {
   PersonWithAllTypeFragment,
 } from 'src/app/generated/graphql';
 import { PersonAdapterService } from 'src/app/services/person-adapter.service';
+import { Experience } from '../../shared/models/experience';
 
 @Component({
   selector: 'app-experiences',
@@ -29,7 +30,11 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     [ExperienceType.Course]: 'Courses',
     [ExperienceType.Hobby]: 'Hobbies',
   };
-  readonly experienceTypeData: {type: ExperienceType, title: string}[];
+  readonly experienceTypeData: {
+    type: ExperienceType;
+    title: string;
+    data: Experience[];
+  }[];
 
   constructor(
     private personAdapterService: PersonAdapterService,
@@ -44,10 +49,13 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     );
     this.personAdapterService.setPersonQueryRef(this.personId);
 
-    this.experienceTypeData = Object.entries(this.experienceTypeTitlesMap).map(([key, value]) => ({
-      type: key as ExperienceType,
-      title: value,
-    }));
+    this.experienceTypeData = Object.entries(this.experienceTypeTitlesMap).map(
+      ([key, value]) => ({
+        type: key as ExperienceType,
+        title: value,
+        data: [],
+      }),
+    );
   }
 
   ngOnInit(): void {
@@ -61,24 +69,17 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
         if (data && data.people) {
-          this.editedPerson = data.people.find((p) => p.id === this.personId);
+          this.setEditedPerson(data.people.find((p) => p.id === this.personId));
           this.isLoading = false;
         }
       },
     );
   }
 
-  getExperienceByType(type: ExperienceType) {
-    return {
-      [ExperienceType.Default]: () => this.editedPerson?.experience,
-      [ExperienceType.Education]: () => this.editedPerson?.education,
-      [ExperienceType.Hobby]: () => this.editedPerson?.hobby,
-      [ExperienceType.Project]: () => this.editedPerson?.projectExperience,
-      [ExperienceType.Course]: () => this.editedPerson?.courses,
-    }[type]() ?? [];
-  }
-
-  submitExperience($event: AbstractControl<any, any>, experienceType: ExperienceType): void {
+  submitExperience(
+    $event: AbstractControl<any, any>,
+    experienceType: ExperienceType,
+  ): void {
     this.isLoading = true;
     const experienceExists = $event.get('id')?.value;
     if (!experienceExists) {
@@ -97,7 +98,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
               `Experience for ${this.editedPerson?.name} was successfully created.`,
             );
             this.personAdapterService?.refetch(this.personId)?.then((res) => {
-              this.editedPerson = res.data.people[0];
+              this.setEditedPerson(res.data.people[0]);
             });
           },
           (error: any) => {
@@ -126,7 +127,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
             `Experience for ${this.editedPerson?.name} was successfully changed.`,
           );
           this.personAdapterService?.refetch(this.personId)?.then((res) => {
-            this.editedPerson = res.data.people[0];
+            this.setEditedPerson(res.data.people[0]);
           });
         },
         (error: any) => {
@@ -162,5 +163,15 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  private setEditedPerson(data: PersonWithAllTypeFragment | undefined) {
+    this.editedPerson = data;
+
+    this.experienceTypeData.forEach((item) => {
+      const key =
+        this.personAdapterService.experienceTypeQueryResultKeyMap[item.type];
+      item.data = data ? data[key] : [];
+    });
   }
 }

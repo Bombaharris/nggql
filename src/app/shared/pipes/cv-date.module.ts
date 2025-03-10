@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CvDate } from './cv-date';
-import { DatePipe } from '@angular/common';
+import { CvDateRangePipe } from './cv-date';
 
 @NgModule({
-  declarations: [CvDate],
-  providers: [DatePipe],
-  exports: [CvDate],
+  declarations: [CvDateRangePipe],
+  exports: [CvDateRangePipe],
 })
 export class CvDateModule {}

@@ -46,6 +46,13 @@ export class PersonAdapterService {
     | undefined = undefined;
   editedPerson: PersonWithAllTypeFragment | null = null;
   people: PersonWithAllTypeFragment[] | null = null;
+  readonly experienceTypeQueryResultKeyMap = {
+    [ExperienceType.Default]: 'experience',
+    [ExperienceType.Project]: 'projectExperience',
+    [ExperienceType.Education]: 'education',
+    [ExperienceType.Course]: 'courses',
+    [ExperienceType.Hobby]: 'hobby',
+  } as const;
 
   constructor(
     private apollo: Apollo,

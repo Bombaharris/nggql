@@ -11,7 +11,7 @@
         <nz-collapse nzExpandIconPosition="right" nzAccordion>
           <nz-collapse-panel *ngFor="let item of experienceTypeData" nzHeader="{{ item.title }}">
             <app-experience-form
-              [experienceData]="getExperienceByType(item.type)"
+              [experienceData]="item.data"
               [experienceType]="item.type"
               (submitted)="submitExperience($event, item.type)"
               (deleted)="removePersonsExperience($event)"
