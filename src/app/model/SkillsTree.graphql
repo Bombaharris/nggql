@@ -1,0 +1,31 @@
+query SkillsTree($where: SkillGroupWhere) {
+  skillGroups(where: $where) {
+    id
+    name
+    children {
+      ... on SkillGroup {
+        __typename
+        id
+        name
+        childrenConnection {
+          totalCount
+        }
+      }
+      ... on Skill {
+        __typename
+        id
+        name
+      }
+    }
+    childrenConnection {
+      totalCount
+    }
+  }
+  skills(where: { groupsAggregate_: {
+    count: 0
+  }}) {
+    id
+    name
+    __typename
+  }
+}

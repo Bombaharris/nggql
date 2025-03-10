@@ -20,6 +20,7 @@ import { RolesAdapterService } from '../services/roles-adapter.service';
 import { SkillsAdapterService } from '../services/skills-adapter.service';
 import { ProjectsAdapterService } from './../services/projects-adapter.service';
 import { PersonForm } from './person-form/models/person-form.model';
+import { map, skipWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -75,7 +76,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.departments$ = this.departmentsAdapterService.fetch();
     this.projects$ = this.projectsAdapterService.fetch();
-    this.skills$ = this.skillsAdapterService.fetch();
+
+    this.skills$ = this.skillsAdapterService.getAllSkills();
+
     this.roles$ = this.rolesAdapterService.fetch();
   }
 

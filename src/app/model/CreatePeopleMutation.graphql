@@ -4,6 +4,7 @@ mutation CreatePeople($input: [PersonCreateInput!]!) {
       id
       name
       surname
+      bio
       seniority
       birthday
     }

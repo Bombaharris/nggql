@@ -41,19 +41,28 @@ type Experience {
   gainedAt: Date
 }
 
+union SkillChild = Skill | SkillGroup
+
 type SkillGroup {
   id: ID! @id @unique
   name: String!
-  skills: [Skill!]! @relationship(type: "BELONGS_TO", direction: IN)
+  children: [SkillChild!]! @relationship(type: "BELONGS_TO", direction: IN)
   parents: [SkillGroup!]! @relationship(type: "BELONGS_TO", direction: OUT)
+}
+
+type SkillGroupAggregate {
+  count: Int!
 }
 
 type Skill {
   id: ID! @id @unique
   name: String!
   groups: [SkillGroup!]! @cypher(statement: """
-    match (this)-[:BELONGS_TO]->+(sg:SkillGroup) return sg
+    MATCH (this)-[:BELONGS_TO]->+(sg:SkillGroup) RETURN sg
   """, columnName: "sg")
+  groupsAggregate_: SkillGroupAggregate! @cypher(statement: """
+    MATCH (this)-[:BELONGS_TO]->+(sg:SkillGroup) RETURN { count: count(sg) } AS count
+  """, columnName: "count")
   persons: [Person!]! @relationship(type: "HAS_SKILL", direction: IN)
   experiences: [Experience!]! @relationship(type: "USED_SKILL", direction: IN)
   recommendedFor(projectId: String!): Boolean! @cypher(statement: """
@@ -91,7 +100,7 @@ type Rate {
 }
 
 type Query {
-  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""", columnName: """s""")
+  findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill|SkillGroup) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""", columnName: """s""")
 }
 
 type PersonsToProject {

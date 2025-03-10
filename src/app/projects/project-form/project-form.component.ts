@@ -32,7 +32,7 @@ export class ProjectFormComponent implements OnInit {
   isLoading: boolean = false;
   confirmModal: boolean = false;
   persons!: Observable<PersonsWithAllQuery['people']>;
-  skills!: Observable<SkillsQuery['skills']>;
+  skills: Observable<SkillsQuery['skills']>;
   qlFilterService = new QLFilterBuilderService();
   projectForm: FormGroup<ProjectForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -48,7 +48,7 @@ export class ProjectFormComponent implements OnInit {
     private projectAdapterService: ProjectsAdapterService,
   ) {
     this.project = this.projectAdapterService.editedProject;
-    this.skills = this.skillsAdapterService.fetch();
+    this.skills = this.skillsAdapterService.getAllSkills();
     this.persons = this.personsAdapterService.fetch();
   }
 

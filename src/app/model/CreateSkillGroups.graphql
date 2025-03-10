@@ -1,0 +1,8 @@
+mutation CreateSkillGroups($input: [SkillGroupCreateInput!]!) {
+  createSkillGroups(input: $input) {
+    info {
+      nodesCreated
+      relationshipsCreated
+    }
+  }
+}

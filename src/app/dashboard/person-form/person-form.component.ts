@@ -18,6 +18,7 @@ import {
 import { DepartmentsAdapterService } from './../../services/departments-adapter.service';
 import { PersonAdapterService } from './../../services/person-adapter.service';
 import { PersonForm } from './models/person-form.model';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-person-form',
@@ -29,13 +30,14 @@ export class PersonFormComponent implements OnInit {
   @Output() canceled = new EventEmitter();
   departments!: DepartmentsQuery['departments'];
   projects!: ProjectsWithAllQuery['projects'];
-  skills!: SkillsQuery['skills'];
+  skills: Observable<SkillsQuery['skills']>;
   roles!: RolesQuery['roles'];
   seniority = Object.values(Seniority);
   personForm: FormGroup<PersonForm> = new FormGroup({
     name: new FormControl(null, Validators.required),
     surname: new FormControl(null, Validators.required),
     birthday: new FormControl(),
+    bio: new FormControl(),
     departments: new FormControl(),
     projects: new FormControl(),
     skills: new FormControl(),
@@ -53,7 +55,7 @@ export class PersonFormComponent implements OnInit {
   ) {
     this.person = personAdapterService.editedPerson;
     this.departments = this.departmentsAdapterService.departments;
-    this.skills = this.skillsAdapterService.skills;
+    this.skills = this.skillsAdapterService.getAllSkills();
     this.roles = this.rolesAdapterService.roles;
     this.projects = this.projectsAdapterService.projects;
   }

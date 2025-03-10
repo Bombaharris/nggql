@@ -4,6 +4,10 @@ fragment SkillPart on Skill {
 }
 mutation CreateSkills($input: [SkillCreateInput!]!) {
   createSkills(input: $input) {
+    info {
+      nodesCreated
+      relationshipsCreated
+    }
     skills {
       ...SkillPart
     }

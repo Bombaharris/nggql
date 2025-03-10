@@ -1,47 +1,79 @@
 <nz-breadcrumb>
-    <nz-breadcrumb-item><a [routerLink]="['../']">Software House</a></nz-breadcrumb-item>
-    <nz-breadcrumb-item>Skills</nz-breadcrumb-item>
-  </nz-breadcrumb>
-  <div nz-row nzJustify="end">
-    <div nz-col [nzSpan]="20">
-      <h1 nz-typography>Skills</h1>
-    </div>
-    <div nz-col [nzSpan]="4">
-      <button nz-button nzBlock nzType="default" (click)="openForm('skill')">Create skill</button>
-    </div>
+  <nz-breadcrumb-item><a [routerLink]="['../']">Software House</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>Skills</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div nz-row nzJustify="end">
+  <div nz-col [nzSpan]="20">
+    <h1 nz-typography>Skills</h1>
   </div>
-  
-  <nz-table
-    #table
-    [nzData]="feed"
-    [nzBordered]="true"
-    [nzLoading]="isLoading"
-    [nzFrontPagination]="false"
-    [nzTotal]="total"
-    [(nzPageIndex)]="pageIndex"
-    [(nzPageSize)]="pageSize"
-    (nzPageIndexChange)="fetchMore()"
-    (nzPageSizeChange)="fetchMore(true)">
-    <thead>
-      <tr>
-        <th>Skill</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let skill of table.data">
-        <td>{{ skill.name }}</td>
-      </tr>
-    </tbody>
-  </nz-table>
-  <nz-drawer
-  *ngIf="currentForm === 'skill'"
+  <div nz-col [nzSpan]="4">
+    <nz-space nzSize="small">
+      <button *nzSpaceItem nz-button nzBlock nzType="default" (click)="openForm('SkillGroup')">Create skill group
+      </button>
+      <button *nzSpaceItem nz-button nzBlock nzType="default" (click)="openForm('Skill')">Create skill</button>
+    </nz-space>
+  </div>
+</div>
+
+<nz-table
+  #table
+  [nzData]="listItems"
+  [nzBordered]="true"
+  [nzLoading]="isLoading | async"
+  [nzFrontPagination]="false"
+>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody cdkDropList (cdkDropListDropped)="handleDrop($event)">
+  <tr *ngFor="let skill of table.data; let index = index" cdkDrag>
+    <td
+      [nzShowExpand]="skill.childrenCount > 0"
+      [nzIndentSize]="skill.level * 20"
+      (nzExpandChange)="handleExpand(skill, index, $event)"
+    >
+      {{ skill.name }}
+    </td>
+    <td>{{ skill.type }}</td>
+    <td>
+      <button *ngIf="skill.type" nz-button nzType="link" (click)="openForm(skill.type, skill.id)">Edit</button>
+      <button
+        *ngIf="skill.type"
+        nz-button nzType="link"
+        nzDanger
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure you want to delete this skill?"
+        nzPopconfirmPlacement="top"
+        (nzOnConfirm)="removeSkill(skill)"
+      >Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-drawer
+  *ngIf="isFormVisible"
   [nzBodyStyle]="{ overflow: 'auto' }"
   [nzMaskClosable]="true"
   [nzWidth]="'40%'"
-  [nzVisible]="isFormVisible"
-  [nzTitle]="'Create skill'"
+  [nzVisible]="true"
+  [nzTitle]="drawerTitle"
   (nzOnClose)="closeForm()">
   <div *nzDrawerContent>
-    <app-skills-form (canceled)="closeForm()" (submitted)="closeForm($event)"></app-skills-form>
+    <app-skills-form
+      *ngIf="currentForm === 'Skill'"
+      [skillId]="skillId"
+      (submitted)="handleSubmitted($event)"
+      (canceled)="closeForm()"
+    ></app-skills-form>
+    <app-skill-groups-form
+      *ngIf="currentForm === 'SkillGroup'"
+      [skillId]="skillId"
+      (submitted)="handleSubmitted($event)"
+      (canceled)="closeForm()"
+    ></app-skill-groups-form>
   </div>
-  </nz-drawer>
+</nz-drawer>

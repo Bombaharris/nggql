@@ -4,6 +4,7 @@ mutation UpdatePeople($where: PersonWhere, $update: PersonUpdateInput) {
       id
       name
       surname
+      bio
       location {
         longitude
         latitude

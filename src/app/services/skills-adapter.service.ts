@@ -1,47 +1,87 @@
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core/types';
-import { Apollo, MutationResult, QueryRef } from 'apollo-angular';
-import { Observable } from 'rxjs';
+import { Apollo, QueryRef } from 'apollo-angular';
+import { merge, Observable, partition } from 'rxjs';
 import {
+  CreateSkillGroupsDocument,
+  CreateSkillGroupsMutation,
+  CreateSkillGroupsMutationVariables,
   CreateSkillsDocument,
+  CreateSkillsMutation,
+  CreateSkillsMutationVariables,
+  DeleteSkillGroupsDocument,
+  DeleteSkillGroupsMutation,
+  DeleteSkillGroupsMutationVariables,
+  DeleteSkillsDocument,
+  DeleteSkillsMutation,
+  DeleteSkillsMutationVariables,
   Exact,
   FindSkillDocument,
   FindSkillQuery,
   InputMaybe,
+  SkillGroupCreateInput,
+  SkillGroupsGQL,
+  SkillGroupsQuery,
+  SkillGroupsQueryVariables,
   SkillOptions,
-  SkillPartFragment,
-  SkillsDocument,
-  SkillsQuery,
+  SkillsTreeGQL,
+  SkillsTreeQuery,
+  SkillsTreeQueryVariables,
   SkillsWithLimitGQL,
   SkillsWithLimitQuery,
-  SkillsWithLimitQueryVariables,
+  UpdateSkillDocument,
+  UpdateSkillGroupsDocument, UpdateSkillGroupsMutation,
+  UpdateSkillGroupsMutationResponse,
+  UpdateSkillGroupsMutationVariables,
+  UpdateSkillMutation,
+  UpdateSkillMutationVariables,
 } from '../generated/graphql';
 import { ApolloClientService } from './apollo-client.service';
-import { map } from 'rxjs/operators';
+import { map, mergeMap, single } from 'rxjs/operators';
+import { QLFilterBuilderService } from './ql-filter-builder.service';
+import { TypedDocumentNode } from '@apollo/client/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillsAdapterService extends ApolloClientService {
-  skills!: SkillsWithLimitQuery['skills'];
-  skillsQueryRef:
-    | QueryRef<
-        SkillsWithLimitQuery,
-        Exact<{ options?: InputMaybe<SkillOptions> | undefined }>
-      >
-    | undefined = undefined;
-  editedSkill: SkillPartFragment | null = null;
+  skillsQueryRef: QueryRef<
+    SkillsWithLimitQuery,
+    Exact<{ options?: InputMaybe<SkillOptions> | undefined }>
+  >;
+  skillsTreeQueryRef: QueryRef<SkillsTreeQuery, SkillsTreeQueryVariables>;
+
+  private allSkillGroupsRef?: QueryRef<
+    SkillGroupsQuery,
+    SkillGroupsQueryVariables
+  >;
+  private lowestSkillGroupsRef?: QueryRef<
+    SkillGroupsQuery,
+    SkillGroupsQueryVariables
+  >;
 
   constructor(
     apollo: Apollo,
     private ssGQl: SkillsWithLimitGQL,
+    private skillsTreeGQl: SkillsTreeGQL,
+    private skillGroupsGQl: SkillGroupsGQL,
+    private qlFilterService: QLFilterBuilderService,
   ) {
     super(apollo);
     this.skillsQueryRef = this.ssGQl.watch(
+      {},
       {
-        options: {
-          limit: 10,
-          offset: 0,
+        fetchPolicy: 'cache-and-network',
+        errorPolicy: 'all',
+      },
+    );
+
+    this.skillsTreeQueryRef = this.skillsTreeGQl.watch(
+      {
+        where: {
+          parentsAggregate: {
+            count: 0,
+          },
         },
       },
       {
@@ -51,14 +91,46 @@ export class SkillsAdapterService extends ApolloClientService {
     );
   }
 
-  fetch(): Observable<SkillsQuery['skills']> {
-    const data = super.fetchValues<SkillsQuery>(SkillsDocument, 'skills');
-    data.subscribe((skills) => this.skills = skills);
-    return data;
+  getAllSkillGroups() {
+    if (!this.allSkillGroupsRef) {
+      this.allSkillGroupsRef = this.skillGroupsGQl.watch(
+        {},
+        {
+          fetchPolicy: 'cache-and-network',
+          errorPolicy: 'all',
+        },
+      );
+    }
+
+    return this.allSkillGroupsRef;
   }
 
-  fetchMore(variables: SkillsWithLimitQueryVariables): void {
-    this.skillsQueryRef?.fetchMore({ variables }).then((skills) => skills.data);
+  getLowestSkillGroups() {
+    if (!this.lowestSkillGroupsRef) {
+      this.lowestSkillGroupsRef = this.skillGroupsGQl.watch(
+        {
+          where: {
+            children_SOME: {
+              Skill: {
+                NOT: { id: null },
+              },
+            },
+          },
+        },
+        {
+          fetchPolicy: 'cache-and-network',
+          errorPolicy: 'all',
+        },
+      );
+    }
+
+    return this.lowestSkillGroupsRef;
+  }
+
+  getAllSkills() {
+    return this.skillsQueryRef?.valueChanges.pipe(
+      map(({ data }) => data.skills),
+    );
   }
 
   findSkill(name: string): Observable<ApolloQueryResult<FindSkillQuery>> {
@@ -68,23 +140,135 @@ export class SkillsAdapterService extends ApolloClientService {
     });
   }
 
-  checkSkillExists(name: string): Observable<FindSkillQuery['findSkill']> {
+  checkSkillExists(name: string): Observable<boolean> {
     return this.findSkill(name).pipe(
-      map((result: ApolloQueryResult<FindSkillQuery>) => result.data.findSkill),
+      single(),
+      map(
+        (result: ApolloQueryResult<FindSkillQuery>) =>
+          result.data.findSkill && result.data.findSkill.length > 0,
+      ),
     );
   }
 
-  submitSkill<T>(name: string): Observable<MutationResult<T>> {
-    const input: any = {
+  createSkill(name: string) {
+    return this.safeCreate<CreateSkillsMutation, CreateSkillsMutationVariables>(
       name,
-    };
+      CreateSkillsDocument,
+      { input: { name } },
+    );
+  }
 
-    const mutation = CreateSkillsDocument;
-    const variables = { input };
-    // Create a new person
-    return super._apollo.mutate<T>({
-      mutation,
-      variables,
+  updateSkill(id: string, variables: UpdateSkillMutationVariables['update']) {
+    return super._apollo.mutate<
+      UpdateSkillMutation,
+      UpdateSkillMutationVariables
+    >({
+      mutation: UpdateSkillDocument,
+      variables: {
+        where: { id },
+        update: variables,
+      },
     });
+  }
+
+  deleteSkill(id: string) {
+    return super._apollo.mutate<
+      DeleteSkillsMutation,
+      DeleteSkillsMutationVariables
+    >({
+      mutation: DeleteSkillsDocument,
+      variables: { where: { id } },
+    });
+  }
+
+  createGroup(input: SkillGroupCreateInput) {
+    return this.safeCreate<
+      CreateSkillGroupsMutation,
+      CreateSkillGroupsMutationVariables
+    >(input.name, CreateSkillGroupsDocument, { input });
+  }
+
+  updateGroup(
+    id: string | string[],
+    variables: UpdateSkillGroupsMutationVariables['update'],
+  ) {
+    return super._apollo.mutate<
+      UpdateSkillGroupsMutation,
+      UpdateSkillGroupsMutationVariables
+    >({
+      mutation: UpdateSkillGroupsDocument,
+      variables: {
+        where: Array.isArray(id) ? { id_IN: id } : { id },
+        update: variables,
+      },
+    });
+  }
+
+  updateAssignmentToParents(
+    type: 'Skill' | 'SkillGroup',
+    skillId: string,
+    oldAssignments: any[],
+    newAssignments: any[],
+  ) {
+    const { connect, disconnect } =
+      this.qlFilterService.toConnectAndDisconnectQuery(
+        oldAssignments,
+        newAssignments,
+      );
+
+    return merge(
+      this.updateGroup(connect, {
+        children: {
+          [type]: {
+            connect: this.qlFilterService.connectWhere('id', skillId),
+          },
+        },
+      }),
+
+      this.updateGroup(disconnect, {
+        children: {
+          [type]: {
+            disconnect: this.qlFilterService.connectWhere('id', skillId),
+          },
+        },
+      }),
+    );
+  }
+
+  deleteGroup(id: string) {
+    return super._apollo.mutate<
+      DeleteSkillGroupsMutation,
+      DeleteSkillGroupsMutationVariables
+    >({
+      mutation: DeleteSkillGroupsDocument,
+      variables: { where: { id } },
+    });
+  }
+
+  private safeCreate<T, V>(
+    name: string,
+    mutation: TypedDocumentNode<unknown, unknown>,
+    variables: V,
+  ) {
+    const [trueObservable, falseObservable] = partition(
+      this.checkSkillExists(name),
+      Boolean,
+    );
+
+    return merge(
+      trueObservable.pipe(
+        mergeMap(() => {
+          throw Error(`Skill ${name} already exists!`);
+        }),
+      ),
+      falseObservable.pipe(
+        mergeMap(() =>
+          super._apollo.mutate<T, V>({
+            mutation,
+            variables,
+          }),
+        ),
+      ),
+    );
   }
 }
