@@ -9,6 +9,7 @@ import { NgZorroAntdModule } from '../ng-zorro-antd.module';
 import { ExperiencesComponent } from './experiences/experiences.component';
 import { RatesFormComponent } from './rates/rates-form/rates-form.component';
 import { RatesComponent } from './rates/rates.component';
+import { CvDateModule } from '../shared/pipes/cv-date.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RatesComponent } from './rates/rates.component';
     PersonsRoutingModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
+    CvDateModule,
   ],
 })
 export class PersonsModule {}

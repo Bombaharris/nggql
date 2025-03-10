@@ -13,6 +13,7 @@ import {
   CreateRatesMutation,
   DeletePersonsDocument,
   DeletePersonsMutation,
+  ExperienceType,
   PersonsWithAllGQL,
   UpdatePeopleDocument,
   UpdatePeopleMutation,
@@ -179,6 +180,7 @@ describe('PersonAdapterService', () => {
     service
       .submitPersonExperience<CreateExperiencesMutation>(
         personId,
+        ExperienceType.Default,
         experience,
         true,
       )
@@ -228,6 +230,7 @@ describe('PersonAdapterService', () => {
     service
       .submitPersonExperience<CreateExperiencesMutation>(
         personId,
+        ExperienceType.Default,
         experience,
         true,
       )

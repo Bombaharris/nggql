@@ -1,11 +1,27 @@
 <nz-layout>
-    <nz-content>
-        <h1>Experience of {{editedPerson?.name}} {{editedPerson?.surname}}</h1>
-        <nz-breadcrumb>
-            <nz-breadcrumb-item>Software House</nz-breadcrumb-item>
-            <nz-breadcrumb-item>Experience</nz-breadcrumb-item>
-            <nz-breadcrumb-item>{{editedPerson?.name}} {{editedPerson?.surname}}</nz-breadcrumb-item>
-        </nz-breadcrumb>
-        <app-experience-form [person]="editedPerson" (submitted)="submitExperience($event)" (deleted)="removePersonsExperience($event)"></app-experience-form>
-    </nz-content>
+  <nz-content>
+    <h1>Experience of {{ editedPerson?.name }} {{ editedPerson?.surname }}</h1>
+    <div nz-flex [nzVertical]="true" [nzGap]="'middle'">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>Software House</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Experience</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{ editedPerson?.name }} {{ editedPerson?.surname }}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-spin [nzSpinning]="isLoading">
+        <nz-collapse nzExpandIconPosition="right" nzAccordion>
+          <nz-collapse-panel *ngFor="let item of experienceTypeData" nzHeader="{{ item.title }}">
+            <app-experience-form
+              [experienceData]="item.data"
+              [experienceType]="item.type"
+              (submitted)="submitExperience($event, item.type)"
+              (deleted)="removePersonsExperience($event)"
+            ></app-experience-form>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </nz-spin>
+      <a nz-button nzType="text" [routerLink]="['/dashboard']">
+        <span nz-icon nzType="left"></span> Go back
+      </a>
+    </div>
+  </nz-content>
 </nz-layout>

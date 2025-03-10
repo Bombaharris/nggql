@@ -4,122 +4,66 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { QueryRef } from 'apollo-angular';
-import { QLFilterBuilderService } from 'src/app/services/ql-filter-builder.service';
+import { AbstractControl, FormArray } from '@angular/forms';
 import { SkillsAdapterService } from 'src/app/services/skills-adapter.service';
 import {
-  Exact,
-  Experience,
-  ExperienceWhere,
-  ExperiencesByPersonQuery,
-  InputMaybe,
-  Person,
+  DefaultExperienceFragment,
+  EducationOrCourseExperienceFragment,
+  ExperienceType,
+  ProjectExperienceFragment,
   SkillsQuery,
 } from '../../../generated/graphql';
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs';
+import { Experience } from '../../../shared/models/experience';
+import { ExperienceFormBuilder } from '../experience-form-builder/experience-form-builder';
 
-type ExperienceFormType = FormGroup<{
-  experiences: FormArray<FormControl>;
-}>;
 @Component({
   selector: 'app-experience-form',
   templateUrl: './experience-form.component.html',
   styleUrls: ['./experience-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ExperienceFormBuilder],
 })
-export class ExperienceFormComponent implements OnInit, OnChanges {
-  @Input() person!: Person | any;
+export class ExperienceFormComponent implements OnChanges {
+  @Input() experienceData: Experience[] = [];
+  @Input() experienceType: ExperienceType = ExperienceType.Default;
   @Output() submitted = new EventEmitter<AbstractControl<any, any>>();
   @Output() deleted = new EventEmitter<string>();
   @Output() canceled = new EventEmitter();
   isLoading: boolean = false;
   confirmModal: boolean = false;
   skills: Observable<SkillsQuery['skills']>;
-  qlFilterService = new QLFilterBuilderService();
-  experienceForm: ExperienceFormType = this.fb.group({
-    experiences: this.fb.array([]),
-  });
-  experienceQueryRef:
-    | QueryRef<
-        ExperiencesByPersonQuery,
-        Exact<{ where?: InputMaybe<ExperienceWhere> | undefined }>
-      >
-    | undefined = undefined;
 
   constructor(
     private skillsAdapterService: SkillsAdapterService,
-    private fb: FormBuilder,
+    public efb: ExperienceFormBuilder,
   ) {
     this.skills = this.skillsAdapterService.getAllSkills();
   }
 
-  ngOnInit(): void {
-    if (!this.person) return;
-    this.experienceForm.patchValue({ experiences: this.person.experiences });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!changes || !changes.person || !changes.person.currentValue) return;
-    this.rebuildFormGroup(changes.person.currentValue.experiences);
-  }
-
-  private rebuildFormGroup(experiences: Experience[]): void {
-    const workExperiencesFormArray = this.experienceForm.get(
-      'experiences',
-    ) as FormArray;
-    const e = experiences
-      .map((exp) => ({ ...exp, skills: exp.skills.map((s) => s.id) }))
-      .sort((a, b) => {
-        const dB = new Date(b.startedFrom).getTime();
-        const dA = new Date(a.startedFrom).getTime();
-        return dB - dA;
-      });
-    workExperiencesFormArray.clear();
-    e.forEach((experience) => {
-      const newWorkExperience = this.fb.group({
-        ...experience,
-        skills: [experience.skills],
-      });
-      //check if experience already exists, if not omit it
-      if (
-        workExperiencesFormArray.controls.find(
-          (w) => w.get('id')?.value === newWorkExperience.get('id')?.value,
-        )
-      )
-        return;
-      workExperiencesFormArray.push(newWorkExperience);
-    });
+  get experienceForm() {
+    return this.efb.form;
   }
 
   get experiences(): FormArray {
     return this.experienceForm.get('experiences') as FormArray;
   }
 
-  newExperienceGroup(): FormGroup {
-    return this.fb.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      startedFrom: ['', [Validators.required]],
-      gainedAt: ['', [Validators.required]],
-      skills: [],
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.experienceData.currentValue.length === changes.experienceData.previousValue?.length) return;
+
+    this.experienceData.forEach(() => {
+      this.efb.add().buildByType(this.experienceType);
     });
+    this.efb.form.patchValue({ experiences: this.mapExperiencesToFormValues() });
   }
 
   addNewForm() {
     if (!this.experiences) return;
-    this.experiences.push(this.newExperienceGroup());
+    this.efb.add().buildByType(this.experienceType);
   }
 
   submitNewExperience(experience: AbstractControl<any, any>): void {
@@ -128,13 +72,38 @@ export class ExperienceFormComponent implements OnInit, OnChanges {
 
   deleteExperience(idx: number, experience: AbstractControl<Experience, any>) {
     const id = experience.get('id')?.value as string;
+    if (!id) return;
     this.experiences.removeAt(idx);
     //if no Id was found (empty form) just remove it from layout
-    if (!id) return;
     this.deleted.emit(id);
   }
 
   cancelDelete() {
     this.confirmModal = false;
   }
+
+  private mapExperiencesToFormValues() {
+    if (this.experienceType === ExperienceType.Hobby) {
+      return this.experienceData;
+    }
+
+    return (
+      this.experienceData as (
+        | DefaultExperienceFragment
+        | ProjectExperienceFragment
+        | EducationOrCourseExperienceFragment
+        )[]
+    )
+      .map((experience) => ({
+        ...experience,
+        skills: experience.skills.map((s) => s.name),
+      }))
+      .sort((a, b) => {
+        const dB = new Date(b.startedFrom).getTime();
+        const dA = new Date(a.startedFrom).getTime();
+        return dB - dA;
+      });
+  }
+
+  protected readonly ExperienceType = ExperienceType;
 }

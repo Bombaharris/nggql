@@ -1,0 +1,40 @@
+fragment CommonExperience on Experience {
+  gainedAt
+  startedFrom
+  skills {
+    name
+  }
+}
+
+fragment DefaultExperience on Experience {
+  ...CommonExperience
+  role
+  institution
+  description
+}
+
+fragment ProjectExperience on Experience {
+  ...CommonExperience
+  name
+  role
+  description
+}
+
+fragment EducationOrCourseExperience on Experience {
+  ...CommonExperience
+  name
+  institution
+  description
+}
+
+fragment HobbyExperience on Experience {
+  name
+}
+
+fragment AllExperienceFields on Experience {
+  ...CommonExperience
+  name
+  role
+  institution
+  description
+}
