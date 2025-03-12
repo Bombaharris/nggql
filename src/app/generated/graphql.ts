@@ -5103,10 +5103,10 @@ export type UpdateSkillsMutationResponse = {
 
 export type _CommonExperienceFragment = { __typename?: 'Experience', gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> };
 
-export type CvQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type _CvQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CvQueryQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', name: string, surname: string, seniority?: Seniority | null, bio?: string | null, roles: Array<{ __typename?: 'Role', name: string }>, languages: Array<{ __typename?: 'Skill', name: string }>, skills: Array<{ __typename?: 'Skill', name: string, recommendedFor: boolean, groups: Array<{ __typename?: 'SkillGroup', name: string }> }>, experience: Array<{ __typename?: 'Experience', role?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, projects: Array<{ __typename?: 'Experience', name?: string | null, role?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', name?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', name?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', name?: string | null }> }> };
+export type _CvQueryQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', name: string, surname: string, seniority?: Seniority | null, bio?: string | null, roles: Array<{ __typename?: 'Role', name: string }>, languages: Array<{ __typename?: 'Skill', name: string }>, skills: Array<{ __typename?: 'Skill', name: string, recommendedFor: boolean, groups: Array<{ __typename?: 'SkillGroup', name: string }> }>, experience: Array<{ __typename?: 'Experience', role?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, projects: Array<{ __typename?: 'Experience', name?: string | null, role?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', name?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', name?: string | null, institution?: string | null, gainedAt?: any | null, startedFrom: any, description?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', name?: string | null }> }> };
 
 export type DepartmentPartFragment = { __typename?: 'Department', id: string, name: string, manager?: { __typename?: 'Person', id: string, name: string, surname: string } | null };
 
@@ -5160,6 +5160,13 @@ export type CreateSkillsMutationVariables = Exact<{
 
 
 export type CreateSkillsMutation = { __typename?: 'Mutation', createSkills: { __typename?: 'CreateSkillsMutationResponse', info: { __typename?: 'CreateInfo', nodesCreated: number, relationshipsCreated: number }, skills: Array<{ __typename?: 'Skill', id: string, name: string }> } };
+
+export type CvQueryQueryVariables = Exact<{
+  where?: InputMaybe<PersonWhere>;
+}>;
+
+
+export type CvQueryQuery = { __typename?: 'Query', people: Array<{ __typename?: 'Person', name: string, surname: string, seniority?: Seniority | null, bio?: string | null, roles: Array<{ __typename?: 'Role', name: string }>, languages: Array<{ __typename?: 'Skill', name: string }>, skills: Array<{ __typename?: 'Skill', name: string, recommendedFor: boolean, groups: Array<{ __typename?: 'SkillGroup', name: string }> }>, experience: Array<{ __typename?: 'Experience', id: string, role?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, projectExperience: Array<{ __typename?: 'Experience', id: string, name?: string | null, role?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, education: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, courses: Array<{ __typename?: 'Experience', id: string, name?: string | null, institution?: string | null, description?: string | null, gainedAt?: any | null, startedFrom: any, skills: Array<{ __typename?: 'Skill', name: string }> }>, hobby: Array<{ __typename?: 'Experience', id: string, name?: string | null }> }> };
 
 export type DeleteDepartmentsMutationVariables = Exact<{
   where?: InputMaybe<DepartmentWhere>;
@@ -5546,8 +5553,8 @@ export const ProjectPartFragmentDoc = gql`
   }
 }
     `;
-export const CvQueryDocument = gql`
-    query CVQuery {
+export const _CvQueryDocument = gql`
+    query _CVQuery {
   people {
     name
     surname
@@ -5596,8 +5603,8 @@ export const CvQueryDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class CvQueryGQL extends Apollo.Query<CvQueryQuery, CvQueryQueryVariables> {
-    document = CvQueryDocument;
+  export class _CvQueryGQL extends Apollo.Query<_CvQueryQuery, _CvQueryQueryVariables> {
+    document = _CvQueryDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -5757,6 +5764,41 @@ export const CreateSkillsDocument = gql`
   })
   export class CreateSkillsGQL extends Apollo.Mutation<CreateSkillsMutation, CreateSkillsMutationVariables> {
     document = CreateSkillsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CvQueryDocument = gql`
+    query CVQuery($where: PersonWhere) {
+  people(where: $where) {
+    name
+    surname
+    seniority
+    bio
+    roles {
+      name
+    }
+    languages: skills(where: {groups: {id: "Languages"}}) {
+      name
+    }
+    skills(where: {groups_SOME: {id: "Technologies"}}) {
+      name
+      groups {
+        name
+      }
+      recommendedFor(projectId: "ProjectCV")
+    }
+    ...ExperienceOfPerson
+  }
+}
+    ${ExperienceOfPersonFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CvQueryGQL extends Apollo.Query<CvQueryQuery, CvQueryQueryVariables> {
+    document = CvQueryDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

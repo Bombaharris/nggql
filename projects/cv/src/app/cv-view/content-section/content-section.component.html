@@ -1,0 +1,7 @@
+<section class="content-section">
+  <p [ngClass]="['title', size]">{{ title }}</p>
+  <p *ngIf="!!subtitle" class="subtitle">{{ subtitle }}</p>
+  <div class="content-wrapper">
+    <ng-content></ng-content>
+  </div>
+</section>

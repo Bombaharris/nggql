@@ -1,0 +1,25 @@
+@import "../styles/typography";
+
+.bt-section {
+  border-top: 2px solid #D8D8D8;
+  padding-top: 1.5rem;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .title {
+    @extend .font-lg;
+    color: #636363;
+
+    span {
+      font-weight: $fw-extra-bold;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+}

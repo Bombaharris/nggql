@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'node_modules/modern-normalize/modern-normalize.css';
+@import './styles/fonts.scss';
+@import './styles/typography.scss';
+@import './styles/components.scss';
+
+body {
+  margin: 0;
+  font-family: Mulish, sans-serif;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p, h1, h2, h3 {
+  margin: 0;
+}

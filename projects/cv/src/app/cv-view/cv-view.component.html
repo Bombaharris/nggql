@@ -1,0 +1,49 @@
+<div class="cv-view-wrapper">
+  <div class="left-column">
+    <div class="gradient-stripe"></div>
+    <div class="content">
+      <div class="bio-wrapper">
+        <img src="../../assets/quote-left.svg" alt="quote icon" />
+        <p class="font-md">{{ person?.bio }}</p>
+      </div>
+      <app-content-section title="Wykształcenie:">
+        <p *ngFor="let item of person?.education" class="font-sm"><span class="font-bold">{{ item.name}} – </span>{{ item.institution }}</p>
+      </app-content-section>
+      <app-content-section title="Języki:">
+        <app-dotted-list [items]="languages"></app-dotted-list>
+      </app-content-section>
+      <app-content-section title="Technologie:">
+        <app-content-section *ngFor="let skillGroup of skills$ | async" [title]="skillGroup.key" [size]="Size.Small">
+          <app-dotted-list [items]="skillGroup.values"></app-dotted-list>
+        </app-content-section>
+      </app-content-section>
+    </div>
+  </div>
+  <div class="right-column">
+    <div>
+      <header>
+        <h1><span>{{ person?.seniority }}</span> {{ role | uppercase }}</h1>
+        <h2>+{{ experienceCount }} lat doświadczenia</h2>
+        <app-dotted-list [items]="['React', 'Angular']" [size]="Size.Large"></app-dotted-list>
+      </header>
+      <section *ngFor="let experienceItem of experience" class="bt-section">
+        <h3 class="title">
+          <ng-container *ngFor="let titlePart of experienceItem.title | split:' '; first as isFirst;">
+            <span *ngIf="isFirst">{{ titlePart }} </span>
+            <ng-container *ngIf="!isFirst">{{ titlePart }}</ng-container>
+          </ng-container>
+        </h3>
+        <div class="content">
+          <app-content-section *ngFor="let item of experienceItem.items" [title]="item.title" [subtitle]="item.subtitle">
+            <p *ngIf="!!item.description" class="experience-description">{{ item.description }}</p>
+            <p *ngIf="!!item.skills" class="experience-skills">
+              Technologie:
+              <span *ngFor="let skill of item.skills">{{ skill }}</span>
+            </p>
+          </app-content-section>
+        </div>
+      </section>
+    </div>
+  </div>
+  <img src="../../assets/logo.svg" alt="logo" class="logo" />
+</div>

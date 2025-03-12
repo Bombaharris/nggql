@@ -1,0 +1,34 @@
+query CVQuery($where: PersonWhere) {
+  people(where: $where) {
+    name
+    surname
+    seniority
+    bio
+    roles {
+      name
+    }
+    languages: skills(where: {groups:  {
+      id: "Languages"
+    }}) {
+      name
+    }
+    skills(where: {groups_SOME:  {
+      id: "Technologies"
+    }}) {
+      name
+      groups {
+        name
+      }
+      recommendedFor(projectId: "ProjectCV")
+    }
+    ...ExperienceOfPerson
+  }
+}
+
+#fragment commonExperience on Experience {
+#  gainedAt
+#  startedFrom
+#  skills {
+#    name
+#  }
+#}

@@ -1,0 +1,98 @@
+@import '../../styles/typography';
+
+.cv-view-wrapper {
+  display: flex;
+  gap: 3rem;
+  height: 100%;
+
+  .left-column {
+    width: 25.5%;
+    background: #F7F7F7;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .content {
+      padding: 0 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .right-column {
+    max-width: 1092px;
+    padding-top: 4.5rem;
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      h1 {
+        @extend .font-2xl;
+        color: #3C3C3C;
+
+        span {
+          font-weight: $fw-light;
+        }
+      }
+
+      h2 {
+        @extend .font-xl;
+        order: -1;
+        color: rgb(from #737373 r g b / 0.5);
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .gradient-stripe {
+    background: linear-gradient(90deg, #F49701 0%, #EF7C01 100%);
+    width: 5.875rem;
+    height: 0.75rem;
+    min-height: 0.75rem;
+  }
+
+  .logo {
+    position: fixed;
+    right: 3rem;
+    bottom: 2.5rem;
+    width: max-content;
+    height: max-content;
+  }
+
+  .bio-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    img {
+      width: max-content;
+      height: max-content;
+    }
+  }
+
+  .experience-description {
+    @extend .font-xs-narrow;
+    max-width: 1010px;
+    color: #000;
+    text-align: justify;
+  }
+
+  .experience-skills {
+    @extend .font-sm;
+    font-weight: $fw-bold;
+    color: #636363;
+
+    span {
+      font-weight: $fw-regular;
+
+      &:not(:last-child):after {
+        content: ",";
+        margin-right: 0.75ch;
+      }
+    }
+  }
+}
