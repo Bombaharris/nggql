@@ -32,3 +32,4 @@ services:
       - NEO4J_USER=neo4j
       - NEO4J_PASSWORD=letmeinnow
       - GRAPHQL_LISTEN_PORT=4000
+      - JWT_SECRET=a-string-secret-at-least-256-bits-long

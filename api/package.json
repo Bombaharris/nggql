@@ -14,8 +14,14 @@
     "@graphql-tools/utils": "^10.7.2",
     "@neo4j/graphql": "^5.11.4",
     "apollo-server": "^3.13.0",
+    "apollo-server-core": "^3.13.0",
+    "apollo-server-express": "^3.13.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "graphql": "^16.10.0",
+    "jose": "^6.0.10",
     "neo4j-driver": "^5.28.0"
   }
 }

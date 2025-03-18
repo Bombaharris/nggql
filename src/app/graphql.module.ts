@@ -4,14 +4,14 @@ import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 
-const uri = 'http://localhost:4000/graphql/'; // <-- add the URL of the GraphQL server here
+const uri = 'http://localhost:4000/graphql'; // <-- add the URL of the GraphQL server here
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const headers = new HttpHeaders({
     'Access-Control-Allow-Origin': '*',
   });
   return {
-    link: httpLink.create({ uri, headers, withCredentials: false }),
+    link: httpLink.create({ uri, headers, withCredentials: true }),
     cache: new InMemoryCache(),
     defaultOptions: {
       watchQuery: {

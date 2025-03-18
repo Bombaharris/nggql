@@ -1,3 +1,7 @@
+type JwtPayload @jwt {
+  roles: [String!]!
+}
+
 enum Seniority {
     JUNIOR
     REGULAR
@@ -12,7 +16,10 @@ enum ExperienceType {
   HOBBY
 }
 
-type Person {
+type Person @authorization(validate: [
+  { where: { jwt: { roles_INCLUDES: "admin" } } }
+  { operations: [READ, AGGREGATE] where: { jwt: { roles_INCLUDES: "token" } } }
+]) {
   id: ID! @id @unique
   name: String!
   surname: String!
@@ -28,7 +35,10 @@ type Person {
   experiences: [Experience!]! @relationship(type: "HAS_EXPERIENCE", direction: OUT)
 }
 
-type Experience {
+type Experience @authorization(validate: [
+  { where: { jwt: { roles_INCLUDES: "admin" } } }
+  { operations: [READ, AGGREGATE] where: { jwt: { roles_INCLUDES: "token" } } }
+]) {
   id: ID! @id @unique
   type: ExperienceType! @coalesce(value: DEFAULT)
   person: Person @relationship(type: "HAS_EXPERIENCE", direction: IN)
@@ -43,7 +53,7 @@ type Experience {
 
 union SkillChild = Skill | SkillGroup
 
-type SkillGroup {
+type SkillGroup @authorization(validate: [{ where: { jwt: { roles_INCLUDES: "admin" } } }]) {
   id: ID! @id @unique
   name: String!
   children: [SkillChild!]! @relationship(type: "BELONGS_TO", direction: IN)
@@ -54,7 +64,10 @@ type SkillGroupAggregate {
   count: Int!
 }
 
-type Skill {
+type Skill@authorization(validate: [
+  { where: { jwt: { roles_INCLUDES: "admin" } } }
+  { operations: [READ, AGGREGATE] where: { jwt: { roles_INCLUDES: "token" } } }
+]) {
   id: ID! @id @unique
   name: String!
   groups: [SkillGroup!]! @cypher(statement: """
@@ -71,12 +84,15 @@ type Skill {
   """, columnName: "exists")
 }
 
-type Role {
+type Role @authorization(validate: [
+  { where: { jwt: { roles_INCLUDES: "admin" } } }
+  { operations: [READ, AGGREGATE] where: { jwt: { roles_INCLUDES: "token" } } }
+]) {
   id: ID! @id @unique
   name: String!
 }
 
-type Project {
+type Project @authorization(validate: [{ where: { jwt: { roles_INCLUDES: "admin" } } }]) {
   id: ID! @id @unique
   name: String!
   skills: [Skill!]! @relationship(type: "NEED_SKILL", direction:OUT)
@@ -85,14 +101,14 @@ type Project {
   duration: Duration!
 }
 
-type Department {
+type Department @authorization(validate: [{ where: { jwt: { roles_INCLUDES: "admin" } } }]) {
   id: ID! @id @unique
   name: String!
   manager: Person @relationship(type: "MANAGED_BY", direction: OUT)
   persons: [Person!]! @relationship(type: "HAS_DEPARTMENT", direction: IN)
 }
 
-type Rate {
+type Rate @authorization(validate: [{ where: { jwt: { roles_INCLUDES: "admin" } } }]) {
   id: ID! @id @unique
   value: Float!
   validFrom: Date!
@@ -103,7 +119,7 @@ type Query {
   findSkill(where: SkillWhere): [Skill!]! @cypher(statement: """MATCH (s:Skill|SkillGroup) WHERE toUpper(s.name) = toUpper($where.name) RETURN s""", columnName: """s""")
 }
 
-type PersonsToProject {
+type PersonsToProject @authorization(validate: [{ where: { jwt: { roles_INCLUDES: "admin" } } }]) {
  people: [PersonWithScore] @cypher(statement: """
         MATCH (p:Person)-[:HAS_SKILL]->(skill:Skill)<-[:NEED_SKILL]-(pr:Project)
         RETURN p,COUNT(*) AS score ORDER BY score DESC
