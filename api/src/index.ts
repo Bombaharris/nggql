@@ -14,7 +14,7 @@ const configService = ServicesContainer.instance.get(ConfigService);
 
 app.use(
   '/login',
-  cors({ origin: 'http://localhost:4200', credentials: true }),
+  cors({ origin: configService.corsWhitelist, credentials: true }),
   loginRouter,
 );
 

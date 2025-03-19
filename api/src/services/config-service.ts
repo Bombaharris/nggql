@@ -10,6 +10,7 @@ export class ConfigService {
   neo4j: Record<'uri' | 'user' | 'password', string>;
   jwtSecret: string;
   tokenCookieSettings: { name: string; maxAge: number };
+  corsWhitelist: string[];
 
   constructor(env: Record<string, string>) {
     this.host = env.HOST || '0.0.0.0';
@@ -29,5 +30,6 @@ export class ConfigService {
       name: 'nggql_token',
       maxAge: 31536000000,
     };
+    this.corsWhitelist = ['http://localhost:4200'];
   }
 }

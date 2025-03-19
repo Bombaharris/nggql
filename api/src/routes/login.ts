@@ -2,30 +2,43 @@ import { Router } from 'express';
 import { ServicesContainer } from '../services/services-container.js';
 import { TokenService } from '../services/token-service.js';
 import { ConfigService } from '../services/config-service.js';
+import type { TokenPayload } from '../types/token-payload.js';
 
 const router = Router();
 
 router.post('/', async (req, res) => {
   const { token } = req.body;
-  const tokenService = ServicesContainer.instance.get(TokenService);
+  const tokenService = ServicesContainer.instance.get(
+    TokenService<TokenPayload>,
+  );
   const configService = ServicesContainer.instance.get(ConfigService);
+  let roles: string[] = [];
 
   if (!(await tokenService.validate(token))) {
     res.sendStatus(401);
     return;
   }
 
-  if (req.cookies.nggql_token) {
-    if (!(await tokenService.validate(req.cookies.nggql_token))) {
+  const cookieToken = req.cookies[configService.tokenCookieSettings.name];
+
+  if (cookieToken) {
+    if (!(await tokenService.validate(cookieToken))) {
       res.sendStatus(401);
       return;
     }
 
-    res.sendStatus(204);
-    return;
+    const cookieRoles =
+      (await tokenService.getPayload(cookieToken))?.roles ?? [];
+
+    if (cookieRoles.sort() === roles.sort()) {
+      res.sendStatus(204);
+      return;
+    }
+
+    roles = cookieRoles;
   }
 
-  const newToken = await tokenService.sign({ roles: ['admin'] });
+  const newToken = await tokenService.sign({ roles });
 
   res.cookie(configService.tokenCookieSettings.name, newToken, {
     httpOnly: true,
