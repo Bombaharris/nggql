@@ -2,23 +2,33 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-export const authGuard: CanActivateFn = async (route, state) => {
-  const { token } = route.queryParams;
-  const router = inject(Router);
+export interface CreateAuthGuardProps {
+  loginUrl: string;
+  unauthorizedUrl: string;
+}
 
-  if (!token) {
-    return router.parseUrl('/unauthorized');
-  }
+export const createAuthGuard = ({
+  loginUrl,
+  unauthorizedUrl,
+}: CreateAuthGuardProps) => {
+  return (async (route: any) => {
+    const { token } = route.queryParams;
+    const router = inject(Router);
 
-  const client = inject(HttpClient);
+    if (!token) {
+      return router.parseUrl(unauthorizedUrl);
+    }
 
-  try {
-    await client
-      .post('http://localhost:4000/login', { token }, { withCredentials: true })
-      .toPromise();
-  } catch (_) {
-    return router.parseUrl('/unauthorized');
-  }
+    const client = inject(HttpClient);
 
-  return true;
+    try {
+      await client
+        .post(loginUrl, { token }, { withCredentials: true })
+        .toPromise();
+    } catch (_) {
+      return router.parseUrl(unauthorizedUrl);
+    }
+
+    return true;
+  }) satisfies CanActivateFn;
 };

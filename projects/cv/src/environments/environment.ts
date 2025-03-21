@@ -1,3 +1,4 @@
 export const environment = {
-  apiUrl: 'http://localhost:4000',
+  gqlApiUrl: 'http://localhost:4000',
+  restApiUrl: 'http://localhost:4100',
 };

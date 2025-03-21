@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
-import { authGuard } from 'shared';
+import { createAuthGuard } from 'shared';
 import { GraphQLModule } from './graphql.module';
+import { environment } from '../environments/environment';
+
+const authGuard = createAuthGuard({
+  loginUrl: new URL('/login', environment.restApiUrl).href,
+  unauthorizedUrl: '/unauthorized',
+});
 
 export const routes: Routes = [
   {
