@@ -10,7 +10,7 @@ import {
   UpperCasePipe,
 } from '@angular/common';
 import { CvQueryQuery } from '../../../../../src/app/generated/graphql';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, pluck, tap } from 'rxjs/operators';
 import { Size } from '../shared/types/size';
 import { CvDateRangePipe } from '../../../../../src/app/shared/pipes/cv-date';
@@ -43,6 +43,8 @@ export class CvViewComponent implements OnInit {
   experience: ExperienceView[] = [];
   experienceCount: number = 0;
   role = '';
+  isLoading = true;
+  private receivedObservablesCount = new BehaviorSubject(0);
 
   constructor(
     public personViewAdapter: PersonViewAdapterService,
@@ -50,6 +52,13 @@ export class CvViewComponent implements OnInit {
     experienceViewBuilder: ExperienceViewBuilder,
     private route: ActivatedRoute,
   ) {
+    this.receivedObservablesCount.subscribe((count) => {
+      if (count >= 3) {
+        this.isLoading = false;
+        this.receivedObservablesCount.next(0);
+      }
+    });
+
     this.personViewAdapter.person$.subscribe((person) => {
       this.person = person;
 
@@ -101,6 +110,9 @@ export class CvViewComponent implements OnInit {
         .description();
 
       this.experience = experienceViewBuilder.build();
+      this.receivedObservablesCount.next(
+        this.receivedObservablesCount.value + 1,
+      );
     });
 
     this.skills$ = this.personViewAdapter.skillGroups$.pipe(
@@ -110,10 +122,18 @@ export class CvViewComponent implements OnInit {
           values: item.values.map((value) => value.name),
         })),
       ),
+      tap(() =>
+        this.receivedObservablesCount.next(
+          this.receivedObservablesCount.value + 1,
+        ),
+      ),
     );
 
     this.personViewAdapter.experienceCount$.subscribe((count) => {
       this.experienceCount = Math.round(count);
+      this.receivedObservablesCount.next(
+        this.receivedObservablesCount.value + 1,
+      );
     });
   }
 
