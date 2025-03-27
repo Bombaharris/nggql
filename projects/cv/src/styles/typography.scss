@@ -1,0 +1,110 @@
+@import './breakpoints';
+
+$fs-1250: 20px;
+$fs-1375: 22px;
+$fs-1500: 24px;
+$fs-1625: 26px;
+$fs-1750: 28px;
+$fs-1875: 30px;
+$fs-2000: 32px;
+$fs-2625: 42px;
+$fs-4000: 64px;
+
+$lh-small: 100%;
+$lh-medium: 140%;
+$lh-large: 150%;
+
+$fw-light: 200;
+$fw-regular: 400;
+$fw-bold: 700;
+$fw-extra-bold: 800;
+$fw-black: 900;
+
+@mixin font($fs, $lh, $fw) {
+  font-size: $fs;
+  line-height: $lh;
+  font-weight: $fw;
+}
+
+/* fonts mobile */
+
+.font-xs {
+  @include font($fs-1250, $lh-medium, $fw-regular);
+
+  &-narrow {
+    @include font($fs-1250, $lh-small, $fw-regular);
+  }
+}
+
+.font-sm {
+  @include font($fs-1375, $lh-small, $fw-light);
+}
+
+.font-md {
+  @include font($fs-1500, $lh-medium, $fw-light);
+
+  &-narrow {
+    @include font($fs-1500, $lh-small, $fw-light);
+  }
+
+  &-wide {
+    @include font($fs-1500, $lh-large, $fw-regular);
+  }
+}
+
+.font-lg {
+  @include font($fs-1750, $lh-small, $fw-regular);
+}
+
+.font-xl {
+  @include font($fs-1875, $lh-small, $fw-black);
+}
+
+.font-2xl {
+  @include font($fs-2625, $lh-small, $fw-black);
+}
+
+
+/* fonts desktop */
+
+@include screen-min(sm) {
+  .font-xs {
+    @include font($fs-1250, $lh-medium, $fw-regular);
+
+    &-narrow {
+      @include font($fs-1250, $lh-small, $fw-regular);
+    }
+  }
+
+  .font-sm {
+    @include font($fs-1375, $lh-small, $fw-light);
+  }
+
+  .font-md {
+    @include font($fs-1500, $lh-medium, $fw-light);
+
+    &-narrow {
+      @include font($fs-1500, $lh-small, $fw-light);
+    }
+
+    &-wide {
+      @include font($fs-1500, $lh-large, $fw-regular);
+    }
+  }
+
+  .font-lg {
+    @include font($fs-1750, $lh-small, $fw-regular);
+  }
+
+  .font-xl {
+    @include font($fs-2000, $lh-small, $fw-black);
+  }
+
+  .font-2xl {
+    @include font($fs-4000, $lh-small, $fw-black);
+  }
+}
+
+.font-bold {
+  font-weight: $fw-bold;
+}

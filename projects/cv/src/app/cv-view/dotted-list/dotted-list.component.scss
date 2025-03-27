@@ -1,0 +1,22 @@
+@import "../../../styles/typography";
+
+.dotted-list {
+  color: #3C3C3C;
+  display: flex;
+  flex-wrap: wrap;
+
+  &.small {
+    @extend .font-sm;
+    font-weight: $fw-bold;
+  }
+
+  &.large {
+    @extend .font-md-narrow;
+    font-weight: $fw-extra-bold;
+  }
+
+  li:not(:last-child):after {
+    content: "·";
+    margin: 0 0.5rem;
+  }
+}

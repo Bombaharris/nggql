@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "tsx src/index.ts",
+    "dev": "tsx --env-file=.env src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -13,9 +14,12 @@
     "@graphql-tools/schema": "^10.0.16",
     "@graphql-tools/utils": "^10.7.2",
     "@neo4j/graphql": "^5.11.4",
+    "@types/cookie-parser": "^1.4.8",
     "apollo-server": "^3.13.0",
-    "dotenv": "^16.4.7",
+    "apollo-server-core": "^3.13.0",
+    "cookie-parser": "^1.4.7",
     "graphql": "^16.10.0",
-    "neo4j-driver": "^5.28.0"
+    "neo4j-driver": "^5.28.0",
+    "tsx": "^4.19.3"
   }
 }

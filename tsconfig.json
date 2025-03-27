@@ -14,9 +14,14 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
+    "paths": {
+      "shared": [
+        "./dist/shared"
+      ]
+    },
     "module": "es2020",
     "lib": [
-      "es2018",
+      "es2022",
       "dom",
       "esnext.asynciterable"
     ],

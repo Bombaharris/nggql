@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:cv": "ng serve cv",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "gql-codegen": "graphql-codegen --config graphql-codegen.yml",
@@ -30,6 +31,7 @@
     "@apollo/client": "^3.8.8",
     "apollo-angular": "^5.0.1",
     "graphql": "^16.6.0",
+    "modern-normalize": "^3.0.1",
     "ng-zorro-antd": "^17.4.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
@@ -62,6 +64,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^17.0.0",
     "prettier": "^3.1.1",
     "typescript": "^5.2.2"
   }

@@ -127,6 +127,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `npm run prestart` to generate GQL services with <https://www.graphql-code-generator.com/docs/plugins/typescript-apollo-angular>.
 
+## Testing tokens
+
+- **Admin** - `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJhZG1pbiJdfQ.yXSUAUgZhlk7pKzf2LDe6gZT9iFwPGFJvszhCd5-8Og`
+- **CV view** - `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJ0b2tlbiJdfQ.lIEhSslls9Kj5hYshpvcG4iXyLJ0raK9ekIrXxW3_00`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.

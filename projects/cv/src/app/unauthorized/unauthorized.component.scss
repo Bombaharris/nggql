@@ -1,0 +1,26 @@
+@import '../../styles/typography';
+
+.unauthorized {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  h1 {
+    @extend .font-xl;
+    line-height: $lh-medium;
+  }
+
+  h2 {
+    @extend .font-md;
+    font-weight: $fw-regular;
+  }
+}

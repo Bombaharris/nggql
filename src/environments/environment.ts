@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  gqlApiUrl: 'http://localhost:4000',
+  restApiUrl: 'http://localhost:4100',
 };
 
 /*
